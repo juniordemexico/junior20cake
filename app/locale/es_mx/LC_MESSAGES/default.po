@@ -1,0 +1,204 @@
+msgid "about"
+msgstr "Acerca de"
+
+msgid "actions"
+msgstr "Acciones"
+
+msgid "address"
+msgstr "Dirección"
+
+msgid "city"
+msgstr "Ciudad"
+
+msgid "company_name"
+msgstr "Razón Social"
+
+msgid "contact_information"
+msgstr "Contacto"
+
+msgid "created"
+msgstr "Creado"
+
+msgid "cve"
+msgstr "Clave"
+
+msgid "list"
+msgstr "Lista"
+
+msgid "add"
+msgstr "Agregar"
+
+msgid "edit"
+msgstr "Editar"
+
+msgid "delete"
+msgstr "Eliminar"
+
+msgid "cancel"
+msgstr "Cancelar"
+
+msgid "authorize"
+msgstr "Autorizar"
+
+msgid "deauthorize"
+msgstr "Desautorizar"
+
+msgid "print"
+msgstr "Imprimir"
+
+msgid "mail"
+msgstr "Correo"
+
+msgid "export"
+msgstr "Exportar"
+
+msgid "import"
+msgstr "Importar"
+
+msgid "process"
+msgstr "Procesar"
+
+msgid "block"
+msgstr "Bloquear"
+
+msgid "previous"
+msgstr "Anterior"
+
+msgid "next"
+msgstr "Siguiente"
+
+msgid "first"
+msgstr "Primero"
+
+msgid "last"
+msgstr "Último"
+
+msgid "undo_process"
+msgstr "Retroceder Proceso"
+
+msgid "description"
+msgstr "Descripción"
+
+msgid "invalid_item"
+msgstr "Item Invalido"
+
+msgid "item_could_not_be_saved"
+msgstr "El Item NO pudo ser guardado"
+
+msgid "item_has_been_saved"
+msgstr "Item Guardado Correctamente"
+
+msgid "item_could_not_be_deleted"
+msgstr "El Item NO se pudo Eliminar"
+
+msgid "item_has_been_deleted"
+msgstr "Item Eliminado Correctamente"
+
+msgid "transaction_could_not_be_saved"
+msgstr "La Transacción NO pudo ser guardada"
+
+msgid "transaction_has_been_saved"
+msgstr "Transacción Guardada Correctamente"
+
+msgid "divisa"
+msgstr "Divisa"
+
+msgid "divisas"
+msgstr "Divisas"
+
+msgid "marca"
+msgstr "Marca"
+
+msgid "marcas"
+msgstr "Marcas"
+
+msgid "email"
+msgstr "EMail"
+
+msgid "name"
+msgstr "Nombre"
+
+msgid "title"
+msgstr "Titulo"
+
+msgid "home"
+msgstr "Home"
+
+msgid "id"
+msgstr "Id"
+
+msgid "index"
+msgstr "Indice"
+
+msgid "modified"
+msgstr "Modificado"
+
+msgid "save"
+msgstr "Guardar"
+
+msgid "submit"
+msgstr "Enviar"
+
+msgid "version"
+msgstr "Versión"
+
+msgid "view"
+msgstr "Ver"
+
+msgid "web_application_information"
+msgstr "Web Application Information"
+
+msgid "zip_postal"
+msgstr "Código Postal"
+
+msgid "first_name"
+msgstr "Nombre"
+
+msgid "last_name"
+msgstr "Apellido"
+
+msgid "last2_name"
+msgstr "Apellido Materno"
+
+msgid "full_name"
+msgstr "Nombre Completo"
+
+msgid "short_name"
+msgstr "Nombre Corto"
+
+msgid "company_name"
+msgstr "Empresa"
+
+msgid "domain_name"
+msgstr "Dominio"
+
+msgid "ax_company_short_name"
+msgstr "OGGI"
+
+msgid "ax_company_common_name"
+msgstr "OGGI JEANS"
+
+msgid "ax_company_real_name"
+msgstr "JUNIOR DE MEXICO, SA DE CV"
+
+msgid "ax_app_version"
+msgstr "2.0 alpha"
+
+msgid "estado"
+msgstr "Estado"
+
+msgid "estados"
+msgstr "Estados"
+
+msgid "name"
+msgstr "Nombre"
+
+msgid "nom"
+msgstr "Nom"
+
+msgid "country"
+msgstr "País"
+
+msgid "countries"
+msgstr "Paises"
+

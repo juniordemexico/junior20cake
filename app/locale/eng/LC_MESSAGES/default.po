@@ -1,0 +1,195 @@
+msgid "about"
+msgstr "About"
+
+msgid "actions"
+msgstr "Actions"
+
+msgid "address"
+msgstr "Address"
+
+msgid "city"
+msgstr "City"
+
+msgid "company_name"
+msgstr "Company Name"
+
+msgid "contact_information"
+msgstr "Contact Information"
+
+msgid "created"
+msgstr "Created"
+
+msgid "cve"
+msgstr "Code"
+
+msgid "list"
+msgstr "List"
+
+msgid "add"
+msgstr "Add"
+
+msgid "edit"
+msgstr "Edit"
+
+msgid "delete"
+msgstr "Delete"
+
+msgid "cancel"
+msgstr "Cancel"
+
+msgid "authorize"
+msgstr "Authorize"
+
+msgid "deauthorize"
+msgstr "Deahutorize"
+
+msgid "print"
+msgstr "Print"
+
+msgid "mail"
+msgstr "Mail"
+
+msgid "export"
+msgstr "Export"
+
+msgid "import"
+msgstr "Import"
+
+msgid "process"
+msgstr "Process"
+
+msgid "block"
+msgstr "Block"
+
+msgid "previous"
+msgstr "Previous"
+
+msgid "next"
+msgstr "Next"
+
+msgid "first"
+msgstr "First"
+
+msgid "last"
+msgstr "Last"
+
+msgid "undo_process"
+msgstr "Undo Process"
+
+msgid "description"
+msgstr "Description"
+
+msgid "item_could_not_be_saved"
+msgstr "The Item Could Not Be Saved"
+
+msgid "the_item_has_been_saved"
+msgstr "The Item Has Been Saved"
+
+msgid "divisa"
+msgstr "Currency"
+
+msgid "divisas"
+msgstr "Currencies"
+
+msgid "marca"
+msgstr "Trademark"
+
+msgid "marcas"
+msgstr "Trademarks"
+
+msgid "email"
+msgstr "Email"
+
+msgid "name"
+msgstr "Name"
+
+msgid "description"
+msgstr "Description"
+
+msgid "title"
+msgstr "Title"
+
+msgid "home"
+msgstr "Home"
+
+msgid "id"
+msgstr "Id"
+
+msgid "index"
+msgstr "Index"
+
+msgid "modified"
+msgstr "Modified"
+
+msgid "save"
+msgstr "Save"
+
+msgid "submit"
+msgstr "Submit"
+
+msgid "version"
+msgstr "Version"
+
+msgid "view"
+msgstr "View"
+
+msgid "web_application_information"
+msgstr "Web Application Information"
+
+msgid "zip_postal"
+msgstr "Zip Code"
+
+msgid "first_name"
+msgstr "First Name"
+
+msgid "last_name"
+msgstr "Last Name"
+
+msgid "last2_name"
+msgstr "Second Last Name"
+
+msgid "full_name"
+msgstr "Full Name"
+
+msgid "short_name"
+msgstr "Short Name"
+
+msgid "company_name"
+msgstr "Company"
+
+msgid "domain_name"
+msgstr "Domain Name"
+
+msgid "ax_company_short_name"
+msgstr "OGGI"
+
+msgid "ax_company_common_name"
+msgstr "OGGI JEANS"
+
+msgid "ax_company_real_name"
+msgstr "JUNIOR DE MEXICO, SA DE CV"
+
+msgid "ax_app_version"
+msgstr "2.0 alpha"
+
+msgid "estado"
+msgstr "Estado"
+
+msgid "estados"
+msgstr "Estados"
+
+msgid "name"
+msgstr "Name"
+
+msgid "nom"
+msgstr "Nom"
+
+msgid "country"
+msgstr "Country"
+
+msgid "pais"
+msgstr "Country"
+
+msgid "paises"
+msgstr "Countries"
+

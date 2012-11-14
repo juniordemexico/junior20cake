@@ -1,0 +1,329 @@
+body {
+	font-family: 'helvetica neue', helvetica, arial, sans-serif;
+	background-color: white;
+	color: black;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 8pt;
+}
+
+code {
+	border: 0px none;
+	margin: 4px;
+	padding: 8px;
+	line-height: 14pt;
+}
+
+.roundcorners {
+	-webkit-border-radius:6px 6px 6px 6px;
+	-moz-border-radius:6px 6px 6px 6px;
+	border-radius:6px 6px 6px 6px;
+}
+
+div.reportheader, div.reportcontent, div.reportfooter, div.code {
+	text-align: center;
+	vertical-align: middle;
+	margin: 0px;
+	border: 0px none;
+	padding: 8px;
+	width: 98%;
+}
+
+div.code {
+	background-color: #D0D0D0;
+	color: black;
+	border: 1px solid none;
+	padding: 8px;
+	font-size: 8pt;
+	font-family: courier, sans-serif;	
+	-webkit-border-radius:6px 6px 6px 6px;
+	-moz-border-radius:6px 6px 6px 6px;
+	border-radius:6px 6px 6px 6px;
+}
+
+/* Report Header */
+DIV.report {
+	border: 0px none;
+	margin 0px;
+	padding: 4px;
+	background-color: transparent;
+	text-align: center;
+	vertical-align: middle;
+}
+
+DIV.letter-portrait {
+	width: 8.5in;
+}
+
+DIV.letter-landscape {
+	width: 11in;
+}
+
+
+DIV.reportheader {
+	text-align: left;
+	font-size: 110%;
+}
+
+DIV.reportheader H1 {
+	text-align: left;
+	vertical-align: top;
+	font-size: 175%;
+	font-weight: bold;
+}
+
+DIV.reportheader H2 {
+	text-align: left;
+	font-size: 125%;
+	font-weight: normal;
+	font-style: italic;
+}
+
+DIV.reportheader H3 {
+	text-align: left;
+	font-size: 115%;
+	font-weight: bold;
+}
+
+DIV.reportheader .ranges {
+	font-weight: bold;
+	font-size: 90%;
+}
+
+DIV.reportheader .columnleft {
+	vertical-align: top;
+	float: left;
+	width: 60%;
+	max-width: 60%;
+	min-width: 60%;
+}
+
+DIV.reportheader .columnright {
+	vertical-align: top;
+	float: right;
+	width:40%;
+	max-width:40%;
+	min-width:40%;
+}
+
+
+DIV.reportheader DIV.ranges {
+	vertical-align: top;
+	font-weight: normal;
+	font-size: 90%;
+	max-width: 2in;
+}
+
+DIV.reportheader DIV.ranges SPAN.label {
+	font-weight: bold;
+	text-align: right;
+	width: 25%;
+	min-width: 25%;
+	max-width: 25%;
+}
+
+
+/* Report Footer */
+
+DIV.reportfooter {
+	text-align: center;
+	font-size: 75%;
+	color: #d0d0d0;
+}
+
+DIV.reportfooter TABLE {
+	width: 100%;
+	border: 0px none #000000;
+	margin: 0px;
+	padding: 0px;
+}
+
+DIV.reportfooter A {
+	color: #B0B0B0;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+DIV.reportfooter A:hover {
+	color: #606060;
+	text-decoration: underline;
+}
+
+DIV.reportfooter TABLE TR TD:nth-child(1), 
+DIV.reportfooter TABLE TR TD:nth-child(3) {
+	width: 25%;
+}
+
+DIV.reportfooter TABLE TR TD {
+	text-align: center;
+}
+
+DIV.reportfooter TABLE TR.footercompany {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+DIV.reportfooter TABLE TR.footerrequest {
+	font-weight: bold;
+}
+
+DIV.reportfooter TABLE TR.footeridd {
+	font-size: 90%;	
+}
+
+
+
+/* Report Record's Table */
+
+TABLE.report {
+	background-color: transparent;
+	color: #000000;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+TABLE.report THEAD {
+	display: table-header-group;	
+}
+
+TABLE.report TFOOT {
+	display: table-footer-group;	
+}
+
+TABLE.report THEAD TH {
+	background-color: #D0D0D0;
+	font-weight: bold;
+	font-size: 110%;
+	line-height: 16pt;
+	border-right: 1px solid #404040;
+}
+
+TABLE.report TD {
+	border-right: 1px solid #D0D0D0;
+}
+
+TABLE.report TH, TABLE.report TD {
+	margin: 0px;
+	padding: 2px 6px 2px 6px;
+}
+
+TABLE.report TR TH:first-child, TABLE.report TR TD:first-child {
+	border-left: 1px solid #000000;
+}
+
+TABLE.report TR TH:last-child, TABLE.report TR TD:last-child {
+	border-right: 1px solid #000000;
+}
+
+TABLE.report TR:nth-child(2n+1) {
+	background-color: #EAEAEA;
+}
+
+TABLE.report TR:hover, TABLE.report TR:nth-child(2n+1):hover {
+	background-color: #DADA90;
+}
+
+TABLE.report TR TD:hover, TABLE.report TR:nth-child(2n+1) TD:hover {
+	background-color: #D0D040;
+}
+
+
+/* Table Header and Footer Styles */
+
+TABLE.report THEAD TR TH {
+	font-weight: bold; 
+}
+
+TABLE.report THEAD TR:first-child TH {
+	border-top: 1px solid #000000;
+}
+
+TABLE.report THEAD TR:last-child TH {
+	border-bottom: 1px solid #000000;
+}
+
+TABLE.report TFOOT TR:last-child TD {
+	border-top: 1px solid #000000; 
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #000000; 
+}
+
+TABLE.report TFOOT TR TD {
+	font-weight: bold;
+	height: .25in; 
+	background-color: #D0D0D0;
+}
+
+
+TABLE.report TBODY TR.groupheader TD {
+	font-weight: bold;
+	font-size: 110%;
+	text-align: left;
+	background-color: #D8D8D8;
+	height: .20in;
+}
+
+TABLE.report TBODY TR.groupfooter TD {
+	font-weight: bold;
+}
+
+
+/* Text Style Classes */
+
+TABLE.report .left {
+	text-align: left;
+}
+
+TABLE.report .right {
+	text-align: right;
+}
+
+TABLE.report .center {
+	text-align: center;
+}
+
+TABLE.report .bold {
+	font-weight: bold;
+}
+
+TABLE.report .italic {
+	font-style: italic;
+}
+
+TABLE.report .underline {
+	text-decoration: underline;
+}
+
+TABLE.report .linethrough {
+	text-decoration: line-through;
+}
+
+
+
+/* Column Width Classes */
+
+TABLE.report .span0 {
+	width: 0.10in;
+}
+
+TABLE.report .span1 {
+	width: 0.20in;
+}
+
+TABLE.report .span2 {
+	width: 0.40in;
+}
+
+TABLE.report .span3 {
+	width: 0.50in;
+}
+
+TABLE.report .span4 {
+	width: 0.90in;
+}
+
+TABLE.report .span5 {
+	width: 1.25in;
+}
+

@@ -1,0 +1,75 @@
+/**
+ * http://github.com/valums/file-uploader
+ * 
+ * Multiple file upload component with progress-bar, drag-and-drop. 
+ * © 2010 Andrew Valums ( andrew(at)valums.com ) 
+ * 
+ * Licensed under GNU GPL 2 or later and GNU LGPL 2 or later, see license.txt.
+ */    
+
+.qq-uploader { position:relative; width: 100%;}
+
+.qq-upload-button {
+/*    display:block;*/ /* or inline-block */
+/*    width: 105px; padding: 7px 0; text-align:center;  */  
+/*    background:#880000; border-bottom:1px solid #ddd;color:#fff;*/
+}
+.qq-upload-button-hover {background:#cc0000;}
+.qq-upload-button-focus {outline:1px dotted black;}
+
+.qq-upload-drop-area {
+    position:absolute; 
+	top:0; 
+	left:0; 
+	width:100%; 
+	height:50px; 
+	min-height: 50px; 
+	z-index:2;
+    background: #006dcc; 
+	text-align:center;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+
+.qq-upload-drop-area span {
+    display:block; 
+	position:absolute; 
+	top: 25%; 
+	width:100%; 
+	margin-top: 0px;
+	height: 40px;
+	min-height: 40px;
+	font-size:16px;
+	font-style: italic;
+	font-weight: bold;
+	font-family: helvetica, arial, sans-serif;
+	color: white;
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+}
+
+.qq-upload-drop-area-active {background:#007edd;}
+
+.qq-upload-list {margin:15px 35px; padding:0; list-style:disc;}
+.qq-upload-list li { margin:0; padding:0; line-height:15px; font-size:12px;}
+.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+    margin-right: 7px;
+}
+
+.qq-upload-file {}
+.qq-upload-spinner {display:inline-block; background: url("/img/uploading.gif"); width:15px; height:15px; vertical-align:text-bottom;}
+.qq-upload-size,.qq-upload-cancel {font-size:11px;}
+
+.qq-upload-failed-text {display:none;}
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
+
+
+
+/**
+ * Modification by Suman (srs81 @ GitHub)
+ */
+#AjaxMultiUpload { 
+    margin-left: 10em;
+    margin-top: -2em;
+    vertical-align: top;
+}

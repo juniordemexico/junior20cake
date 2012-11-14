@@ -1,0 +1,320 @@
+/*############################## GLOBAL ###############################*/	
+html,body {
+	background:#fff;
+	margin:0;
+	padding:0;
+}
+body {
+	font: 76% arial,sans-serif;
+}
+label {
+	color: #fcfcfc;
+	display:block;
+	float:left;
+	font-weight:bold;
+	width:100px;
+}
+p {
+	color:#fcfcfc;
+	margin:0 10px 10px;
+}
+a {
+	color: #C7D8F8;
+	padding:10px;
+}
+/*############################## HEADER ###############################*/	
+div#header {
+	background:url(../img/bg_wrapper.gif) repeat-x;
+}
+div#header h1 {
+	height:120px;
+	line-height:80px;
+	margin:0;
+	padding-left:10px;
+	color: #79B30B;
+}
+div#header h1 a {
+	color: #fff;
+	text-decoration: none;
+	font-size:1.5em;
+}
+/*############################## CONTENT ###############################*/	
+div#content {
+	margin: 10px 1% 10px 1%;
+}
+div#content h1 {
+	color: #fff;
+	font-size: 1.3em;
+	margin-top: 5px;
+	padding: 4px;
+}
+div#content p {
+	line-height:1.4;
+	padding: 3px;
+}
+div#content ul {
+	margin: 0;
+	padding: 0;
+}
+div#content ul.add li {
+	height: 25px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+div#content ul.add li a {
+	background: url(../img/icon_add.gif) no-repeat 0px 7px; 
+	color: #fcfcfc;
+	text-decoration: none;
+	padding-left: 19px;
+}
+/*############################## NAVBAR ###############################*/	
+div#navbar {
+	float:left;
+	margin: 0 1% 0 0;
+}
+div#navbar {
+	background:transparent url(../img/bg_nav_off.gif) repeat-x scroll 0% 50%
+	clear:left;
+	height:35px;
+	padding:0pt 0pt 0pt 16px;
+}
+div#navbar ul {
+	clear: left;
+	list-style-type: none;
+	margin: 0pt;
+	padding: 0pt;
+	text-align: center;
+	width: 100%;
+}
+div#navbar ul li {
+	background:transparent url(../img/bg_nav_off.gif) repeat-x;
+	float: left;
+	vertical-align: middle;
+	width: 137px;
+}
+div#navbar ul li a {
+	color: #fff;
+	display: block;
+	letter-spacing: 1px;
+	text-decoration: none;
+}
+div#navbar ul li a:hover {
+	background:transparent url(../img/bg_nav_hov.gif) repeat-x;
+	color:#fff;
+}
+div#navbar ul li a.on {
+	background:transparent url(../img/bg_nav_on.gif) repeat-x;
+}
+div#navbar a {
+	color: #981793;
+	padding:10px;
+}
+/*############################## SIDNAV ###############################*/	
+div#sidenav {
+	background:#B9CAFF;
+	float:left;
+	width:32.9%;
+}
+div#sidenav li {
+	list-style-type: none;
+}
+div#sidenav a {
+	color: #7f521d;
+	display: block;
+	text-decoration: none;
+}
+/*############################## EXTRA ###############################*/	
+div#extra {
+	background:#7f521d;
+	float:left;
+	clear:left;
+	width:32.9%;
+}
+div#extra p {
+	color: #3dd4ff;
+	padding: 3px;
+}
+/*############################## FOOTER ###############################*/	
+div#footer {
+	background:#243656;
+	clear:left;
+	color: #fff;
+	float: left;
+	height: 80px;
+	width:100%;
+}
+div#footer li {
+	float: left;
+	list-style-type: none;
+	margin: 5px 0 0 13px;
+	padding: 2px;
+}
+div#footer p {
+	margin:0;
+	padding:5px 10px;
+}
+/*############################## WRAPPER ###############################*/	
+div#wrapper {
+	background:#6495ed;
+	float:right;
+	width:100%;
+}
+/*############################## DATAGRID ###############################*/	
+div#gridWrapper {
+	border: 1px solid #405F97;
+	margin-right:10px;
+	overflow: scroll;
+	width: auto;
+}
+table#datagrid {
+	background: #D5E2FA;
+	border-collapse: collapse;
+	width: 100%;
+}
+table#datagrid thead {
+	margin: 0;
+	padding: 0;
+}
+table#datagrid th {
+	color: #C7D8F8;
+	background: #1B2941;
+	height: 40px;
+	padding: 3px;
+}
+table#datagrid td {
+	height: 30px;
+	padding: 3px;
+	white-space:nowrap;
+}
+table#datagrid a {
+	color: #fff;
+	text-decoration: none;
+	display: inline;
+}
+th.amount,th.charge,th.cost,th.disbursement,th.dollar,th.dollar_amount,th.expense,th.height,th.loss,th.number,th.price,th.payment,th.price_tag,th.total,th.totals,th.tolls,th.width {
+	text-align:right;
+	padding-right: 2px;
+}
+td.amount,td.charge,td.cost,td.disbursement,td.dollar,td.dollar_amount,td.expense,td.height,td.loss,td.number,td.price,td.payment,td.price_tag,td.total,td.totals,td.tolls,td.width {
+	text-align:right;
+	padding-right: 2px;
+}
+th.actions,td.actions {
+	text-align:center;
+}
+td.actions a {
+	color: #1B2941 !important;
+}
+div.paging {
+	color: #1B2941;
+	display: block;
+	margin-top:15px;
+	white-space: none;
+}
+div.paging a {
+	color: #1B2941;
+}
+div.paging ul li{
+	display:inline;
+}
+div.paging div.disabled {
+	display:inline;
+}
+p.counter {
+	margin: 10px 0 10px 0;
+}
+/*############################## FORM ###############################*/	
+div.input {
+	clear:both;
+	padding: 5px 0;
+}
+div.input.checkbox {
+	padding-left:95px;
+	white-space:nowrap;
+}
+div.input.checkbox input {
+	float:left;
+}
+label.readonly {
+	color:#fcfcfc;
+}
+.label.readonly em {
+	color: #1B2941;
+}
+div.label {
+	display:block;
+	clear:both;
+	padding: 5px 0;
+}
+div.readonly {
+	color:#888;
+}
+div.submit {
+	margin-top: 10px;
+}
+div.select > div.x-form-field-wrap {
+	margin-left:100px;
+}
+/*############################## MESSAGES ###############################*/	
+div.message {
+	clear: both;
+	color: #900;
+	font-size: 140%;
+	font-weight: bold;
+	margin: 1em 0;
+}
+div.error-message {
+	clear: both;
+	color: #900;
+	font-weight: bold;
+	padding: 5px;
+}
+p.error {
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+.notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+.success {
+	background: green;
+	color: #fff;
+}
+/*############################## DEVELOPMENT ###############################*/	
+.cake-sql-log {
+	clear:both;
+}
+#cakeControllerDump {
+	clear:both;
+}
+/*############################## ACTIONS ###############################*/	
+div.additional.actions ul {
+	background: #ccc;
+	margin-right:20px !important;
+	padding:0 0 10px 10px !important;
+}
+div.additional.actions ul li {
+	list-style-type:none;
+	padding:3px;
+}
+div.additional.actions ul li a {
+	color:#1B2941 !important;
+}

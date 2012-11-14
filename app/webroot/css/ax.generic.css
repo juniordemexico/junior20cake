@@ -1,0 +1,666 @@
+
+body {
+	font-family: 'helvetica neue', helvetica, arial, sans-serif;
+	background-color: #aaaaaa;
+}
+
+input[type=radio] {
+	margin-left: 16px;
+	margin-right: 4px;
+}
+
+input: focus {
+	
+}
+
+#header {
+	top: 0px;
+	width: 100%;
+	height: 50px;
+	min-height: 50px;
+	max-height: 50px;
+	z-index: 1;
+	background-color: transparent;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	border: 0px none;
+	padding: 0px;
+	opacity: 0.7;
+}
+
+#wrapper {
+/*	padding-top:20px;*/
+	background: transparent;
+	width: 100%;
+}
+
+#content {
+	width: 100%;
+	background: transparent;
+}
+
+
+.ui-tabs {
+	background-color: #e0e0e0;
+}
+
+/* IDD Added Styles */
+#busy-indicator-div { float:right; width: 72px; height:20px; padding: 0px; margin-top: 8px; border: 0px;}
+#busy-indicator { display:none; width: 72px; height:20px; padding: 0px; margin: 0px; border: 0px; top: 0px; }
+
+
+/* Master-Detail Tables */
+
+.gridWrapper {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid;
+}
+
+#datagrid {
+	width: 99.99%;
+	font-size: 90%;
+	margin-bottom: -16px;
+/*
+	-webkit-border-radius: 6px 6px 6px 6px;
+	-moz-border-radius: 6px 6px 6px 6px;
+	border-radius: 6px 6px 6px 6px;
+*/
+}
+
+#datagrid tr {
+/*	background-color: #f0f0f0;*/
+/*	padding: 0px;*/
+/*	border: none;*/
+}
+
+#datagrid thead tr {
+	vertical-align: middle;
+	background-color: #a0a0a0;
+}
+
+#datagrid thead th {
+/*	padding: 4px 4px 4px 4px;*/
+/*	border: 2px solid #2010A0;*/
+	font-size: 125%;
+	vertical-align: middle;
+}
+
+#datagrid thead tr.tablefilter th {
+/*	text-align: left;*/
+	padding: 4px;
+	vertical-align: middle;
+/*	border: 2px solid #2010A0;*/
+/*	font-size: 10pt;*/
+}
+
+
+#datagrid thead th input[type=search] {
+	padding: 1px 2px 1px 2px; 
+/*	border: 1px solid #000000;*/
+	width: 80%;
+}
+
+
+#datagrid tbody tr {
+	background-color: #e0e0e0;
+}
+
+#datagrid tbody tr:nth-child(2n) {
+	background-color: #cacaca;
+}
+
+#datagrid tbody tr:hover {
+	background-color: #F0E075;
+	font-weight: bold;
+}
+
+#datagrid tbody td {
+	background-color: transparent;
+	padding: 2px 4px 2px 4px;
+/*
+	padding: 2px 4px 2px 4px;
+	border: none;
+	background-color: transparent;
+*/
+}
+
+#datagrid tbody td:hover {
+	font-weight: bold;
+}
+
+DIV#debug {
+	position: relative;
+	margin-top: 64px;
+}
+
+DIV#footer {
+	margin-top: 32px;
+}
+
+.cake-sql-log {
+	margin: 2px;
+	padding: 16px;
+	position: relative;
+	background-color: #505070;
+	color: #d0d0e0;
+	opacity: .50;
+	width: 100%;
+}
+
+
+DIV.related-records {
+	padding: 8px;
+	height: 240px;
+	max-height: 240px;
+	width: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin: 10px;
+}
+
+#related-records-container {
+	vertical-align: top;
+}
+
+DIV.related-records LI {
+	font-size: 85%; 
+ 	line-height: 110%;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+/*
+.itemrecorddata {
+	font-weight: normal;
+	font-style: italic;
+}
+.itemrecorddata label {
+	font-weight: bold;
+	font-style: plain;
+}
+*/
+
+/*
+input[type=text] {
+	border:1px solid #ccc;
+	-webkit-box-shadow: 1px 1px 2px #303030;
+	-moz-box-shadow: 1px 1px 2px #303030;
+	box-shadow: 1px 1px 2px #303030;
+	color: #000000;
+	background-color: #FFFFFF;
+	padding: 2px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 100%;
+	-webkit-border-radius:3px 0 0 3px;
+	-moz-border-radius:3px 0 0 3px;
+	border-radius:3px 0 0 3px;
+}
+*/
+/*
+textarea {
+	font-size: 100%;
+	padding: 2px;
+	font-family: helvetica, arial, sans-serif;
+}
+
+label {
+	color: #2010A0;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+}
+*/
+
+input[type=search]:focus,input[type=text]:focus,select:focus,textarea:focus {
+	background-color: #FAEA90;
+	font-weight: bold;
+	color: #000000;
+}
+
+/*
+select {
+	font-size: 100%;
+	font-family: helvetica, arial, sans-serif;
+}
+
+select:focus {
+	font-size: 100%;
+}
+*/
+/* begin: Transaction Monitors styles */
+#monitorWrapper {
+	width: 100%;
+	background-color: yellow;
+}
+
+#monitorgrid {
+	background-color: red;
+	border: 2px solid #2010A0;
+	padding: 0px;
+	margin: 0px;
+	font-size: 80%;
+	width: 100%;
+}
+
+#monitorgrid tr {
+	background-color: #303030;
+	padding: 0px;
+	border: none;
+	color: #e0e0e0;
+}
+
+#monitorgrid th {
+	padding: 2px 4px 2px 4px;
+/*	border:1px solid #303030;*/
+/*	text-align: left;*/
+/*	border: none; */
+	font-size: 120%;
+	color: #f9f9f9;
+}
+
+/*
+#monitorgrid tbody tr {
+	background-color: #606060;
+}
+*/
+/*
+#monitorgrid tbody tr:nth-child(2n) {
+	background-color: #505050;
+}
+*/
+
+
+#monitorgrid tbody td:hover {
+/*	background-color: transparent;*/
+	font-weight: bold;
+1}
+/* end: Transaction Monitors styles */
+
+
+
+/* jQuery Tabs Styles */
+
+.ui-tabs-nav {
+/*	background: #bababa;
+	color: #2010A0;
+	padding: 0px;
+	margin: 0px;
+*/
+}
+
+
+/*
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+}
+
+.ui-tabs-nav li {
+	font-style: italic;
+}
+
+.ui-tabs-nav li a:link {
+	font-style: italic;
+	cursor: pointer;
+}
+
+.ui-tabs-nav .ui-tabs-selected {
+	font-style: normal;
+	font-weight: bold;
+	text-decoration: underline;	
+
+}
+*/
+/*
+.ui-tabs .ui-tabs-panel {
+	border: 2px solid #2010A0;
+	padding: 2px;
+	min-height:500px;
+	max-height:500px;
+	overflow-y: auto;
+}
+*/
+/*
+#tabs {
+	padding: 0px;
+	margin: 0px;
+}
+*/
+/*
+div.actions {
+	font-size: 110%;
+}
+
+div.actions ul li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 16px;
+}
+*/
+/*
+div.auto_complete    {
+     position         :absolute;
+     width            :250px;
+     background-color :white;
+     border           :1px solid #888;
+     margin           :0px;
+     padding          :0px;
+} 
+li.selected    { background-color: #ffb; }
+*/
+/* IDD: Table's fields styles */
+.listButton {
+	width: 40px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.id {
+	width: 30px;
+	text-align: right;
+}
+
+.refer {
+	width: 50px;
+	font-weight: bold;
+	text-align: left;
+}
+
+.date {
+	width: 75px;
+	text-align: right;
+}
+
+.datetime {
+	width: 125px;
+	text-align: left;
+}
+
+.timestamp {
+	width: 100px;
+	text-align: left;
+}
+
+.cve {
+	width: 110px;
+	text-align: left;
+}
+
+.cveart {
+	width: 110px;
+	font-weight: bold;
+	text-align: left;
+}
+
+.cveven {
+	width: 40px;
+	text-align: left;
+}
+
+.cvepro {
+	width: 60px;
+	text-align: left;
+}
+
+.cvecli {
+	width: 60px;
+	text-align: left;
+}
+
+.tda {
+	width: 50px;
+	text-align: left;
+}
+
+.descrip {
+	text-align: left;
+}
+
+.locfor {
+	width: 30px;
+	text-align: left;
+}
+
+.tipo {
+	width: 40px;
+	text-align: left;
+}
+
+.email {
+	width: 100px;
+	text-align: left;
+}
+
+.tipoarticulo {
+	width: 70px;
+	text-align: left;
+}
+
+.tipocontacto {
+	width: 60px;
+	text-align: left;
+}
+
+.st {
+	width: 30px;
+	text-align: left;
+}
+
+.licve {
+	width: 60px;
+	text-align: left;
+}
+
+.macve {
+	width: 80px;
+	text-align: left;
+}
+
+.tecve {
+	width: 80px;
+	text-align: left;
+}
+
+.dicve {
+	text-align: left;
+	width: 40px;
+}
+
+.tcambio {
+	width: 50px;
+}
+
+.cant {
+	text-align: right;
+	width: 50px;
+}
+
+.precio {
+	text-align: right;
+	width: 60px;
+}
+
+.sum {
+	text-align: right;
+	width: 100px;
+}
+
+.subtotal {
+	text-align: right;
+	width: 100px;
+}
+
+.total {
+	text-align: right;
+	width: 100px;
+}
+
+.esedo {
+	width: 100px;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.papais {
+	width: 100px;
+}
+
+.atn {
+	width: 150px;
+}
+
+.submit {
+	height: 24px;
+}
+
+.ip {
+	width: 100px;
+}
+
+.sqltext {
+	max-width: 400px;
+	
+}
+
+.ui-autocomplete { 
+	font-size: 90%;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: normal;
+}	
+
+ul.ui-autocomplete {
+	box-shadow: 3px 3px 5px #202020;
+	-webkit-box-shadow: 3px 3px 5px #202020;
+	-moz-box-shadow: 3px 3px 5px #202020;
+}
+
+form.login {
+	width: 300px;
+	font-size: 11pt;
+	padding: 4px;
+	margin: 8px;
+	border: 1px solid #303030;
+	color: #2010A0;
+/*
+	box-shadow: 3px 3px 5px #202020;
+	-webkit-box-shadow: 3px 3px 5px #202020;
+	-moz-box-shadow: 3px 3px 5px #202020;
+*/
+}
+
+.emphatize {
+	font-weight: bold;
+}
+
+.tableactionicon {
+	width: 32px;
+	height: 32px;
+	border: 0px none;
+	margin: 0px;
+	padding: 0px;
+	cursor: pointer;
+}
+
+div.index {
+	width: 100%;
+	text-align: center;
+}
+
+
+.monitor-frame {
+	width: 100%;
+	height: 480px;
+	border: 0px none;
+}
+
+.index-form {
+	text-align: center;
+}
+
+#pagination-container {
+	text-align: center;
+	vertical-align: middle;
+	width: 99.5%;
+	margin-top: 2px;
+}
+
+#pagination-container p {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.shadow {
+	box-shadow: 3px 3px 5px #202020;
+	-webkit-box-shadow: 3px 3px 5px #202020;
+	-moz-box-shadow: 3px 3px 5px #202020;
+}
+
+.roundcorners {
+	-webkit-border-radius:6px 0 0 6px;
+	-moz-border-radius:6px 0 0 6px;
+	border-radius:6px 0 0 6px;
+}
+
+.bordered {
+	border: 1px solid black;
+}
+
+.bordered-hard {
+	border: 2px solid black;
+}
+
+.transparent-half {
+	opacity: 0.5;
+}
+
+.transparent-dark {
+	opacity: 0.33;
+}
+
+.transparent-dark {
+	opacity: 0.85;
+}
+
+.chat_window {
+	max-height: 240px;
+	height: 240px;
+	overflow-y: scroll;
+}
+
+DIV.multiple-input {
+	max-height: 240px;
+	overflow-y: scroll;
+}
+
+/* Column Width Classes */
+
+.col0 {
+	width: 25pt;
+	min-width: 25pt;
+}
+
+.col1 {
+	width: 35pt;
+	min-width: 35pt;
+}
+
+.col2 {
+	width: 50pt;
+	min-width: 50pt;
+}
+
+.col3 {
+	width: 75pt;
+	min-width: 75pt;
+}
+
+.col4 {
+	width: 100pt;
+	min-width: 100pt;
+}
+
+.col5 {
+	width: 150pt;
+	min-width: 150pt;
+}
+
