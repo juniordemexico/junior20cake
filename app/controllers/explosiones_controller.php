@@ -1,6 +1,5 @@
 <?php
 
-
 class ExplosionesController extends MasterDetailAppController {
 	var $name='Explosiones';
 
@@ -12,7 +11,6 @@ class ExplosionesController extends MasterDetailAppController {
 	
 	var $cacheAction = array('view'
 							);
-
 
 	function index() {
 		$this->layout='default';
@@ -27,14 +25,13 @@ class ExplosionesController extends MasterDetailAppController {
 												'Explosion.modified'),
 								'conditions' => array('Articulo.tipoarticulo_id'=>'0', 'Articulo.arst'=>'A'),
 								'joins' => array(
-										array(	'table'=>'(SELECT articulo_id, COALESCE(MAX(modified), MAX(created)) Modified FROM Explosiones GROUP BY articulo_id) ',
-												'alias'=>'Explosion',
-												'type'=> 'LEFT',
-												'conditions'=>array(
+										array(	'table' => '(SELECT articulo_id, COALESCE(MAX(modified), MAX(created)) Modified FROM Explosiones GROUP BY articulo_id) ',
+												'alias' => 'Explosion',
+												'type' => 'LEFT',
+												'conditions' => array(
 													'Explosion.articulo_id=Articulo.id'
 											)
 										),
-
 									)
 								);
 		$filter = $this->Filter->process($this);
@@ -59,7 +56,7 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));			
 		} 
-		
+
 		if (!empty($this->data)) {
 			if ($this->Explosion->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
@@ -78,6 +75,19 @@ class ExplosionesController extends MasterDetailAppController {
 			exit;
 		}
 		if ($this->Explosion->delete($id)) {
+			echo "OK";
+		}
+	}
+
+	function propio($id=null) {
+		$this->autoRender=false;
+		if (!$id) {
+			echo __('invalid_item', true);
+			exit;
+		}
+		$this->data=$this->Explosion->read(null, $id);
+		pr($this->data);
+		if ($this->Explosion->saveField('insumopropio', !$this->data['Explosion']['insumopropio']) ) {
 			echo "OK";
 		}
 	}

@@ -78,41 +78,35 @@ class Explosion extends AppModel
 
 	public function getAllItemsWithAllCosts($id) {
 		$items=$this->getAllItems($id);
-		$i=0;
+		$out=array();
 		foreach($items['tela'] as $item) {
-			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
-											"Articuloproveedor".costo,
-											"Proveedor".prcvepro, "Proveedor".prnom 
-											FROM articulos_proveedores "Articuloproveedor"
-											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
-											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
-										);
-			$items[$i++]['Costo']=$proveedor_costos[0];
+			$item['Costo']=$this->getItemAllCosts($item['Explosion']['material_id']);
+			$out['tela'][]=$item;
 		}
 
 		foreach($items['habilitacion'] as $item) {
-			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
-											"Articuloproveedor".costo,
-											"Proveedor".prcvepro, "Proveedor".prnom 
-											FROM articulos_proveedores "Articuloproveedor"
-											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
-											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
-										);
-			$items[$i++]['Costo']=$proveedor_costos[0];
+			$item['Costo']=$this->getItemAllCosts($item['Explosion']['material_id']);
+			$out['habilitacion'][]=$item;
 		}
 
 		foreach($items['servicio'] as $item) {
-			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
-											"Articuloproveedor".costo,
-											"Proveedor".prcvepro, "Proveedor".prnom 
-											FROM articulos_proveedores "Articuloproveedor"
-											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
-											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
-										);
-			$items[$i++]['Costo']=$proveedor_costos[0];
+			$item['Costo']=$this->getItemAllCosts($item['Explosion']['material_id']);
+			$out['servicio'][]=$item;
 		}
-
-		return ($items);
+		return ($out);
 	}
 
+	public function getItemAllCosts($id, $order='') {
+		$rs=$this->query('SELECT "Articuloproveedor".proveedor_id, 
+								"Articuloproveedor".costo,
+								"Proveedor".prcvepro, "Proveedor".prnom 
+								FROM articulos_proveedores "Articuloproveedor"
+								JOIN Proveedores "Proveedor" ON ("Proveedor".id="Articuloproveedor".proveedor_id)
+								WHERE "Articuloproveedor".articulo_id='.$id.
+								' ORDER BY "Articuloproveedor".costo ASC '
+								);	
+		return($rs);	
+	}
+	
+	
 }

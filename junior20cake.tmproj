@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/webroot/js/mocha/scripts/ax-desktop.js</string>
+	<string>app/models/explosion.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,89 +21,89 @@
 	<integer>263</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_model.php</key>
+		<key>app/controllers/costeos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>36</integer>
+				<integer>80</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>19</integer>
-		</dict>
-		<key>app/controllers/articulos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>3</integer>
-				<key>line</key>
-				<integer>196</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>173</integer>
+			<integer>46</integer>
 		</dict>
 		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>41</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>59</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>25</integer>
+			<integer>47</integer>
 		</dict>
-		<key>app/controllers/materiales_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>60</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/articulo.php</key>
+		<key>app/models/articulo_proveedor.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>60</integer>
+				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>131</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/models/explosion.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>62</integer>
+				<integer>87</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>37</integer>
+			<integer>70</integer>
+		</dict>
+		<key>app/views/costeos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>22</integer>
+				<key>line</key>
+				<integer>119</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>100</integer>
+		</dict>
+		<key>app/views/costeos/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>49</integer>
+				<key>line</key>
+				<integer>45</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>20</integer>
 		</dict>
 		<key>app/views/elements/articulos/form.ctp</key>
 		<dict>
@@ -135,125 +135,50 @@
 				<integer>21</integer>
 			</dict>
 		</dict>
-		<key>app/views/elements/menuoptions.ctp</key>
+		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>15</integer>
+				<integer>150</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/menuoptions_10.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>60</integer>
-				<key>line</key>
-				<integer>15</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/menuoptions_21.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>63</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>127</integer>
 		</dict>
 		<key>app/views/explosiones/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>48</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>144</integer>
+				<integer>29</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>110</integer>
-		</dict>
-		<key>app/views/helpers/t_b_s.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>58</integer>
-				<key>line</key>
-				<integer>58</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>49</integer>
-		</dict>
-		<key>app/views/proveedores/costoarticulo.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>11</integer>
-				<key>line</key>
-				<integer>34</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/webroot/js/mocha/scripts/ax-desktop.js</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>385</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>364</integer>
+			<integer>18</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/controllers/articulos_controller.php</string>
-		<string>app/controllers/materiales_controller.php</string>
-		<string>app/views/helpers/t_b_s.php</string>
 		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/views/elements/menuoptions_10.ctp</string>
-		<string>app/views/elements/menuoptions.ctp</string>
-		<string>app/webroot/js/mocha/scripts/ax-desktop.js</string>
-		<string>app/views/elements/menuoptions_21.ctp</string>
-		<string>app/views/explosiones/index.ctp</string>
-		<string>app/views/proveedores/costoarticulo.ctp</string>
-		<string>app/views/elements/articulos/form.ctp</string>
+		<string>app/views/costeos/edit.ctp</string>
+		<string>app/controllers/costeos_controller.php</string>
 		<string>app/models/explosion.php</string>
-		<string>app/models/articulo.php</string>
-		<string>app/app_model.php</string>
+		<string>app/models/articulo_proveedor.php</string>
+		<string>app/views/costeos/index.ctp</string>
+		<string>app/views/explosiones/index.ctp</string>
+		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/elements/articulos/form.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{20, 87}, {793, 783}}</string>
+	<string>{{20, 87}, {788, 783}}</string>
 </dict>
 </plist>

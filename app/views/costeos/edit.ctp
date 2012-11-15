@@ -36,16 +36,36 @@
 				<th class="span2">Tela</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Promedio</th>
+				<th class="span2">Costo</th>
 				<th class="span1">Inventario Propio</th>
 				<th class="span1">&nbsp</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($explosion['tela'] as $item): ?>
+			<?php foreach($items['tela'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span3">
+
+				<div class="btn-group span3">
+					<button class="btn btn-info" data-costo="">
+					<?php if(isset($item['Costo'][0]) ):?>
+					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
+					<?php endif;?>
+					</button>
+					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+					<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">					
+					<?php foreach($item['Costo'] as $costo): ?>
+					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
+					<?php endforeach;?>
+  					</ul>
+				</div>
+
+				</td>
 				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
 				<td class=""><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
 			</tr>
@@ -74,16 +94,36 @@
 				<th class="span2">Material</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
+				<th class="span2">Costo</th>
 				<th class="span1">Inventario Propio</th>
 				<th class="span1">&nbsp</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($explosion['habilitacion'] as $item): ?>
+			<?php foreach($items['habilitacion'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span3">
+
+				<div class="btn-group span3">
+					<button class="btn btn-info" data-costo="">
+					<?php if(isset($item['Costo'][0]) ):?>
+					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
+					<?php endif;?>
+					</button>
+					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+					<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">					
+					<?php foreach($item['Costo'] as $costo): ?>
+					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
+					<?php endforeach;?>
+  					</ul>
+				</div>
+
+				</td>
 				<td class=""><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
 				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
 			</tr>
@@ -112,16 +152,35 @@
 				<th class="cveart">Servicio</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
-				<th class="span1">&nbsp;</th>
+				<th class="span2">Costo</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($explosion['servicio'] as $item): ?>
+			<?php foreach($items['servicio'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="precio"><?php e($item['Explosion']['cant'])?></td>
+				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span3">
+
+				<div class="btn-group span3">
+					<button class="btn btn-info" data-costo="">
+					<?php if(isset($item['Costo'][0]) ):?>
+					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
+					<?php endif;?>
+					</button>
+					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+					<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">					
+					<?php foreach($item['Costo'] as $costo): ?>
+					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
+					<?php endforeach;?>
+  					</ul>
+				</div>
+
+				</td>
 				<td class="">&nbsp;</td>
 				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
 			</tr>

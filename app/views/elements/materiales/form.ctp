@@ -80,24 +80,6 @@
 </div> <!-- div tabs tabbable-->
 <?php
 echo $this->Js->submit('GUARDAR', array('class' => 'ui-button-primary', 'update' => '#content'));
-echo $this->Html->button('GUARDAR', array('class' => 'ui-button-primary', 'update' => '#content'));
 
 echo $this->Form->end(); 
-?>
-
-<?php
-
-/*
- $autocompleteUrl = Router::url(array('action'=>'autoComplete','field'=>'Articulo.arcveart'), true);
- echo $this->Html->scriptBlock("
-   $('#ArticulosEditForm').find('#ArticuloArcveart').autocomplete({
-    source: '".$autocompleteUrl."',
-    minLength:4,
-	search: function(event, ui) { },
-    select: function(event, ui) { }
-   });
-
-
- ", array('inline' => true));
-*/
 ?>
