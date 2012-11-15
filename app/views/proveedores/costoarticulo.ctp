@@ -3,9 +3,10 @@
 	<small><?php e($this->data['Proveedor']['prnom']);?></small>
 </h1>
 <hr />
-<br />
+</div>
 
 <div id="detailContent" class="row-fluid">
+
 	<div id="detailContentMaterial" class="span6">
 		<h4>Materiales relacionados:</h4><br />
 		<?php echo $this->Form->create('Proveedor', array('action'=>'/costoarticulo', 'class'=>'form-search')); ?>

@@ -3,7 +3,7 @@
 		<div class="container">
 			<ul class="nav navvar">
 				<li>
-<?php 
+<?php
 				echo $this->Js->link('Lista', array('controller' => $this->name, 'action' => 'index', 'page' => isset($returnpage)?$returnpage:1), array('update' => '#content','before' => $this->Js->get('#content')->effect('fadeOut', array('buffer' => false)).$this->Js->get('#toolbarForm')->effect('fadeOut', array('buffer' => false)),
 														'complete' => 
 $this->Js->get('#content')->effect('fadeIn', array('buffer' => false)).$this->Js->get('#toolbarList')->effect('fadeIn', array('buffer' => false))

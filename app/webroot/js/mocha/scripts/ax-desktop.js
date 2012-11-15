@@ -377,6 +377,29 @@ initializeWindows = function() {
 		});
 	}	
 
+	MUI.materialproveedorCostosWindow = function(){
+		new MUI.Window({
+			id: 'materialproveedorcostos',
+			title: 'Costos de Materiales por Proveedor',
+			loadMethod: 'iframe',
+			contentURL: '/Articulos/explosiones',
+			y: 80,
+			width: 1000,
+			height: 400,
+			resizeLimit:  {'x': [1000, 1280], 'y': [200, 1024]},
+			headerHeight: 26,
+			footerHeight: 20,
+			toolbar: false,
+		});
+	}	
+	if ($('articuloExplosionLinkCheck')) {
+		$('articuloExplosionLinkCheck').addEvent('click', function(e){
+		new Event(e).stop();
+			MUI.materialproveedorCostosWindow();
+		});
+	}	
+						<li><a id="articuloExplosionLinkCheck" href="/Articulos/explosiones">Explosion</a></li>
+
 
 	MUI.divisasWindow = function(){
 		new MUI.Window({

@@ -29,14 +29,6 @@ class ArticulosController extends MasterDetailAppController {
 		}
 	}
 
-/*
-	function beforeRender() {
-		if(isset($this->data['Articulo']['arcveart'])) {
-			$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
-		}
-	}
-*/
-	
 	function index() {
 		$this->paginate = array(
 								'update' => '#content',
@@ -164,6 +156,46 @@ class ArticulosController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('articulos', $this->paginate($filter));
 		$this->set('clickAction', 'edit');
+	}
+
+	function explosiones() {
+		$this->paginate = array(
+								'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGINATE_ROWS,
+								'order' => array('Articulo.arcveart' => 'asc'),
+								'fields' => array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
+												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
+												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve', '(SELECT MAX(modified) FROM explosiones as Explosion WHERE Explosion.articulo_id=Articulo.id) AS modified'),
+								'conditions' => array('Articulo.tipoarticulo_id'=>'0', 'Articulo.arst'=>'A'),
+								);
+		$filter = $this->Filter->process($this);
+		$this->set('articulos', $this->paginate($filter));
+		$this->set('clickAction', 'explosion');
+	}
+
+	function explosion($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action'=>'index'));
+		}
+//		$this->Articulo->recursive=1;
+		if (!empty($this->data)) {
+			if ($this->Articulo->save($this->data)) {
+//				$this->Axnotification->sendNotification(array('title'=>'Modificacion de producto',
+//				array('subject'=>'Modificacion Articulo: '.$this->Articulo->arcveart), 'Este es el contenido chido chdo' ) );
+				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Articulo->id.')', 'success');
+				$this->redirect(array('action' => 'index'));
+			} 
+			else {
+				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Articulo->read(null, $id);
+			$this->set('title_for_layout', 'Explosion de Materiales');
+		}
+
 	}
 
 		function existencias() {

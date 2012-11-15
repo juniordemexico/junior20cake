@@ -59,12 +59,12 @@ class Articulo extends AppModel
 		'ArticuloProveedor',
 		'Pedidodet',
 		'Facturadet',
-/*
 		'Explosion'=>array(
 			'className'=>'Explosion',
 			'foreignKey'=>'articulo_id',
-			'dependent'=>true,
+//			'dependent'=>true,
 			),
+/*
 		'ExplosionMaterial'=>array(
 			'className'=>'Explosion',
 			'foreignKey'=>'material_id',
