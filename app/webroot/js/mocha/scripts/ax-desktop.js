@@ -377,12 +377,12 @@ initializeWindows = function() {
 		});
 	}	
 
-	MUI.materialproveedorCostosWindow = function(){
+	MUI.articuloExplosionWindow = function(){
 		new MUI.Window({
-			id: 'materialproveedorcostos',
-			title: 'Costos de Materiales por Proveedor',
+			id: 'explosion',
+			title: 'Explosion de Materiales',
 			loadMethod: 'iframe',
-			contentURL: '/Articulos/explosiones',
+			contentURL: '/Explosiones',
 			y: 80,
 			width: 1000,
 			height: 400,
@@ -395,11 +395,31 @@ initializeWindows = function() {
 	if ($('articuloExplosionLinkCheck')) {
 		$('articuloExplosionLinkCheck').addEvent('click', function(e){
 		new Event(e).stop();
-			MUI.materialproveedorCostosWindow();
+			MUI.articuloExplosionWindow();
 		});
 	}	
-						<li><a id="articuloExplosionLinkCheck" href="/Articulos/explosiones">Explosion</a></li>
 
+	MUI.articuloCosteosWindow = function(){
+		new MUI.Window({
+			id: 'costeoexplosion',
+			title: 'Costeo de Productos',
+			loadMethod: 'iframe',
+			contentURL: '/Costeos',
+			y: 80,
+			width: 1000,
+			height: 400,
+			resizeLimit:  {'x': [1000, 1280], 'y': [200, 1024]},
+			headerHeight: 26,
+			footerHeight: 20,
+			toolbar: false,
+		});
+	}	
+	if ($('articuloCosteosLinkCheck')) {
+		$('articuloCosteosLinkCheck').addEvent('click', function(e){
+		new Event(e).stop();
+			MUI.articuloCosteosWindow();
+		});
+	}	
 
 	MUI.divisasWindow = function(){
 		new MUI.Window({

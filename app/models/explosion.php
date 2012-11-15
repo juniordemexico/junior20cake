@@ -51,25 +51,68 @@ class Explosion extends AppModel
 			)
 	);
 
-	public function getAllItems() {
+	public function getAllItems($id) {
 		$this->recursive=0;
 
 		$out=array();
 		// Telas
-		$rs=$this->find('all', array( 'conditions'=>array('Explosion.tipoarticulo_id=1', 
+		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
+															'Explosion.tipoarticulo_id=1', 
 															'Material.linea_id = 2102') ) );
 		$out['tela']=$rs;
 		
 		// Habilitacion
-		$rs=$this->find('all', array( 'conditions'=>array('Explosion.tipoarticulo_id=1',
+		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
+															'Explosion.tipoarticulo_id=1',
 															'Material.linea_id <> 2102') ) );
 		$out['habilitacion']=$rs;
 		
 		// Servicios
-		$rs=$this->find('all', array( 'conditions'=>array('Explosion.tipoarticulo_id=2'), 
+		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
+															'Explosion.tipoarticulo_id=2'), 
 											'order'=> 'Material.linea_id, Explosion.id' ) );
 		$out['servicio']=$rs;
 
 		return($out);
 	}
+
+	public function getAllItemsWithAllCosts($id) {
+		$items=$this->getAllItems($id);
+		$i=0;
+		foreach($items['tela'] as $item) {
+			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
+											"Articuloproveedor".costo,
+											"Proveedor".prcvepro, "Proveedor".prnom 
+											FROM articulos_proveedores "Articuloproveedor"
+											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
+											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
+										);
+			$items[$i++]['Costo']=$proveedor_costos[0];
+		}
+
+		foreach($items['habilitacion'] as $item) {
+			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
+											"Articuloproveedor".costo,
+											"Proveedor".prcvepro, "Proveedor".prnom 
+											FROM articulos_proveedores "Articuloproveedor"
+											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
+											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
+										);
+			$items[$i++]['Costo']=$proveedor_costos[0];
+		}
+
+		foreach($items['servicio'] as $item) {
+			$proveedor_costos=$this->query('SELECT "Articuloproveedor".proveedor_id, 
+											"Articuloproveedor".costo,
+											"Proveedor".prcvepro, "Proveedor".prnom 
+											FROM articulos_proveedores "Articuloproveedor"
+											JOIN proveedores "Proveedor" on "Proveedor".id="Articuloproveedor".proveedor_id
+											WHERE "Articuloproveedor".articulo_id='.$item['Explosion']['material_id']
+										);
+			$items[$i++]['Costo']=$proveedor_costos[0];
+		}
+
+		return ($items);
+	}
+
 }

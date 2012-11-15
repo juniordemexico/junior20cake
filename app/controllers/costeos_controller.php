@@ -1,11 +1,11 @@
 <?php
 
 
-class ExplosionesController extends MasterDetailAppController {
-	var $name='Explosiones';
+class CosteosController extends MasterDetailAppController {
+	var $name='Costeos';
 
 	var $uses = array(
-		'Articulo', 'Explosion', 'Color', 'Linea', 'Marca', 'Temporada'
+		'Articulo', 'Explosion', 'ArticuloProveedor', 'Linea', 'Marca', 'Temporada'
 	);
 
 	var $layout = 'ajaxclean';
@@ -29,7 +29,7 @@ class ExplosionesController extends MasterDetailAppController {
 								'joins' => array(
 										array(	'table'=>'(SELECT articulo_id, COALESCE(MAX(modified), MAX(created)) Modified FROM Explosiones GROUP BY articulo_id) ',
 												'alias'=>'Explosion',
-												'type'=> 'LEFT',
+												'type'=> 'inner',
 												'conditions'=>array(
 													'Explosion.articulo_id=Articulo.id'
 											)
@@ -47,11 +47,10 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-//		$this->data=$this->Explosion->findByArticuloId($id);
-		
+//		$this->data=$this->Costeo->findByArticuloId($id);
 		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('explosion', $this->Explosion->getAllItems($id) );
-		$this->set('title_for_layout', 'Explosion::'.$this->data['Articulo']['arcveart'] );
+		$this->set('items', $this->Explosion->getAllItemsWithAllCosts($id) );
+		$this->set('title_for_layout', 'Costeo::'.$this->data['Articulo']['arcveart'] );
 	}
 
 	function add($id=null) {
@@ -61,7 +60,7 @@ class ExplosionesController extends MasterDetailAppController {
 		} 
 		
 		if (!empty($this->data)) {
-			if ($this->Explosion->save($this->data)) {
+			if ($this->Costeo->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -77,7 +76,7 @@ class ExplosionesController extends MasterDetailAppController {
 			echo __('invalid_item', true);
 			exit;
 		}
-		if ($this->Explosion->delete($id)) {
+		if ($this->Costeo->delete($id)) {
 			echo "OK";
 		}
 	}
