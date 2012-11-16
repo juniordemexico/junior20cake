@@ -132,8 +132,7 @@
 				<th class="cveart">Servicio</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
-				<th class="span1">&nbsp;</th>
-				<th class="span1">&nbsp;</th>
+				<th class="span1">Costo</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -141,8 +140,7 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="precio"><?php e($item['Explosion']['cant'])?></td>
-				<td class="">&nbsp;</td>
+				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
@@ -189,10 +187,12 @@ function(result) {
 			type: 'post', 
 			url: $(me).data('url')+'/'+$(me).data('id'),
 			success: function (data, textStatus) {
-			if(data=='OK') 
+			if(data=='OK') {
 				self.parent.parent.remove();
-			else 
+			}
+			else { 
 				bootbox.alert( data + ' ('+textStatus+')' );
+			}
 			},
 		});
     }

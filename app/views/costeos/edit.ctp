@@ -36,7 +36,7 @@
 				<th class="span2">Tela</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Promedio</th>
-				<th class="span2">Costo</th>
+				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
 				<th class="span1">&nbsp</th>
 			</tr>
@@ -44,9 +44,9 @@
 			<tbody>
 			<?php foreach($items['tela'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
+				<td class="span2" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span2"><?php e($item['Explosion']['cant'])?></td>
 				<td class="span3">
 
 				<div class="btn-group span3">
@@ -66,8 +66,8 @@
 				</div>
 
 				</td>
-				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class="span1"><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -91,12 +91,12 @@
 		<table class="table table-condensed">
 			<thead>
 			<tr>
-				<th class="span2">Material</th>
+				<th class="cveart">Material</th>
 				<th class="">Descripcion</th>
-				<th class="span2">Cantidad</th>
-				<th class="span2">Costo</th>
+				<th class="span1">Cantidad</th>
+				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
-				<th class="span1">&nbsp</th>
+				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -104,7 +104,7 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
 				<td class="span3">
 
 				<div class="btn-group span3">
@@ -124,8 +124,8 @@
 				</div>
 
 				</td>
-				<td class=""><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -152,7 +152,7 @@
 				<th class="cveart">Servicio</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
-				<th class="span2">Costo</th>
+				<th class="span3">Costo</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -161,7 +161,7 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="span2"><?php e($item['Explosion']['cant'])?></td>
 				<td class="span3">
 
 				<div class="btn-group span3">
@@ -181,8 +181,7 @@
 				</div>
 
 				</td>
-				<td class="">&nbsp;</td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
