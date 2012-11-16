@@ -47,7 +47,17 @@
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
+				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									data-type="clickaction"
+									data-url="/Explosiones/delete" 
+									data-id="<?php e($item['Explosion']['id']); ?>" 
+									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="label" 
+									data-confirm-msg="Seguro de Eliminar el Item?"
+									data-icon="trash">
+									<i class="icon icon-trash"></i>
+							</button>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -85,7 +95,17 @@
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									data-type="clickaction"
+									data-url="/Explosiones/delete" 
+									data-id="<?php e($item['Explosion']['id']); ?>" 
+									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="label" 
+									data-confirm-msg="Seguro de Eliminar el Item?"
+									data-icon="trash">
+									<i class="icon icon-trash"></i>
+							</button>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -123,7 +143,17 @@
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class="precio"><?php e($item['Explosion']['cant'])?></td>
 				<td class="">&nbsp;</td>
-				<td class=""><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									data-type="clickaction"
+									data-url="/Explosiones/delete" 
+									data-id="<?php e($item['Explosion']['id']); ?>" 
+									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="label" 
+									data-confirm-msg="Seguro de Eliminar el Item?"
+									data-icon="trash">
+									<i class="icon icon-trash"></i>
+							</button>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -141,22 +171,30 @@
 <?php
 $this->Js->get('.detailDelete')->event(
 'click', "
-var theID=this.parentElement.parentElement.id;
-bootbox.confirm('Seguro de ELIMINAR la partida ' + $('#'+theID).data('cve') + ' de la explosion ?', 
+var self=this;
+var me=$(this);
+
+if ($(me).data('confirm')=='label') {
+	message=$(me).data('confirm-msg') + '<br/><strong>' + $(me).data('label') + '</strong>';
+}
+else {
+	message=$(me).data('confirm-msg');
+}
+
+bootbox.confirm( message, 
 function(result) {
-    if (result) {
+	if (result) {
 		$.ajax({
 			dataType: 'html', 
 			type: 'post', 
-			url: '/Explosiones/delete/'+theID,
+			url: $(me).data('url')+'/'+$(me).data('id'),
 			success: function (data, textStatus) {
 			if(data=='OK') 
-				$( '#'+theID ).remove();
+				self.parent.parent.remove();
 			else 
 				bootbox.alert( data + ' ('+textStatus+')' );
 			},
 		});
-
     }
 }
 );

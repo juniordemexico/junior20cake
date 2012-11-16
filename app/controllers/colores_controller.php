@@ -105,7 +105,7 @@ class ColoresController extends MasterDetailAppController {
 		if (empty($this->data)) {
 			$this->data = $this->Color->read(null, $id);
 		}
-		pr($this->data);
+//		pr($this->data);
 	}
 
 	function indexlistform() {
