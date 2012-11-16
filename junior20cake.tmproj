@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/explosiones/edit.ctp</string>
+	<string>app/views/costeos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -49,6 +49,20 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>app/views/costeos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>48</integer>
+				<key>line</key>
+				<integer>52</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>35</integer>
+		</dict>
 		<key>app/views/elements/materiales/form.ctp</key>
 		<dict>
 			<key>caret</key>
@@ -61,21 +75,21 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>38</integer>
 		</dict>
 		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>8</integer>
 				<key>line</key>
-				<integer>174</integer>
+				<integer>144</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>164</integer>
+			<integer>78</integer>
 		</dict>
 		<key>app/views/helpers/t_b_s.php</key>
 		<dict>
@@ -114,6 +128,7 @@
 		<string>app/views/elements/materiales/form.ctp</string>
 		<string>app/views/helpers/t_b_s.php</string>
 		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/costeos/edit.ctp</string>
 		<string>app/controllers/colores_controller.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
