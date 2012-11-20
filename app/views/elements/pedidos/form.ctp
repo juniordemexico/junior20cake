@@ -83,7 +83,7 @@
 </div>
 <?php
 if ($mode == 'view') {
-echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
+echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'type'=>'button', 'update' => '#content'));
 }
 echo $this->Form->end(); 
 ?>

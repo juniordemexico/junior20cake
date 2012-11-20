@@ -10,6 +10,6 @@
 </div>
 
 <?php
-echo $this->Js->submit('GUARDAR', array('class' => 'ui-button-primary', 'update' => '#content'));
+echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'type'=>'button', 'update' => '#content'));
 echo $this->Form->end(); 
 ?>

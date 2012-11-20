@@ -8,6 +8,6 @@
 <?php echo $this->Form->input('Divisa.ditcambio', array('type' => 'textarea', 'default' => '1.00', 'maxLength' => '7')); ?>
 
 <?php
-echo $this->Js->submit('GUARDAR', array('class' => 'ui-button-primary', 'update' => '#content'));
+echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'type'=>'button', 'update' => '#content'));
 echo $this->Form->end(); 
 ?>
