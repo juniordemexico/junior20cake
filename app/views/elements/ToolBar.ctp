@@ -5,17 +5,17 @@
 			<ul class="nav navvar">
 				<li>
 <?php 
-				echo $this->Html->link('<i class="icon icon-refresh icon-white"></i> Refrescar', array(), array('update' => '#content', 'escape'=>false
+				echo $this->Html->link('<i class="icon icon-refresh"></i> Refrescar', array(), array('update' => '#content', 'escape'=>false
 				)); 
 ?>
 				</li>
 				<li class="divider-vertical"></li>
 				<li>
-					<?php echo $this->Html->link('<i class="icon icon-list icon-white"></i>  Lista', array('action' => (isset($listAction)?$listAction:'index')), array('escape'=>false)); ?>
+					<?php echo $this->Html->link('<i class="icon icon-list"></i>  Lista', array('action' => (isset($listAction)?$listAction:'index')), array('escape'=>false)); ?>
 				</li>
 				<li class="divider-vertical"></li>
 				<li>
-					<?php echo $this->Html->link('<i class="icon icon-plus-sign icon-white"></i>  Agregar', array('action' => 'add'), array('escape'=>false)); ?>
+					<?php echo $this->Html->link('<i class="icon icon-plus-sign"></i>  Agregar', array('action' => 'add'), array('escape'=>false)); ?>
 				</li>
 				<li class="divider-vertical"></li>
 				<?php if($this->action=='edit'): ?>
@@ -62,8 +62,8 @@
 ?>
 <li class="pull-right">
 <span id="busy-indicator-div" class="pull-right">
-			<?php echo $this->Html->image('loading.gif', array('id' => 'busy-indicator', 'alt' => 'Espere')); ?>
-		</span>
+			<?php echo $this->Html->image('loading-ajax-transparent.gif', array('id' => 'busy-indicator', 'alt' => 'Transmitiendo', 'style'=>'display: none;')); ?>
+</span>
 				</li>
 			</ul>
 		</div>
