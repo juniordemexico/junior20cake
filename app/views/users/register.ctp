@@ -29,7 +29,7 @@ echo $this->TBS->input('st', array('type'=>'radiogroup', 'label'=>'Estatus',
 							'selectOptions'=>array('A'=>'Activo', 'B'=>'Baja', 'S'=>'Suspendido'))
 							);
 
-echo $this->Form->submit('Registrarme', array('update' => '#content', 'class' => 'ui-button-primary'));
+echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'type'=>'button', 'update' => '#content'));
 echo $this->Form->end();
 ?>
 

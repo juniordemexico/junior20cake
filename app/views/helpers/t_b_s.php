@@ -264,7 +264,7 @@ class  TBSHelper extends AppHelper {
 				}
 			}
 
-``			
+			
 			$theScripts = $this->Html->scriptBlock($this->Js->domReady('
 var typeahead'.$theControlId.' = $(\'#'.$theControlId.'\');
     typeahead'.$theControlId.'.typeahead({
