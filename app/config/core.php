@@ -64,54 +64,54 @@
 	Configure::write('Cache.check', false);
 
 	Cache::config('default', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 3600, 		// 60 minutes
 								));
 
 	Cache::config('_cake_core_', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 43200, 	// 12 hours
     							));
 
 	Cache::config('queries', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 1800,		// 30 minutes
     							));
 
 	Cache::config('reports', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 1800,		// 12 hours
     							));
 
 	Cache::config('publicfiles', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 86400,		// 24 hours
     							));
 
 	Cache::config('onetask', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 300,		// 5 minutes  (shell, batch, and big transactions)
     							));
 
 	Cache::config('hourly', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 3600,		// 60 minutes (transactions, monitors, mail, messaggin)
     							));
 
 	Cache::config('daily', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 86400,		// 1 day  (stadistics, master catalogs)
     							));
 
 	Cache::config('weekly', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 604800,	// 7 days (company memos and documents)
     							));
 
 	Cache::config('forever', array(
-									'engine' => 'apc',
+									'engine' => 'files',
 									'duration'=> 2592000, 	// 30 days (global parameters, user parameters, views, site design elements, company own data )
     							));
 
 	// Media Plugin Settings
-//	require APP . 'plugins/media/config/core.php';
+	require APP . 'plugins/media/config/core.php';

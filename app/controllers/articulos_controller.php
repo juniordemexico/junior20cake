@@ -1,6 +1,6 @@
 <?php
 
-//App::import('Component', 'Barcode');
+App::import('Component', 'Barcode');
 
 class ArticulosController extends MasterDetailAppController {
 	var $name='Articulos';
