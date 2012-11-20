@@ -10,37 +10,16 @@ echo
 		'jquery/jquery.min',
 		'jquery/jquery-ui.min',
 
-		'jquery/ensure.min',
-		'jquery/jquery.transform.min',
-//		'jquery/jquery.tools.min',
-
-		'jquery/jquery.pulse.min',
-		'jquery/jquery.pop',
-		'jquery/jquery.maskedinput.min',
-		'jquery/jquery.event.drag.min',
-		'jquery/jquery.mousewheel.pack',
-		'jquery/wz_jsgraphics',
-
-		'jquery/jquery.gritter.min',
-		'jquery/jquery.tipsy',
-		'jquery/jquery.fancygestures',
-		'jquery/jquery.fancybox.pack',
-
 		'jquery/grid.locale-es',
 		'jquery/jquery.jqGrid.min',
+		'jquery/jquery.maskedinput-1.3.min',
 		'jquery/jquery.fileuploader',
 
 		'bootstrap/bootstrap.min',
-		'bootstrap/bootbox.min',
-		'bootstrap/bootstrap-typeahead',
+		'bootstrap/bootbox.min.js',
+		'bootstrap/bootstrap-typeahead.js',
 		'bootstrap/bootstrap-timepicker',
 		'bootstrap/bootstrap-image-gallery.min',
-
-//		'unicorn/uniform',
-		'unicorn/unicorn',
-//		'unicorn/unicorn.tables',
-//		'unicorn/unicorn.charts',
-
 		// Application's libraries and utilities
 		'axcore'
 		)).CR.

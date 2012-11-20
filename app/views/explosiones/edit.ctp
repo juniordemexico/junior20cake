@@ -169,24 +169,32 @@
 <?php
 $this->Js->get('.detailDelete')->event(
 'click', "
-var theID=this.parentElement.parentElement.id;
-bootbox.confirm('Seguro de ELIMINAR la partida ' + $('#'+theID).data('cve') + ' de la explosion ?', 
+var self=this;
+var me=$(this);
+
+if ($(me).data('confirm')=='label') {
+	message=$(me).data('confirm-msg') + '<br/><strong>' + $(me).data('label') + '</strong>';
+}
+else {
+	message=$(me).data('confirm-msg');
+}
+
+bootbox.confirm( message, 
 function(result) {
-    if (result) {
+	if (result) {
 		$.ajax({
 			dataType: 'html', 
 			type: 'post', 
-			url: '/Explosiones/delete/'+theID,
+			url: $(me).data('url')+'/'+$(me).data('id'),
 			success: function (data, textStatus) {
 			if(data=='OK') {
-				$( '#'+theID ).remove();
+				self.parent.parent.remove();
 			}
-			else {
-				bootbox.alert( '<img scr=\"/img/icons/Devine/white/".ICON_HELP."\" alt=\"Usuario\" / ><label class=\"label label-error\">Atencion!</label><br/><code>'+data+'<code>' );
+			else { 
+				bootbox.alert( data + ' ('+textStatus+')' );
 			}
 			},
 		});
-
     }
 }
 );

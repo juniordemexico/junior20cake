@@ -208,12 +208,10 @@ function(result) {
 			type: 'post', 
 			url: '/Explosiones/delete/'+theID,
 			success: function (data, textStatus) {
-			if(data=='OK') {
+			if(data=='OK') 
 				$( '#'+theID ).remove();
-			}
-			else {
-				bootbox.alert( '<label class="label label-warning"><i class="icon icon-alert"></i> Atencion!</label><br/><code>'+data+'<code>' );
-			}
+			else 
+				bootbox.alert( data + ' ('+textStatus+')' );
 			},
 		});
 

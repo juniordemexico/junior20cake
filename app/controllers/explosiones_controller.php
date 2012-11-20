@@ -70,52 +70,26 @@ class ExplosionesController extends MasterDetailAppController {
 
 	function delete($id=null) {
 		$this->autoRender=false;
-		
-		// Check if the ID was submited and if the specified item exists
-		if (!$id && 
-			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
-			!$this->Explosion->read(null, $id)) {
-			echo __('invalid_item', true).($id?" (id: $id)":'');			
+		if (!$id) {
+			echo __('invalid_item', true);
 			exit;
 		}
-
-		// Execute DB Operations
 		if ($this->Explosion->delete($id)) {
 			echo "OK";
 		}
-		else {
- 			echo __('item_could_not_be_deleted', true)." (id: $id)";
-		}
 	}
 
-	function propio($id=null, $newValue=null) {
+	function propio($id=null) {
 		$this->autoRender=false;
-
-		// Check if the ID was submited and if the specified item exists
-		if (!$id && 
-			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
-			!$this->Explosion->read(null, $id) ) {
-			echo __('invalid_item', true).($id?" (id: $id)":'');			
+		if (!$id) {
+			echo __('invalid_item', true);
 			exit;
 		}
-
-		// Determine field's new value
-		pr($this->Explosion);
-		if(!$newValue && isset($this->data['insumopropio'])) {
-			$newValue=(int)$this->Explosion->insumopropio*-1;
-		}
-		else {
-			$newValue=1;
-		}
-
-		// Execute DB Operations
-		if ($this->Explosion->saveField('insumopropio', $newValue) ) {
+		$this->data=$this->Explosion->read(null, $id);
+		pr($this->data);
+		if ($this->Explosion->saveField('insumopropio', !$this->data['Explosion']['insumopropio']) ) {
 			echo "OK";
 		}
-		else {
-			echo __('item_could_not_be_updated', true)." (id: $id)";				
-		}
-
 	}
 
 }
