@@ -88,7 +88,7 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 	}
 
-	function propio($id=null, $newValue=null) {
+	function toggleInsumo($id=null, $newValue=null) {
 		$this->autoRender=false;
 
 		// Check if the ID was submited and if the specified item exists
@@ -100,7 +100,7 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 
 		// Determine field's new value
-		pr($this->Explosion);
+//		pr($this->Explosion);
 		if(!$newValue && isset($this->data['insumopropio'])) {
 			$newValue=(int)$this->Explosion->insumopropio*-1;
 		}

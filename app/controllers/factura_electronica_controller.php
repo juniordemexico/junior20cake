@@ -71,6 +71,23 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->set($params);
 	}
 
+	public function getAllXmlByCliente($cliente_str=null) {
+		if(!$cliente_str) {
+			die("El formato de la URL debe ser: http://servidor.com/FacturaElectronica/getAllXmlByCliente/XXXXXX/filename:archivo.zip\n<br/>XXXXX=Nombre o RFC del Cliente<br/>archivo.zip=Nombre del Archivo ZIP donde se empacaran los documentos encontrados");
+		}
+		if(isset($this->params['named']['filename'])) {
+			$zipfilename=$this->params['named']['filename'];
+		}
+		elseif( isset($this->params['url']['filename']) ) {
+			$zipfilename=$this->params['url']['filename'];
+		}
+		else {
+			$zipfilename=''.date('Ymd').'.zip';
+		}
+		$cmd='sudo find . -type f  -name "JME910405B83*.xml" \( -name "*B00*" -or -name "*B-*" \) -exec grep -il "YAZMIN " "{}" \; |sort | sudo zip /home/www/junior20cake/app/files/tmp/yazmin.xml.zip \@'
+
+	}
+
 }
 	
 ?>

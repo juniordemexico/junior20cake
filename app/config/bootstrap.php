@@ -75,7 +75,7 @@
 	define('ICON_SUCCESS', 'Fevorite.png');
 	define('ICON_ALERT', 'Info 2.png');
 	define('ICON_WARNING', 'Info 2.png');
-	define('ICON_ERROR', 'Winamp 2.png');
+	define('ICON_ERROR', 'Winamp.png');
 	define('ICON_CLOUD', 'Cloud.png');
 	define('ICON_CHAT', 'Conversion Massanger.png');
 	define('ICON_TASK', 'Task.png');

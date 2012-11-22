@@ -1,22 +1,19 @@
 
-body {
-	font-family: 'helvetica neue', helvetica, arial, sans-serif;
-/*	background-color: #aaaaaa;*/
-}
-
 input[type=radio] {
-/*
-	margin-left: 16px;
+
+	margin-left: 8px;
 	margin-right: 4px;
-*/
+
 }
 
-input: focus {
-	
+
+TABLE THEAD TH {
+	color: #08c;
 }
 
-#header {
 /*
+#header {
+
 	top: 0px;
 	width: 100%;
 	height: 50px;
@@ -29,21 +26,21 @@ input: focus {
 	border: 0px none;
 	padding: 0px;
 	opacity: 0.7;
-*/
 }
-/*
+*/
+
 #wrapper {
-	padding-top:20px;
-	background: transparent;
+/*	padding-top:20px;*/
+/*	background: transparent;*/
 	width: 100%;
 }
-*/
-/*
+
+
 #content {
 	width: 100%;
-	background: transparent;
+/*	background: transparent;*/
 }
-*/
+
 
 .ui-tabs {
 /*
@@ -52,22 +49,24 @@ input: focus {
 }
 
 /* IDD Added Styles */
-#busy-indicator-div { float:right; width: 72px; height:20px; padding: 0px; margin-top: 8px; border: 0px;}
-#busy-indicator { display:none; width: 72px; height:20px; padding: 0px; margin: 0px; border: 0px; top: 0px; }
+#busy-indicator-div { float:right; width: 36px; height:36px; padding: 0px; margin-top: 2px; border: 0px none;}
+#busy-indicator { display:none; width:36px; height:36px; padding: 0px; margin: 0px; border: 0px none; top: 0px; }
 
 
 /* Master-Detail Tables */
 
 .gridWrapper {
 	width: 100%;
+/*
 	padding: 0px;
 	margin: 0px;
 	border: 0px solid;
+*/
 }
 
 #datagrid {
 	width: 99.99%;
-	font-size: 90%;
+/*	font-size: 90%;*/
 /*
 	margin-bottom: -16px;
 	-webkit-border-radius: 6px 6px 6px 6px;
@@ -78,46 +77,55 @@ input: focus {
 
 #datagrid tr {
 /*	background-color: #f0f0f0;*/
-/*	padding: 0px;*/
+/*	padding: 0px; */
 /*	border: none;*/
 }
 
 #datagrid thead tr {
+	color: #08c;
 	vertical-align: middle;
-/*
-	background-color: #a0a0a0;
-*/
+
+	background-color: #bbb;
+
 	text-align: center;
 }
 
 #datagrid thead th {
 /*	padding: 4px 4px 4px 4px;*/
 /*	border: 2px solid #2010A0;*/
-	font-size: 125%;
+	font-size: 115%;
 	vertical-align: middle;
 }
 
 #datagrid thead tr.tablefilter th {
-/*	text-align: left;*/
+	text-align: left;
 	padding: 4px;
 	vertical-align: middle;
 /*	border: 2px solid #2010A0;*/
 /*	font-size: 10pt;*/
+	font-size: 90%;
 	text-align: left;
 }
 
 #datagrid thead tr.rowfilter td {
 	text-align: left;
+	font-size: 90%;
 }
 
 #datagrid thead th input[type=search] {
+/*
 	padding: 1px 8px 1px 8px; 
 	margin: 2px 16px 2px 2px; 
 	line-height: 100%;
-/*	border: 1px solid #000000;*/
-	width: 75%;
-	font-size: 80%;
+	border: 1px solid #000000;
+*/
+	padding: 2px 8px 2px 8px; 
+	margin: 2px 16px 2px 2px; 
+	font-size: 90%;
+	line-height: 90%;
+	width: 66.66%;
 	text-align: left;
+
 }
 
 
@@ -136,8 +144,8 @@ input: focus {
 #datagrid tbody tr:hover {
 /*
 	background-color: #F0E075;
-	font-weight: bold;
 */
+	color: black;
 }
 
 #datagrid tbody td {
@@ -162,7 +170,7 @@ DIV#debug {
 }
 
 DIV#footer {
-	margin-top: 32px;
+	margin-top: 16px;
 }
 
 .cake-sql-log {
@@ -199,7 +207,7 @@ DIV.related-records LI {
 
 
 /*
-.itemrecorddata {
+.itemrecorddata { 
 	font-weight: normal;
 	font-style: italic;
 }
@@ -242,7 +250,7 @@ label {
 input[type=search]:focus,input[type=text]:focus,select:focus,textarea:focus {
 	background-color: #FAEA90;
 	font-weight: bold;
-	color: #000000;
+	color: #000;
 }
 
 /*

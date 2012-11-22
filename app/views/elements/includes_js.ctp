@@ -37,7 +37,7 @@ echo
 		'bootstrap/bootstrap-image-gallery.min',
 
 //		'unicorn/uniform',
-		'unicorn/unicorn',
+//		'unicorn/unicorn',
 //		'unicorn/unicorn.tables',
 //		'unicorn/unicorn.charts',
 

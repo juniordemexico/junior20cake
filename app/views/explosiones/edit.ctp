@@ -22,15 +22,17 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="ExplosionTelacve" name="data[Proveedor][Telacve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+			<input type="text" maxlength="16" id="ExplosionTelacant" name="data[Explosion][Telacant]" field="Explosion.telacant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="checkbox" class="detailPropio" id="ExplosionTelainsumopropio" name="data[Explosion][Telainsumopropio]" field="Explosion.Telainsumopropio" title="Marcar en caso de ser un insumo propio" />
 			<button id="btnMaterialSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentTelasTable">
-		<table class="table table-condensed">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Tela</th>
@@ -48,10 +50,11 @@
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
 									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
 									data-confirm="label" 
 									data-confirm-msg="Seguro de Eliminar el Item?"
 									data-icon="trash">
@@ -70,15 +73,17 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="ExplosionMaterialcve" name="data[Explosion][Materialcve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+			<input type="text" maxlength="16" id="ExplosionHabilcant" name="data[Explosion][Habilcant]" field="Explosion.habilcant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="checkbox" class="detailPropio" id="ExplosionHabilinsumopropio" name="data[Explosion][Habilinsumopropio]" field="Explosion.habilinsumopropio" title="Marcar en caso de ser un insumo propio" />
 			<button id="btnHabilSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentHabilTable">
-		<table class="table table-condensed">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Material</th>
@@ -94,12 +99,13 @@
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
-				<td class=""><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class=""><input type="checkbox" class="detailToggleInsumo" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
 									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
 									data-confirm="label" 
 									data-confirm-msg="Seguro de Eliminar el Item?"
 									data-icon="trash">
@@ -118,15 +124,16 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="ExplosionServiciocve" name="data[Explosion][Serviciocve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:3"
-			/>
+			/> &nbsp;&nbsp;
+			<input type="text" maxlength="16" id="ExplosionServiciocant" name="data[Explosion][Serviciocant]" field="Explosion.serrviciocant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
 			<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentTelasTable">
-		<table class="table table-condensed">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
 				<th class="cveart">Servicio</th>
@@ -142,10 +149,11 @@
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
 									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-label="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
 									data-confirm="label" 
 									data-confirm-msg="Seguro de Eliminar el Item?"
 									data-icon="trash">
@@ -167,10 +175,14 @@
 <?php echo $this->Form->end();?>
 
 <?php
+
+// Event for Detail's Delete Button
 $this->Js->get('.detailDelete')->event(
 'click', "
-var theID=this.parentElement.parentElement.id;
-bootbox.confirm('Seguro de ELIMINAR la partida ' + $('#'+theID).data('cve') + ' de la explosion ?', 
+var el=$('#'+this.id);
+var theID=el.data('id');
+var theCve=el.data('value');
+bootbox.confirm('Seguro de ELIMINAR la partida ' + theCve + ' de la explosion ?', 
 function(result) {
     if (result) {
 		$.ajax({
@@ -178,12 +190,12 @@ function(result) {
 			type: 'post', 
 			url: '/Explosiones/delete/'+theID,
 			success: function (data, textStatus) {
-			if(data=='OK') {
-				$( '#'+theID ).remove();
-			}
-			else {
-				bootbox.alert( '<img scr=\"/img/icons/Devine/white/".ICON_HELP."\" alt=\"Usuario\" / ><label class=\"label label-error\">Atencion!</label><br/><code>'+data+'<code>' );
-			}
+				if(data=='OK') {
+					axAlert(theCve+' Eliminado.', 'success');
+					}
+				else {
+					axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+				}
 			},
 		});
 
@@ -193,4 +205,28 @@ function(result) {
 "
 , array('stop' => true));
 
+// Event for Detail's Checkbox
+/*
+$this->Js->get('.detailToggleInsumo')->event(
+'click', "
+var el=$('#'+this.id);
+var theID=el.data('id');
+var theCve=el.data('value');
+	$.ajax({
+		dataType: 'html', 
+		type: 'post', 
+		url: '/Explosiones/toggleInsumo/'+theID,
+		success: function (data, textStatus) {
+			if(data=='OK') {
+				axAlert(theCve+' Toggled.', 'success');
+			}
+			else {
+				axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			}
+		},
+	});
+);
+"
+, array('stop' => true));
+*/
 ?>

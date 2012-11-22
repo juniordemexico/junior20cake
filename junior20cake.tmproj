@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/articulos/index.ctp</string>
+	<string>app/views/elements/includes_css.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>410</integer>
+	<integer>256</integer>
 	<key>metaData</key>
 	<dict>
 		<key>app/config/bootstrap.php</key>
@@ -26,14 +26,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>74</integer>
+				<integer>111</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>60</integer>
+			<integer>91</integer>
+		</dict>
+		<key>app/controllers/clientes_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>218</integer>
 		</dict>
 		<key>app/controllers/colores_controller.php</key>
 		<dict>
@@ -65,6 +79,20 @@
 				<integer>141</integer>
 			</dict>
 		</dict>
+		<key>app/controllers/factura_electronica_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>33</integer>
+				<key>line</key>
+				<integer>78</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>52</integer>
+		</dict>
 		<key>app/views/articulos/index.ctp</key>
 		<dict>
 			<key>caret</key>
@@ -77,7 +105,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>50</integer>
+			<integer>46</integer>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -109,19 +137,47 @@
 				<integer>225</integer>
 			</dict>
 		</dict>
+		<key>app/views/elements/MasterDetailIndexPaging.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>80</integer>
+				<key>line</key>
+				<integer>18</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>app/views/elements/ToolBar.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>62</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>64</integer>
+				<integer>33</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>35</integer>
+			<integer>3</integer>
+		</dict>
+		<key>app/views/elements/articulos/form.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>71</integer>
+				<key>line</key>
+				<integer>90</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>89</integer>
 		</dict>
 		<key>app/views/elements/includes_css.ctp</key>
 		<dict>
@@ -130,26 +186,26 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>4</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/elements/includes_js.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>38</integer>
+				<integer>22</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>15</integer>
+			<integer>9</integer>
 		</dict>
 		<key>app/views/elements/materiales/form.ctp</key>
 		<dict>
@@ -231,6 +287,20 @@
 				<integer>63</integer>
 				<key>line</key>
 				<integer>27</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/webroot/css/ax.generic.css</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>45</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -529,18 +599,23 @@
 		<string>app/views/users/login.ctp</string>
 		<string>vendors/twitteroauth/twitteroauth.php</string>
 		<string>app/views/elements/includes_js.ctp</string>
+		<string>app/controllers/clientes_controller.php</string>
+		<string>app/controllers/factura_electronica_controller.php</string>
 		<string>app/views/articulos/index.ctp</string>
 		<string>app/webroot/js/axcore.js</string>
 		<string>app/config/bootstrap.php</string>
 		<string>app/webroot/js/jquery/jquery.maskedinput.min.js</string>
 		<string>app/webroot/js/jquery/jquery.maskedinput-1.3.js</string>
 		<string>app/views/elements/ToolBar.ctp</string>
+		<string>app/views/elements/MasterDetailIndexPaging.ctp</string>
 		<string>app/webroot/js/jquery/jquery.tools.min.js</string>
 		<string>app/webroot/js/jquery/jquery.mousewheel.pack.js</string>
 		<string>app/webroot/js/jquery/jquery.pulse.js</string>
 		<string>app/webroot/js/jquery/jquery.event.drag.min.js</string>
 		<string>app/webroot/js/unicorn/uniform.js</string>
 		<string>app/views/elements/includes_css.ctp</string>
+		<string>app/views/elements/articulos/form.ctp</string>
+		<string>app/webroot/css/ax.generic.css</string>
 		<string>app/views/costeos/edit.ctp</string>
 		<string>app/webroot/css/bootstrap/ADMINSTRAP - style.css</string>
 		<string>app/webroot/css/bootstrap/ADMINSTRAP - bootstrap.min.css</string>

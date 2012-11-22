@@ -31,8 +31,6 @@
 		<div class="span12">
 
 			<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
-			<div id="headerSpacer" class="row-fluid" style="height: 0px; margin: 32px 0px 32px 0px; padding: 0px;">
-			</div> <!-- headerSpacer -->
 				
 			<section id="MainSection">
 			<div class="row-fluid" id="wrapper">

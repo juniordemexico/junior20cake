@@ -36,6 +36,7 @@ class AppController extends Controller {
 		'Session',
 		'Paginator',
 		'TBS',
+		'Gritter',
 /*		'Embed',*/
 	/*	'CakeGrid',*/
 		'Upload',
