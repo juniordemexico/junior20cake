@@ -59,6 +59,7 @@
   */
 
 class DATABASE_CONFIG {
+/*
 	var $default = array(
 		'driver' => 'firebird',
 		'persistent' => true,
@@ -71,7 +72,7 @@ class DATABASE_CONFIG {
 		'prefix' => '',
 		'encoding' => 'utf-8'
 	);
-/*
+*/
 	var $default = array(
 		'driver' => 'firebird',
 		'persistent' => true,
@@ -79,12 +80,12 @@ class DATABASE_CONFIG {
 		'port' => '3050',
 		'login' => 'SYSDBA',
 		'password' => 'larrykey',
-		'database' => '/Users/Shared/Develop/db.firebird/JUNIOR_V2.FDB',
+		'database' => '/home/db/JUNIOR.FDB',
 		'schema' => '',
 		'prefix' => '',
 		'encoding' => 'utf-8'
 	);
-*/
+
 	var $test = array(
 		'driver' => '',
 		'persistent' => false,
