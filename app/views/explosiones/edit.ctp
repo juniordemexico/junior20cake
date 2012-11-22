@@ -45,7 +45,7 @@
 			<tbody>
 			<?php foreach($explosion['tela'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
+				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
 				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
@@ -191,7 +191,8 @@ function(result) {
 			url: '/Explosiones/delete/'+theID,
 			success: function (data, textStatus) {
 				if(data=='OK') {
-					axAlert(theCve+' Eliminado.', 'success');
+					$('#'+theID).remove();
+					axAlert(theCve+' Eliminado.', 'success', false);
 					}
 				else {
 					axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');

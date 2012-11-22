@@ -14,7 +14,7 @@ class  TBSHelper extends AppHelper {
 	 * @var array
 	 * @access public
 	 */
-	public $helpers = array("Form", "Html", "Js", "Ajax", "Session", 'Number', 'Time', 'Text');
+	public $helpers = array("Form", "Html", "Js", "Ajax", "Session", 'Number', 'Time', 'Text', 'WebAlert');
 	
 	
 	// Confirm Replacement
