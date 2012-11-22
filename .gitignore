@@ -1,3 +1,4 @@
+junior20cake.tmproj		# Text Mate's Project file
 app/config/database.php		# Local database configuration file
 
 app/files/facturaselectronicas/*	# Invoice's pdf file store folder
