@@ -66,16 +66,8 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
 , array('stop' => true));
 ?>
 
-<?php echo $this->Gritter->alert('Esta es una alerta chida'); ?>
-<?php echo $this->Gritter->alert('Esta es una alerta chida','success'); ?>
-<?php echo $this->Gritter->alert('Esta es una alerta chida','error'); ?>
-<?php echo $this->Gritter->alert('Esta es una alerta chida','alert'); ?>
-<?php echo $this->Gritter->alertFlash('alera pues temporalmente, temporal para todos y cada uno'); ?>
-<script>
-/*
-axAlert('la de default ajua!');
-axAlert('alerta pues!', 'success' );
-axAlert('alerta pues!', 'error' );
-axAlert('alerta pues!', 'alert' );
-*/
-</script>
+<?php echo $this->WebAlert->sticky('Esta es una alerta chida'); ?>
+<?php echo $this->WebAlert->sticky('Esta es una alerta chida','success'); ?>
+<?php echo $this->WebAlert->sticky('Esta es una alerta chida','error'); ?>
+<?php echo $this->WebAlert->sticky('Esta es una alerta chida','alert'); ?>
+<?php echo $this->WebAlert->sticky('alera pues temporalmente, temporal para todos y cada uno'); ?>

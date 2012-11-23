@@ -48,7 +48,18 @@
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
-				<td class=""><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class=""><input type="checkbox" 
+								class="clickaction detailToggleInsumoPropio" 
+								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
+								title="Marcar en caso de ser un insumo propio" 
+								data-type="clickaction"
+								data-url="/Explosiones/toggleInsumoPropio" 
+								data-id="<?php e($item['Explosion']['id']) ?>" 
+								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+								data-confirm=false 
+								<?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" 
+							/>
+				</td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
 									data-type="clickaction"
@@ -99,9 +110,22 @@
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class=""><?php e($item['Explosion']['cant'])?></td>
-				<td class=""><input type="checkbox" class="detailToggleInsumo" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+				<td class=""><input type="checkbox" 
+								class="clickaction detailToggleInsumoPropio" 
+								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
+								title="Marcar en caso de ser un insumo propio" 
+								data-type="clickaction"
+								data-url="/Explosiones/toggleInsumoPropio" 
+								data-id="<?php e($item['Explosion']['id']) ?>" 
+								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+								data-confirm=false 
+								<?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" 
+							/>
+				</td>
+				<td class=""><button type="button"
+									class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
+									title="Quitar el Insumo de la Explosion de Materiales" 
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
 									data-id="<?php e($item['Explosion']['id']); ?>" 
@@ -148,8 +172,10 @@
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
 				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
-				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+				<td class=""><button type="button" 
+									class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
+									title="Quitar el Servicio de la Explosion de Materiales" 
 									data-type="clickaction"
 									data-url="/Explosiones/delete" 
 									data-id="<?php e($item['Explosion']['id']); ?>" 
@@ -179,20 +205,22 @@
 // Event for Detail's Delete Button
 $this->Js->get('.detailDelete')->event(
 'click', "
+
 var el=$('#'+this.id);
 var theID=el.data('id');
 var theCve=el.data('value');
+var theUrl=el.data('url');
 bootbox.confirm('Seguro de ELIMINAR la partida ' + theCve + ' de la explosion ?', 
 function(result) {
     if (result) {
 		$.ajax({
 			dataType: 'html', 
 			type: 'post', 
-			url: '/Explosiones/delete/'+theID,
+			url: theUrl+'/'+theID,
 			success: function (data, textStatus) {
 				if(data=='OK') {
 					$('#'+theID).remove();
-					axAlert(theCve+' Eliminado.', 'success', false);
+					axAlert('Insumo ' + theCve + ' Eliminado', 'success', false);
 					}
 				else {
 					axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
@@ -203,31 +231,37 @@ function(result) {
     }
 }
 );
+
 "
 , array('stop' => true));
 
 // Event for Detail's Checkbox
-/*
-$this->Js->get('.detailToggleInsumo')->event(
-'click', "
+
+$this->Js->get('.detailToggleInsumoPropio')->event(
+'change', "
+
 var el=$('#'+this.id);
 var theID=el.data('id');
 var theCve=el.data('value');
-	$.ajax({
-		dataType: 'html', 
-		type: 'post', 
-		url: '/Explosiones/toggleInsumo/'+theID,
-		success: function (data, textStatus) {
-			if(data=='OK') {
-				axAlert(theCve+' Toggled.', 'success');
-			}
-			else {
-				axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-			}
-		},
-	});
-);
+var theValue=(el.attr('checked')=='checked');
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+/*	data: seriealize(edtCveArt, edtCant, ckInsumopropio),*/
+	url: '/Explosiones/toggleInsumoPropio/'+theID+'/value:'+theValue,
+	success: function (data, textStatus) {
+		if(data=='OK') {
+			axAlert('Insumo ' + theCve + ' Actualizado', 'success', false);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
 "
 , array('stop' => true));
-*/
+
 ?>

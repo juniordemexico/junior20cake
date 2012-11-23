@@ -34,11 +34,56 @@
 
 
 				</li>
-				<li class="divider-vertical"></li>
 <?php endif;?>
+				<li class="divider-vertical"></li>
+			<li class="dropdown navbar-icon-signal pull-right" id="btnSocialNotifications" style="background-color:transparent;">
+				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
+				<i class="icon icon-envelope icon-white"></i> Mail <span class="badge badge-info">5</span></a><b class="caret"></b></a>
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.75;">
+					<li class="notifications-list" style="opacity: 0.75;border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-info">ATENCION!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-important">ERROR!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-success">OK!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown navbar-icon-signal pull-right" id="btnNotifications"  style="background-color:transparent;float:right;" >
+				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
+				<i class="icon icon-envelope icon-white"></i>
+				Notificaciones <span class="badge badge-warning">10</span></a>
+				
+				<b class="caret"></b></a>
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.85;">
+					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-info">ATENCION!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-important">ERROR!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
+					<label class="label label-success">OK!</label>
+					<div>Mensaje de la persona esta que es bien buena</div>
+					<a href="#">Ver</a>
+					</li>
+				</ul>
+			</li>
 <?php
 /*
-			<li class="dropdown" id="menu2"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu2"><i class="icon icon-music"></i> Acciones<b class="caret"></b>
+			<li class="dropdown" id="menu2"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu2"><i class="icon icon-music"></i> Acciones
 </a>
 				<ul class="dropdown-menu">
 				<li><a href="#as">Autorizar</a></li>
@@ -51,11 +96,11 @@
 				</ul>
 			</li>
 				<li class="divider-vertical"></li>
-			<li class="dropdown navbar-icon-signal" id="menu1"><a class="dropdown-toggle " data-toggle="dropdown" href="#menu1"><i class="icon icon-envelope"></i> Compartir <b class="caret"></b></a>
+			<li class="dropdown navbar-icon-signal" id="menu1"><a class="dropdown-toggle " data-toggle="dropdown" href="#menu1"><i class="icon icon-envelope"></i> Compartir
 				<ul class="dropdown-menu">
 				<li><a href="#as">Imprimir</a></li>
 				<li><a href="#as">Correo</a></li>
-				<li><a href="#as">Mensaje</a></li>
+				<li><a href="#as">Notificaciones</a></li>
 				</ul>
 			</li>
 				<li class="divider-vertical"></li>

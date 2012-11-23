@@ -88,24 +88,37 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 	}
 
-	function toggleInsumo($id=null, $newValue=null) {
+	function toggleInsumoPropio($id=null, $newValue=-1) {
 		$this->autoRender=false;
 
 		// Check if the ID was submited and if the specified item exists
-		if (!$id && 
-			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
-			!$this->Explosion->read(null, $id) ) {
-			echo __('invalid_item', true).($id?" (id: $id)":'');			
-			exit;
+		if (!$id) {
+			if(isset($this->params['named']['id'])) {
+				$id=$this->params['named']['id'];
+			}
+			elseif( isset($this->params['url']['id']) ) {
+				$id=$this->params['url']['id'];
+			}
+			else {
+				echo __('invalid_item', true).($id?" (id: $id)":'');			
+				exit;
+			}
+		}
+		$this->data=$this->Explosion->read(null, $id);
+		if (!($this->Explosion->id>0) ) {
+				echo __('invalid_item', true).($id?" (id: $id)":'');			
+				exit;			
 		}
 
 		// Determine field's new value
-//		pr($this->Explosion);
-		if(!$newValue && isset($this->data['insumopropio'])) {
-			$newValue=(int)$this->Explosion->insumopropio*-1;
+		if($newValue==-1 && isset($this->Explosion->insumopropio)) {
+			$newValue=((int)$this->Explosion->insumopropio)*-1;
+		}
+		elseif($newValue>0 || $newValue=='on' || $newValue=='checked' || $newValue=='true' || $newValue==true) {
+			$newValue=1;
 		}
 		else {
-			$newValue=1;
+			$newValue=0;
 		}
 
 		// Execute DB Operations
