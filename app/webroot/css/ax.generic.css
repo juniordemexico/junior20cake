@@ -49,8 +49,8 @@ TABLE THEAD TH {
 }
 
 /* IDD Added Styles */
-#busy-indicator-div { float:right; width: 36px; height:36px; padding: 0px; margin-top: 2px; border: 0px none;}
-#busy-indicator { display:none; width:36px; height:36px; padding: 0px; margin: 0px; border: 0px none; top: 0px; }
+#busy-indicator-div { vertical-align: middle; text-align: center; width: 36px; height:100%;  border: 0px none; margin-top: 10px; margin-right:2px; opacity: 0.75;}
+#busy-indicator { display:none; width:20px; height:20px; padding: 0px; margin: 0px; border: 0px none; top: 0px; }
 
 
 /* Master-Detail Tables */

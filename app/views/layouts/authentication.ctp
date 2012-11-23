@@ -102,7 +102,7 @@
 
 				</div> <!-- formScripts -->
 
-<?php if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
+<?php //if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
 				
 			</div> <!-- content -->
 			</div> <!-- wrapper -->

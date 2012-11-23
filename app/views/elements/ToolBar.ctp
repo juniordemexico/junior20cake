@@ -3,22 +3,17 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<a href="/Desktop" class="brand right">OGGI JEANS, Co.</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<ul class="nav navvar">
-				<li>
-<?php 
-				echo $this->Html->link('<i class="icon icon-refresh icon-white"></i> Refrescar', array(), array('update' => '#content', 'escape'=>false
-				)); 
-?>
-				</li>
-				<li class="divider-vertical"></li>
+				<li class="divider-vertical active">&nbsp;</li>
 				<li>
 					<?php echo $this->Html->link('<i class="icon icon-list icon-white"></i>  Lista', array('action' => (isset($listAction)?$listAction:'index')), array('escape'=>false)); ?>
 				</li>
-				<li class="divider-vertical"></li>
+				<li class="divider-vertical">&nbsp;</li>
 				<li>
 					<?php echo $this->Html->link('<i class="icon icon-plus-sign icon-white"></i>  Agregar', array('action' => 'add'), array('escape'=>false)); ?>
 				</li>
-				<li class="divider-vertical"></li>
+				<li class="divider-vertical">&nbsp;</li>
 				<?php if($this->action=='edit'): ?>
 				<li>
 					<?php if(is_array($this->data)) {echo $this->Html->link('<i class="icon icon-trash"></i>  Eliminar', 
@@ -35,11 +30,41 @@
 
 				</li>
 <?php endif;?>
-				<li class="divider-vertical"></li>
-			<li class="dropdown navbar-icon-signal pull-right" id="btnSocialNotifications" style="background-color:transparent;">
-				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
-				<i class="icon icon-envelope icon-white"></i> Mail <span class="badge badge-info">5</span></a><b class="caret"></b></a>
-				<ul class="dropdown-menu notifications-list" style="opacity: 0.75;">
+			</ul>
+			<ul class="nav navvar pull-right">
+			<li class="divider-vertical">&nbsp;</li>
+				<li>
+<?php 
+				echo $this->Html->link('<i class="icon icon-refresh icon-white"></i>', array(), array('update' => '#content', 'escape'=>false
+				)); 
+?>
+				</li>
+			<li class="divider-vertical">&nbsp;</li>
+			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
+				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
+				onclick=":javascript:$('#edtMsg').focus();">
+<img src="/img/icons/Devine/white/Massage.png" width="20px" height="20px" />
+				<b class="caret"></b></a>
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.80; width: 200px; height:150px;">
+					<li>
+					<div>
+					<form class="form-search form-well">
+					<div class="control-group">
+					<input id="edtMsg" type="text" placeholder="Escribe tu mensaje..." class="input-control span2">
+					<button class="btn btn-small"><i class="icon icon-arrow-right"></i></btn>
+					</div>
+					</form>
+					</div>
+					</li>
+				</ul>
+			</li>
+			<li class="divider-vertical">&nbsp;</li>
+			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications"  style="" >
+				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications">
+<img src="/img/icons/Devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
+				<span class="badge badge-info">10</span>
+				<b class="caret"></b></a>
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">
 					<li class="notifications-list" style="opacity: 0.75;border: 1px solid #000; background-color: white; padding: 4px;">
 					<label class="label label-info">ATENCION!</label>
 					<div>Mensaje de la persona esta que es bien buena</div>
@@ -57,13 +82,13 @@
 					</li>
 				</ul>
 			</li>
-			<li class="dropdown navbar-icon-signal pull-right" id="btnNotifications"  style="background-color:transparent;float:right;" >
+			<li class="divider-vertical">&nbsp;</li>
+			<li class="dropdown navbar-icon-signal" id="btnNotifications"  style="background-color:transparent;" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
-				<i class="icon icon-envelope icon-white"></i>
-				Notificaciones <span class="badge badge-warning">10</span></a>
-				
+<img src="/img/icons/Devine/white/Info 2.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
+				<span class="badge badge-warning">10</span>
 				<b class="caret"></b></a>
-				<ul class="dropdown-menu notifications-list" style="opacity: 0.85;">
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">
 					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
 					<label class="label label-info">ATENCION!</label>
 					<div>Mensaje de la persona esta que es bien buena</div>
@@ -81,35 +106,13 @@
 					</li>
 				</ul>
 			</li>
-<?php
-/*
-			<li class="dropdown" id="menu2"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu2"><i class="icon icon-music"></i> Acciones
-</a>
-				<ul class="dropdown-menu">
-				<li><a href="#as">Autorizar</a></li>
-				<li><a href="#as">Desautorizar</a></li>
-				<li><a href="#as">Cancelar</a></li>
-				<li><?php 	//echo $this->Html->link(__('delete', true),
-//								array('controller' => $this->name, 'action' => 'delete', 0),
-//								null, sprintf(__('¿ Seguro de Eliminar # %%s ?', true), 0)); ?>
-				</li>
-				</ul>
-			</li>
-				<li class="divider-vertical"></li>
-			<li class="dropdown navbar-icon-signal" id="menu1"><a class="dropdown-toggle " data-toggle="dropdown" href="#menu1"><i class="icon icon-envelope"></i> Compartir
-				<ul class="dropdown-menu">
-				<li><a href="#as">Imprimir</a></li>
-				<li><a href="#as">Correo</a></li>
-				<li><a href="#as">Notificaciones</a></li>
-				</ul>
-			</li>
-				<li class="divider-vertical"></li>
-*/
-?>
-			</ul>
-<span id="busy-indicator-div" class="pull-right" style="float:right;">
+			<li class="divider-vertical">&nbsp;</li>
+			<li>
+			<span id="busy-indicator-div" class="pull-right" style="float:right;">
 			<?php echo $this->Html->image('/img/loading_circle.gif', array('id' => 'busy-indicator', 'alt' => 'Transmitiendo', 'style'=>'display: none; float: right;')); ?>
-</span>
+			</span>
+			</li>
+			</ul>
 		</div> <!-- container -->
 	</div>  <!-- navbar-inner -->
 
