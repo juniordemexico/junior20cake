@@ -73,6 +73,26 @@ class ProveedoresController extends MasterDetailAppController {
 		}
 	}
 
+	function deleteCostoArticulo($id=null) {
+		$this->autoRender=false;
+		
+		// Check if the ID was submited and if the specified item exists
+		if (!$id && 
+			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
+			!$this->ArticuloProveedor->read(null, $id)) {
+			echo __('invalid_item', true).($id?" (id: $id)":'');			
+			exit;
+		}
+
+		// Execute DB Operations
+		if ($this->ArticuloProveedor->delete($id)) {
+			echo "OK";
+		}
+		else {
+ 			echo __('item_could_not_be_deleted', true)." (id: $id)";
+		}
+	}
+
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');

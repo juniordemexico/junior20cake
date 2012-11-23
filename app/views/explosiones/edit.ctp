@@ -7,7 +7,7 @@
 <div id="detailContent" class="row-fluid">
 
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
-<?php echo $this->Form->hidden('Articulo.id'); ?>
+<?php echo $this->Form->hidden('Articulo.id', array("value"=>$articulo['Articulo']['id'])); ?>
 
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
@@ -22,13 +22,15 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="ExplosionTelacve" name="data[Proveedor][Telacve]" class="span2"
+			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="16" id="ExplosionTelacant" name="data[Explosion][Telacant]" field="Explosion.telacant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
-			<input type="checkbox" class="detailPropio" id="ExplosionTelainsumopropio" name="data[Explosion][Telainsumopropio]" field="Explosion.Telainsumopropio" title="Marcar en caso de ser un insumo propio" />
-			<button id="btnMaterialSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
+			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]" title="Marcar en caso de ser un insumo propio" />
+			<button id="submitTela" class="btn" type="button"
+			data-url="/Explosiones/add"
+			><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentTelasTable">
@@ -83,14 +85,14 @@
 <div id="tabs-1" class="tab-pane">
 
 		<div class="controls controls-row well well-small">
-			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="ExplosionMaterialcve" name="data[Explosion][Materialcve]" class="span2"
+			<!-- Typeahead term -->			
+			<input type="text" maxlength="16" id="edtHabilCve" name="data[Explosion][HabilCve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="16" id="ExplosionHabilcant" name="data[Explosion][Habilcant]" field="Explosion.habilcant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
-			<input type="checkbox" class="detailPropio" id="ExplosionHabilinsumopropio" name="data[Explosion][Habilinsumopropio]" field="Explosion.habilinsumopropio" title="Marcar en caso de ser un insumo propio" />
-			<button id="btnHabilSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
+			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="checkbox" class="detailPropio" id="chkHabilPropio" name="data[Explosion][HabilPropio]" title="Marcar en caso de ser un insumo propio" />
+			<button id="submitHabil" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentHabilTable">
@@ -152,7 +154,7 @@
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:3"
 			/> &nbsp;&nbsp;
-			<input type="text" maxlength="16" id="ExplosionServiciocant" name="data[Explosion][Serviciocant]" field="Explosion.serrviciocant" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="16" id="ExplosionServiciocant" name="data[Explosion][Serviciocant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
 			<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
@@ -244,14 +246,52 @@ var el=$('#'+this.id);
 var theID=el.data('id');
 var theCve=el.data('value');
 var theValue=(el.attr('checked')=='checked');
+var theUrl=el.data('url');
 $.ajax({
 	dataType: 'html', 
 	type: 'post',
-/*	data: seriealize(edtCveArt, edtCant, ckInsumopropio),*/
-	url: '/Explosiones/toggleInsumoPropio/'+theID+'/value:'+theValue,
+	url: theUrl+'/'+theID+'/value:'+theValue,
 	success: function (data, textStatus) {
 		if(data=='OK') {
 			axAlert('Insumo ' + theCve + ' Actualizado', 'success', false);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
+// Add Detail Button Event
+
+$this->Js->get('#submitTela')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theTipoExplosion=1;
+var theArticuloID=$('#ArticuloId').val();
+var theCve=$('#edtTelaCve').val();
+var theCant=$('#edtTelaCant').val();
+var theInsumoPropio=(($('#chkTelaInsumoPropio').attr('checked')=='checked')?1:0);
+var theUrl=el.data('url');
+/*
+axAlert('articulo_id:'+theArticuloID);
+axAlert('cve:'+theCve);
+axAlert('cant:'+theCant);
+axAlert('propio:'+theInsumoPropio);
+*/
+axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio);
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio+'/tipoexplosionid:'+theTipoExplosion,
+	success: function (data, textStatus) {
+		if(data.substring(0,2)=='OK') {
+			axAlert('Insumo ' + theCve + ' Agregado', 'success', false);
 			return true;
 		}
 		else {

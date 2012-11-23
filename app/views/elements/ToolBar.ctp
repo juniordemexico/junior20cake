@@ -43,7 +43,7 @@
 			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
 				onclick=":javascript:$('#edtMsg').focus();">
-<img src="/img/icons/Devine/white/Massage.png" width="20px" height="20px" />
+<img src="/img/icons/devine/white/Massage.png" width="20px" height="20px" />
 				<b class="caret"></b></a>
 				<ul class="dropdown-menu notifications-list" style="opacity: 0.80; width: 200px; height:150px;">
 					<li>
@@ -61,7 +61,7 @@
 			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications"  style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications">
-<img src="/img/icons/Devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
+<img src="/img/icons/devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
 				<span class="badge badge-info">10</span>
 				<b class="caret"></b></a>
 				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">
@@ -85,7 +85,7 @@
 			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnNotifications"  style="background-color:transparent;" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
-<img src="/img/icons/Devine/white/Info 2.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
+<img src="/img/icons/devine/white/Info 2.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
 				<span class="badge badge-warning">10</span>
 				<b class="caret"></b></a>
 				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">

@@ -90,11 +90,22 @@ $this->Js->get('#btnMaterialSubmit')->event(
 			</thead>
 			<tbody>
 			<?php foreach($materiales as $item):?>
-			<tr id="<?php e($item['ArticuloProveedor']['articulo_id']);?>" class="t-row">
+			<tr id="<?php e($item['ArticuloProveedor']['id']);?>" class="t-row">
 				<td class="" title="<?php e($item['Articulo']['ardescrip'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class="precio"><?php e($item['ArticuloProveedor']['costo'])?></td>
 				<td class="fecha">NO</td>
-				<td class="st"><button class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
+				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									id="btnDelete_<?php e($item['Articulo']['id']); ?>"
+									data-type="clickaction"
+									data-url="/Proveedores/deleteCostoArticulo" 
+									data-id="<?php e($item['ArticuloProveedor']['id']); ?>" 
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="vale" 
+									data-confirm-msg="Seguro de Eliminar el Item?"
+									data-icon="trash">
+									<i class="icon icon-trash"></i>
+							</button>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -127,11 +138,22 @@ $this->Js->get('#btnMaterialSubmit')->event(
 			</thead>
 			<tbody>
 			<?php foreach($servicios as $item):?>
-			<tr id="<?php e($item['ArticuloProveedor']['articulo_id']);?>" class="t-row">
+			<tr id="<?php e($item['ArticuloProveedor']['id']);?>" class="t-row">
 				<td class="" title="<?php e($item['Articulo']['ardescrip'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class="precio"><?php e($item['ArticuloProveedor']['costo'])?></td>
 				<td class="fecha">NO</td>
-				<td class="st"><button class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
+				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
+									id="btnDelete_<?php e($item['Articulo']['id']); ?>"
+									data-type="clickaction"
+									data-url="/Proveedores/deleteCostoArticulo" 
+									data-id="<?php e($item['ArticuloProveedor']['id']); ?>" 
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="vale" 
+									data-confirm-msg="Seguro de Eliminar el Item?"
+									data-icon="trash">
+									<i class="icon icon-trash"></i>
+							</button>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -140,4 +162,40 @@ $this->Js->get('#btnMaterialSubmit')->event(
 		<?php echo $this->Form->End();?>
 	</div>
 </div>
+
+<?php
+
+// Event for Detail's Delete Button
+$this->Js->get('.detailDelete')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theID=el.data('id');
+var theCve=el.data('value');
+var theUrl=el.data('url');
+bootbox.confirm('Seguro de ELIMINAR la partida ' + theCve + ' de la explosion ?', 
+function(result) {
+    if (result) {
+		$.ajax({
+			dataType: 'html', 
+			type: 'post', 
+			url: theUrl+'/'+theID,
+			success: function (data, textStatus) {
+				if(data=='OK') {
+					$('#'+theID).remove();
+					axAlert('Insumo ' + theCve + ' Eliminado', 'success', false);
+					}
+				else {
+					axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+				}
+			},
+		});
+
+    }
+}
+);
+
+"
+, array('stop' => true));
+?>
 

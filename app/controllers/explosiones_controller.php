@@ -52,11 +52,12 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 	function add($id=null) {
+		$this->autoRender=false;
 		if(!$id) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			$this->redirect(array('action' => 'index'));			
+ 			echo __('item_could_not_be_deleted', true)." (id: $id)";
+			exit;
 		} 
-
+/*
 		if (!empty($this->data)) {
 			if ($this->Explosion->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
@@ -65,6 +66,35 @@ class ExplosionesController extends MasterDetailAppController {
 				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
 			}
 		}
+*/
+	if(isset($this->params['named']['cve'])) $this->params['named']['cve']=strtoupper($this->params['named']['cve']);
+			$material_id=$this->Explosion->Material->findByArcveart($this->params['named']['cve']);
+			if($material_id && isset($material_id['Articulo']['id'])) {
+				$material_id=$material_id['Articulo']['id'];
+				$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];
+			}
+
+			$cant=abs($this->params['named']['cant']);
+			$insumopropio=$this->params['named']['insumopropio'];
+			$tipoarticuloid=$this->params['named']['tipoexplosionid'];
+
+			$record=array('Explosion'=>array(
+								'articulo_id'=>$id,
+								'material_id'=>$material_id,
+								'cant'=>$cant,
+								'insumopropio'=>$insumopropio,
+								'tipoarticuloid'=>$tipoarticuloid,
+			));
+			
+				$this->Explosion->create();
+				if( $this->Explosion->save($record) ) {
+					echo "OK Insumo Agregado";
+				}
+				else {
+ 					echo __('item_could_not_be_saved', true)." (id: $material_id)";
+					exit;					
+				}
+			echo "OK $material_id";
 
 	}
 
