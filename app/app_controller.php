@@ -35,6 +35,7 @@ class AppController extends Controller {
 		'Form',
 		'Session',
 		'Paginator',
+/*		'AssetCompress.AssetCompress',*/
 		'TBS',
 		'WebAlert',
 /*		'Embed',*/

@@ -1,5 +1,14 @@
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
+<?php 
+// Compile and minify all the js files, grouped by layers (ie: jquery, twitter bootstrap, ui mvc, axbos)
+// To generate production's compiled files, from the Cake's Shell: 
+// cake asset_compress.asset_compress build_ini 
+// cake asset_compress.asset_compress build
+ 
+//echo $this->AssetCompress->script('jquery-combined'); 
+?>
+
 <?php
 
 echo

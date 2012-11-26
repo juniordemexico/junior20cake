@@ -33,7 +33,7 @@
 			><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentTelasTable">
+		<div id="detailContentTelaTable">
 		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
@@ -91,8 +91,11 @@
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
 			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
-			<input type="checkbox" class="detailPropio" id="chkHabilPropio" name="data[Explosion][HabilPropio]" title="Marcar en caso de ser un insumo propio" />
-			<button id="submitHabil" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
+			<input type="checkbox" class="detailPropio" id="chkHabilInsumoPropio" name="data[Explosion][HabilPropio]" title="Marcar en caso de ser un insumo propio" />
+			<button id="submitHabil" class="btn" type="button"
+			data-url="/Explosiones/add"
+			>
+			<i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentHabilTable">
@@ -150,15 +153,18 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="ExplosionServiciocve" name="data[Explosion][Serviciocve]" class="span2"
+			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:3"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			/> &nbsp;&nbsp;
-			<input type="text" maxlength="16" id="ExplosionServiciocant" name="data[Explosion][Serviciocant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
-			<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
+			<input type="text" maxlength="16" id="edtServicioCant" name="data[Explosion][ServicioCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<button id="submitServicio" class="btn" type="button"
+			data-url="/Explosiones/add"
+			>
+			<i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentTelasTable">
+		<div id="detailContentServicioTable">
 		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
@@ -205,6 +211,7 @@
 <?php
 
 // Event for Detail's Delete Button
+$this->Js->domReady(
 $this->Js->get('.detailDelete')->event(
 'click', "
 
@@ -235,7 +242,7 @@ function(result) {
 );
 
 "
-, array('stop' => true));
+, array('stop' => true)));
 
 // Event for Detail's Checkbox
 
@@ -278,20 +285,82 @@ var theCve=$('#edtTelaCve').val();
 var theCant=$('#edtTelaCant').val();
 var theInsumoPropio=(($('#chkTelaInsumoPropio').attr('checked')=='checked')?1:0);
 var theUrl=el.data('url');
-/*
-axAlert('articulo_id:'+theArticuloID);
-axAlert('cve:'+theCve);
-axAlert('cant:'+theCant);
-axAlert('propio:'+theInsumoPropio);
-*/
-axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio);
+
 $.ajax({
 	dataType: 'html', 
 	type: 'post',
 	url: theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio+'/tipoexplosionid:'+theTipoExplosion,
 	success: function (data, textStatus) {
 		if(data.substring(0,2)=='OK') {
-			axAlert('Insumo ' + theCve + ' Agregado', 'success', false);
+			axAlert(data, 'success', false);
+			$('#detailContentTelaTable').load('/Explosiones/detailtela/'+theArticuloID);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
+$this->Js->get('#submitHabil')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theTipoExplosion=1;
+var theArticuloID=$('#ArticuloId').val();
+var theCve=$('#edtHabilCve').val();
+var theCant=$('#edtHabilCant').val();
+var theInsumoPropio=(($('#chkHabilInsumoPropio').attr('checked')=='checked')?1:0);
+var theUrl=el.data('url');
+/*
+axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio+'/tipoexplosionid:'+theTipoExplosion);
+*/
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio+'/tipoexplosionid:'+theTipoExplosion,
+	success: function (data, textStatus) {
+		if(data.substring(0,2)=='OK') {
+			axAlert(data, 'success', false);
+			$('#detailContentHabilTable').load('/Explosiones/detailhabil/'+theArticuloID);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
+
+$this->Js->get('#submitServicio')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theTipoExplosion=2;
+var theArticuloID=$('#ArticuloId').val();
+var theCve=$('#edtServicioCve').val();
+var theCant=$('#edtServicioCant').val();
+var theUrl=el.data('url');
+/*
+axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/tipoexplosionid:'+theTipoExplosion);
+*/
+
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/tipoexplosionid:'+theTipoExplosion,
+	success: function (data, textStatus) {
+		if(data.substring(0,2)=='OK') {
+			axAlert(data, 'success', false);
+			$('#detailContentServicioTable').load('/Explosiones/detailservicio/'+theArticuloID);
 			return true;
 		}
 		else {

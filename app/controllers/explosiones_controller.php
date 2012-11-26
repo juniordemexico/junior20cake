@@ -57,48 +57,60 @@ class ExplosionesController extends MasterDetailAppController {
  			echo __('item_could_not_be_deleted', true)." (id: $id)";
 			exit;
 		} 
-/*
-		if (!empty($this->data)) {
-			if ($this->Explosion->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
-			}
-		}
-*/
-	if(isset($this->params['named']['cve'])) $this->params['named']['cve']=strtoupper($this->params['named']['cve']);
-			$material_id=$this->Explosion->Material->findByArcveart($this->params['named']['cve']);
+
+	if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
+			$material_id=$this->Explosion->Material->findByArcveart($material_cve);
 			if($material_id && isset($material_id['Articulo']['id'])) {
 				$material_id=$material_id['Articulo']['id'];
-				$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];
+				$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
+			}
+			else {
+				echo "NO se encontro $material_cve de tipo $tipoexplosionid";
+				exit;
 			}
 
 			$cant=abs($this->params['named']['cant']);
-			$insumopropio=$this->params['named']['insumopropio'];
-			$tipoarticuloid=$this->params['named']['tipoexplosionid'];
+			$insumopropio=isset($this->params['named']['insumopropio'])?$this->params['named']['insumopropio']:0;
+			$tipoexplosionid=$this->params['named']['tipoexplosionid'];
 
 			$record=array('Explosion'=>array(
 								'articulo_id'=>$id,
 								'material_id'=>$material_id,
 								'cant'=>$cant,
 								'insumopropio'=>$insumopropio,
-								'tipoarticuloid'=>$tipoarticuloid,
+								'tipoarticulo_id'=>$tipoexplosionid
 			));
 			
 				$this->Explosion->create();
+				$palabra=($tipoexplosionid==2?'Servicio': 'Insumo');
 				if( $this->Explosion->save($record) ) {
-					echo "OK Insumo Agregado";
+					echo "OK $palabra $material_cve agregado a la explosión ($tipoexplosionid)";
+					exit;
 				}
 				else {
  					echo __('item_could_not_be_saved', true)." (id: $material_id)";
 					exit;					
 				}
-			echo "OK $material_id";
+			echo "ERROR Indeterminado";
 
 	}
 
-	function delete($id=null) {
+	public function detailtela($id=null) {
+		$this->set('articulo', $this->Articulo->read(null,$id) );
+		$this->set('explosion', $this->Explosion->getAllItems($id) );
+	}
+	
+	public function detailhabil($id=null) {
+		$this->set('articulo', $this->Articulo->read(null,$id) );
+		$this->set('explosion', $this->Explosion->getAllItems($id) );
+	}
+	
+	public function detailservicio($id=null) {
+		$this->set('articulo', $this->Articulo->read(null,$id) );
+		$this->set('explosion', $this->Explosion->getAllItems($id) );
+	}
+	
+	public function delete($id=null) {
 		$this->autoRender=false;
 		
 		// Check if the ID was submited and if the specified item exists

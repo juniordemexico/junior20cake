@@ -10,31 +10,43 @@
 	<div id="detailContentMaterial" class="span6">
 		<h4>Materiales relacionados:</h4><br />
 		<?php echo $this->Form->create('Proveedor', array('action'=>'/costoarticulo', 'class'=>'form-search')); ?>
-		<?php echo $this->Form->hidden('Proveedor.id'); ?>
+		<?php echo $this->Form->hidden('Proveedor.id', array('value'=>$this->data['Proveedor']['id'])); ?>
 		<?php echo $this->Form->hidden('Proveedor.prcvepro'); ?>
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
 		<?php echo $this->Form->hidden('Material.id'); ?>
 		<!-- Typeahead init -->
 
 		<div class="controls controls-row well well-small">
+			<input type="text" maxlength="16" id="edtMaterialCve" name="data[ArticuloProveedor][MaterialCve]" class="span2"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			/>
+			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span1" title="Costo segun el proveedor especificado" />
+			<button id="submitMaterial" class="btn" type="button"
+			data-url="/Proveedores/addCostoArticulo"
+			><i class="icon icon-plus-sign"></i> Agregar</button>
+
 <?php
 //		<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
 //		data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 //		data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 //		/>
 ?>
-		<?php echo $this->TBS->input('Material.arcveart',
+
+		<?php
+		/* echo $this->TBS->input('Material.arcveart',
 										array(
+										'id'=>'edtMaterialCve'
 										'label'=>false,
 										'postData'=>array('Proveedor.id'),
 										'autocomplete'=>array(
 											'url'=>'/Articulos/autocomplete/tipo:1',
 											'min-length'=>2,
-/*											'addHiddenField'=>array('Material.id'=>array('source'=>'id')) */
+//											'addHiddenField'=>array('Material.id'=>array('source'=>'id')) 
 											),
 										)
 									);
-		?>
+*/		?>
 <?php
 
 /*
@@ -67,15 +79,6 @@ var cveartmat_el = $('#MaterialArcveart');
 array('inline'=>false)
 );
 */
-?>
-		<!-- Typeahead term -->
-		<input type="text" maxlength="8" id="material_costo" name="data[Proveedor][material_costo]" class="span1" />
-		<button id="btnMaterialSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
-<?php echo 
-$this->Js->get('#btnMaterialSubmit')->event(
-'click',
-"bootbox.alert( $('#MaterialId').val() );"
-, array('stop' => true));
 ?>
 		</div>
 		<div id="detailContentMaterialTable">
@@ -121,10 +124,14 @@ $this->Js->get('#btnMaterialSubmit')->event(
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
 		<?php echo $this->Form->hidden('Material.id'); ?>
 		<div class="controls controls-row well well-small">
-		<?php //echo $this->TBS->autoComplete('Proveedor.cveart', '/Articulo/autocomplete', array('label'=>false) );?>
-		<input type="text" maxlength="16" id="Proveedor.cveartserv" name="data[Proveedor][cveartserv]" class="span2" data-provide="typeahead" data-items="16" data-min-length="2" data-source='["uno","dos","tres","doscientos","cuadrados"]' />
-		<input type="text" maxlength="6" id="Proveedor.costoserv" name="data[Proveedor][costoserv]" class="span1" />
-		<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
+			<input type="text" maxlength="16" id="edtServicioCve" name="data[ArticuloProveedor][ServicioCve]" class="span2"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			/>
+			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" class="span1" title="Costo segun el proveedor especificado" />
+			<button id="submitServicio" class="btn" type="button"
+			data-url="/Proveedores/addCostoArticulo"
+			><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 		<div id="detailContentServicioTable">
 		<table class="table table-condensed">
@@ -197,5 +204,73 @@ function(result) {
 
 "
 , array('stop' => true));
+
+
+// Add Detail Button Event
+
+$this->Js->get('#submitMaterial')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theProveedorID=$('#ProveedorId').val();
+var theCve=$('#edtMaterialCve').val();
+var thePCosto=$('#edtMaterialPCosto').val();
+var theUrl=el.data('url');
+axAlert(theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto);
+
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto,
+	success: function (data, textStatus) {
+		if(data.substring(0,2)=='OK') {
+			axAlert(data, 'success', false);
+/*			$('#detailContentTelaTable').load('/Proveedor/detailcostos/'+theProveedorID);*/
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
+
+
+// Add Detail Button Event::SERVICIOS
+
+$this->Js->get('#submitServicio')->event(
+'click', "
+
+var el=$('#'+this.id);
+var theProveedorID=$('#ProveedorId').val();
+var theCve=$('#edtServicioCve').val();
+var thePCosto=$('#edtServicioPCosto').val();
+var theUrl=el.data('url');
+axAlert(theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto);
+
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto,
+	success: function (data, textStatus) {
+		if(data.substring(0,2)=='OK') {
+			axAlert(data, 'success', false);
+/*			$('#detailContentTelaTable').load('/Proveedor/detailcostos/'+theProveedorID);*/
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
 ?>
 

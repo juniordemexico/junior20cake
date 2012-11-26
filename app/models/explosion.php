@@ -32,7 +32,7 @@ class Explosion extends AppModel
 				'message' => 'Debe Especificar el Material o Servicio'
 			),
 		),
-		'insumopropio' => array(
+		'insumopropio' => array( 
 			'inlist' => array(
 				'rule' => array('boolean'),
 				'required' => false,
