@@ -95,6 +95,15 @@ class ExplosionesController extends MasterDetailAppController {
 
 	}
 
+	public function getDetail($id=null, $type=null) {
+		if(!$id) {
+			
+		}
+//		$this->set('articulo', $this->Articulo->read(null,$id) );
+		$rs=$this->Explosion->getAllItems($id);
+		$this->set('response', $this->Explosion->getAllItems($id) );
+	}
+
 	public function detailtela($id=null) {
 		$this->set('articulo', $this->Articulo->read(null,$id) );
 		$this->set('explosion', $this->Explosion->getAllItems($id) );

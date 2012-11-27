@@ -17,6 +17,7 @@ class AppController extends Controller {
   							'Auth',	
 							'Axfile',
 							'Axnotification',
+							'AxApiResponse',
 							'Filter',
 							'PaginationRecall',
 							'Upload',
@@ -48,6 +49,8 @@ class AppController extends Controller {
 
 	public $ok=true;
 	
+	public $apiResponse=array();
+	
 	// default datetime filter
 	var $_Form_options_datetime = array();
 
@@ -60,6 +63,16 @@ class AppController extends Controller {
 		$this->Auth->loginAction = array('controller' => 'Users', 'action' => 'login');
 		$this->Auth->loginRedirect = array('controller' => 'Desktop', 'action' => 'index');
 
+		// Initialize the apiResponse structure
+		$this->apiResponse=array(
+			'_id'=>99999,
+			'_parentid'=>88888,
+			'_timestamp'=>date('Y-m-d H:i:s'),
+			'result'=>'ok',
+			'messages'=>array(),
+			'data'=>array(),
+			);
+		
 		// Set the default page's title
 		$this->pageTitle=$this->name;
 

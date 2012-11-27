@@ -45,6 +45,8 @@ echo
 		'bootstrap/bootstrap-timepicker',
 		'bootstrap/bootstrap-image-gallery.min',
 
+		'ui/ember',
+
 //		'unicorn/uniform',
 //		'unicorn/unicorn',
 //		'unicorn/unicorn.tables',
