@@ -1,58 +1,14 @@
-/* IDD Core Javascript functionality */
-
-
-/* JQuery Ajax Global Options and Callbacks */
-
-
-$(document).ready(function() {
-	if ( typeof $('#busy-indicator')=='object') {
-		$('#busy-indicator').ajaxStart( function() {
-			$(this).show();
-		});
-		$('#busy-indicator').ajaxStop( function() {
-			$(this).hide();
-		});
-	}
-
-	if ( typeof $('.dropdown-toggle') != 'undefined' ) {
-		$('.dropdown-toggle').dropdown();
-	}
-
-$.extend($.gritter.options, { 
-    position: 'top-right', // defaults to 'top-right' but can be 'bottom-left', 'bottom-right', 'top-left', 'top-right' (added in 1.7.1)
-	fade_in_speed: 'fast', // how fast notifications fade in (string or int)
-	fade_out_speed: 2000, // how fast the notices fade out
-	time: 5000, // hang on the screen for...
-	sticky: true,
-});
-
-});
-
-function capitaliseFirstLetter(string)
-{
-    return string[0].toUpperCase() + string.slice(1);
-}
-
-var AxFillFormFields = function(data,form) {
-	
-        $.each(data,function(k,d) {
-			var model=k;
-			$.each(d,function(field,value) {
-				elID=model+capitaliseFirstLetter(field);
-				el=$('#'+form+' '+'#'+elID);
-				if(typeof $(el) != undefined) {
-					$(el).val(value);
-				}
-			});
-		});
-    }
+/* AxBOS Core Javascript functionality (symbols, functions and classes) */
 
 
 /*
-	In-Browser sticky alerts
-	
-	axAlert('buena notificacion Eliminado.', 'success');
-	axAlert('Esto es por un error que ocurrio ya sabes pues', 'error');
+	In-Browser sticky alerts (Based on jQuery's Gritter)
+	Usage:
+	axAlert('This is the text contents of an INFO alert (default)');
+	axAlert('Transaction succesfully!', 'success');
+	axAlert('Error while trying to connect with the host...', 'error');
+	axAlert('Today is due-date for THAT TASK!', 'warning');
+	axAlert('You have a new mail from he@there.no', 'notification');
 */
 var axAlert = function(txt, type, sticky, title, icon) {
 	var labelClass='';
@@ -76,7 +32,7 @@ var axAlert = function(txt, type, sticky, title, icon) {
 			iconClass = 'Fevorite.png';
 			title = title!='' ? title : 'OK!';
 			break;
-		case 'alert': 
+		case 'notification': 
 			labelClass='label-info';
 			iconClass = 'Info 2.png';
 			title = title!='' ? title : 'NOTIFICACION!';
@@ -114,9 +70,31 @@ var axAlert = function(txt, type, sticky, title, icon) {
 	});
 }
 
+/* Form's functions */
+var AxFillFormFields = function(data,form) {
+	$.each(data,function(k,d) {
+		var model=k;
+		$.each(d,function(field,value) {
+			elID=model+capitaliseFirstLetter(field);
+			el=$('#'+form+' '+'#'+elID);
+			if(typeof $(el) != undefined) {
+				$(el).val(value);
+			}
+		});
+	});
+}
+
+/* Generic Utilities */
 function getUniqueId(prefix) {
 	if(typeof prefix != 'object') {
 		prefix='';
 	}
 	return (prefix + '_' + Math.floor(Math.random()*99999));
+}
+
+
+/* String functions */
+function capitaliseFirstLetter(string)
+{
+    return string[0].toUpperCase() + string.slice(1);
 }

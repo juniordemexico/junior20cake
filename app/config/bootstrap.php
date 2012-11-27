@@ -107,24 +107,6 @@
 	define('AX_TALLAS_MAX', 10);
 	define('AX_AUTOCOMLPETE_ITEMS_LIMIT',16);
 
-//	require APP . 'plugins' . DS . 'ajax_multi_upload' . DS . 'config' . DS . 'bootstrap.php';
+	// Load jQuery's AjaxMultiUpload plugin's bootstrap file
 	require APP . 'config' . DS . 'ajaxmultiupload.bootstrap.php';
 
-//CakePlugin::load('AjaxMultiUpload', array('bootstrap' => true, 'routes' => true));
-
-/* Media Plugin */
-/*
-require APP . 'plugins' . DS . 'media' . DS . 'config' . DS . 'core.php';
-//images sizes
-$small = array('fitCrop' => array(320, 240));
-$medium = array('fitCrop' => array(1280, 768));
-$large = array('fitCrop' => array(1440, 1080));
- 
-Configure::write('Media.filter', array(
-	'audio' =>  array(),
-	'document' =>  array(),
-	'generic' => array(),
-	'image' => compact('small', 'medium', 'large'),
-	'video' => compact('small', 'medium')
-));
-*/

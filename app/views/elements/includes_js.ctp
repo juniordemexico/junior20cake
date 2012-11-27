@@ -45,14 +45,13 @@ echo
 		'bootstrap/bootstrap-timepicker',
 		'bootstrap/bootstrap-image-gallery.min',
 
-		'ui/ember',
+		'webui/ember',
 
-//		'unicorn/uniform',
-//		'unicorn/unicorn',
-//		'unicorn/unicorn.tables',
-//		'unicorn/unicorn.charts',
-
-		// Application's libraries and utilities
-		'axcore'
+		// AxBOS Bootstrap JS script
+		'ax.bootstrap'
+		
+		// AxBOS Core Application's Functions, Classes, Helpers, Simbols
+		'ax.core'
+				
 		)).CR.
 	CR;
