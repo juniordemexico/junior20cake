@@ -13,7 +13,7 @@ echo $form->create('Color',array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
 				<th class=""><?php echo $form->text('cve', array('id'=>'cve', 'label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Color', 'class' => 'search-query'));?></th>

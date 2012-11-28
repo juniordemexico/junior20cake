@@ -13,7 +13,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
 				<th class="cveart"><?php echo $form->text('arcveart', array('id'=>'cveart', 'label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>

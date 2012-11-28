@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!--[if IE 8]><html class="lt-ie10 ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html class="lt-ie10 ie9" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
 
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
@@ -26,13 +28,13 @@
 <body>
 
 <div class="container-fluid">	
-	<div class="row-fluid">
+	<div class="row">
 		<div class="span12">
 
-			<div class="row-fluid" id="wrapper">
+			<div class="row" id="wrapper">
 			<div class="span12" id="content">
 
-				<div class="row-fluid" id="formMessagesContainer">
+				<div class="row" id="formMessagesContainer">
 				<div class="span12" id="formMessages">
 
 <?php echo $this->TBS->myflashes(); ?>
@@ -40,13 +42,13 @@
 				</div> <!-- span formMessages -->
 				</div> <!-- row formMessagesContainer -->
 
-				<div class="row-fluid" id="formContent">
+				<div class="row" id="formContent">
 
 <?php echo $content_for_layout; ?>
 
 				</div> <!-- formContent row -->
 
-				<div class="row-fluid" id="formScriptsContainer">
+				<div class="row" id="formScriptsContainer">
 				<div class="span12" id="formScripts">
 						
 <?php echo $this->Js->writeBuffer();?>

@@ -16,7 +16,7 @@ echo
 	'jquery-ui/fullcalendar',
 
 	// Twitters Bootstrap's styles and themes 
-	'bootstrap/bootstrap-responsive.min',
+//	'bootstrap/bootstrap-responsive.min',
 	'bootstrap/bootstrap.min',
 	'bootstrap/bootstrap-image-gallery.min',
 	// Application Main Styles 

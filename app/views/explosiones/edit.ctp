@@ -22,13 +22,11 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
+
 			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<script type="text/x-handlebars">
-			{{view App.SearchTextField placeholder="Search..." valueBinding="App.tweetsC.term"}}
-
 			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
 			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]" title="Marcar en caso de ser un insumo propio" />
 			<button id="submitTela" {{action "load" target="AxBOS.TelaC"}} class="btn" type="button"
@@ -48,10 +46,8 @@
 			</tr>
 			</thead>
 			<tbody>
-			{{#view AxBOS.telasV}}
-				{{#each App.telasC}}
 
-			<?php //foreach($explosion['tela'] as $item): ?>
+			<?php foreach($explosion['tela'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
@@ -82,9 +78,7 @@
 				</td>
 			</tr>
 
-			<?php //endforeach; ?>
-				{{/each}}
-			{{/view}}
+			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -220,7 +214,6 @@
 <?php
 
 // Event for Detail's Delete Button
-$this->Js->domReady(
 $this->Js->get('.detailDelete')->event(
 'click', "
 
@@ -251,7 +244,7 @@ function(result) {
 );
 
 "
-, array('stop' => true)));
+, array('stop' => true));
 
 // Event for Detail's Checkbox
 
@@ -325,9 +318,7 @@ var theCve=$('#edtHabilCve').val();
 var theCant=$('#edtHabilCant').val();
 var theInsumoPropio=(($('#chkHabilInsumoPropio').attr('checked')=='checked')?1:0);
 var theUrl=el.data('url');
-/*
-axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/insumopropio:'+theInsumoPropio+'/tipoexplosionid:'+theTipoExplosion);
-*/
+
 $.ajax({
 	dataType: 'html', 
 	type: 'post',
@@ -358,9 +349,6 @@ var theArticuloID=$('#ArticuloId').val();
 var theCve=$('#edtServicioCve').val();
 var theCant=$('#edtServicioCant').val();
 var theUrl=el.data('url');
-/*
-axAlert(theUrl+'/'+theArticuloID+'/cve:'+theCve+'/cant:'+theCant+'/tipoexplosionid:'+theTipoExplosion);
-*/
 
 $.ajax({
 	dataType: 'html', 
@@ -383,74 +371,3 @@ $.ajax({
 , array('stop' => true));
 
 ?>
-
-<script>
-AxBOS = Em.Application.create();
-AxBOS.edtTelaCve = Em.TextField.extend({
-    insertNewline: function() {
-        AxBOS.telasC.load();
-    }
-
-});
-
-AxBOS.Tela = Em.Object.extend({
-    id: null,
-    cve: null,
-    cant: null,
-    insumopropio: null,
-});
-
-AxBOS.telasC=Em.ArrayController.create({
-content: [],
-cve: '',
-//loader: false,
-firstRun: true,
-load: function() {
-	var me=this;
-	var term=me.get('term');
-	var first=me.get('firstRun');
-	
-	//show loader
-//	me.set('loader', true);
-	
-	// no longer first-run
-	if(first == true) {
-		me.set('firstRun',false);
-	}
-	
-	if (term) {
-		var url='/Explosiones/gettelas/'+$('#ArticuloId').val();
-		
-		$.ajax({
-			url: url,
-			dataType: 'JSON',
-			success: function(data) {
-				var telas = data.results;
-				me.set('content', []);
-				$(telas).each(function(index, record){
-                	var item = AxBOS.Tela.create({
-    					id: record.id,
-    					cve: record.cve,
-    					cant: record.cant,
-    					insumopropio: record.insumopropio,
-                	});
-					me.pushObject(item);
-				});
-//				me.set('loader', false);
-			},
-			complete: function(xhr) {
-				if(xhr.status == 400 || xhr.status == 420) {
-                	me.set('limit', true);
-				}
-            });
-		
-	} // if(term)
-} // function load()
-	
-});  // telasC controller
-
-AxBOS.telasV=Em.View.extend ({
-
-});
-
-</script>

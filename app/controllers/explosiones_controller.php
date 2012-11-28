@@ -7,13 +7,12 @@ class ExplosionesController extends MasterDetailAppController {
 		'Articulo', 'Explosion', 'Color', 'Linea', 'Marca', 'Temporada'
 	);
 
-	var $layout = 'ajaxclean';
+	var $layout = 'default';
 	
 	var $cacheAction = array('view'
 							);
 
 	function index() {
-		$this->layout='default';
 
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
@@ -105,18 +104,24 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 	public function detailtela($id=null) {
-		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('explosion', $this->Explosion->getAllItems($id) );
+		if(!$id) {
+			$this->set('articulo', $this->Articulo->read(null,$id) );
+			$this->set('explosion', $this->Explosion->getAllItems($id) );
+		}
 	}
 	
 	public function detailhabil($id=null) {
-		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('explosion', $this->Explosion->getAllItems($id) );
+		if(!$id) {
+			$this->set('articulo', $this->Articulo->read(null,$id) );
+			$this->set('explosion', $this->Explosion->getAllItems($id) );
+		}
 	}
 	
 	public function detailservicio($id=null) {
-		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('explosion', $this->Explosion->getAllItems($id) );
+		if(!$id) {
+			$this->set('articulo', $this->Articulo->read(null,$id) );
+			$this->set('explosion', $this->Explosion->getAllItems($id) );
+		}
 	}
 	
 	public function delete($id=null) {

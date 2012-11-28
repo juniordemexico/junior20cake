@@ -13,7 +13,7 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed" cellspacing="0">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr id="trFilter">
 				<th class="cvepro"><?php echo $form->text('prcvepro', array('label' => '', 'type' => 'search', 'maxLength' => '16', 'placeholder' => 'Clave', 'class' => 'search-query'));?></th>

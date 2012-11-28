@@ -12,7 +12,7 @@ class AxApiResponse extends Component
 	public function startup( &$controller ) {
 		$this->controller =& $controller;
 		
-		$this->_header=array(	'_id'=>99999,
+		$this->_header=array(	'_id'=>99999, 
 								'_refererid'=>88888,
 								'_timestamp'=>date('Y-m-d H:i:s'),
 		);

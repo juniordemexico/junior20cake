@@ -12,7 +12,7 @@
 </div>
 </div>
 <?php
-echo $this->Js->submit('GUARDAR', array('class' => 'ui-button-primary', 'update' => '#content'));
+echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
 
 echo $this->Form->end();
 ?>

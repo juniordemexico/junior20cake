@@ -13,7 +13,7 @@ echo $form->create('Estados', array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
 				<th class=""><?php echo $form->text('Estado.esedo',array('label' => '', 'type' => 'search', 'placeholder' => 'Estado', 'class' => 'search-query'));?></th>

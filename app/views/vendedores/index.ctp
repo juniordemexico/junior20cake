@@ -6,7 +6,7 @@ $this->Paginator->options(array('update' => '#content',
 ?>
 
 <div id="gridWrapper">
-	<table id="datagrid" class="table table-bordered table-striped table-condensed" cellspacing="0">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr>
 				<th class="vendedor cve"><?php echo $this->Paginator->sort('Clave','vecveven'); ?></th>

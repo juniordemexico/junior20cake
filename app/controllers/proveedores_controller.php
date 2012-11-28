@@ -50,26 +50,28 @@ class ProveedoresController extends MasterDetailAppController {
 	function costoarticulo($id = null) {
 		$this->set('listAction', 'costos');
 		$this->set('title_for_layout', 'Costos por Proveedor');
-		if(!empty($this->data)) {
-			pr($this->data);
-			die();
-		}
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if (true/*$this->Proveedor->save($this->data)*/) {
-				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
-			}
-		}
-		if (empty($this->data)) {
+		$this->data = $this->Proveedor->read(null, $id);
+		$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (1)")) );
+		$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)")) );
+	}
+
+	function detailcostomaterial($id = null) {
+		if($id) {
 			$this->data = $this->Proveedor->read(null, $id);
 			$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(1)")) );
-			$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id NOT IN(0,1)")) );
+			$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(2)")) );
+		}
+	}
+
+	function detailcostoservicio($id = null) {
+		if($id) {
+			$this->data = $this->Proveedor->read(null, $id);
+			$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(1)")) );
+			$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(2)")) );
 		}
 	}
 
@@ -98,17 +100,16 @@ class ProveedoresController extends MasterDetailAppController {
 								'articulo_id'=>$material_id,
 								'costo'=>$pcosto,
 			));
-			
-				$this->ArticuloProveedor->create();
-				$palabra=($tipoarticulo_id==2?'Servicio': 'Insumo');
-				if( $this->ArticuloProveedor->save($record) ) {
-					echo "OK Costo de $material_cve guardado para este Proveedor";
-					exit;
-				}
-				else {
- 					echo __('item_could_not_be_saved', true)." (id: $material_id)";
-					exit;					
-				}
+			$this->ArticuloProveedor->create();
+			$palabra=($tipoarticulo_id==2?'Servicio': 'Insumo');
+			if( $this->ArticuloProveedor->save($record) ) {
+				echo "OK Costo de $material_cve guardado para este Proveedor";
+				exit;
+			}
+			else {
+ 				echo __('item_could_not_be_saved', true)." (id: $material_id)";
+				exit;					
+			}
 			echo "ERROR Indeterminado";
 	}
 

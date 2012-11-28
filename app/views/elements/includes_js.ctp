@@ -45,10 +45,11 @@ echo
 		'bootstrap/bootstrap-timepicker',
 		'bootstrap/bootstrap-image-gallery.min',
 
+		'webui/handlebars',
 		'webui/ember',
 
 		// AxBOS Bootstrap JS script
-		'ax.bootstrap'
+		'ax.bootstrap',
 		
 		// AxBOS Core Application's Functions, Classes, Helpers, Simbols
 		'ax.core'

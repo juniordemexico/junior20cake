@@ -13,7 +13,7 @@ echo $form->create('Cliente',array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
 				<th class="cvecli"><?php echo $form->text('clcvecli', array('type' => 'search', 'maxLength' => '16', 'placeholder' => 'Clave', 'class' => 'search-query'));?></th>

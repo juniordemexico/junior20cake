@@ -14,7 +14,7 @@ echo $form->create('Factura',array('inputDefaults' => array(
 															);
 ?>
 
-	<table id="datagrid"  class="table table-bordered table-striped table-condensed" cellspacing="0">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr id="trFilter">
 				<th class="refer"><?php echo $form->text('farefer', array('label' => '', 'type' => 'search', 'maxlength' => '8', 'placeholder' => 'Folio', 'class' => 'search-query'));?></th>

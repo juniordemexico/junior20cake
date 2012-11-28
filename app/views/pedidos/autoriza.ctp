@@ -13,7 +13,7 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed" cellspacing="0">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr id="trFilter">
 				<th class="refer"><?php echo $form->text('perefer', array('label' => '', 'type' => 'search', 'placeholder' => 'Folio', 'class' => 'search-query'));?></th>

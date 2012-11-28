@@ -17,21 +17,16 @@
 		<!-- Typeahead init -->
 
 		<div class="controls controls-row well well-small">
-			<input type="text" maxlength="16" id="edtMaterialCve" name="data[ArticuloProveedor][MaterialCve]" class="span2"
+			<input type="text" maxlength="16" id="edtMaterialCve" name="data[ArticuloProveedor][MaterialCve]"
+			class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span1" title="Costo segun el proveedor especificado" />
+			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span1"
+			title="Costo segun el proveedor especificado" />
 			<button id="submitMaterial" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
 			><i class="icon icon-plus-sign"></i> Agregar</button>
-
-<?php
-//		<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
-//		data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-//		data-autocomplete-url="/Articulos/autocomplete/tipo:1"
-//		/>
-?>
 
 		<?php
 		/* echo $this->TBS->input('Material.arcveart',
@@ -124,11 +119,13 @@ array('inline'=>false)
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
 		<?php echo $this->Form->hidden('Material.id'); ?>
 		<div class="controls controls-row well well-small">
-			<input type="text" maxlength="16" id="edtServicioCve" name="data[ArticuloProveedor][ServicioCve]" class="span2"
+			<input type="text" maxlength="16" id="edtServicioCve" name="data[ArticuloProveedor][ServicioCve]"
+			class="span2"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" class="span1" title="Costo segun el proveedor especificado" />
+			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" 
+			class="span1" title="Costo segun el proveedor especificado" />
 			<button id="submitServicio" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
 			><i class="icon icon-plus-sign"></i> Agregar</button>
@@ -155,7 +152,7 @@ array('inline'=>false)
 									data-url="/Proveedores/deleteCostoArticulo" 
 									data-id="<?php e($item['ArticuloProveedor']['id']); ?>" 
 									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-									data-confirm="vale" 
+									data-confirm="value" 
 									data-confirm-msg="Seguro de Eliminar el Item?"
 									data-icon="trash">
 									<i class="icon icon-trash"></i>
@@ -225,7 +222,7 @@ $.ajax({
 	success: function (data, textStatus) {
 		if(data.substring(0,2)=='OK') {
 			axAlert(data, 'success', false);
-/*			$('#detailContentTelaTable').load('/Proveedor/detailcostos/'+theProveedorID);*/
+			$('#detailContentMaterialTable').load('/Proveedores/detailcostomaterial/'+theProveedorID);
 			return true;
 		}
 		else {
@@ -259,7 +256,7 @@ $.ajax({
 	success: function (data, textStatus) {
 		if(data.substring(0,2)=='OK') {
 			axAlert(data, 'success', false);
-/*			$('#detailContentTelaTable').load('/Proveedor/detailcostos/'+theProveedorID);*/
+			$('#detailContentServicioTable').load('/Proveedores/detailcostoservicio/'+theProveedorID);
 			return true;
 		}
 		else {

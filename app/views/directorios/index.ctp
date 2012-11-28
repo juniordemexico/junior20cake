@@ -14,7 +14,7 @@ echo $form->create('Directorio',array('inputDefaults' => array(
 															);
 ?>
 
-	<table id="datagrid" class="table table-bordered table-striped table-condensed">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
 				<th class="span1"><?php echo $form->text('cve', array('type' => 'search', 'maxLength' => '16', 'placeholder' => 'Clave', 'class' => 'search-query'));?></th>

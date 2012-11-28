@@ -463,7 +463,7 @@ array('inline'=>false)
 			$options['id'] = 'submit-' . intval(mt_rand());
 		}
 		$formOptions = array('div');
-		list($options, $htmlOptions) = $this->_getHtmlOptions($options, $formOptions);
+		list($options, $htmlOptions) = $this->Js->_getHtmlOptions($options, $formOptions);
 		if( isset($options['escape']) ) $htmlOptions['escape']=$options['escape'];
 		
 		$out = $this->Form->submit($caption, $htmlOptions);
