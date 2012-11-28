@@ -100,6 +100,9 @@ msgstr "La Transacción NO pudo ser guardada"
 msgid "transaction_has_been_saved"
 msgstr "Transacción Guardada Correctamente"
 
+msgid "you_are_not_authorized_to_access_that_location"
+msgstr "No estas autorizado para accesar esta direccion"
+
 msgid "divisa"
 msgstr "Divisa"
 

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/layouts/authentication.ctp</string>
+	<string>app/locale/es_mx/LC_MESSAGES/default.po</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,19 +21,77 @@
 	<integer>316</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/views/articulos/edit.ctp</key>
+		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>31</integer>
 				<key>line</key>
-				<integer>5</integer>
+				<integer>121</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
+			<integer>95</integer>
+		</dict>
+		<key>app/controllers/users_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>11</integer>
+				<key>line</key>
+				<integer>47</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
 			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>12</integer>
+		</dict>
+		<key>app/locale/eng/LC_MESSAGES/default.po</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>12</integer>
+				<key>line</key>
+				<integer>40</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>21</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>8</integer>
+				<key>line</key>
+				<integer>40</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>12</integer>
+				<key>line</key>
+				<integer>40</integer>
+			</dict>
+		</dict>
+		<key>app/locale/es_mx/LC_MESSAGES/default.po</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>37</integer>
+				<key>line</key>
+				<integer>85</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>72</integer>
 		</dict>
 		<key>app/views/articulos/index.ctp</key>
 		<dict>
@@ -62,6 +120,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>42</integer>
+		</dict>
+		<key>app/views/users/login.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>52</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>app/webroot/css/bootstrap/bootstrap.css.original</key>
 		<dict>
@@ -96,8 +168,12 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/articulos/edit.ctp</string>
 		<string>app/views/layouts/authentication.ctp</string>
+		<string>app/views/users/login.ctp</string>
+		<string>app/controllers/users_controller.php</string>
+		<string>app/locale/es_mx/LC_MESSAGES/default.po</string>
+		<string>app/locale/eng/LC_MESSAGES/default.po</string>
+		<string>app/controllers/explosiones_controller.php</string>
 		<string>app/views/articulos/index.ctp</string>
 		<string>app/webroot/css/bootstrap/bootstrap.css.original</string>
 	</array>
