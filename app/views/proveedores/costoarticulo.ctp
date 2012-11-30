@@ -17,13 +17,17 @@
 		<!-- Typeahead init -->
 
 		<div class="controls controls-row well well-small">
+			<div class="controls input">
 			<input type="text" maxlength="16" id="edtMaterialCve" name="data[ArticuloProveedor][MaterialCve]"
-			class="span2"
+			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span1"
+			</div>
+			<div class="controls input">
+			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span2"
 			title="Costo segun el proveedor especificado" />
+			</div>
 			<button id="submitMaterial" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
 			><i class="icon icon-plus-sign"></i> Agregar</button>
@@ -119,13 +123,17 @@ array('inline'=>false)
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
 		<?php echo $this->Form->hidden('Material.id'); ?>
 		<div class="controls controls-row well well-small">
+			<div class="controls input">
 			<input type="text" maxlength="16" id="edtServicioCve" name="data[ArticuloProveedor][ServicioCve]"
-			class="span2"
+			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+			</div>
+			<div class="controls input">
 			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" 
-			class="span1" title="Costo segun el proveedor especificado" />
+			class="span2" title="Costo segun el proveedor especificado" />
+			</div>
 			<button id="submitServicio" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
 			><i class="icon icon-plus-sign"></i> Agregar</button>

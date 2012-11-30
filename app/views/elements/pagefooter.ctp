@@ -1,5 +1,5 @@
 <section id="sectionFooters">
-	<div id="footer" class="row-fluid centered">
+	<div id="footer" class="row centered">
 		<div id="footer1" class="span6 centered">
 			<h6><?php echo __('ax_company_common_name').$html->link(' :: AxBOS :: '.__('ax_app_version'),'/'); ?></h6>
 		</div>

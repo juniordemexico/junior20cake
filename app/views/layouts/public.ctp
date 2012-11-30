@@ -75,7 +75,7 @@
 			<div class="row-fluid" id="wrapper">
 			<div class="span12" id="content">
 
-				<div class="row-fluid" id="formMessagesContainer">
+				<div class="row" id="formMessagesContainer">
 				<div class="span12" id="formMessages">
 
 <?php echo $this->TBS->myflashes(); ?>
@@ -83,13 +83,13 @@
 				</div> <!-- span formMessages -->
 				</div> <!-- row formMessagesContainer -->
 
-				<div class="row-fluid" id="formContent">
+				<div class="row" id="formContent">
 
 <?php echo $content_for_layout; ?>
 
 				</div> <!-- formContent row -->
 
-				<div class="row-fluid" id="formScriptsContainer">
+				<div class="row" id="formScriptsContainer">
 				<div class="span12" id="formScripts">
 						
 <?php echo $this->Js->writeBuffer();?>

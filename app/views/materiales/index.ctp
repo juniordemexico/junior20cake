@@ -20,6 +20,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class=""><?php echo $form->text('ardescrip',array('id'=>'descrip','label' => false, 'type' => 'search', 'maxLength' => '64', 'placeholder'=>'Descripción', 'class' => 'search-query'));?></th>
 				<th class="licve"><?php echo $form->text('Linea.licve',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Linea', 'class' => 'search-query'));?></th>
 				<th class="macve"><?php echo $form->text('Marca.macve',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Marca', 'class' => 'search-query'));?></th>
+				<th class="datetime"><?php echo $form->text('modified',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Fecha Modificacion...', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('arst',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php
@@ -32,6 +33,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class=""><?php echo $this->Paginator->sort('Descripción','ardescrip'); ?></th>
 				<th class="licve"><?php echo $this->Paginator->sort('Linea','Linea.licve'); ?></th>
 				<th class="macve"><?php echo $this->Paginator->sort('Marca','Marca.macve'); ?></th>
+				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','modified'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','arst'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
@@ -43,6 +45,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<td class=""><?php echo $articulo['Articulo']['ardescrip'];?></td>
 				<td class="licve"><?php echo $articulo['Linea']['licve']; ?></td>
 				<td class="macve"><?php echo $articulo['Marca']['macve']; ?></td>
+				<td class="datetime"><?php echo $articulo['Articulo']['modified']; ?></td>
 				<td class="st"><?php echo $articulo['Articulo']['arst']; ?></td>
 				<td class="id"><?php echo $articulo['Articulo']['id']; ?></td>
 			</tr>

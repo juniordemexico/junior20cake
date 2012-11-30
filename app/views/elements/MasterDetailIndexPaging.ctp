@@ -1,5 +1,5 @@
 
-<div class="row-fluid">
+<div class="row">
 <div class="span12" id="pagination-container">
 <div class="pagination centered">
 <?php if( $paginator->hasNext() || $paginator->current()>1 ) :?>
