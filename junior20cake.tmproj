@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/config/ajaxmultiupload.bootstrap.php</string>
+	<string>app/views/explosiones/explosion.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -105,6 +105,20 @@
 			<key>firstVisibleLine</key>
 			<integer>21</integer>
 		</dict>
+		<key>app/views/explosiones/explosion.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>39</integer>
+				<key>line</key>
+				<integer>225</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>209</integer>
+		</dict>
 		<key>app/views/materiales/index.ctp</key>
 		<dict>
 			<key>caret</key>
@@ -144,6 +158,7 @@
 		<string>app/app_controller.php</string>
 		<string>app/config/bootstrap.php</string>
 		<string>app/config/ajaxmultiupload.bootstrap.php</string>
+		<string>app/views/explosiones/explosion.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
