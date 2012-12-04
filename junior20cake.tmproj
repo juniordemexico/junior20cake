@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/helpers/t_b_s.php</string>
+	<string>app/controllers/articulos_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,39 +21,69 @@
 	<integer>316</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/views/helpers/t_b_s.php</key>
+		<key>app/controllers/articulos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>293</integer>
+				<integer>33</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>268</integer>
+			<integer>36</integer>
 		</dict>
-		<key>app/views/proveedores/costos.ctp</key>
+		<key>app/controllers/materiales_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>41</integer>
+				<key>line</key>
+				<integer>23</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/elements/includes_css.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>14</integer>
 				<key>line</key>
 				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>6</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/webroot/css/ax.generic.css</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>1081</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>1045</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/proveedores/costos.ctp</string>
-		<string>app/views/helpers/t_b_s.php</string>
+		<string>app/webroot/css/ax.generic.css</string>
+		<string>app/controllers/materiales_controller.php</string>
+		<string>app/controllers/articulos_controller.php</string>
+		<string>app/views/elements/includes_css.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

@@ -55,7 +55,17 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<td class="macve"><?php echo $articulo['Marca']['macve']; ?></td>
 				<td class="precio"><?php echo $this->Number->currency($articulo['Articulo']['arpva']); ?></td>
 				<td class="precio"><?php echo $this->Number->currency($articulo['Articulo']['arpvb']); ?></td>
-				<td class="precio"><?php echo $this->Number->precision($articulo[0]['existencia'],0); ?></td>
+				<td class="precio"><?php echo $this->Number->precision($articulo[0]['existencia'],0); ?>
+							<a href="/Articulos/tallacolor/<?php echo$articulo['Articulo']['id']; ?>/control:articulos/action:tallacolorexistenciadata" 
+							class="btnModalTallaColor"
+							data-toggle="modal" 
+							data-target="#dialogArticuloExistencia" 
+							data-item-id="<?php echo $articulo['Articulo']['id']; ?>"
+							data-item-title="<?php echo $articulo['Articulo']['arcveart']; ?> :: <?php echo $articulo['Articulo']['ardescrip']; ?>"
+							>
+							<i class="icon icon-eye-open pull-right"></i>
+							</a>
+				</td>
 				<td class="id"><?php echo $articulo['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
@@ -66,57 +76,26 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Articulo')); ?>
 
-<div id="dialogArticuloExistencia">
+<div id="dialogArticuloExistencia"  class="modal hide fade tallacolorModal">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="#dialogArticuloExistenciaTitle">Detalle de Tallas y Colores</h3>
+  </div>
+  <div class="modal-body">
+  </div>
 </div>
 
 </div> <!-- index-form -->
 
-<?php echo 
-$this->Js->get('.t-row')->event(
-'click',
-'
-$( "#dialogArticuloExistencia" ).html(this.id); 
-$( "#dialogArticuloExistencia" ).dialog( "open" );
-'
-, array('stop' => true));
-?>
-
 <script>
 
-$( "#dialogArticuloExistencia" ).dialog({
-			autoOpen: false,
-			height: 320,
-			width: 800,
-   			position: ["center","center"], 
-			zIndex: 999999,
-			modal: true,
-			stack: true,
-			resizable: false,
-			hide: 'fade',
-			show: 'fade',
-			autoOpen: false,
-			draggable: true,
-			rezisable: false,
-			buttons: {
-				Cerrar: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			open: function() {
-/*
-			if ( typeof $('#busy-indicator')=='object') {
-				$('#busy-indicator').show();
-			}
-*/
-				$( "#dialogArticuloExistencia" ).load('/articulos/tallacolor/'+$( "#dialogArticuloExistencia" ).html()+'/control:articulos/action:tallacolorexistenciadata');
-			},
-			close: function() {
-				$("#dialogArticuloExistencia").html('');
-/*
-				if ( typeof $('#busy-indicator')=='object') {
-					$('#busy-indicator').hide();
-				}
-*/				
-			}
-		});
+// Load the dynamic content before the Modal is Displayed
+$('#datagrid').on('click touchstart', '.btnModalTallaColor', function(event) {
+	var el=this;
+	var theUrl=el.href;
+	$('#dialogArticuloExistencia').find('h3').html($(el).data('itemTitle'));
+	$('#dialogArticuloExistencia').find('.modal-body').load(theUrl);
+	event.preventDefault();
+});
+
 </script>

@@ -21,6 +21,9 @@ class MaterialesController extends MasterDetailAppController {
 			if(isset($this->data['Articulo']['arcveart'])) {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
+//			if(isset($this->data['Articulo']['tipoarticulo_id'])) {
+				$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
+//			}
 		}
 	}
 

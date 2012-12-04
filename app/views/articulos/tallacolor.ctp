@@ -7,7 +7,7 @@ var isEditable=<?php echo "$isEditable";?>;
 jQuery("#list").jqGrid(
 { 
 url: '<?php echo $html->url('/'.$thecontroller.'/'.$theaction.'/'.$child_id.(isset($master_id)?'/master_id:'.$master_id:'').(isset($child_id)?'/child_id:'.$child_id:''));?>',
-datatype: "xml",
+datatype: "json",
 colNames:['COLOR','<?php echo $result['Talla']['tat0']?>','<?php echo $result['Talla']['tat1']?>','<?php echo $result['Talla']['tat2']?>','<?php echo $result['Talla']['tat3']?>','<?php echo $result['Talla']['tat4']?>','<?php echo $result['Talla']['tat5']?>','<?php echo $result['Talla']['tat6']?>','<?php echo $result['Talla']['tat7']?>','<?php echo $result['Talla']['tat8']?>','<?php echo $result['Talla']['tat9']?>'],
 colModel:[ 
 {name:'color_cve',index:'color_cve', width:250, editable:false, maxlength:32, sorteable: false, frozen: true, align: 'left'},
@@ -39,7 +39,6 @@ limit: 64,
 height: 150,
 width: 750,
 showCaption: false,
-caption:"<?php echo $result['Articulo']['arcveart'].' :: '.$result['Articulo']['ardescrip']; ?>",
 editurl: '<?php // echo $html->url('/'.$thecontroller.'/'.$theaction.'edit/'.$child_id.'/master_id:'.$master_id); ?>'
  });
 jQuery("#list").navGrid('navgrid',"#pager",{edit:false,add:false,del:false});

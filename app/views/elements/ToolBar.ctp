@@ -2,7 +2,8 @@
 <div id="divNavbar" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
- 			<a href="#" class="brand right">OGGI JEANS, Co.</a>
+			<a href="/Desktop" class="brand right">OGGI JEANS, Co.</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<ul class="nav navvar">
 				<li class="divider-vertical active">&nbsp;</li>
 				<li>
@@ -30,9 +31,14 @@
 				</li>
 <?php endif;?>
 			</ul>
-
-		 	<div id="navbarNotificationsContainer" class="nav-collapse collapse">
-			<ul class="nav navvar">
+			<ul class="nav navvar pull-right">
+			<li class="divider-vertical">&nbsp;</li>
+				<li>
+<?php 
+				echo $this->Html->link('<i class="icon icon-refresh icon-white"></i>', array(), array('update' => '#content', 'escape'=>false
+				)); 
+?>
+				</li>
 			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
@@ -53,7 +59,7 @@
 				</ul>
 			</li>
 			<li class="divider-vertical">&nbsp;</li>
-			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications">
+			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications"  style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications">
 <img src="/img/icons/devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
 				<span class="badge badge-info">10</span>
@@ -101,26 +107,13 @@
 				</ul>
 			</li>
 			<li class="divider-vertical">&nbsp;</li>
-				<li>
-<?php 
-				echo $this->Html->link('<i class="icon icon-refresh icon-white"></i>', array(), array('update' => '#content', 'escape'=>false
-				)); 
-?>
-				</li>
-		</ul>
-		</div>
-
-
-		</div> <!-- container -->
-		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		<span class="icon icon-bar"></span>
-		<span class="icon icon-bar"></span>
-		</a>
-			<div id="busy-indicator-div" class="pull-right">
+			<li>
+			<span id="busy-indicator-div" class="pull-right" style="float:right;">
 			<?php echo $this->Html->image('/img/loading_circle.gif', array('id' => 'busy-indicator', 'alt' => 'Transmitiendo', 'style'=>'display: none; float: right;')); ?>
-			</div>
-		</div>  <!-- container -->
-
+			</span>
+			</li>
+			</ul>
+		</div> <!-- container -->
 	</div>  <!-- navbar-inner -->
 
 </div>  <!-- divNavbar -->

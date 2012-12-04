@@ -66,7 +66,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Articulo')); ?>
 
-<div id="dialogArticuloExistencia">
+<div id="dialogArticuloExistencia" class="modal hide fade">
 </div>
 
 </div> <!-- index-form -->
