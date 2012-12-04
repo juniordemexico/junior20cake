@@ -238,6 +238,7 @@ class  TBSHelper extends AppHelper {
 												);
 
 			// Generate the html control element
+			$options['escape']=false;
 			$theControl=$this->Form->input($field, $options);
 
 			// Gets the generated control's id
@@ -330,10 +331,6 @@ array('inline'=>false)
 				}
 
 			}
-			$options['escape']=false;
-			
-	//		pr($options);
-
 			$theControl = $this->Form->input($field, $options);			
 		}
 

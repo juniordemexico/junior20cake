@@ -95,7 +95,7 @@ $( "#dialogArticuloExistencia" ).dialog({
 			hide: 'fade',
 			show: 'fade',
 			autoOpen: false,
-			draggable: true,
+			draggable: false,
 			rezisable: false,
 			buttons: {
 				Cerrar: function() {
@@ -105,7 +105,7 @@ $( "#dialogArticuloExistencia" ).dialog({
 			open: function() {
 /*
 			if ( typeof $('#busy-indicator')=='object') {
-				$('#busy-indicator').show(); b
+				$('#busy-indicator').show();
 			}
 */
 				$( "#dialogArticuloExistencia" ).load('/articulos/tallacolor/'+$( "#dialogArticuloExistencia" ).html()+'/control:articulos/action:tallacolorexistenciadata');

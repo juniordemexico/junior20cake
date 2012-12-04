@@ -86,7 +86,7 @@ $( "#dialogArticuloExistencia" ).dialog( "open" );
 $( "#dialogArticuloExistencia" ).dialog({
 			autoOpen: false,
 			height: 320,
-			width: 780,
+			width: 800,
    			position: ["center","center"], 
 			zIndex: 999999,
 			modal: true,
