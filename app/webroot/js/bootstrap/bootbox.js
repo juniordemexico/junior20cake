@@ -1,19 +1,16 @@
 /**
- * The MIT License
+ * bootbox.js v2.5.0
  *
- * Copyright (C) 2011-2012 by Nick Payne nick@kurai.co.uk
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+ * http://bootboxjs.com/license.txt
  */
-var bootbox = window.bootbox || (function() {
+var bootbox = window.bootbox || (function($) {
 
     var _locale        = 'en',
         _defaultLocale = 'en',
         _animate       = true,
+        _backdrop      = 'static',
+        _defaultHref   = 'javascript:;',
+        _classes       = '',
         _icons         = {},
         /* last var should always be the public object we'll return */
         that           = {};
@@ -47,9 +44,27 @@ var bootbox = window.bootbox || (function() {
             OK      : 'OK',
             CANCEL  : 'Cancelar',
             CONFIRM : 'Sim'
+        },
+        'nl' : {
+            OK      : 'OK',
+            CANCEL  : 'Annuleren',
+            CONFIRM : 'Accepteren'
+        },
+        'ru' : {
+            OK      : 'OK',
+            CANCEL  : 'Отмена',
+            CONFIRM : 'Применить'
+        },
+        'it' : {
+            OK      : 'OK',
+            CANCEL  : 'Annulla',
+            CONFIRM : 'Conferma'
         }
     };
 
+    /**
+     * private methods
+     */
     function _translate(str, locale) {
         // we assume if no target locale is probided then we should take it from current setting
         if (locale == null) {
@@ -69,6 +84,9 @@ var bootbox = window.bootbox || (function() {
         return str;
     }
 
+    /**
+     * public API
+     */
     that.setLocale = function(locale) {
         for (var i in _locales) {
             if (i == locale) {
@@ -77,7 +95,7 @@ var bootbox = window.bootbox || (function() {
             }
         }
         throw new Error('Invalid locale: '+locale);
-    }
+    };
 
     that.addLocale = function(locale, translations) {
         if (typeof _locales[locale] == 'undefined') {
@@ -86,14 +104,14 @@ var bootbox = window.bootbox || (function() {
         for (var str in translations) {
             _locales[locale][str] = translations[str];
         }
-    }
+    };
 
     that.setIcons = function(icons) {
         _icons = icons;
         if (typeof _icons !== 'object' || _icons == null) {
             _icons = {};
         }
-    }
+    };
 
     that.alert = function(/*str, label, cb*/) {
         var str   = "",
@@ -132,7 +150,7 @@ var bootbox = window.bootbox || (function() {
         }, {
             "onEscape": cb
         });
-    }
+    };
 
     that.confirm = function(/*str, labelCancel, labelOk, cb*/) {
         var str         = "",
@@ -189,7 +207,95 @@ var bootbox = window.bootbox || (function() {
                 }
             }
         }]);
-    }
+    };
+
+    that.prompt = function(/*str, labelCancel, labelOk, cb, defaultVal*/) {
+        var str         = "",
+            labelCancel = _translate('CANCEL'),
+            labelOk     = _translate('CONFIRM'),
+            cb          = null,
+            defaultVal  = "";
+
+        switch (arguments.length) {
+            case 1:
+                str = arguments[0];
+                break;
+            case 2:
+                str = arguments[0];
+                if (typeof arguments[1] == 'function') {
+                    cb = arguments[1];
+                } else {
+                    labelCancel = arguments[1];
+                }
+                break;
+            case 3:
+                str         = arguments[0];
+                labelCancel = arguments[1];
+                if (typeof arguments[2] == 'function') {
+                    cb = arguments[2];
+                } else {
+                    labelOk = arguments[2];
+                }
+                break;
+            case 4:
+                str         = arguments[0];
+                labelCancel = arguments[1];
+                labelOk     = arguments[2];
+                cb          = arguments[3];
+                break;
+            case 5:
+                str         = arguments[0];
+                labelCancel = arguments[1];
+                labelOk     = arguments[2];
+                cb          = arguments[3];
+                defaultVal  = arguments[4];
+                break;
+            default:
+                throw new Error("Incorrect number of arguments: expected 1-5");
+                break;
+        }
+
+        var header = str;
+
+        // let's keep a reference to the form object for later
+        var form = $("<form></form>");
+        form.append("<input autocomplete=off type=text value='" + defaultVal + "' />");
+
+        var div = that.dialog(form, [{
+            "label": labelCancel,
+            "icon" : _icons.CANCEL,
+            "callback": function() {
+                if (typeof cb == 'function') {
+                    cb(null);
+                }
+            }
+        }, {
+            "label": labelOk,
+            "icon" : _icons.CONFIRM,
+            "callback": function() {
+                if (typeof cb == 'function') {
+                    cb(
+                        form.find("input[type=text]").val()
+                    );
+                }
+            }
+        }], {
+            "header": header
+        });
+
+        div.on("shown", function() {
+            form.find("input[type=text]").focus();
+
+            // ensure that submitting the form (e.g. with the enter key)
+            // replicates the behaviour of a normal prompt()
+            form.on("submit", function(e) {
+                e.preventDefault();
+                div.find(".btn-primary").click();
+            });
+        });
+
+        return div;
+    };
 
     that.modal = function(/*str, label, options*/) {
         var str;
@@ -199,7 +305,7 @@ var bootbox = window.bootbox || (function() {
         var defaultOptions = {
             "onEscape": null,
             "keyboard": true,
-            "backdrop": true
+            "backdrop": _backdrop
         };
 
         switch (arguments.length) {
@@ -233,7 +339,7 @@ var bootbox = window.bootbox || (function() {
         }
 
         return that.dialog(str, [], options);
-    }
+    };
 
     that.dialog = function(str, handlers, options) {
         var hideSource = null,
@@ -251,6 +357,7 @@ var bootbox = window.bootbox || (function() {
         var i = handlers.length;
         while (i--) {
             var label    = null,
+                href     = null,
                 _class   = null,
                 icon     = '',
                 callback = null;
@@ -300,17 +407,28 @@ var bootbox = window.bootbox || (function() {
                 icon = "<i class='"+handlers[i]['icon']+"'></i> ";
             }
 
-            buttons += "<a data-handler='"+i+"' class='btn "+_class+"' href='#'>"+icon+""+label+"</a>";
+            if (handlers[i]['href']) {
+                href = handlers[i]['href'];
+            }
+            else {
+                href = _defaultHref;
+            }
+
+            buttons += "<a data-handler='"+i+"' class='btn "+_class+"' href='" + href + "'>"+icon+""+label+"</a>";
 
             callbacks[i] = callback;
         }
 
-        var parts = ["<div class='bootbox modal'>"];
+        // @see https://github.com/makeusabrew/bootbox/issues/46#issuecomment-8235302
+        // and https://github.com/twitter/bootstrap/issues/4474
+        // for an explanation of the inline overflow: hidden
+
+        var parts = ["<div class='bootbox modal' style='overflow:hidden;'>"];
 
         if (options['header']) {
             var closeButton = '';
             if (typeof options['headerCloseButton'] == 'undefined' || options['headerCloseButton']) {
-                closeButton = "<a href='#' class='close'>&times;</a>";
+                closeButton = "<a href='"+_defaultHref+"' class='close'>&times;</a>";
             }
 
             parts.push("<div class='modal-header'>"+closeButton+"<h3>"+options['header']+"</h3></div>");
@@ -320,7 +438,7 @@ var bootbox = window.bootbox || (function() {
         parts.push("<div class='modal-body'></div>");
 
         if (buttons) {
-            parts.push("<div class='modal-footer'>"+buttons+"</div>")
+            parts.push("<div class='modal-footer'>"+buttons+"</div>");
         }
 
         parts.push("</div>");
@@ -332,6 +450,11 @@ var bootbox = window.bootbox || (function() {
 
         if (shouldFade) {
             div.addClass("fade");
+        }
+
+        var optionalClasses = (typeof options.classes === 'undefined') ? _classes : options.classes;
+        if( optionalClasses )  {
+          div.addClass( optionalClasses );
         }
 
         // now we've built up the div properly we can inject the content whether it was a string or a jQuery object
@@ -360,37 +483,66 @@ var bootbox = window.bootbox || (function() {
             $("a.btn-primary:last", div).focus();
         });
 
-        $("a", div).click(function(e) {
+        // wire up button handlers
+        div.on('click', '.modal-footer a, a.close', function(e) {
+
+            var handler   = $(this).data("handler"),
+                cb        = callbacks[handler],
+                hideModal = null;
+
+            // sort of @see https://github.com/makeusabrew/bootbox/pull/68 - heavily adapted
+            // if we've got a custom href attribute, all bets are off
+            if (typeof handler                   !== 'undefined' &&
+                typeof handlers[handler]['href'] !== 'undefined') {
+
+                return;
+            }
+
             e.preventDefault();
-            hideSource = 'button';
-            div.modal("hide");
-            var handler = $(this).data("handler");
-            var cb = callbacks[handler];
+
             if (typeof cb == 'function') {
-                cb();
+                hideModal = cb();
+            }
+
+            // the only way hideModal *will* be false is if a callback exists and
+            // returns it as a value. in those situations, don't hide the dialog
+            // @see https://github.com/makeusabrew/bootbox/pull/25
+            if (hideModal !== false) {
+                hideSource = 'button';
+                div.modal("hide");
             }
         });
 
         if (options.keyboard == null) {
             options.keyboard = (typeof options.onEscape == 'function');
         }
+
         $("body").append(div);
 
         div.modal({
-            "backdrop" : options.backdrop || true,
+            "backdrop" : (typeof options.backdrop  === 'undefined') ? _backdrop : options.backdrop,
             "keyboard" : options.keyboard
         });
 
         return div;
-    }
+    };
 
     that.hideAll = function() {
         $(".bootbox").modal("hide");
-    }
+    };
 
     that.animate = function(animate) {
         _animate = animate;
-    }
+    };
+
+    that.backdrop = function(backdrop) {
+        _backdrop = backdrop;
+    };
+
+    that.classes = function(classes) {
+        _classes = classes;
+    };
 
     return that;
-})();
+
+})( window.jQuery );
