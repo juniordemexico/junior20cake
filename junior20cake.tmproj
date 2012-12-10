@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>currentDocument</key>
-	<string>app/controllers/articulos_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -20,74 +18,10 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>251</integer>
 	<key>metaData</key>
-	<dict>
-		<key>app/controllers/articulos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>53</integer>
-				<key>line</key>
-				<integer>52</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>36</integer>
-		</dict>
-		<key>app/controllers/materiales_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>41</integer>
-				<key>line</key>
-				<integer>23</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/includes_css.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>14</integer>
-				<key>line</key>
-				<integer>20</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/webroot/css/ax.generic.css</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>1081</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>1045</integer>
-		</dict>
-	</dict>
-	<key>openDocuments</key>
-	<array>
-		<string>app/webroot/css/ax.generic.css</string>
-		<string>app/controllers/materiales_controller.php</string>
-		<string>app/controllers/articulos_controller.php</string>
-		<string>app/views/elements/includes_css.ctp</string>
-	</array>
+	<dict/>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{16, 132}, {788, 746}}</string>
+	<string>{{48, 54}, {874, 967}}</string>
 </dict>
 </plist>

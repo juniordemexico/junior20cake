@@ -1,25 +1,19 @@
-<?php
 
-//	licve VARCHAR(16) DEFAULT '' NOT NULL
-
-class Linea extends AppModel 
+class Almacen extends AppModel 
 {
-	var $name = 'Linea';
-	var $table = 'lineas';
-	var $alias = 'Linea';
+	var $name = 'Almacen';
+	var $table = 'almacenes';
+	var $alias = 'Almacen';
 	var $primaryKey = 'id';
 	var $cache=true;
 
 	var $hasMany = array(
-		'Articulo'
-		);
-
-	var $belongsTo= array(
-		'Tipoarticulo'
+		'Ubicacion',
+		'Invfisico'
 		);
 
 	var $validate = array(
-		'licve' => array(
+		'cve' => array(
 			'isunique' => array(
 				'rule' => array('isUnique'),
 				'required' => true,
@@ -27,13 +21,13 @@ class Linea extends AppModel
 				'message' => 'La Clave YA Existe'
 			),
 			'between' => array(
-				'rule' => array('between', 1, 4),
-				'message' => 'La Clave debe contener entre 1 y 4 caracteres'
+				'rule' => array('between', 1, 2),
+				'message' => 'La Clave debe contener entre 1 y 2 caracteres'
 			),
 		),
 		'descrip' => array(
 			'between' => array(
-				'rule' => array('between', 1, 20),
+				'rule' => array('between', 1, 32),
 				'required' => false,
 				'allowEmpty' => true,
 				'message' => 'La Descripcion debe contener entre 1 y 32 caracteres'

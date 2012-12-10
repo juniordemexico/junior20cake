@@ -108,6 +108,8 @@ class Inflector {
 			'proporcion' => 'proporciones',
 			'divisa' => 'divisas',
 			'explosion' => 'explosiones'
+			'almacen' => 'almacenes'
+			'ubicacion' => 'ubicaciones'
 		)
 	);
 
@@ -121,13 +123,16 @@ class Inflector {
 		'rules' => array(
 			'/(c)lientesdirecciones$/i' => '\1lientesdireccion',
 			'/(c)olores$/i' => '\1olor',
-			'/(p)ropoprciones$/i' => '\1roporcion',
+			'/(p)roporciones$/i' => '\1roporcion',
 			'/(e)xplosiones$/i' => '\1xplosion',
 			'/(d)ivisas$/i' => '\1ivisa',
 			'/(p)aises$/i' => '\1ais',
 			'/(u)nidades$/i' => '\1nidad',
 			'/(p)roveedores$/i' => '\1roveedor',
 			'/(v)endedores$/i' => '\1endedor',
+			'/(a)lmacenes$/i' => '\1lmacen',
+			'/(u)bicaciones$/i' => '\1bicacion',
+			'/(i)nventarios$/i' => '\1nventario',
 			'/(t)mppartidas$/i' => '\1mppartida',
 			'/(t)mpmovs$/i' => '\1mpmov',
 			'/(s)tatuses$/i' => '\1\2tatus',
