@@ -6,7 +6,7 @@
  * @author Joey Trapp
  *
  */
-class  TBSHelper extends AppHelper {
+class TBSHelper extends AppHelper {
 
 	/**
 	 * Helpers available in this helper
@@ -823,4 +823,3 @@ array('inline'=>false)
 		return false;
 	}
 }
-?>

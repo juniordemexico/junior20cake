@@ -83,7 +83,7 @@ class DATABASE_CONFIG {
 		'database' => '/home/db/JUNIOR.FDB',
 		'schema' => '',
 		'prefix' => '',
-		'encoding' => 'utf-8'
+		'encoding' => 'utf8'
 	);
 
 	var $test = array(

@@ -93,7 +93,9 @@
 				<div class="row-fluid" id="formScriptsContainer">
 				<div class="span12" id="formScripts">
 						
+<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
+</section>
 
 				</div> <!-- formScripts -->
 				</div> <!-- formScriptsContainer -->

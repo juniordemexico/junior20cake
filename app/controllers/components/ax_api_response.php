@@ -2,6 +2,7 @@
 
 class AxApiResponse extends Component
 {
+/*
 	protected $_result=0;
 	protected $_header=array();
 	protected $_messages=array();
@@ -82,7 +83,7 @@ class AxApiResponse extends Component
 	}
 
 	public function addDataItem($item=null) {
-		if(!$item || (is_array($item) && count($item)<1) {
+		if(!$item || (is_array($item) && count($item)<1)) {
 			return false;
 		}
 		$this->_data[]=$item;
@@ -93,12 +94,12 @@ class AxApiResponse extends Component
 		
 		return (
 			json_encode(array(
-			'result'=>$this->_result;
+			'result'=>$this->_result,
 			'header'=>$this->_header,
 			'messages'=>$this->_messages,
 			'data'=>$this->_data,			
 			))
 			);
 	} 
-
+*/
 }

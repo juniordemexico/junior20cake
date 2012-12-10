@@ -15,50 +15,19 @@
 
 	<title><?php echo $title_for_layout; ?></title>
 
-	<?php
-		/* jQuery themes and styles */
-		echo $html->css(array(
-							'jquery-ui/ui.jqgrid',
-							'jquery-ui/custom-theme/jquery-ui-1.8.16.custom',
-							'jquery-ui/ui.daterangepicker',
-							'bootstrap/bootstrap',
-							'bootstrap/bootstrap-responsive',
-							)
-						);
+	<!-- CSS Style Includes -->
+	<?php  echo $this->AssetCompress->css('core.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php  echo $this->AssetCompress->css('ui.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
-		/* AxBOS main generic styles */
-		echo $html->css('ax.generic');
+	<!-- JS Code and Data -->
+	<?php  echo $this->AssetCompress->script('core.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php  echo $this->AssetCompress->script('ui.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php  echo $this->AssetCompress->script('ui-util.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
-		/* (idd) Javascript and Ajax Libraries and Frameworks */
-		echo $html->script(array(
-							'jquery/jquery.min',
-							'jquery/jquery-ui.min',
-							)
-						);  // Serve jQuery from this Google url--> https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js
+	<!-- Page's UI especific MVC code -->
+	<?php  //echo $this->AssetCompress->script('webapp.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
-
-		echo $html->script(array(
-							'jquery/grid.locale-es',
-							'jquery/jquery.jqGrid.min',
-							'jquery/jquery.maskedinput-1.3.min.js',
-							'jquery/jquery-ui/third-party/jQuery-UI-Date-Range-Picker/js/date',							
-							'jquery/jquery-ui/third-party/jQuery-UI-Date-Range-Picker/js/daterangepicker.jQuery.compressed',							
-							)
-						);
-						
-		echo $html->script(array(
-							'jquery/bootstrap/bootstrap.min',
-							)
-						);
-
-		echo $html->script('axcore');
-		
-/*
-		$this->html->scriptBlock("$('.log').ajaxStart(function() {
-  $(this).text('Triggered ajaxStart handler.');
-});",array('inline'=>false));
-*/
-		echo $scripts_for_layout;
+	<?php echo $scripts_for_layout; ?>
 
 	?>
 
@@ -99,7 +68,9 @@
 				<div class="row" id="formScriptsContainer">
 				<div class="span12" id="formScripts">
 						
+<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
+</section>
 
 				</div> <!-- formScripts -->
 				</div> <!-- formScriptsContainer -->

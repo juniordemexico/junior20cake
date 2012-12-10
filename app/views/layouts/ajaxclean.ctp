@@ -6,7 +6,9 @@
 
 <?php echo $content_for_layout; ?>
 						
+<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
+</section>
 <!-- End Response Data -->
 
 <!-- Debug Data Data -->

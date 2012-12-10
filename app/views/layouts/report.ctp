@@ -28,6 +28,8 @@
 <section id="sectionReportContent">
 <?php echo $content_for_layout; ?>
 						
+</section>
+<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
 </section>
 

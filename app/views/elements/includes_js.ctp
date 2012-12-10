@@ -17,7 +17,7 @@ echo
 		'load-image.min',
 
 		'jquery/jquery.min',
-		'jquery/jquery-ui.min',
+//		'jquery/jquery-ui.min',
 
 		'jquery/ensure.min',
 		'jquery/jquery.transform.min',

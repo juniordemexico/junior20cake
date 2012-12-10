@@ -17,7 +17,7 @@ class AppController extends Controller {
   							'Auth',	
 							'Axfile',
 							'Axnotification',
-							'AxApiResponse',
+		/*					'AxApiResponse',*/
 							'Filter',
 							'PaginationRecall',
 							'Upload',
@@ -26,6 +26,7 @@ class AppController extends Controller {
 							);
 
 	var $helpers = array(
+		'AssetCompress.AssetCompress',
 		'Js' => array('Jquery'),
 		'Ajax',
 		'Number',
@@ -36,13 +37,13 @@ class AppController extends Controller {
 		'Form',
 		'Session',
 		'Paginator',
-/*		'AssetCompress.AssetCompress',*/
-		'TBS',
 		'WebAlert',
+		'TBS',
 /*		'Embed',*/
-	/*	'CakeGrid',*/
+		'CakeGrid.Grid',
 		'Upload',
 		'Youtube',
+
 	);
 
 	var $layout = 'plain';
@@ -59,6 +60,9 @@ class AppController extends Controller {
 	 */
 	
 	function beforeFilter() {
+
+		App::import('Model', 'User');
+		User::store($this->Auth->user());
 		// Session and Authentication stuff.
 		$this->Auth->loginAction = array('controller' => 'Users', 'action' => 'login');
 		$this->Auth->loginRedirect = array('controller' => 'Desktop', 'action' => 'index');

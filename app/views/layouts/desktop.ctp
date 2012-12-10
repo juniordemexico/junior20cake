@@ -12,7 +12,9 @@
 	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- CSS Style Includes -->
-	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<!-- CSS Style Includes -->
+	<?php  echo $this->AssetCompress->css('core.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php  echo $this->AssetCompress->css('ui.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
 	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Content.css" />
 	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Core.css" />
@@ -95,6 +97,10 @@
 
 
 </div><!-- desktop end -->
+
+<section id="sectionWebAppCode" class="hidden script">
+<?php echo $this->Js->writeBuffer();?>
+</section>
 
 </body>
 </html>

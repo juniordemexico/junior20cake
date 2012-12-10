@@ -14,7 +14,7 @@
  * In development mode, you need to click the flash message to continue.
  */
 
-	Configure::write('debug', 0);
+	Configure::write('debug', 2);
 
 /**
  * CakePHP Log Level:
