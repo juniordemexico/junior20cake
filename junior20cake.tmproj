@@ -5,8 +5,12 @@
 <<<<<<< HEAD
 =======
 	<key>currentDocument</key>
+<<<<<<< HEAD
 	<string>app/views/layouts/report.ctp</string>
 >>>>>>> Integration of JS and CSS AssetsCompress plugin. To optimize browser download and parsing time.
+=======
+	<string>app/webroot/css_files.php</string>
+>>>>>>> Added the AjaxController Class. To manage JSON responses
 	<key>documents</key>
 	<array>
 		<dict>
@@ -55,28 +59,14 @@
 			<key>firstVisibleLine</key>
 			<integer>63</integer>
 		</dict>
-		<key>app/views/elements/includes_css.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>app/views/layouts/ListWithForm.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>42</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -130,67 +120,37 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>64</integer>
 				<key>line</key>
-				<integer>66</integer>
+				<integer>3</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>52</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/layouts/customerportal.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>42</integer>
 				<key>line</key>
-				<integer>73</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>58</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/layouts/default.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
 				<integer>64</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>45</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
 				<key>line</key>
-				<integer>61</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>64</integer>
-			</dict>
-		</dict>
-		<key>app/views/layouts/default.original.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
+				<integer>3</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -202,23 +162,51 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>14</integer>
 				<key>line</key>
-				<integer>103</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>71</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/empty.ctp</key>
+		<key>app/views/layouts/json.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>1</integer>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/mobile.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>42</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/monitor.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>42</integer>
+				<key>line</key>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -232,40 +220,56 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>2</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>1</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
 		</dict>
 		<key>app/views/layouts/plain.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>64</integer>
 				<key>line</key>
-				<integer>60</integer>
+				<integer>3</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>45</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/layouts/public.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>42</integer>
 				<key>line</key>
-				<integer>68</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>53</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/layouts/report.ctp</key>
 		<dict>
@@ -279,21 +283,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
-		</dict>
-		<key>app/views/layouts/reportform.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>67</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>52</integer>
 		</dict>
 		<key>app/views/layouts/text.ctp</key>
 		<dict>
@@ -302,33 +292,94 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>2</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>1</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<key>app/webroot/css.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>77</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>58</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>96</integer>
+			</dict>
+		</dict>
+		<key>app/webroot/css_files.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>41</integer>
+				<key>line</key>
+				<integer>76</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>64</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/elements/includes_css.ctp</string>
-		<string>app/views/layouts/default.ctp</string>
-		<string>app/views/layouts/default.original.ctp</string>
-		<string>app/views/layouts/desktop.ctp</string>
-		<string>app/views/layouts/empty.ctp</string>
-		<string>app/views/layouts/ListWithForm.ctp</string>
-		<string>app/views/layouts/pdf.ctp</string>
-		<string>app/views/layouts/plain.ctp</string>
-		<string>app/views/layouts/public.ctp</string>
-		<string>app/views/layouts/report.ctp</string>
-		<string>app/views/layouts/reportform.ctp</string>
-		<string>app/views/layouts/text.ctp</string>
+		<string>app/views/layouts/customerportal.ctp</string>
+		<string>app/views/layouts/authentication.ctp</string>
+		<string>app/views/layouts/attachment.ctp</string>
 		<string>app/views/layouts/ajaxclean.ctp</string>
 		<string>app/views/layouts/ajax.ctp</string>
-		<string>app/views/layouts/attachment.ctp</string>
-		<string>app/views/layouts/authentication.ctp</string>
-		<string>app/views/layouts/customerportal.ctp</string>
+		<string>app/views/layouts/text.ctp</string>
+		<string>app/views/layouts/default.ctp</string>
+		<string>app/views/layouts/desktop.ctp</string>
+		<string>app/views/layouts/ListWithForm.ctp</string>
+		<string>app/views/layouts/json.ctp</string>
+		<string>app/views/layouts/mobile.ctp</string>
+		<string>app/views/layouts/monitor.ctp</string>
+		<string>app/views/layouts/plain.ctp</string>
+		<string>app/views/layouts/pdf.ctp</string>
+		<string>app/webroot/css.php</string>
+		<string>app/webroot/css_files.php</string>
+		<string>app/views/layouts/public.ctp</string>
+		<string>app/views/layouts/report.ctp</string>
 		<string>app/plugins/asset_compress/config/asset_compress.ini</string>
 		<string>app/config/asset_compress.ini</string>
 	</array>
