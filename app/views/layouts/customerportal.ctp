@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" manifest="/cache.manifest">
 <head>
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo 	$html->charset().CR.

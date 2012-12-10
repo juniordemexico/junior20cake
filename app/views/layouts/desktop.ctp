@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml" manifest="/cache.manifest">
+<html lang="en" manifest="/cache.manifest">
 <head>
 
 	<title><?php echo $title_for_layout; ?></title>

@@ -4,31 +4,30 @@ NETWORK:
 *
 
 CACHE:
-/Desktop
 
-/js/axcore.js
+/css_files/core.css
+/css_files/ui.css
 
-/js/jquery/jquery.min.js
-/js/jquery/jquery-ui.min.js
-/js/jquery/jquery.ifixpng.js
-/js/jquery/system.js
-/js/jquery/ensure.min.js
-/js/jquery/jquery.maskedinput-1.3.min.js
-/js/jquery/jquery.mousewheel-3.0.6.pack.js
-/js/jquery/jquery.fancybox.pack.js
-/js/jquery/jquery.fileuploader.js
-/js/jquery/jquery.pulse.min.js
-/js/jquery/jquery.tipsy.js
-/js/jquery/jquery.tools.min.js
-/js/jquery/jquery.transform-0.6.2.min.js
+/js_files/core.css
+/js_files/ui.css
+/js_files/ui-util.css
 
-/js/jquery/jquery.jqGrid.min.js
-/js/jquery/grid.locale-en.js
-/js/jquery/grid.locale-es.js
-
-/js/bootstrap/bootstrap.min.js
+/css/ax.report.css
 
 /js/mocha/scripts/ax-desktop.js
+
+
+/img/glyphicons-halflings.png
+/img/glyphicons-halflings-white.png
+
+/img/blank.gif
+/img/loading.gif
+/img/uploading.gif
+/img/pixel.gif
+/img/ie-spacer.gif
+/img/ui/twitter_web_sprite_bgs.png
+/img/icons/Devine/*
+
 /js/mocha/scripts/excanvas_r43.js
 /js/mocha/scripts/mocha-init.js
 /js/mocha/scripts/mocha.js
@@ -41,27 +40,5 @@ CACHE:
 /js/mocha/themes/charcoal/css/Tabs.css
 /js/mocha/themes/charcoal/css/Window.css
 
-
-/css/ax.generic.css
-/css/ax.report.css
-
 /css/mocha/ui.css
 /css/content.css
-/css/jquery-ui/ui.jqgrid.css
-/css/jquery-ui/jquery.ui.theme.css
-/css/jquery-ui/ui.daterangepicker.css
-/css/jquery-ui/ui.fileuploader.css
-/css/jquery-ui/jquery.fancybox.css
-
-/css/bootstrap/bootstrap.css
-/css/bootstrap/bootstrap-responsive.min.css
-
-/css/bootstrap/img/glyphicons-halflings-white.png
-/css/bootstrap/img/glyphicons-halflings.png
-
-/img/blank.gif
-/img/loading.gif
-/img/uploading.gif
-/img/pixel.gif
-/img/ie-spacer.gif
-/img/ui/twitter_web_sprite_bgs.png
