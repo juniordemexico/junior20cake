@@ -1,21 +1,71 @@
 CACHE MANIFEST
 
+#Modified: 20121210_2041
+
 NETWORK:
-*
+/
+/*
+/login
+/logout
+
+/Users
+/Users/*
+
+/Desktop
+/Datahouse
+/api
+/tmp
+/files
+
+/Almacenes
+/Articuloattachments
+/Articulos
+/Bancos
+/Barcodes
+/Clientes
+/Colores
+/Contactos
+/Costeos
+/Customerportal
+/Cxc
+/Cxp
+/Directorios
+/Divisas
+/Estados
+/Explosiones
+/Facturas
+/Invfisicos
+/Lineas
+/Marcas
+/Materiales
+/Mobile
+/Monitors
+/Paises
+/Pedidos
+/Produccion
+/Produccionreports
+/Proporciones
+/Proveedores
+/Tallas
+/Temporadas
+/Ubicaciones
+/Unidades
+/Uploads
+/Users
+/Vendedores
 
 CACHE:
 
 /css_files/core.css
 /css_files/ui.css
 
-/js_files/core.css
-/js_files/ui.css
-/js_files/ui-util.css
+/js_files/core.js
+/js_files/ui.js
+/js_files/ui-util.js
 
 /css/ax.report.css
 
 /js/mocha/scripts/ax-desktop.js
-
 
 /img/glyphicons-halflings.png
 /img/glyphicons-halflings-white.png

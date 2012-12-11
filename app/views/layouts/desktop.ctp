@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="en" manifest="/cache.manifest">
+<html lang="en" manifest="/manifest.appcache">
 <head>
 
 	<title><?php echo $title_for_layout; ?></title>

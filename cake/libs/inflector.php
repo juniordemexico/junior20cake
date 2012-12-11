@@ -107,8 +107,8 @@ class Inflector {
 			'color' => 'colores',
 			'proporcion' => 'proporciones',
 			'divisa' => 'divisas',
-			'explosion' => 'explosiones'
-			'almacen' => 'almacenes'
+			'explosion' => 'explosiones',
+			'almacen' => 'almacenes',
 			'ubicacion' => 'ubicaciones'
 		)
 	);

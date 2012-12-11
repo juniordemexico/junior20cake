@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="lt-ie10 ie8" lang="en"><![endif]-->
-<!--[if IE 9]><html class="lt-ie10 ie9" lang="en"><![endif]-->
-<!--[if gt IE 9]><!--><html lang="en" manifest="/cache.manifest"><!--<![endif]-->
-
+<html lang="en" manifest="/manifest.appcache">
 <head>
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>
