@@ -1,9 +1,10 @@
+<?php
 
-class Invfisico extends AppModel 
+class Inventariofisico extends AppModel 
 {
-	var $name = 'Invfisico';
-	var $table = 'invfisicos';
-	var $alias = 'Invfisico';
+	var $name = 'Inventariofisico';
+	var $table = 'inventariofisicos';
+	var $alias = 'Inventariofisico';
 	var $primaryKey = 'id';
 	var $cache=false;
 
@@ -12,7 +13,7 @@ class Invfisico extends AppModel
 		);
 
 	var $hasMany = array(
-		'Invfisicodetail',
+		'Inventariofisicodetail',
 		);
 
 	var $validate = array(
@@ -24,8 +25,8 @@ class Invfisico extends AppModel
 				'message' => 'La Clave YA Existe'
 			),
 			'between' => array(
-				'rule' => array('between', 1, 8),
-				'message' => 'La Clave debe contener entre 1 y 8 caracteres'
+				'rule' => array('between', 1, 32),
+				'message' => 'La Clave debe contener entre 1 y 32 caracteres'
 			),
 		),
 		'fecha' => array(

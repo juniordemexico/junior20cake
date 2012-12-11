@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="/manifest.appcache">
+<html lang="en">
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
