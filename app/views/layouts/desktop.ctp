@@ -11,9 +11,10 @@
 	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- CSS Style Includes -->
-	<!-- CSS Style Includes -->
-	<?php  echo $this->AssetCompress->css('core.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
-	<?php  echo $this->AssetCompress->css('ui.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+
+	<!-- JS Code and Data -->
+	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
 	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Content.css" />
 	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Core.css" />

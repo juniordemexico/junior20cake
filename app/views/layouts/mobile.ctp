@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" manifest="/cache.manifest">
+<html lang="en">
 <head>
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo 	$html->charset().CR.
@@ -15,43 +15,14 @@
 
 	<title><?php echo $title_for_layout; ?></title>
 
-	<?php
-		/* jQuery themes and styles */
-		echo $html->css(array(
-							'jquery-ui/ui.jqgrid',
-							'jquery-ui/custom-theme/jquery-ui-1.8.16.custom',
-							'jquery-ui/ui.daterangepicker',
-							'bootstrap/bootstrap',
-							'bootstrap/bootstrap-responsive',
-							)
-						);
+	<!-- CSS Style Includes -->
+	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
-		/* AxBOS main generic styles */
-		echo $html->css('ax.generic');
+	<!-- JS Code and Data -->
+	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
-		/* (idd) Javascript and Ajax Libraries and Frameworks */
-		echo $html->script(array(
-							'jquery/jquery.min',
-							'jquery/jquery-ui.min',
-							)
-						);  // Serve jQuery from this Google url--> https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js
-
-
-		echo $html->script(array(
-							'jquery/grid.locale-es',
-							'jquery/jquery.jqGrid.min',
-							'jquery/jquery.maskedinput-1.3.min.js',
-							'jquery/jquery-ui/third-party/jQuery-UI-Date-Range-Picker/js/date',							
-							'jquery/jquery-ui/third-party/jQuery-UI-Date-Range-Picker/js/daterangepicker.jQuery.compressed',							
-							)
-						);
-						
-		echo $html->script(array(
-							'jquery/bootstrap/bootstrap.min',
-							)
-						);
-
-		echo $html->script('axcore');
+	<!-- Page's UI especific MVC code -->
+	<?php  //echo $this->AssetCompress->script('webapp.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 		
 /*
 		$this->html->scriptBlock("$('.log').ajaxStart(function() {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" manifest="/cache.manifest">
+<html lang="en">
 <head>
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>

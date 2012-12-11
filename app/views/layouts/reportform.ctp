@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" manifest="/cache.manifest">
+<html lang="en">
 <head>
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo 	$html->charset().CR.
@@ -15,14 +15,14 @@
 
 	<title><?php echo $title_for_layout; ?></title>
 
+	<!-- Request, User and Session Data -->
+	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
+
 	<!-- CSS Style Includes -->
-	<?php  echo $this->AssetCompress->css('core.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
-	<?php  echo $this->AssetCompress->css('ui.css'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- JS Code and Data -->
-	<?php  echo $this->AssetCompress->script('core.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
-	<?php  echo $this->AssetCompress->script('ui.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
-	<?php  echo $this->AssetCompress->script('ui-util.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- Page's UI especific MVC code -->
 	<?php  //echo $this->AssetCompress->script('webapp.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>

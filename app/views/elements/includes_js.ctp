@@ -1,24 +1,30 @@
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 <?php 
+/* 
 // Compile and minify all the js files, grouped by layers (ie: jquery, twitter bootstrap, ui mvc, axbos)
 // To generate production's compiled files, from the Cake's Shell: 
 // cake asset_compress.asset_compress build_ini 
 // cake asset_compress.asset_compress build
  
-//echo $this->AssetCompress->script('jquery-combined'); 
-?>
-
-<?php
+  echo $this->AssetCompress->script('core.js'); 
+  echo $this->AssetCompress->script('ui.js');
+  echo $this->AssetCompress->script('ui-util.js');
+*/
 
 echo
 	$this->Html->script(array(
 		// Javascript frameworks, libraries and utilities
-		'load-image.min',
 
-		'jquery/jquery.min',
+		'/js_files/core.js',
+		'/js/files/ui.js',
+		'/js_files/ui-util.js'
+//		'load-image.min',
+
+//		'jquery/jquery.min',
 //		'jquery/jquery-ui.min',
 
+/*
 		'jquery/ensure.min',
 		'jquery/jquery.transform.min',
 //		'jquery/jquery.tools.min',
@@ -53,6 +59,6 @@ echo
 		
 		// AxBOS Core Application's Functions, Classes, Helpers, Simbols
 		'ax.core'
-				
+*/				
 		)).CR.
 	CR;
