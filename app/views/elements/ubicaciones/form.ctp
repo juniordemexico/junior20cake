@@ -1,7 +1,7 @@
 <?php echo $this->Form->create('Ubicacion', array('class'=>'form-horizontal')); ?>
 <?php if ($mode == 'edit'): ?>
 <?php	echo $this->Form->hidden('id'); ?>
-<?php  endif; ?>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<?php echo $this->TBS->input('almacen_id', array('label' => 'Almacén')); ?>
