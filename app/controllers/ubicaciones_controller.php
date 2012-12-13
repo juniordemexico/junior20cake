@@ -4,12 +4,20 @@
 class UbicacionesController extends MasterDetailAppController {
 	var $name='Ubicaciones';
 
-	var $uses = array('Ubicacion', 'Tipoarticulo');
+	var $uses = array('Ubicacion', 'Almacen');
 
 	var $cacheAction = array('view',
 							);
 	var $layout = 'default';
 
+	function beforeFilter() {
+		parent::beforeFilter();
+		if( isset($this->data) && isset($this->data['Ubicacion']) ) {
+			$this->data['Ubicacion']['cve']=$this->data['Ubicacion']['zona'].
+											$this->data['Ubicacion']['fila'].
+											$this->data['Ubicacion']['espacio'];
+		}
+	}
 
 	function index() {
 		$this->Ubicacion->recursive = 0;
@@ -17,13 +25,12 @@ class UbicacionesController extends MasterDetailAppController {
 								'update' => '#content',
 								'evalScripts' => true,
 								'limit' => 20,
-								'order' => array('Ubicacion.tipoarticulo_id', 'Ubicacion.licve'),
-								'fields' => array('id', 'licve', 'descrip', 'Tipoarticulo.id', 'Tipoarticulo.cve', 'created', 'modified'),
+								'order' => array('Almacen.alcve','Ubicacion.cve'),
 								'conditions' => array(),
 								);
 		$filter = $this->Filter->process($this);
 		
-		$this->set('ubicaciones', $this->paginate($filter));
+		$this->set('items', $this->paginate($filter));
 	}
 
 
@@ -53,9 +60,6 @@ class UbicacionesController extends MasterDetailAppController {
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Ubicacion->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$dates = $this->Ubicacion->find(array('id'=>$id),array('created','modified'));
-				$this->data['Ubicacion']['created'] = $dates['Ubicacion']['created'];
-				$this->data['Ubicacion']['modified'] = $dates['Ubicacion']['modified'];
 				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
 			}
 		}
@@ -63,14 +67,15 @@ class UbicacionesController extends MasterDetailAppController {
 			$this->data = $this->Ubicacion->read(null, $id);
 		}
 
-		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve')));
-		$this->set(compact('tipoarticulos'));
+		$this->set('almacenes', $this->Ubicacion->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
 	}
 
 	function add() { 
 		if (!empty($this->data)) {
-			if ($this->Ubicacion->save($this->data)) {
+			pr($this->data);
+//			$this->Ubicacion->create($this->data);
+			if ($this->Ubicacion->save($this->data, array('validate'=>false))) {
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Ubicacion->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -78,8 +83,7 @@ class UbicacionesController extends MasterDetailAppController {
 			}
 		}
 
-		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve')));
-		$this->set(compact('tipoarticulos'));
+		$this->set('almacenes', $this->Ubicacion->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
 	}
 
