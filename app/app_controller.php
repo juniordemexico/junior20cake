@@ -27,7 +27,7 @@ class AppController extends Controller {
 							);
 
 	var $helpers = array(
-		'AssetCompress.AssetCompress',
+/*		'AssetCompress.AssetCompress',*/
 		'Js' => array('Jquery'),
 		'Ajax',
 		'Number',

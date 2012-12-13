@@ -17,7 +17,7 @@ echo
 		// Javascript frameworks, libraries and utilities
 
 		'/js_files/core.js',
-		'/js/files/ui.js',
+		'/js_files/ui.js',
 		'/js_files/ui-util.js'
 //		'load-image.min',
 

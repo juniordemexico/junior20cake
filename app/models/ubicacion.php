@@ -1,3 +1,4 @@
+<?php
 
 class Ubicacion extends AppModel 
 {
@@ -12,7 +13,7 @@ class Ubicacion extends AppModel
 		);
 
 	var $hasMany = array(
-		'Invfisicodetail',
+//		'Invfisicodetail',
 		);
 
 	var $validate = array(

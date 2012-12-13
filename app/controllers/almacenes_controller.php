@@ -17,13 +17,13 @@ class AlmacenesController extends MasterDetailAppController {
 								'update' => '#content',
 								'evalScripts' => true,
 								'limit' => 20,
-								'order' => array('Almacen.tipoarticulo_id', 'Almacen.licve'),
-								'fields' => array('id', 'licve', 'descrip', 'Tipoarticulo.id', 'Tipoarticulo.cve', 'created', 'modified'),
+								'order' => array('Almacen.alcve'),
+								'fields' => array('id', 'alcve', 'aldescrip'),
 								'conditions' => array(),
 								);
 		$filter = $this->Filter->process($this);
 		
-		$this->set('almacenes', $this->paginate($filter));
+		$this->set('items', $this->paginate($filter));
 	}
 
 
@@ -84,5 +84,3 @@ class AlmacenesController extends MasterDetailAppController {
 	}
 
 }
-
-?>

@@ -1,3 +1,4 @@
+<?php
 
 class Almacen extends AppModel 
 {
@@ -5,15 +6,14 @@ class Almacen extends AppModel
 	var $table = 'almacenes';
 	var $alias = 'Almacen';
 	var $primaryKey = 'id';
-	var $cache=true;
+	var $cache=false;
 
 	var $hasMany = array(
 		'Ubicacion',
-		'Invfisico'
 		);
 
 	var $validate = array(
-		'cve' => array(
+		'alcve' => array(
 			'isunique' => array(
 				'rule' => array('isUnique'),
 				'required' => true,
@@ -25,7 +25,7 @@ class Almacen extends AppModel
 				'message' => 'La Clave debe contener entre 1 y 2 caracteres'
 			),
 		),
-		'descrip' => array(
+		'aldescrip' => array(
 			'between' => array(
 				'rule' => array('between', 1, 32),
 				'required' => false,
