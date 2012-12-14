@@ -211,7 +211,7 @@ class TBSHelper extends AppHelper {
 
 		if(isset($options['type']) && $options['type']=='textdate') {
 			$options['type']='text';
-			$theScripts.=' $(\'#'.$theModel.'.'.$options['field'].'\').datepicker({ dateFormat: \'yy-mm-dd\'});';
+			$theScripts.=' $(\'#'.$theModel.'.'.$options['field'].'\').datepicker({ dateFormat: \'yyyy-mm-dd\'});';
 //			$options['dateFormat'] = 'DMY';
 		}
 

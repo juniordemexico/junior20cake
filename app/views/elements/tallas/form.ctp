@@ -3,7 +3,7 @@
 <?php	echo $this->Form->hidden('id'); ?>
 <?php  endif; ?>
 
-<div class="row-fluid">
+<div class="row">
 	<?php echo $this->TBS->input('tacve', array('type' => 'text', 'label' => 'Clave', 'ly_w'=>'2')); ?>
 	<?php echo $this->TBS->input('tadescrip', array('type' => 'text', 'label' => 'Descripcion', 'ly_w'=>'4')); ?>
 	<?php echo $this->TBS->input('Talla.st', array('type'=>'radiogroup', 'label'=>'Estatus', 

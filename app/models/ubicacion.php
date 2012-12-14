@@ -13,7 +13,7 @@ class Ubicacion extends AppModel
 		);
 
 	var $hasMany = array(
-//		'Invfisicodetail',
+		'Invfisicodetail',
 		);
 
 	var $validate = array(
@@ -43,10 +43,15 @@ class Ubicacion extends AppModel
 		'fila' => array(
 			'between' => array(
 				'rule' => array('between', 2, 2),
-				'message' => 'Fila consta de 2 caracteres numericos (01, 02 ... 99)',
+				'message' => 'Fila consta de 2 números (01, 02 ... 99)',
 				'required' => false,
 				'allowEmpty' => true,
 				),
+			'menor50' => array(
+				'rule' => array('comparison', '<=', '50'),
+				'message' => 'Fila debe tener un valor entre 01 y 50',
+				),
+				
 		),
 		'espacio' => array(
 			'between' => array(
@@ -54,6 +59,10 @@ class Ubicacion extends AppModel
 				'required' => false,
 				'allowEmpty' => true,
 				'message' => 'Espacio consta de 4 digitos (0001, 0002 ... 9999)',
+				),
+			'menor100' => array(
+				'rule' => array('comparison', '<=', '100'),
+				'message' => 'Espacio debe tener un valor entre 0001 y 0100',
 				),
 		),
 		'descrip' => array(

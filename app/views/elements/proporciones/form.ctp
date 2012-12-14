@@ -3,7 +3,7 @@
 <?php	echo $this->Form->hidden('id'); ?>
 <?php  endif; ?>
 
-<div class="row-fluid">
+<div class="row">
 	<?php echo $this->TBS->input('cve', array('type' => 'text', 'label' => 'Clave')); ?>
 	<?php echo $this->TBS->input('Proporcion.st', array('type'=>'radiogroup', 'label'=>'Estatus', 
 								'selectOptions'=>array('A'=>'Activo','B'=>'Baja','S'=>'Suspendido'))

@@ -10,6 +10,7 @@ class Almacen extends AppModel
 
 	var $hasMany = array(
 		'Ubicacion',
+		'Invfisico',
 		);
 
 	var $validate = array(

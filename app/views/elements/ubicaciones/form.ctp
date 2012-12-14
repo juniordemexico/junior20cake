@@ -3,7 +3,7 @@
 <?php	echo $this->Form->hidden('id'); ?>
 <?php endif; ?>
 
-<div class="row-fluid">
+<div class="row">
 	<?php echo $this->TBS->input('almacen_id', array('label' => 'Almacén')); ?>
 	<?php echo $this->TBS->input('zona', array('type' => 'text', 'label' => 'Zona', 'ly_w'=>'1', 'maxlength'=>1)); ?>
 	<?php echo $this->TBS->input('fila', array('type' => 'text', 'label' => 'Fila', 'ly_w'=>'1', 'maxlength'=>2)); ?>

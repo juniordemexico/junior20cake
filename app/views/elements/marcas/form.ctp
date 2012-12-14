@@ -3,7 +3,7 @@
 <?php	echo $this->Form->hidden('id'); ?>
 <?php  endif; ?>
 
-<div class="row-fluid">
+<div class="row">
 	<?php echo $this->TBS->input('macve', array('type' => 'text', 'label' => 'Clave')); ?>
 	<?php echo $this->TBS->input('nom', array('type' => 'text', 'label' => 'Nombre')); ?>
 

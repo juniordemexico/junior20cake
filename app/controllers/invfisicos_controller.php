@@ -4,7 +4,7 @@
 class InvfisicosController extends MasterDetailAppController {
 	var $name='Invfisicos';
 
-	var $uses = array('Almacen', 'Tipoarticulo');
+	var $uses = array('Invfisico', 'Almacen');
 
 	var $cacheAction = array('view',
 							);
@@ -12,18 +12,21 @@ class InvfisicosController extends MasterDetailAppController {
 
 
 	function index() {
-		$this->Almacen->recursive = 0;
+		$this->Invfisico->recursive = 0;
 		$this->paginate = array(
 								'update' => '#content',
 								'evalScripts' => true,
 								'limit' => 20,
-								'order' => array('Almacen.tipoarticulo_id', 'Almacen.licve'),
-								'fields' => array('id', 'licve', 'descrip', 'Tipoarticulo.id', 'Tipoarticulo.cve', 'created', 'modified'),
+								'order' => array('Invfisico.fecha','Invfisico.almacen_id'),
+								'fields' => array('Invfisico.id', 'Invfisico.cve',
+								 				'Invfisico.fecha', 'Almacen.aldescrip',
+								 				'Invfisico.finicio', 'Invfisico.ftermino',
+								 				'Invfisico.st', 'Invfisico.modified'),
 								'conditions' => array(),
 								);
 		$filter = $this->Filter->process($this);
 		
-		$this->set('invfisicos', $this->paginate($filter));
+		$this->set('items', $this->paginate($filter));
 	}
 
 
@@ -63,8 +66,7 @@ class InvfisicosController extends MasterDetailAppController {
 			$this->data = $this->Almacen->read(null, $id);
 		}
 
-		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve')));
-		$this->set(compact('tipoarticulos'));
+		$this->set('almacenes', $this->Invfisico->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
 	}
 
@@ -78,8 +80,7 @@ class InvfisicosController extends MasterDetailAppController {
 			}
 		}
 
-		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve')));
-		$this->set(compact('tipoarticulos'));
+		$this->set('almacenes', $this->Invfisico->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
 	}
 
