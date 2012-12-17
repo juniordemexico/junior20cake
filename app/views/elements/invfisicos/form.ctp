@@ -1,4 +1,4 @@
-<?php echo $this->Form->create('Ubicacion', array('class'=>'form-horizontal')); ?>
+<?php echo $this->Form->create('INV', array('class'=>'form-horizontal')); ?>
 <?php if ($mode == 'edit'): ?>
 <?php	echo $this->Form->hidden('id'); ?>
 <?php endif; ?>

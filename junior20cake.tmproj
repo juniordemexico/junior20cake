@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/elements/ubicaciones/form.ctp</string>
+	<string>app/webroot/js/ax.webapp.js</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,42 +21,56 @@
 	<integer>269</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
+		<key>app/config/asset_compress.ini</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>31</integer>
+				<integer>100</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>65</integer>
 		</dict>
-		<key>app/controllers/ubicaciones_controller.php</key>
+		<key>app/controllers/invfisicos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>41</integer>
+				<integer>2</integer>
 				<key>line</key>
-				<integer>58</integer>
+				<integer>29</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>33</integer>
+			<integer>19</integer>
 		</dict>
-		<key>app/models/almacen.php</key>
+		<key>app/models/invfisico.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>53</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>2</integer>
+		</dict>
+		<key>app/models/invfisicodetail.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -68,102 +82,132 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>0</integer>
 				<key>line</key>
 				<integer>62</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>22</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/views/almacenes/index.ctp</key>
+		<key>app/views/elements/invfisicos/form.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
-				<key>line</key>
-				<integer>26</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>80</integer>
-			<key>firstVisibleLine</key>
-			<integer>15</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
+				<integer>10</integer>
 				<key>line</key>
 				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>60</integer>
-			</dict>
-		</dict>
-		<key>app/views/elements/ubicaciones/form.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>114</integer>
-				<key>line</key>
-				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/customerportal.ctp</key>
+		<key>app/views/helpers/t_b_s.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>92</integer>
+				<key>line</key>
+				<integer>213</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>188</integer>
+		</dict>
+		<key>app/webroot/js/ax.webapp.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>120</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>105</integer>
+		</dict>
+		<key>app/webroot/js/unicorn/unicorn.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>16</integer>
+		</dict>
+		<key>app/webroot/js/unicorn/unicorn.login.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/ubicaciones/index.ctp</key>
+		<key>app/webroot/js/unicorn/unicorn.tables.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>64</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>31</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>4</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/webroot/js/webui/angular.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>14493</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>14489</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/layouts/customerportal.ctp</string>
-		<string>app/app_controller.php</string>
-		<string>app/views/almacenes/index.ctp</string>
-		<string>app/views/ubicaciones/index.ctp</string>
-		<string>app/controllers/ubicaciones_controller.php</string>
-		<string>app/views/elements/ubicaciones/form.ctp</string>
-		<string>app/models/almacen.php</string>
+		<string>app/controllers/invfisicos_controller.php</string>
+		<string>app/webroot/js/ax.webapp.js</string>
+		<string>app/config/asset_compress.ini</string>
+		<string>app/webroot/js/webui/angular.js</string>
+		<string>app/webroot/js/unicorn/unicorn.js</string>
+		<string>app/webroot/js/unicorn/unicorn.login.js</string>
+		<string>app/webroot/js/unicorn/unicorn.tables.js</string>
+		<string>app/views/elements/invfisicos/form.ctp</string>
+		<string>app/views/helpers/t_b_s.php</string>
 		<string>app/models/ubicacion.php</string>
+		<string>app/models/invfisico.php</string>
+		<string>app/models/invfisicodetail.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1894, -137}, {915, 970}}</string>
+	<string>{{14, 0}, {915, 878}}</string>
 </dict>
 </plist>
