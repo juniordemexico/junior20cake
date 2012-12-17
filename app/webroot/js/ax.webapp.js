@@ -3,7 +3,6 @@
 
 // http://plnkr.co/edit/vU2y87
 
-
 angular.element(window).bind('keydown', function(e) {
   if (e.keyCode === 32) {
   el=document.getElementById('scanIn');
@@ -44,11 +43,20 @@ function AxAppController( $scope ) {
   $scope.item = item;
   $scope.printLabel = false;  
   $scope.isKit = false;  
+  $scope.isDataComplete = function() {
+      return false;  
+  };
   $scope.save = function($scope) {
     console.log(this.item);
     alert(this.item.articulo_cve+' :: '+this.printLabel+' :: '+this.isKit+' :: '+this.item.cantidad.t0);
   };
+  $scope.submit = function($scope) {
+    alert(this.scan_input);
+    return false;
+  };
+
 }
+
 
 </script>
 
@@ -65,8 +73,8 @@ function AxAppController( $scope ) {
   </head>
   <body>
 
-<div id="content" class="row" ng-controller="AxAppController">
-<div ng-form id="theForm" name="itemForm" class="form span5">
+<div id="content" class="row">
+<form id="theForm" ng-submit="submit()" ng-controller="AxAppController" name="itemForm" class="form span5">
  
   <div class="control-group">
     <label class="control-label" for="artcve">Producto:</label>
@@ -104,7 +112,8 @@ function AxAppController( $scope ) {
   </label>
 
   <div class="form-actions">
-    <button ng:click="save()" ng:disabled="{{isSaveDisabled()}}" type="button" class="btn btn-primary btn-block">Guardar</button>
+  <input type="submit" id="submit" value="sumbit" />
+  <button ng:click="save()" ng:disabled="{{isDataComplete}}" type="button" class="btn btn-primary btn-block">Guardar</button>
   </div>
 
   <div class="control-group well">
@@ -115,32 +124,8 @@ function AxAppController( $scope ) {
     <span class="help-inline"><em class="text-info">{{scan_input}}</em></span>
   </div>
 
-</div> <!-- div itemForm -->
-
-<div id="divDebug" class="tiny span5">
-
-<pre>
-
-<ul>
-  <li>Item: <small class="text-info">{{item}}</small></li>
-  <li>Clave: {{item.articulo_cve}}</li>
-  <li>Color: {{item.color_cve}}</li>
-  <li>Paquete: {{isKit}}</li>
-  <li>Etiqueta: {{printLabel}}</li>
-  <li><em>Cantidades:</em>
-    <ul class="inline">
-    <li>{{item.cantidad.t0}}</li>
-    <li>{{item.cantidad.t1}}</li>
-    <li>{{item.cantidad.t2}}</li>
-    <li class="">{{item.cantidad.t3}}</li>
-    </ul>
-  </li>
-</ul>
-
-  
-</pre>
-
-</div> <!-- divDebug -->
+</form><!-- div itemForm -->
+</div>
 
   </body>
 </html>

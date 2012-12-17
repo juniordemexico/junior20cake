@@ -18,16 +18,18 @@ echo
 
 		'/js_files/core.js',
 		'/js_files/ui.js',
-		'/js_files/ui-util.js'
-//		'load-image.min',
-
-//		'jquery/jquery.min',
-//		'jquery/jquery-ui.min',
-
+		'/js_files/ui-util.js',
+		'/js/webui/angular.min.js"
+	  
 /*
+		'load-image.min',
+
+		'jquery/jquery.min',
+		'jquery/jquery-ui.min',
+
 		'jquery/ensure.min',
 		'jquery/jquery.transform.min',
-//		'jquery/jquery.tools.min',
+		'jquery/jquery.tools.min',
 
 		'jquery/jquery.pulse.min',
 		'jquery/jquery.pop',
