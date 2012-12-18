@@ -2,17 +2,14 @@
 
 
 class InvfisicosmovilController extends MasterDetailAppController {
-	var $name='Invfisicos';
+	var $name='Invfisicosmovil';
 
-	var $uses = array('Invfisico', 'Almacen');
+	var $uses = array('Invfisico', 'Invfisicodetail', 'Almacen', 'Articulo', 'Color', 'Talla' );
 
-	var $cacheAction = array('view',
-							);
 	var $layout = 'almacenmovil';
 
 
-	function index() {
-				
+	function index() {		
 //		$this->set('items', $this->paginate($filter));
 	}
 

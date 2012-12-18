@@ -41,7 +41,7 @@ class AppController extends Controller {
 		'WebAlert',
 		'TBS',
 /*		'Embed',*/
-		'CakeGrid.Grid',
+/*		'CakeGrid.Grid',*/
 		'Upload',
 		'Youtube',
 

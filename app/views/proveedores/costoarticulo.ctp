@@ -13,7 +13,7 @@
 		<?php echo $this->Form->hidden('Proveedor.id', array('value'=>$this->data['Proveedor']['id'])); ?>
 		<?php echo $this->Form->hidden('Proveedor.prcvepro'); ?>
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
-		<?php echo $this->Form->hidden('Material.id'); ?>
+		<?php echo $this->Form->hidden('Material.id', array('id'=>'MaterialId')); ?>
 		<!-- Typeahead init -->
 
 		<div class="controls controls-row well well-small">
@@ -23,6 +23,40 @@
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+
+			<?php
+					
+			echo $this->Html->scriptBlock($this->Js->domReady("
+			var cveartmat_el = $('#edtMaterialCve');
+			    cveartmat_el.typeahead({
+			        source: function(typeahead, query) {
+			            if(this.ajax_call)
+			                this.ajax_call.abort();
+			            this.ajax_call = $.ajax({
+			                dataType: 'json',
+							data: {
+			                    keyword: query,
+			                    proveedor_id: $('#Proveedor.id').val()
+			                },
+			                url: cveartmat_el.data('autocompleteUrl'),
+			                success: function(data) {
+			                    typeahead.process(data);
+			                }
+			            });
+			        },
+			        property: 'value',
+			        onselect: function (obj) {
+						$('#MaterialId').val(obj.id);
+						$('#MaterialArcveart').attr('title', obj.title);
+//						$('#MaterialPcosto').val(obj.pcosto);
+			        }
+			    });
+			"), 
+			array('inline'=>false)
+			);
+			?>
+
+
 			</div>
 			<div class="controls input">
 			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span2"
@@ -33,7 +67,8 @@
 			><i class="icon icon-plus-sign"></i> Agregar</button>
 
 		<?php
-		/* echo $this->TBS->input('Material.arcveart',
+/*
+		 echo $this->TBS->input('Material.arcveart',
 										array(
 										'id'=>'edtMaterialCve'
 										'label'=>false,
@@ -41,44 +76,12 @@
 										'autocomplete'=>array(
 											'url'=>'/Articulos/autocomplete/tipo:1',
 											'min-length'=>2,
-//											'addHiddenField'=>array('Material.id'=>array('source'=>'id')) 
+									'addHiddenField'=>array('Material.id'=>array('source'=>'id')) 
 											),
 										)
 									);
-*/		?>
-<?php
-
-/*
-echo $this->Html->scriptBlock($this->Js->domReady("
-var cveartmat_el = $('#MaterialArcveart');
-    cveartmat_el.typeahead({
-        source: function(typeahead, query) {
-            if(this.ajax_call)
-                this.ajax_call.abort();
-            this.ajax_call = $.ajax({
-                dataType: 'json',
-				data: {
-                    keyword: query,
-                    proveedor_id: $('#Proveedor.id').val()
-                },
-                url: cveartmat_el.data('autocompleteUrl'),
-                success: function(data) {
-                    typeahead.process(data);
-                }
-            });
-        },
-        property: 'value',
-        onselect: function (obj) {
-			$('#MaterialId').val(obj.id);
-			$('#MaterialPcosto').val(obj.pcosto);
-			$('#MaterialArcveart').attr('title', obj.title);
-        }
-    });
-"), 
-array('inline'=>false)
-);
 */
-?>
+		?>
 		</div>
 		<div id="detailContentMaterialTable">
 		<table class="table table-condensed">
@@ -121,14 +124,47 @@ array('inline'=>false)
 		<?php echo $this->Form->hidden('Proveedor.id'); ?>
 		<?php echo $this->Form->hidden('Proveedor.prcvepro'); ?>
 		<?php echo $this->Form->hidden('Proveedor.prnom'); ?>
-		<?php echo $this->Form->hidden('Material.id'); ?>
+		<?php echo $this->Form->hidden('Servicio.id', array('id'=>'ServicioId')); ?>
 		<div class="controls controls-row well well-small">
 			<div class="controls input">
 			<input type="text" maxlength="16" id="edtServicioCve" name="data[ArticuloProveedor][ServicioCve]"
 			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			/>
+
+			<?php
+					
+			echo $this->Html->scriptBlock($this->Js->domReady("
+			var cveartmat_el = $('#edtMaterialCve');
+			    cveartmat_el.typeahead({
+			        source: function(typeahead, query) {
+			            if(this.ajax_call)
+			                this.ajax_call.abort();
+			            this.ajax_call = $.ajax({
+			                dataType: 'json',
+							data: {
+			                    keyword: query,
+			                    proveedor_id: $('#Proveedor.id').val()
+			                },
+			                url: cveartmat_el.data('autocompleteUrl'),
+			                success: function(data) {
+			                    typeahead.process(data);
+			                }
+			            });
+			        },
+			        property: 'value',
+			        onselect: function (obj) {
+						$('#ServicioId').val(obj.id);
+						$('#MaterialPcosto').val(obj.pcosto);
+						$('#edtServicioCve').attr('title', obj.title);
+			        }
+			    });
+			"), 
+			array('inline'=>false)
+			);
+			?>
+
 			</div>
 			<div class="controls input">
 			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" 
