@@ -17,9 +17,9 @@ echo
 		// Javascript frameworks, libraries and utilities
 
 		'/js_files/core.js',
+		'/js/webui/angular.min.js"
 		'/js_files/ui.js',
 		'/js_files/ui-util.js',
-		'/js/webui/angular.min.js"
 	  
 /*
 		'load-image.min',
