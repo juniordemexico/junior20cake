@@ -165,7 +165,7 @@
 				<td class="span3">
 
 				<div class="btn-group span3">
-					<button class="btn btn-info" data-costo="">
+					<button class="btn btn-info" data-costo="<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?>" data-proveedor-cve="<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>">
 					<?php if(isset($item['Costo'][0]) ):?>
 					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
 					<?php endif;?>

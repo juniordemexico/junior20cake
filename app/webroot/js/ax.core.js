@@ -14,7 +14,7 @@ var axAlert = function(txt, type, sticky, title, icon) {
 	var labelClass='';
 	var iconClass='';
 	
-	if(typeof type == 'undefined') {
+	if(typeof type == 'undefined' || type=='info') {
 		type='info';
 	}
 
@@ -57,10 +57,18 @@ var axAlert = function(txt, type, sticky, title, icon) {
 		iconClass=icon;
 	}
 	
+	// Get Time and Date
+	var currentDate = new Date();
+	  var day = currentDate.getDate();
+	  var month = currentDate.getMonth() + 1;
+	  var year = currentDate.getYear();
+	  var time = currentDate.getTime();
+	
+	var theTimestamp = day + '/' + month + '/' + year + ' ' + time; 
 	// Generate an unique id
 
 	return $.gritter.add({
-		title: '<label class="label '+labelClass+'" style="width:95%;">'+title+' <span class="pull-right"><small><em>('+'18:30:53'+')</em></small></span></label>',
+		title: '<label class="label '+labelClass+'" style="width:95%;">'+title+' <span class="pull-right"><small><em>('+theTimestamp+')</em></small></span></label>',
 		text: txt,
 		image: '/img/icons/devine/white/'+iconClass,
 		fade_out_speed: 2000, // how fast the notices fade out

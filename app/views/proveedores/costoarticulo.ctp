@@ -18,7 +18,7 @@
 
 		<div class="controls controls-row well well-small">
 			<div class="controls input">
-			<input type="text" maxlength="16" id="edtMaterialCve" name="data[ArticuloProveedor][MaterialCve]"
+			<input type="text" maxlength="16" id="edtMaterialCve"  name="data[ArticuloProveedor][MaterialCve]"
 			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
@@ -47,8 +47,9 @@
 			        property: 'value',
 			        onselect: function (obj) {
 						$('#MaterialId').val(obj.id);
-						$('#MaterialArcveart').attr('title', obj.title);
-//						$('#MaterialPcosto').val(obj.pcosto);
+						$('#edtMaterialCve').attr('title', obj.title);
+						axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Material');
+//						$('#edtMaterialPCosto').val(obj.pcosto);
 			        }
 			    });
 			"), 
@@ -134,12 +135,11 @@
 			/>
 
 			<?php
-					
-			echo $this->Html->scriptBlock($this->Js->domReady("
-			var cveartmat_el = $('#edtMaterialCve');
-			    cveartmat_el.typeahead({
-			        source: function(typeahead, query) {
-			            if(this.ajax_call)
+				echo $this->Html->scriptBlock($this->Js->domReady("
+				var cveartser_el = $('#edtServicioCve');
+				    cveartser_el.typeahead({
+			        	source: function(typeahead, query) {
+		            	if(this.ajax_call)
 			                this.ajax_call.abort();
 			            this.ajax_call = $.ajax({
 			                dataType: 'json',
@@ -147,27 +147,29 @@
 			                    keyword: query,
 			                    proveedor_id: $('#Proveedor.id').val()
 			                },
-			                url: cveartmat_el.data('autocompleteUrl'),
-			                success: function(data) {
+			                url: cveartser_el.data('autocompleteUrl'),
+				                success: function(data) {
 			                    typeahead.process(data);
-			                }
-			            });
-			        },
-			        property: 'value',
-			        onselect: function (obj) {
-						$('#ServicioId').val(obj.id);
-						$('#MaterialPcosto').val(obj.pcosto);
-						$('#edtServicioCve').attr('title', obj.title);
-			        }
-			    });
-			"), 
-			array('inline'=>false)
-			);
+				                }
+				            });
+				        },
+				        property: 'value',
+				        onselect: function (obj) {
+							$('#ServicioId').val(obj.id);
+							$('#edtServicioCve').attr('title', obj.title);
+							axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Servicio');
+							
+	//						$('#ServicioPcosto').val(obj.pcosto);
+				        }
+				    });
+				"), 
+				array('inline'=>false)
+				);
 			?>
 
 			</div>
 			<div class="controls input">
-			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPCosto]" 
+			<input type="text" maxlength="8" id="edtServicioPcosto" name="data[ArticuloProveedor][ServicioPcosto]" 
 			class="span2" title="Costo segun el proveedor especificado" />
 			</div>
 			<button id="submitServicio" class="btn" type="button"
@@ -257,7 +259,6 @@ var theProveedorID=$('#ProveedorId').val();
 var theCve=$('#edtMaterialCve').val();
 var thePCosto=$('#edtMaterialPCosto').val();
 var theUrl=el.data('url');
-axAlert(theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto);
 
 $.ajax({
 	dataType: 'html', 
@@ -291,7 +292,6 @@ var theProveedorID=$('#ProveedorId').val();
 var theCve=$('#edtServicioCve').val();
 var thePCosto=$('#edtServicioPCosto').val();
 var theUrl=el.data('url');
-axAlert(theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto);
 
 $.ajax({
 	dataType: 'html', 

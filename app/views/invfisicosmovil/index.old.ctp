@@ -5,19 +5,17 @@
   <div class="control-group">
     <label class="control-label" for="artcve">Producto:</label>
     <div class="controls">
-      <input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3"/>
+		<input type="hidden" id="item_id" name="item_id" ng-model="item_id" />
+		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3" />
     </div>
+    <span class="help-inline"><small>{{item.articulo_descrip}}</small></span>
     <span class="help-inline hide">Woohoo!</span>
  </div>
- <div><small>{{item.articulo_descrip}}</small></div>
  
   <div class="control-group">
     <label class="control-label" for="colcve">Color:</label>
     <div class="controls">
       <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span3"/>
-	<select>
-		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
-	</select>
     </div>
     <span class="help-inline hide">Woohoo!</span>
   </div>
@@ -30,9 +28,9 @@
   <div class="control-group">
   <div class="controls controls-row">
 <?php for($i=0; $i<5; $i++ ): ?> 
-   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
-	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
-	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
+   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talladetail[<?php e($i)?>].cant" 
+	placeholder="{{item.talladetail[<?php e($i)?>].label}}" title="Talla {{item.talladetail[<?php e($i)?>].label}}"
+	class="span1" ng-show="item.talladetail[<?php e($i)?>].label" />
 <?php endfor; ?>
   </div>
   </div>
@@ -40,9 +38,9 @@
   <div class="control-group">
   <div class="controls controls-row">
 <?php for($i=5; $i<10; $i++ ): ?> 
-   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
-	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
-	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
+   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talladetail[<?php e($i)?>].cant" 
+	placeholder="{{item.talladetail[<?php e($i)?>].label}}" title="Talla {{item.talladetail[<?php e($i)?>].label}}"
+	class="span1" ng-show="item.talladetail[<?php e($i)?>].label" />
 <?php endfor; ?>
   </div>
   </div>
@@ -60,12 +58,10 @@
   </div>
 
   <div class="control-group">
-    <label class="control-label label" for="colcve">Scanner </label>
     <div class="controls">
-      <input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4"/>
+		<input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4" placeholder="Scanner input..." />
+    	<span class="help-inline">Last read: {{lastScanInput}}</span>
     </div>
-    <p><span class="help-inline"><em class="text-info">{{scanInput}}</em></span></p>
-	<p>Last read: {{lastScanInput}}</p>
   </div>
 
 </form><!-- div itemForm -->
@@ -73,30 +69,28 @@
 
 <script>
 
-// http://plnkr.co/edit/vU2y87
+// http://plnkr.co/edit/vU2y87   by me ;)
 
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 32) {
 		el=document.getElementById('scanInput');
 		el.focus();
-//    $scope.$apply(function() {
-//      $scope.subpage = false;
-//    });
 	}
 });
 
-var itemTalladetail={}
 var item={
-	user_id : '1',
+	user_id : 1,
 	username : 'IDD',
-	articulo_id : '111',
+	item_id : 0,
+	articul o_id : '111',
 	articulo_cve : 'POWE',
 	articulo_descrip : 'PANTALON POWER',
 	color_id : '222',
 	color_cve : 'BLACK',
+	descrip : 'Pantalon',
 	talla_id : 0,
 	talla_cve : '',
-	talla: [
+	talladetail: [
 		{cant : '', label : '28'},
  		{cant : '', label : '29'},
  		{cant : '', label : '30'},
@@ -107,16 +101,12 @@ var item={
  		{cant : '', label : '36'},
  		{cant : '', label : '38'},
  		{cant : '', label : '40'}
-	],
-	color: [
-		{id:1, cve:'UNICO'}
 	]
-
 };
 
-
-function AxAppController( $scope, $http ) {
-	$scope.getUrl = '/Invfisicosmovil/getItemByCve';
+function AxAppController( $scope, $http, $templateCache ) {
+	$scope.method = 'GET';
+	$scope.getUrl = '/Invfisicosmovil/itemData';
 	$scope.addUrl = '/Invfisicosmovil/addItem';
 
 	$scope.item = item;			// This is the Controller's main Model
@@ -127,25 +117,24 @@ function AxAppController( $scope, $http ) {
 	$scope.scanInput = '';		// Every barcode scanner's reads are redirected through this
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
-	$scope.lastCve='';
-	
 	// We have all the required data in our form?
 	$scope.isDataComplete = function() {
-		return false;  
+		return true;  
 	};
 	
 	// Save and push this record to the server
+/*
 	$scope.save = function() {
 		console.log($scope.item);
 		alert($scope.item.articulo_cve+' :: '+$scope.printLabel+' :: '+$scope.isKit+' :: '+
-				$scope.item.talla[0].cant + $scope.item.talla[0].label );
+				$scope.item.talladetail[0].cant + $scope.item.talladetail[0].label );
 	};
+*/
 
 	// This action is used as a form's "onChange" generic event.
   	$scope.submit = function() {
 		console.log('Raw scanner input:' + $scope.scanInput);
 		var scannedInput=$scope.scanInput;
-		alert($scope.item.articulo_cve);
 		if(typeof scannedInput != 'undefined' && typeof scannedInput == 'string') {
 			scannedInput='{' + scannedInput + '}';
 			$scope.scanInput=scannedInput;
@@ -154,29 +143,9 @@ function AxAppController( $scope, $http ) {
 		
 		console.log('Processed scanner input:' + $scope.scanInput);
 		$scope.scanInput='';
+		alert('un submit');
 		return false;
 	};
-	
-	$('#artcve').bind('blur', function() {
-		if($scope.item.articulo_cve!=$scope.lastCve) {
-			$scope.lastCve=$scope.item.articulo_cve;
-
-			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
-				$scope.item=response.data;
-/*
-				angular.forEach(response.data.color, function(value, key) {
-//					this.push(key + ': ' + value);
-				});
-*/ 
-       		});
-		}
-	});
-
 }
-
-/*
-			var Articulo = $resource('/Invfisicosmovil/getItemByCve/:cve',
- 				{cve:$scope.item.articulo_cve} 	);
-*/
 
 </script>

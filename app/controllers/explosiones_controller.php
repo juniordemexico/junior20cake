@@ -103,6 +103,7 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 	public function detailtela($id=null) {
+		$this->layout='empty';
 		if($id) {
 			$this->set('articulo', $this->Articulo->read(null,$id) );
 			$this->set('explosion', $this->Explosion->getAllItems($id) );
@@ -110,6 +111,7 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 	
 	public function detailhabil($id=null) {
+		$this->layout='empty';
 		if($id) {
 			$this->set('articulo', $this->Articulo->read(null,$id) );
 			$this->set('explosion', $this->Explosion->getAllItems($id) );
@@ -117,6 +119,7 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 	
 	public function detailservicio($id=null) {
+		$this->layout='empty';
 		if($id) {
 			$this->set('articulo', $this->Articulo->read(null,$id) );
 			$this->set('explosion', $this->Explosion->getAllItems($id) );

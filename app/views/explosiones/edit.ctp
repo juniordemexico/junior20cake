@@ -23,15 +23,50 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
 
-			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" class="span2"
+			<input type="hidden" maxlength="16" id="TelaId" name="data[Explosion][TelaId]"/>
+
+			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" 
+			class="span2" placeholder="Tela..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+
+			<?php
+
+			echo $this->Html->scriptBlock($this->Js->domReady("
+				var cvearttela_el = $('#edtTelaCve');
+				cvearttela_el.typeahead({
+					source: function(typeahead, query) {
+						if(this.ajax_call)
+							this.ajax_call.abort();
+						this.ajax_call = $.ajax({
+							dataType: 'json',
+							data: {
+								keyword: query,
+//								proveedor_id: $('#Proveedor.id').val()
+							},
+							url: cvearttela_el.data('autocompleteUrl'),
+							success: function(data) {
+								typeahead.process(data);
+							}
+						});
+					},
+					property: 'value',
+					onselect: function (obj) {
+						$('#MaterialId').val(obj.id);
+						$('#edtTelaCve').attr('title', obj.title);
+						axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Tela');
+		        	}
+			    });
+			"), 
+			array('inline'=>false)
+			);
+			?>
+
 			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
 			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]" title="Marcar en caso de ser un insumo propio" />
-			<button id="submitTela" {{action "load" target="AxBOS.TelaC"}} class="btn" type="button"
-			data-url="/Explosiones/add"
-			><i class="icon icon-plus-sign"></i> Agregar</button>
+			<button id="submitTela" class="btn" type="button" 
+			data-url="/Explosiones/add"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
 		<div id="detailContentTelaTable">
@@ -89,7 +124,11 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->			
-			<input type="text" maxlength="16" id="edtHabilCve" name="data[Explosion][HabilCve]" class="span2"
+
+			<input type="hidden" maxlength="16" id="HabilId" name="data[Explosion][HabilId]"/>
+
+			<input type="text" maxlength="16" id="edtHabilCve" name="data[Explosion][HabilCve]"
+			class="span2" placeholder="Material..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
@@ -99,6 +138,37 @@
 			data-url="/Explosiones/add"
 			>
 			<i class="icon icon-plus-sign"></i> Agregar</button>
+
+			<?php
+			echo $this->Html->scriptBlock($this->Js->domReady("
+				var cvearthabil_el = $('#edtHabilCve');
+				cvearthabil_el.typeahead({
+				source: function(typeahead, query) {
+					if(this.ajax_call) this.ajax_call.abort();
+					this.ajax_call = $.ajax({
+					dataType: 'json',
+					data: {
+						keyword: query,
+//						proveedor_id: $('#Proveedor.id').val()
+					},
+					url: cvearthabil_el.data('autocompleteUrl'),
+					success: function(data) {
+						typeahead.process(data);
+					}
+					});
+				},
+				property: 'value',
+				onselect: function (obj) {
+					$('#HabilId').val(obj.id);
+					$('#edtHabilCve').attr('title', obj.title);
+					axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Tela');
+					}
+				});
+			"), 
+			array('inline'=>false)
+			);
+			?>
+			
 		</div>
 
 		<div id="detailContentHabilTable">
@@ -156,7 +226,10 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]" class="span2"
+			<input type="hidden" maxlength="16" id="ServicioId" name="data[Explosion][ServicioId]"/>
+
+			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]"
+			class="span2" placeholder="Servicio..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			/> &nbsp;&nbsp;
@@ -165,6 +238,38 @@
 			data-url="/Explosiones/add"
 			>
 			<i class="icon icon-plus-sign"></i> Agregar</button>
+
+			<?php
+			echo $this->Html->scriptBlock($this->Js->domReady("
+				var cveartserv_el = $('#edtServicioCve');
+				cveartserv_el.typeahead({
+				source: function(typeahead, query) {
+					if(this.ajax_call) this.ajax_call.abort();
+					this.ajax_call = $.ajax({
+					dataType: 'json',
+					data: {
+						keyword: query,
+//						proveedor_id: $('#Proveedor.id').val()
+					},
+					url: cveartserv_el.data('autocompleteUrl'),
+					success: function(data) {
+						typeahead.process(data);
+					}
+					});
+				},
+				property: 'value',
+				onselect: function (obj) {
+					$('#ServicioId').val(obj.id);
+					$('#edtServicioCve').attr('title', obj.title);
+					axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Tela');
+					}
+				});
+			"), 
+			array('inline'=>false)
+			);
+			?>
+
+
 		</div>
 
 		<div id="detailContentServicioTable">

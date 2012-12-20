@@ -432,6 +432,7 @@ $response->userdata['name'] = 'Totals:';
 							'Articulo.arpcosto', 'Articulo.arpva','Articulo.arpvb',
 							'Linea.licve', 'Marca.macve', 'Temporada.tecve'),
 			'limit'=>16,
+			'order'=>'Articulo.arcveart',
 			'conditions' => array(
 					'Articulo.tipoarticulo_id'=>$tipo,
 					'Articulo.arst'=>'A',
@@ -449,25 +450,6 @@ $response->userdata['name'] = 'Totals:';
 		else {
 			return;
 		}
-		// Create the dataset to be returned
-/*
-		($response, array('id'=>'Articulo.id', 'value'=>'Articulo.arcveart',
-		 				'label'=>array('') 
-		));
-*/
-/*
-		$response = array();
-		foreach($results as $item) {
-   			$response[]=array(
-						'id'=>$item['Articulo']['id'],
-						'value'=>trim($item['Articulo']['arcveart']),
-						'label'=>trim($item['Articulo']['arcveart']).' '.trim($item['Articulo']['ardescrip']).' ('.trim($item['Linea']['licve']).')',
-						'pcosto'=>$item['Articulo']['arpcosto'],
-						'pva'=>$item['Articulo']['arpva'],
-						'pvb'=>$item['Articulo']['arpvb'],
-						);
-  		}
-*/
 	}
 
 	/* Text Field Autocomplete action */

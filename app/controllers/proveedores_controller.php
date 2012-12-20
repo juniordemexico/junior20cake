@@ -60,6 +60,7 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 	function detailcostomaterial($id = null) {
+		$this->layout='empty';
 		if($id) {
 			$this->data = $this->Proveedor->read(null, $id);
 			$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(1)")) );
@@ -68,6 +69,7 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 	function detailcostoservicio($id = null) {
+		$this->layout='empty';
 		if($id) {
 			$this->data = $this->Proveedor->read(null, $id);
 			$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN(1)")) );
