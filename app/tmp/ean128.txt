@@ -1,0 +1,40 @@
+#Comandos globales
+N
+WN
+OD,F
+
+#Configuracion de la forma
+FK"ETIQ1"
+FS"ETIQ1"
+V00,16,L,""
+V01,32,L,""
+V02,32,L,""
+
+#Medidas de la forma
+Q918,70
+q1180
+D13
+S3
+
+#Rectangulo
+X1,1,2,450,140
+#Contenido
+#B10,10,0,1A,2,2,60,N,V00
+A10,80,0,2,2,1,N,V00
+A10,100,0,1,1,1,N,V01
+A10,120,0,1,1,1,N,V02
+A10,140,0,1,1,1,N,"KAKA"
+PA2,1
+FE
+
+
+FR"ETIQ1"
+?
+ER01020304050607
+Collar con perlas negras y amarillas
+y naranjas y moradas
+P1
+AZ01020304050607
+Collarzote con perlas amarillas
+y naranjas y moradas verdosas
+P1

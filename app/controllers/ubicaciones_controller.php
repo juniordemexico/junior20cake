@@ -86,5 +86,46 @@ class UbicacionesController extends MasterDetailAppController {
 		$this->set('almacenes', $this->Ubicacion->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
 	}
+	
+	public function printLabel($zona=null, $fila=null, $espacio=null) {
+		$this->layout='plain';
+		$tmpPath='/home/www/junior20dev/app/files/tmp';
+		if(!$zona) {
+			$this->Session->setFlash(__('invalid_item', true).' ('.$this->Ubicacion->id.')', 'error');
+			$this->redirect(array('action' => 'index'));			
+		}
+
+		$conditions= array(
+				'Ubicacion.zona'=>$zona,
+				'Ubicacion.fila'=>$fila,
+			);
+		
+		$options=array(
+			'limit'=>12,
+			'order'=>array('Ubicacion.cve'),
+			'conditions'=>$conditions,
+			);
+
+		$rs=$this->Ubicacion->find('all', $options);
+		$items=array();
+		$content='';
+		foreach($rs as $item) {
+			$items[]=array(	'id'=>$item['Ubicacion']['id'],
+							'cve'=>$item['Ubicacion']['cve'],
+							'descrip'=>$item['Ubicacion']['descrip'],
+							);
+			$content.='
+N
+D14
+A225,5,0,5,1,1,N,"'.$item['Ubicacion']['cve'].'"
+B225,65,0,1,2,10,75,N,"t%u,id%'.$item['Ubicacion']['id'].'"
+P2
+';
+		}
+		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.'_'.$fila.'.txt', $content);
+
+		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.'_'.$fila.'.txt');
+		$this->set(compact('content', 'items', 'shellout'));
+	}
 
 }

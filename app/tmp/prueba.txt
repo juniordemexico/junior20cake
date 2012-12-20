@@ -1,0 +1,31 @@
+#Appendix B - EAN128 Example
+N
+OD,F
+D13
+S3
+Q918,70
+q1180
+
+#Lineas Horizontales
+LO1,1,450,2
+LO1,130,450,2
+#Lineas Verticales
+LO1,1,2,130
+LO440,1,2,130
+#Contenido
+B20,210,0,1,2,2,60,N,"ER010203"
+A20,280,0,2,2,1,N,"ER0102030"
+A20,300,0,1,1,1,N,"Col-a/ madera cafe-vh"
+
+B20,400,0,1,1,2,30,N,"8NE9018"
+A20,450,0,2,1,1,N,"8NE9018"
+A20,470,0,1,1,1,N,"Col-a/ madera cafe-vh"
+A20,490,0,2,1,1,N,"$299.87"
+
+B20,600,0,1B,2,5,30,N,"8NE9018"
+A20,650,0,2,1,1,N,"8NE9018"
+A20,670,0,1,1,1,N,"Col-a/ madera cafe-vh"
+A20,690,0,2,2,1,N,"$299.87"
+
+P1
+

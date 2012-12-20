@@ -162,7 +162,16 @@ function AxAppController( $scope, $http ) {
 			$scope.lastCve=$scope.item.articulo_cve;
 
 			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
-				$scope.item=response.data;
+				if(typeof response.data != 'undefined') {
+					if(typeof response.data.result != 'undefined' &&
+						typeof response.data.result == 'string') {
+						alert('Error');
+					}
+					else {
+						$scope.item=response.data;
+					}
+
+				}
 /*
 				angular.forEach(response.data.color, function(value, key) {
 //					this.push(key + ': ' + value);
