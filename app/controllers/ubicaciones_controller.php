@@ -26,7 +26,7 @@ class UbicacionesController extends MasterDetailAppController {
 								'limit' => 20,
 								'order' => array('Almacen.alcve','Ubicacion.cve'),
 								'conditions' => array(),
-								);w
+								);
 		$filter = $this->Filter->process($this);
 		
 		$this->set('items', $this->paginate($filter));
@@ -96,12 +96,15 @@ class UbicacionesController extends MasterDetailAppController {
 
 		$conditions= array(
 				'Ubicacion.zona'=>$zona,
-				'Ubicacion.fila'=>$fila,
+				'Ubicacion.fila <'=>'36',
+				'Ubicacion.espacio >'=>'4000',
+				'Ubicacion.espacio <'=>'4999',
+				'SUBSTRING(Ubicacion.espacio FROM 3 for 2) <'=>'13',
 			);
 		
 		$options=array(
 			'offset'=>0,
-			'limit'=>12,
+			'limit'=>433,
 			'order'=>array('Ubicacion.cve'),
 			'conditions'=>$conditions,
 			);
@@ -122,9 +125,9 @@ B225,65,0,1,2,10,75,N,"t%u,id%'.$item['Ubicacion']['id'].'"
 P2
 ';
 		}
-		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.'_'.$fila.'.txt', $content);
+		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.'_nivel4.txt', $content);
 
-		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.'_'.$fila.'.txt');
+		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.'_nivel4.txt');
 		$this->set(compact('content', 'items', 'shellout'));
 	}
 
