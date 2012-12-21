@@ -15,6 +15,15 @@ class Explosion extends AppModel
 		),
 	);
 
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	var $belongsTo = array(
+		'Material'=>array(
+			'className'=>'Articulo',
+			'foreignKey'=>'material_id',
+			'conditions'=>'Material.tipoarticulo_id<>0',
+			)
+	);
+
 	var $validate = array(
 		'articulo_id' => array(
 			'isunique' => array(
@@ -40,15 +49,6 @@ class Explosion extends AppModel
 				'message' => 'Debe especificar si el insumo es propio o no'
 			)
 		),
-	);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
-		'Material'=>array(
-			'className'=>'Articulo',
-			'foreignKey'=>'material_id',
-			'conditions'=>'Material.tipoarticulo_id<>0',
-			)
 	);
 
 	public function getAllItems($id) {

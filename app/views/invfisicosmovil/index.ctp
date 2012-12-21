@@ -68,7 +68,11 @@
 	<p>Last read: {{lastScanInput}}</p>
   </div>
 
+
 </form><!-- div itemForm -->
+<pre class="pre">
+item = {{item | json}}
+</pre>
 </div>
 
 <script>
@@ -114,11 +118,16 @@ var item={
 
 };
 
+var user={
+	user_id : '1',
+	username : 'IDD',
+};
 
 function AxAppController( $scope, $http ) {
-	$scope.getUrl = '/Invfisicosmovil/getItemByCve';
+	$scope.getUrl = '/Articulos/getItemByCve';
 	$scope.addUrl = '/Invfisicosmovil/addItem';
 
+	$scope.user = user;			// This is the Controller's User Model
 	$scope.item = item;			// This is the Controller's main Model
 
 	$scope.isKit = false;		// We have a product kit or package with more than one units?

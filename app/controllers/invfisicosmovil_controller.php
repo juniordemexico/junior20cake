@@ -13,20 +13,25 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$this->set('title_for_layout', "Inventario Físico");	
 //		$this->set('items', $this->paginate($filter));
 	}
-	
+/*	
 	function getItemByCve($cve=null) {
 		$this->autoRender=false;
-		$this->Articulo->recursive=0;
+		$this->Articulo->recursive=1;
 		$rs=$this->Articulo->findByArcveart($cve);
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Producto Inválido',
+		);
+
 		if($rs && isset($rs['Articulo']['id']) && $rs['Articulo']['id']>0) {
 			$color=array();
 			$color[]=array('id'=>1, 'cve'=>'NEGRO');
 
-/*
-		foreach($rs['Color'] as $item) {
-			$colores[]=array('id'=>$item['id'], 'cve'=>$item['cve']);
-		}
-*/
+
+			foreach($rs['Color'] as $item) {
+				$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
+			}
+		
 
 			$out=array(
 				'articulo_id'=>$rs['Articulo']['id'],
@@ -57,11 +62,9 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			$out=array(
 				'result'=>'error',
 				'errorMessage'=>'Producto Inválido',
-				'messages'=>array(),
-				'alerts'=>array( array('text'=>'Producto Inválido', 'type'=>'error', 'sticky'=>false) )
 				);
 		}
 		echo json_encode($out);
 	}
-
+*/
 }

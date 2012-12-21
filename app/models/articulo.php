@@ -57,13 +57,14 @@ class Articulo extends AppModel
 
 	var $hasMany = array(
 		'ArticuloProveedor',
-		'Pedidodet',
-		'Facturadet',
-		'Explosion'=>array(
+//		'Pedidodet',
+//		'Facturadet',
+/*		'Explosion'=>array(
 			'className'=>'Explosion',
 			'foreignKey'=>'articulo_id',
 //			'dependent'=>true,
 			),
+*/
 /*
 		'ExplosionMaterial'=>array(
 			'className'=>'Explosion',

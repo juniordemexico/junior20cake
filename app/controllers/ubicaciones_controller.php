@@ -1,6 +1,5 @@
 <?php
 
-
 class UbicacionesController extends MasterDetailAppController {
 	var $name='Ubicaciones';
 
@@ -27,7 +26,7 @@ class UbicacionesController extends MasterDetailAppController {
 								'limit' => 20,
 								'order' => array('Almacen.alcve','Ubicacion.cve'),
 								'conditions' => array(),
-								);
+								);w
 		$filter = $this->Filter->process($this);
 		
 		$this->set('items', $this->paginate($filter));
@@ -101,6 +100,7 @@ class UbicacionesController extends MasterDetailAppController {
 			);
 		
 		$options=array(
+			'offset'=>0,
 			'limit'=>12,
 			'order'=>array('Ubicacion.cve'),
 			'conditions'=>$conditions,
