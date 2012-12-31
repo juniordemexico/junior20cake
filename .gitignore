@@ -1,4 +1,7 @@
-junior20cake.tmproj		# Text Mate's Project file
+junior20cake.tmproj		# TMate's Project file
+junior20cake.sublime-project	# Sublime Text's Project file
+junior20cake.sublime-workspace	# Sublime Text's Project file
+
 app/config/database.php		# Local database configuration file
 app/config/core.php
 

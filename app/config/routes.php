@@ -11,6 +11,10 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice. 
  */
+
+	Router::parseExtensions('json');
+
+
 	Router::connect('/',
 		array(
 			'controller' => 'pages'

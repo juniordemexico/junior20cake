@@ -1,5 +1,5 @@
 BODY {
-	padding: 40px;
+	padding-top: 40px;
 }
 
 input[type=radio] {
@@ -558,7 +558,7 @@ li.selected    { background-color: #ffb; }
 	max-width: 400px;
 	
 }
-
+/*
 .ui-autocomplete { 
 	font-size: 90%;
 	font-family: helvetica, arial, sans-serif;
@@ -570,11 +570,11 @@ ul.ui-autocomplete {
 	-webkit-box-shadow: 3px 3px 5px #202020;
 	-moz-box-shadow: 3px 3px 5px #202020;
 }
-
+*/
 form.login {
-	width: 180px;
-	font-size: 10px;
-	padding: 4px;
+	width: 240px;
+	font-size: 12px;
+	padding: 8px;
 	margin: 8px;
 	border: 1px solid #303030;
 	color: #2010A0;
@@ -601,6 +601,9 @@ form.login {
 div.index {
 	width: 100%;
 	text-align: center;
+	padding: 0px;
+	margin: 0px;
+	border: 0px none;
 }
 
 

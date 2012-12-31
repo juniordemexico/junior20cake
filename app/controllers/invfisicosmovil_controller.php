@@ -9,10 +9,13 @@ class InvfisicosmovilController extends MasterDetailAppController {
 	var $layout = 'almacenmovil';
 
 
-	function index() {
+	public function index() {
 		$this->set('title_for_layout', "Inventario Físico");	
+		
 //		$this->set('items', $this->paginate($filter));
 	}
+
+	public function
 /*	
 	function getItemByCve($cve=null) {
 		$this->autoRender=false;

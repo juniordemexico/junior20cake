@@ -61,25 +61,16 @@ class AppController extends Controller {
 	 */
 	
 	function beforeFilter() {
-
-		App::import('Model', 'User');
-		User::store($this->Auth->user());
 		// Session and Authentication stuff.
 		$this->Auth->loginAction = array('controller' => 'Users', 'action' => 'login');
 		$this->Auth->loginRedirect = array('controller' => 'Desktop', 'action' => 'index');
 
-		// Initialize the apiResponse structure
-		$this->apiResponse=array(
-			'_id'=>99999,
-			'_parentid'=>88888,
-			'_timestamp'=>date('Y-m-d H:i:s'),
-			'result'=>'ok',
-			'messages'=>array(),
-			'data'=>array(),
-			);
-		
-		// Set the default page's title
-		$this->pageTitle=$this->name;
+		// Prepare the content for JSON requests
+   		$this->RequestHandler->setContent('json', 'text/x-json');
+
+		// Create a static User model accesible from everywhere
+		App::import('Model', 'User');
+		User::store($this->Auth->user());
 
 		// Fill a request's data array. Mainly to pass it to models and views
 		$this->set('request', array(
@@ -91,6 +82,20 @@ class AppController extends Controller {
 			'isMobile' => $this->RequestHandler->isMobile(),
 			'request_method' => ($this->RequestHandler->isGet()?'GET':($this->RequestHandler->isPost()?'POST':($this->RequestHandler->isDelete()?'DELETE':($this->RequestHandler->isPut()?'PUT':'')))),
 		));
+
+		// Initialize the apiResponse structure
+		$this->apiResponse=array(
+			'_id'=>99999,
+			'_parentid'=>88888,
+			'_timestamp'=>date('Y-m-d H:i:s'),
+			'result'=>'ok',
+			'messages'=>array(),
+			'data'=>array(),
+			);
+		
+
+		// Set the default page's title
+		$this->pageTitle=$this->name;
 
 		// Check for autocomplete parameters and sanitize them
 /*
@@ -153,14 +158,14 @@ class AppController extends Controller {
 	}
 
 
-	public function autocomplete($keyword='', $type=0) {
+	public function autocomplete(string $keyword='', integer $type=0) {
  		Configure::write ( 'debug', 0 );
   		$this->layout = 'json';
 		$this->autoRender=false;
 		$options=$this->_autocompleteParseOptions($keyword, $type);
 	}
 	
-	function _autocompleteParseOptions($keyword='', $type=0) {
+	function _autocompleteParseOptions($keyword='', $type=null) {
 
 		$keyword=trim($keyword);
 
@@ -369,7 +374,7 @@ class ReportAppController extends AppController {
  *
  * @package default
  */
-abstract class AjaxController extends Controller {
+abstract class AjaxController extends AppController {
 
 /**
  * Override for the current HTTP-Status code
