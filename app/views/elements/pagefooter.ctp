@@ -1,3 +1,7 @@
+<?php
+//echo $this->Html->script('/js_files/ui-util.js');
+?>
+
 <section id="sectionFooters">
 	<div id="footer" class="row centered">
 		<div id="footer1" class="span6 centered">

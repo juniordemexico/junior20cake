@@ -14,7 +14,7 @@
 	<!-- JS Code and Data -->
 	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
-	<?php echo $this->Html->script('/js/webui/angular.min'); ?>
+	<?php //echo $this->Html->script('/js/webui/angular.min'); ?>
 
 	<?php echo $scripts_for_layout; ?>
 
@@ -24,7 +24,7 @@
 
 <body>
 
-<div class="container">	
+<div class="container tablet7">	
 	<div class="row">
 		<div class="span12">
 

@@ -1362,6 +1362,14 @@ TABLE THEAD TH {
 /*	background: transparent;*/
 }
 
+@media (min-width: 500px) and (max-width:640px) {
+body {
+	width: 500px;
+	max-width:500px;
+	min-width:500px;
+}	
+	
+}
 
 .ui-tabs {
 /*

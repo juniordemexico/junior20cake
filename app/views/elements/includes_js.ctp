@@ -8,7 +8,7 @@
 // cake asset_compress.asset_compress build
  
   echo $this->AssetCompress->script('core.js'); 
-  echo $this->AssetCompress->script('ui.js');
+//  echo $this->AssetCompress->script('ui.js');
   echo $this->AssetCompress->script('ui-util.js');
 */
 
@@ -17,8 +17,8 @@ echo
 		// Javascript frameworks, libraries and utilities
 
 		'/js_files/core.js',
-		'/js/webui/angular.min.js"
-		'/js_files/ui.js',
+		'/js/webui/angular.min.js',
+/*		'/js_files/ui.js', */
 		'/js_files/ui-util.js',
 	  
 /*

@@ -13,16 +13,6 @@
 	<!-- CSS Style Includes -->
 	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
 
-	<!-- JS Code and Data -->
-	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
-
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Content.css" />
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Core.css" />
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Layout.css" />
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Dock.css" />
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Tabs.css" />
-	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Window.css" />
-
 	<?php
 		/* AxBOS main generic styles */
 		echo $html->script(array('mocha/scripts/mootools-1.2.4-core-yc',
@@ -36,6 +26,17 @@
 	<!--[if IE]>
 		<script type="text/javascript" src="/js/mocha/scripts/excanvas_r43.js"></script>
 	<![endif]-->
+
+	<!-- JS Code and Data -->
+	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
+
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Content.css" />
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Core.css" />
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Layout.css" />
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Dock.css" />
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Tabs.css" />
+	<link rel="stylesheet" type="text/css" href="js/mocha/themes/charcoal/css/Window.css" />
+
 
 	<style>	
 	/* This CSS should be placed in a style sheet. It is only here in order to not conflict with the other demos. */
@@ -101,6 +102,13 @@
 <section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
 </section>
+
+<?php
+echo
+	$this->Html->script(array(
+		'/js_files/ui-util.js',
+	  ));
+?>
 
 </body>
 </html>
