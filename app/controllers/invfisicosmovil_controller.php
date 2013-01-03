@@ -35,12 +35,70 @@ class InvfisicosmovilController extends MasterDetailAppController {
 	
 			$out=array(
 				'articulo_id'=>$rs['Articulo']['id'],
-				'articulo_cve'=>$rs['Articulo']['arcveart'],
-				'articulo_descrip'=>$rs['Articulo']['ardescrip'],
+				'articulo_cve'=>trim($rs['Articulo']['arcveart']),
+				'articulo_descrip'=>trim($rs['Articulo']['ardescrip']),
 				'color_id'=>null,
 				'color_cve'=>null,
 				'talla_id'=>$rs['Articulo']['talla_id'],
-				'talla_cve'=>$rs['Talla']['tadescrip'],
+				'talla_cve'=>trim($rs['Talla']['tadescrip']),
+				'talla'=>array(
+					array('label'=>$rs['Talla']['tat0'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat1'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat2'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat3'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat4'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat5'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat6'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat7'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat8'], 'cant'=>''),
+					array('label'=>$rs['Talla']['tat9'], 'cant'=>'')
+				),
+				'color'=>$color
+
+			);
+
+		}
+		else {
+			$out=array(
+				'result'=>'error',
+				'errorMessage'=>'Producto Inválido',
+				);
+		}
+		echo json_encode($out);
+	}
+
+	public function getItem($articulo_id=null,$color_id=null,$talla_index=null) {
+		$this->autoRender=false;
+		$this->Articulo->recursive=1;
+		
+		$rs=$this->Articulo->findById($articulo_id);
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Producto Inválido',
+		);
+
+		if($rs && isset($rs['Articulo']['id']) && $rs['Articulo']['id']>0) {
+			$color=array();
+//			$color[]=array('id'=>1, 'cve'=>'NEGRO');
+
+
+			foreach($rs['Color'] as $item) {
+				if($item['id']==$color_id) {
+					$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
+					$color_cve=trim($item['cve']);		
+				}
+			}
+	
+			$out=array(
+				'articulo_id'=>$rs['Articulo']['id'],
+				'articulo_cve'=>trim($rs['Articulo']['arcveart']),
+				'articulo_descrip'=>trim($rs['Articulo']['ardescrip']),
+				'color_id'=>$color_id,
+				'color_cve'=>$color_cve,
+				'talla_id'=>$rs['Articulo']['talla_id'],
+				'talla_cve'=>trim($rs['Talla']['tadescrip']),
+				'talla_index'=>$talla_index,
+				'talla_label'=>trim($rs['Talla']['tat'.$talla_index]),
 				'talla'=>array(
 					array('label'=>$rs['Talla']['tat0'], 'cant'=>''),
 					array('label'=>$rs['Talla']['tat1'], 'cant'=>''),

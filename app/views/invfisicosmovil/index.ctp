@@ -3,17 +3,23 @@
 	name="itemForm" class="form well span5">
  
   <div class="control-group">
-    <label class="control-label" for="artcve">Ubicación:</label>
-    <div class="controls">
-      <input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span3"/>
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Ubicación:</span>
+      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span3"/>
+    	</div>
     </div>
+    <span class="help-inline hide">Woohoo!</span>
  </div>
  <div>Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></div>
 <br/><br/>	
+
   <div class="control-group">
-    <label class="control-label" for="artcve">Producto:</label>
-    <div class="controls">
-      <input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3"/>
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Producto:</span>
+      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3"/>
+    	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
@@ -23,43 +29,20 @@
   <div class="control-group">
     <label class="control-label" for="colcve">Color:</label>
     <div class="controls">
-      <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span3"/>
-	<select>
-		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
-	</select>
+      <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span3" readonly class="readonly"/>
     </div>
     <span class="help-inline hide">Woohoo!</span>
   </div>
+<br/><br/>
 
   <div class="control-group">
-    <label class="checkbox" for="kit">Paquete
-    <input type="checkbox" id="kit" name="isKit" ng-model="isKit" class="checkbox"/>
-  </label>
-
-  <div class="control-group">
-  <div class="controls controls-row">
-<?php for($i=0; $i<5; $i++ ): ?> 
-   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
-	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
-	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
-<?php endfor; ?>
+    <label class="control-label" for="colcve">TALLA {{item.talla_label}} <small>({{item.talla_cve}})</small>:</label>
+    <div class="controls">
+      <input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="span3" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
+    </div>
+    <span class="help-inline hide">Woohoo!</span>
   </div>
-  </div>
-
-  <div class="control-group">
-  <div class="controls controls-row">
-<?php for($i=5; $i<10; $i++ ): ?> 
-   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
-	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
-	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
-<?php endfor; ?>
-  </div>
-  </div>
- 
-  <div class="control-group">
-    <label class="checkbox" for="printLbl">Imprimir etiquetas
-    <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
-  </label>
+<br/><br/>
 
   <div class="form-actions">
   <button type="submit" id="submit" value="sumbit"
@@ -69,22 +52,24 @@
   </div>
 
   <div class="control-group">
-    <label class="control-label label" for="colcve">Scanner </label>
     <div class="controls">
-      <input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4"/>
+      <input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4" placeholder="Scanner Input"/>
     </div>
-    <p><span class="help-inline"><em class="text-info">{{scanInput}}</em></span></p>
-	<p>Last read: {{lastScanInput}}</p>
+    <p><span class="help-inline"><em class="text-info">Last read: {{lastScanInput}}</em></span></p>
   </div>
 
 
-</form><!-- div itemForm -->
+<div>
 <pre class="pre">
 item = {{item | json}}
 </pre>
 <pre class="pre">
 ubicacion = {{ubicacion | json}}
 </pre>
+</div>
+
+</form><!-- div itemForm -->
+
 
 </div>
 
@@ -95,6 +80,7 @@ ubicacion = {{ubicacion | json}}
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
+//		el.value='';
 		el.focus();
 
 //    $scope.$apply(function() {
@@ -110,10 +96,12 @@ var item={
 	articulo_id : '',
 	articulo_cve : '',
 	articulo_descrip : '',
-	color_id : '222',
+	color_id : '',
 	color_cve : '',
 	talla_id : 0,
 	talla_cve : '',
+	talla_index : '',
+	talla_label : '',
 	talla: [
 		{cant : '', label : ''},
  		{cant : '', label : ''},
@@ -161,6 +149,8 @@ function AxAppController( $scope, $http ) {
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
 	$scope.lastCve='';
+
+	$scope.cantidad='';			// This is the Controller's Ubication Model
 	
 	// We have all the required data in our form?
 	$scope.isDataComplete = function() {
@@ -198,11 +188,10 @@ function AxAppController( $scope, $http ) {
 
 	};
 
-	$scope.getItem = function() {
-		console.log('Get Item: '+$scope.item.articulo_cve);
-		alert('Get Item:'+$scope.item.articulo_cve);
+	$scope.getItemByCve = function() {
+		console.log('Get By Cve Item: '+$scope.item.articulo_cve);
 
-			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
+			$http.get('/Articulos/getItemByCve/'+$scope.item.articulo_cve).then(function(response) {
 				if(typeof response.data != 'undefined') {
 					if(typeof response.data.result != 'undefined' ||
 						typeof response.data.result == 'string') {
@@ -218,13 +207,32 @@ function AxAppController( $scope, $http ) {
 
 	};
 
+	$scope.getItem = function() {
+		console.log('Get Item: '+$scope.item.articulo_cve);
+			$http.get('/Invfisicosmovil/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
+				if(typeof response.data != 'undefined') {
+					if(typeof response.data.result != 'undefined' ||
+						typeof response.data.result == 'string') {
+						alert('Error');
+					}
+					else {
+						$scope.item=response.data;
+					}
+
+				}
+       		});
+
+
+	};
+/*
 	$('#artcve').bind('blur', function() {
+		$scope.item.articulo_cve=$('#artcve').val();
 		if($scope.item.articulo_cve!=$scope.lastCve) {
 			$scope.lastCve=$scope.item.articulo_cve;
-			$scope.getItem();
+			$scope.getItemByCve();
 		}
 	});
-
+*/
 	$('#ubicacioncve').bind('blur', function() {
 		$scope.ubicacion.cve=$('#ubicacioncve').val();
 		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
@@ -251,8 +259,8 @@ function AxAppController( $scope, $http ) {
 			theValue=theValue.replace('t:u','"t":"u"');
 			theValue=theValue.replace('t:p','"t":"p"');
 			theValue=theValue.replace('id:','"id":');
-			
 			var theType=theValue.substring(6,7);
+			$scope.lastScanInput=theValue;
 
 
 			if(theType=='u') {
@@ -261,9 +269,6 @@ function AxAppController( $scope, $http ) {
 				var el=$('#ubicacioncve');
 				el.val(theData);
 
-				$scope.lastScanInput=theValue;
-				$scope.scanInput='';
-
 				$scope.getUbicacion();
 				
 				var el=document.getElementById('artcve');
@@ -271,23 +276,28 @@ function AxAppController( $scope, $http ) {
 			}
 			
 			if(theType=='p') {
-				var theData=theValue.substring(11,theValue.length-1);
-				alert('theData::'+theData);
-			alert('kaaa::'+theType+' <br/> valor::'+theValue+ ' <br/> theData::'+theData);
-/*				
-				$scope.item.articulo_cve=theData;
-				var el=$('#actualubicacion');
-				el.val(theData);
-				var el=document.getElementById('artcve');
-
+				var theData=theValue.substring(14,theValue.length-1);
+				var theData=theData.split(',');
+				var theId=theData[0];
+				var theColorId=theData[1].substring(2,theData[1].length);
+				var theTallaIndex=theData[2].substring(2,theData[2].length);
+				
+				$scope.item.articulo_id=theId;
+				$scope.item.color_id=theColorId;
+				$scope.item.talla_index=theTallaIndex;
 				$scope.lastScanInput=theValue;
-				$scope.scanInput='';
-*/
+				
+//				alert('id::'+$scope.item.articulo_id+' color_id::'+$scope.item.color_id+' talla_index::'+theTallaIndex);
+				$scope.getItem();
+				$scope.cantidad='';
+
+				var el=document.getElementById('edtcantidad');
+				el.focus();
+			
 			}
 			
 			console.log('Processed scanner input:' + theValue);
 			
-			$scope.lastScanInput=theValue;
 			$scope.scanInput='';
 
 		}
@@ -304,6 +314,38 @@ function AxAppController( $scope, $http ) {
 
 			var Articulo = $resource('/Invfisicosmovil/getItemByCve/:cve',
  				{cve:$scope.item.articulo_cve} 	);
+
+	<select>
+		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
+	</select>
+
+
+  <div class="control-group">
+  <div class="controls controls-row">
+<?php for($i=5; $i<10; $i++ ): ?> 
+   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
+	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
+	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
+<?php endfor; ?>
+  </div>
+  </div>
+ 
+  <div class="control-group">
+  <div class="controls controls-row">
+<?php for($i=0; $i<5; $i++ ): ?> 
+   <input type="text" id="cant<?php e($i)?>" name="cantidad<?php e($i)?>" ng-model="item.talla[<?php e($i)?>].cant" 
+	placeholder="{{item.talla[<?php e($i)?>].label}}" title="Talla {{item.talla[<?php e($i)?>].label}}"
+	class="span1" ng-show="item.talla[<?php e($i)?>].label" />
+<?php endfor; ?>
+  </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="checkbox" for="printLbl">Imprimir etiquetas
+    <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
+  </label>
+
 */
 
 </script>
