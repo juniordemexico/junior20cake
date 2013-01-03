@@ -4,7 +4,7 @@
 class InvfisicosController extends MasterDetailAppController {
 	var $name='Invfisicos';
 
-	var $uses = array('Invfisico', 'Almacen');
+	var $uses = array('Invfisico', 'Almacen', 'Articulo', 'Color');
 
 	var $cacheAction = array('view',
 							);
@@ -82,6 +82,71 @@ class InvfisicosController extends MasterDetailAppController {
 
 		$this->set('almacenes', $this->Invfisico->Almacen->find('list', array('fields' => array('Almacen.id', 'Almacen.aldescrip'))) );
 
+	}
+
+	public function printLabel($cve=null) {
+		$this->layout='plain';
+		$tmpPath='/home/www/junior20dev/app/files/tmp';
+		if(!$cve) {
+			$this->Session->setFlash(__('invalid_item', true).' ('.$this->Ubicacion->id.')', 'error');
+			die();
+		}
+
+		$conditions= array(
+				'Articulo.arcveart'=>$cve,
+				'Articulo.arst'=>'A',
+/*				'Ubicacion.fila ='=>$fila,
+
+				'Ubicacion.espacio >'=>'1000',
+				'Ubicacion.espacio <'=>'4999',
+				'SUBSTRING(Ubicacion.espacio FROM 3 for 2) <'=>'13',
+*/
+			);
+		
+		$options=array(
+			'offset'=>0,
+//			'limit'=>,
+			'order'=>array('Articulo.arcveart'),
+			'conditions'=>$conditions,
+			);
+
+		$rs=$this->Articulo->find('all', $options);
+print_r($rs);
+die();
+		$items=array();
+		$content='';
+		foreach($rs as $item) {
+			$lasTallas=array();
+			$i=0;
+			foreach($rs['Talla'] as $oneTalla) {
+				if(!empty($oneTalla)) $lasTallas[]=$i++;
+			}
+			$items[]=array(	'id'=>$item['Articulo']['id'],
+							'cve'=>$item['Articulo']['arcveart'],
+							'descrip'=>$item['Articulo']['ardescrip'],
+							'color'=>array(),
+							'talla'=>$item
+							);
+			$content.='
+N
+D14
+A025,025,0,4,1,1,N,"2012-12-11 14:30:37"
+A450,025,0,4,1,1,N,"Oper: FERNANDO"
+A025,75,0,5,1,1,N,"POWEBLACK"
+A450,75,0,5,1,1,N,"BLACK"
+A025,150,0,5,1,1,N,"TALLA:28"
+A450,150,0,5,1,1,N,"CANT:10"
+B050,250,0,1,2,3,75,N,"t%p,a%181233,c%'.$item.',t%12"
+A050,400,0,4,1,1,N,"MARBETE: 45234652"
+A450,400,0,4,1,1,N,"UBICACION: ________"
+B050,425,0,1,4,6,150,N,"t=M,id=45234652"
+P1
+';
+		}
+		$this->Axfile->StringToFile($tmpPath.'/tmp.articulos.label.'.$cve.'.txt', $content);
+
+		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.articulos.label.'.$cve.'.txt');
+		$this->set(compact('content', 'items', 'shellout'));
 	}
 
 }

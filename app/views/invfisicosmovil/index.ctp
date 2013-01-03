@@ -8,8 +8,8 @@
       <input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span3"/>
     </div>
  </div>
- <div><small>{{ubicacion.cve}}</small></div>
-
+ <div>Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></div>
+<br/><br/>	
   <div class="control-group">
     <label class="control-label" for="artcve">Producto:</label>
     <div class="controls">
@@ -17,7 +17,8 @@
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
- <div><small>{{item.articulo_descrip}}</small></div>
+ <div><strong>{{item.articulo_descrip}}</strong></div>
+<br/><br/>	
  
   <div class="control-group">
     <label class="control-label" for="colcve">Color:</label>
@@ -106,24 +107,24 @@ var itemTalladetail={}
 var item={
 	user_id : '1',
 	username : 'IDD',
-	articulo_id : '111',
-	articulo_cve : 'POWE',
-	articulo_descrip : 'PANTALON POWER',
+	articulo_id : '',
+	articulo_cve : '',
+	articulo_descrip : '',
 	color_id : '222',
-	color_cve : 'BLACK',
+	color_cve : '',
 	talla_id : 0,
 	talla_cve : '',
 	talla: [
-		{cant : '', label : '28'},
- 		{cant : '', label : '29'},
- 		{cant : '', label : '30'},
- 		{cant : '', label : '31'},
- 		{cant : '', label : '32'},
- 		{cant : '', label : '33'},
- 		{cant : '', label : '34'},
- 		{cant : '', label : '36'},
- 		{cant : '', label : '38'},
- 		{cant : '', label : '40'}
+		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''},
+ 		{cant : '', label : ''}
 	],
 	color: [
 		{id:1, cve:'UNICO'}
@@ -132,9 +133,11 @@ var item={
 };
 
 var ubicacion={
-	id : '0',
-	cve : '',
-	descrip : ''
+	id :0 ,
+	cve : "",
+	zona : "",
+	fila : "",
+	espacio: ""
 };
 
 var user={
@@ -172,49 +175,61 @@ function AxAppController( $scope, $http ) {
 	};
 
 
-	$('#artcve').bind('blur', function() {
-		if($scope.item.articulo_cve!=$scope.lastCve) {
-			$scope.lastCve=$scope.item.articulo_cve;
+	$scope.getUbicacion = function() {
+		console.log('Get Ubicacion: '+$scope.ubicacion.cve);
+	//	alert('Get Ubicacion:'+$scope.ubicacion.cve);
+
+			$http.get('/Invfisicosmovil/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
+				if(typeof response.data != 'undefined') {
+					if(typeof response.data.result != 'undefined' ||
+						typeof response.data.result == 'string' ||
+						response.data.result=='error') {
+						if(typeof response.data.errorMessage == 'string') {
+							alert('Error: '+response.data.errorMessage);						
+						}
+					}
+					else {
+						$scope.ubicacion=response.data;
+					}
+
+				}
+       		});
+
+
+	};
+
+	$scope.getItem = function() {
+		console.log('Get Item: '+$scope.item.articulo_cve);
+		alert('Get Item:'+$scope.item.articulo_cve);
 
 			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
 				if(typeof response.data != 'undefined') {
 					if(typeof response.data.result != 'undefined' ||
 						typeof response.data.result == 'string') {
-						alert('Error');
+					//	alert('Error');
 					}
 					else {
 						$scope.item=response.data;
 					}
 
 				}
-/*
-				angular.forEach(response.data.color, function(value, key) {
-//					this.push(key + ': ' + value);
-				});
-*/ 
        		});
+
+
+	};
+
+	$('#artcve').bind('blur', function() {
+		if($scope.item.articulo_cve!=$scope.lastCve) {
+			$scope.lastCve=$scope.item.articulo_cve;
+			$scope.getItem();
 		}
 	});
 
 	$('#ubicacioncve').bind('blur', function() {
 		$scope.ubicacion.cve=$('#ubicacioncve').val();
 		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
-			alert('Nueva Ubicacion:'+$scope.ubicacion.cve);
 			$scope.lastUbicacionCve=$scope.ubicacion.cve;
-/*			
-			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
-				if(typeof response.data != 'undefined') {
-					if(typeof response.data.result != 'undefined' ||
-						typeof response.data.result == 'string') {
-						alert('Error');
-					}
-					else {
-						$scope.item=response.data;
-					}
-
-				}
-       		});
-*/
+			$scope.getUbicacion();
 		}
 	});
 
@@ -233,29 +248,41 @@ function AxAppController( $scope, $http ) {
 			}
 			
 			theValue=theValue.replace(/\%/g,':');
-			theValue=theValue.replace('t:U','"t":"U"');
+			theValue=theValue.replace('t:u','"t":"u"');
+			theValue=theValue.replace('t:p','"t":"p"');
 			theValue=theValue.replace('id:','"id":');
-//			alert(theValue);
 			
 			var theType=theValue.substring(6,7);
-			var theData=theValue.substring(14,theValue.length-1);
 
-			if(theType=='U') {
+
+			if(theType=='u') {
+				var theData=theValue.substring(14,theValue.length-1);
 				$scope.ubicacion.cve=theData;
 				var el=$('#ubicacioncve');
 				el.val(theData);
+
+				$scope.lastScanInput=theValue;
+				$scope.scanInput='';
+
+				$scope.getUbicacion();
+				
 				var el=document.getElementById('artcve');
 				el.focus();
-//				alert($scope.actualUbicacion);			
 			}
-
-			if(theType=='A') {
-				$scope.actualUbicacion=theData;
+			
+			if(theType=='p') {
+				var theData=theValue.substring(11,theValue.length-1);
+				alert('theData::'+theData);
+			alert('kaaa::'+theType+' <br/> valor::'+theValue+ ' <br/> theData::'+theData);
+/*				
+				$scope.item.articulo_cve=theData;
 				var el=$('#actualubicacion');
 				el.val(theData);
 				var el=document.getElementById('artcve');
-				el.focus();
-				alert($scope.ubicacionCve);			
+
+				$scope.lastScanInput=theValue;
+				$scope.scanInput='';
+*/
 			}
 			
 			console.log('Processed scanner input:' + theValue);

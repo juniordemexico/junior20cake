@@ -4,7 +4,7 @@
 class InvfisicosmovilController extends MasterDetailAppController {
 	var $name='Invfisicosmovil';
 
-	var $uses = array('Invfisico', 'Invfisicodetail', 'Almacen', 'Articulo', 'Color', 'Talla' );
+	var $uses = array('Invfisico', 'Invfisicodetail', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion' );
 
 	var $layout = 'almacenmovil';
 
@@ -15,7 +15,6 @@ class InvfisicosmovilController extends MasterDetailAppController {
 //		$this->set('items', $this->paginate($filter));
 	}
 
-	
 	public function getItemByCve($cve=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;
@@ -27,14 +26,13 @@ class InvfisicosmovilController extends MasterDetailAppController {
 
 		if($rs && isset($rs['Articulo']['id']) && $rs['Articulo']['id']>0) {
 			$color=array();
-			$color[]=array('id'=>1, 'cve'=>'NEGRO');
+//			$color[]=array('id'=>1, 'cve'=>'NEGRO');
 
 
 			foreach($rs['Color'] as $item) {
 				$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
 			}
-		
-
+	
 			$out=array(
 				'articulo_id'=>$rs['Articulo']['id'],
 				'articulo_cve'=>$rs['Articulo']['arcveart'],
@@ -68,4 +66,59 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		}
 		echo json_encode($out);
 	}
+
+
+	public function getUbicacion($cve=null) {
+		$this->autoRender=false;
+		$this->Articulo->recursive=1;
+
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Ubicación Inválida',
+		);
+		
+		if(!$cve or empty($cve)) {
+			echo json_encode($out);
+			return;
+		}
+		
+		if(is_numeric($cve)) {
+			$rs=$this->Ubicacion->findById($cve);
+		}
+		else {
+			$rs=$this->Ubicacion->findByCve($cve);
+		}
+
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Producto Inválido',
+		);
+
+		if($rs && isset($rs['Ubicacion']['id']) && $rs['Ubicacion']['id']>0) {
+			$color=array();
+			$color[]=array('id'=>1, 'cve'=>'NEGRO');
+
+
+			foreach($rs['Color'] as $item) {
+				$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
+			}
+	
+			$out=array(
+				'id'=>$rs['Ubicacion']['id'],
+				'cve'=>$rs['Ubicacion']['cve'],
+				'zona'=>$rs['Ubicacion']['zona'],
+				'fila'=>$rs['Ubicacion']['fila'],
+				'espacio'=>$rs['Ubicacion']['espacio'],
+			);
+
+		}
+		else {
+			$out=array(
+				'result'=>'error',
+				'errorMessage'=>'Producto Inválido',
+				);
+		}
+		echo json_encode($out);
+	}
+
 }
