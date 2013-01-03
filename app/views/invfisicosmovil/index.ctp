@@ -3,6 +3,14 @@
 	name="itemForm" class="form well span5">
  
   <div class="control-group">
+    <label class="control-label" for="artcve">Ubicación:</label>
+    <div class="controls">
+      <input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span3"/>
+    </div>
+ </div>
+ <div><small>{{ubicacion.cve}}</small></div>
+
+  <div class="control-group">
     <label class="control-label" for="artcve">Producto:</label>
     <div class="controls">
       <input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3"/>
@@ -73,6 +81,10 @@
 <pre class="pre">
 item = {{item | json}}
 </pre>
+<pre class="pre">
+ubicacion = {{ubicacion | json}}
+</pre>
+
 </div>
 
 <script>
@@ -80,9 +92,10 @@ item = {{item | json}}
 // http://plnkr.co/edit/vU2y87
 
 angular.element(window).bind('keydown', function(e) {
-	if (e.keyCode === 32) {
+	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
 		el.focus();
+
 //    $scope.$apply(function() {
 //      $scope.subpage = false;
 //    });
@@ -118,6 +131,12 @@ var item={
 
 };
 
+var ubicacion={
+	id : '0',
+	cve : '',
+	descrip : ''
+};
+
 var user={
 	user_id : '1',
 	username : 'IDD',
@@ -129,7 +148,9 @@ function AxAppController( $scope, $http ) {
 
 	$scope.user = user;			// This is the Controller's User Model
 	$scope.item = item;			// This is the Controller's main Model
-
+	$scope.ubicacion=ubicacion;			// This is the Controller's Ubication Model
+	$scope.lastUbicacionCve='';			// This is the Controller's Ubication Model
+	
 	$scope.isKit = false;		// We have a product kit or package with more than one units?
 	$scope.printLabel = false;  // We need to print a barcode label after save the data?
 
@@ -150,29 +171,14 @@ function AxAppController( $scope, $http ) {
 				$scope.item.talla[0].cant + $scope.item.talla[0].label );
 	};
 
-	// This action is used as a form's "onChange" generic event.
-  	$scope.submit = function() {
-		console.log('Raw scanner input:' + $scope.scanInput);
-		var scannedInput=$scope.scanInput;
-		alert($scope.item.articulo_cve);
-		if(typeof scannedInput != 'undefined' && typeof scannedInput == 'string') {
-			scannedInput='{' + scannedInput + '}';
-			$scope.scanInput=scannedInput;
-			$scope.lastScanInput=scannedInput;
-		}
-		
-		console.log('Processed scanner input:' + $scope.scanInput);
-		$scope.scanInput='';
-		return false;
-	};
-	
+
 	$('#artcve').bind('blur', function() {
 		if($scope.item.articulo_cve!=$scope.lastCve) {
 			$scope.lastCve=$scope.item.articulo_cve;
 
 			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
 				if(typeof response.data != 'undefined') {
-					if(typeof response.data.result != 'undefined' &&
+					if(typeof response.data.result != 'undefined' ||
 						typeof response.data.result == 'string') {
 						alert('Error');
 					}
@@ -190,9 +196,85 @@ function AxAppController( $scope, $http ) {
 		}
 	});
 
+	$('#ubicacioncve').bind('blur', function() {
+		$scope.ubicacion.cve=$('#ubicacioncve').val();
+		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
+			alert('Nueva Ubicacion:'+$scope.ubicacion.cve);
+			$scope.lastUbicacionCve=$scope.ubicacion.cve;
+/*			
+			$http.get($scope.getUrl+'/'+$scope.item.articulo_cve).then(function(response) {
+				if(typeof response.data != 'undefined') {
+					if(typeof response.data.result != 'undefined' ||
+						typeof response.data.result == 'string') {
+						alert('Error');
+					}
+					else {
+						$scope.item=response.data;
+					}
+
+				}
+       		});
+*/
+		}
+	});
+
+
+	$('#scanInput').bind('blur', function() {
+		var theValue=$scope.scanInput;
+		if(typeof theValue != 'undefined' && typeof theValue == 'string' &&
+			theValue!='') {
+			// Checks for the Init Character '$'
+			if(theValue.substring(0,1)=='$') {
+				theValue=theValue.substring(1,32);
+			}
+			// Checks if the value already has json's brackets '{}'
+			if(theValue.substring(0,1)!='{') {
+				theValue='{' + theValue + '}';
+			}
+			
+			theValue=theValue.replace(/\%/g,':');
+			theValue=theValue.replace('t:U','"t":"U"');
+			theValue=theValue.replace('id:','"id":');
+//			alert(theValue);
+			
+			var theType=theValue.substring(6,7);
+			var theData=theValue.substring(14,theValue.length-1);
+
+			if(theType=='U') {
+				$scope.ubicacion.cve=theData;
+				var el=$('#ubicacioncve');
+				el.val(theData);
+				var el=document.getElementById('artcve');
+				el.focus();
+//				alert($scope.actualUbicacion);			
+			}
+
+			if(theType=='A') {
+				$scope.actualUbicacion=theData;
+				var el=$('#actualubicacion');
+				el.val(theData);
+				var el=document.getElementById('artcve');
+				el.focus();
+				alert($scope.ubicacionCve);			
+			}
+			
+			console.log('Processed scanner input:' + theValue);
+			
+			$scope.lastScanInput=theValue;
+			$scope.scanInput='';
+
+		}
+		
+	});
+
 }
 
 /*
+	//		var theDataObject=$.toJSON(theValue);
+						
+	//		alert(theDataObject.T);
+
+
 			var Articulo = $resource('/Invfisicosmovil/getItemByCve/:cve',
  				{cve:$scope.item.articulo_cve} 	);
 */

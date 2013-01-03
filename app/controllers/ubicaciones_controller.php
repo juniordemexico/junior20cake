@@ -96,10 +96,12 @@ class UbicacionesController extends MasterDetailAppController {
 
 		$conditions= array(
 				'Ubicacion.zona'=>$zona,
-				'Ubicacion.fila <'=>'36',
-				'Ubicacion.espacio >'=>'4000',
+/*				'Ubicacion.fila ='=>$fila,
+
+				'Ubicacion.espacio >'=>'1000',
 				'Ubicacion.espacio <'=>'4999',
 				'SUBSTRING(Ubicacion.espacio FROM 3 for 2) <'=>'13',
+*/
 			);
 		
 		$options=array(
@@ -117,17 +119,17 @@ class UbicacionesController extends MasterDetailAppController {
 							'cve'=>$item['Ubicacion']['cve'],
 							'descrip'=>$item['Ubicacion']['descrip'],
 							);
-			$content.='
+$t%U,id%17778905				$content.='
 N
 D14
 A225,5,0,5,1,1,N,"'.$item['Ubicacion']['cve'].'"
 B225,65,0,1,2,10,75,N,"t%u,id%'.$item['Ubicacion']['id'].'"
-P2
+P4
 ';
 		}
-		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.'_nivel4.txt', $content);
+		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'.txt', $content);
 
-		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.'_nivel4.txt');
+		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'.txt');
 		$this->set(compact('content', 'items', 'shellout'));
 	}
 

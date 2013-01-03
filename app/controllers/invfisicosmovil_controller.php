@@ -15,9 +15,8 @@ class InvfisicosmovilController extends MasterDetailAppController {
 //		$this->set('items', $this->paginate($filter));
 	}
 
-	public function
-/*	
-	function getItemByCve($cve=null) {
+	
+	public function getItemByCve($cve=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;
 		$rs=$this->Articulo->findByArcveart($cve);
@@ -69,5 +68,4 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		}
 		echo json_encode($out);
 	}
-*/
 }

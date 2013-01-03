@@ -5,6 +5,9 @@ junior20cake.sublime-workspace	# Sublime Text's Project file
 app/config/database.php		# Local database configuration file
 app/config/core.php
 
+app/files/tmp			# Temporary files
+app/tmp				# Temporary files
+
 app/files/facturaselectronicas/*	# Invoice's pdf file store folder
 idd	# Project and Documentation folder
 

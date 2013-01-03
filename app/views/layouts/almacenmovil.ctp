@@ -3,8 +3,18 @@
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
-	<?php echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>
-
+	<?php //echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>
+	<?php
+echo CR.
+'<meta charset="utf-8">'.CR.
+//	$this->Html->charset().CR.
+	$this->Html->meta(array('name'=>'viewport', 'content '=> 'width=600, initial-scale=2')).CR.
+'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1,webkit=1,safari=1">'.CR.
+	$this->Html->meta(array('name'=>'description', 'content' => $title_for_layout)).CR.
+	$this->Html->meta(array('name'=>'keywords', 'content' => 'axbos idd erp intranet junior oggi '.$this->name)).CR.
+	$this->Html->meta('icon').CR.
+	CR;
+?>
 	<!-- Request, User and Session Data -->
 	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
 
@@ -13,8 +23,6 @@
 
 	<!-- JS Code and Data -->
 	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
-
-	<?php //echo $this->Html->script('/js/webui/angular.min'); ?>
 
 	<?php echo $scripts_for_layout; ?>
 
