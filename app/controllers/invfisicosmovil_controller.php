@@ -15,6 +15,38 @@ class InvfisicosmovilController extends MasterDetailAppController {
 //		$this->set('items', $this->paginate($filter));
 	}
 
+	public function addItem() {
+		$this->autoRender=false;
+		$theData=$this->params['url'];
+		unset($theData['url']);
+
+		if(
+			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
+			isset($theData['color_id']) && $theData['color_id']>0 &&
+			isset($theData['talla_index']) && $theData['articulo_id']>=0 &&
+			isset($theData['cantidad']) && $theData['cantidad']>0 
+			)
+		{
+			$cadena='Art:'.$theData['articulo_id'].
+					' Col:'.$theData['color_id'].
+					' Talla:'.$theData['talla_index'].
+					' CANTIDAD:'.$theData['cantidad'];
+					
+			$out=array(
+				'result'=>'recibido',
+				'message'=>$cadena
+			);
+		}
+		else {
+			$out=array(
+				'result'=>'error',
+				'message'=>'Error en la Solicitud'
+			);
+		}
+
+		echo json_encode($out);
+	}
+
 	public function getItemByCve($cve=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;

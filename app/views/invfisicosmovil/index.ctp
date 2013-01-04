@@ -6,7 +6,7 @@
     <div class="controls input">
 		<div class="input-prepend">
 			<span class="add-on">Ubicación:</span>
-      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span3"/>
+      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span2"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
@@ -18,7 +18,7 @@
     <div class="controls input">
 		<div class="input-prepend">
 			<span class="add-on">Producto:</span>
-      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span3"/>
+      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span4"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
@@ -26,22 +26,33 @@
  <div><strong>{{item.articulo_descrip}}</strong></div>
 <br/><br/>	
  
-  <div class="control-group">
-    <label class="control-label" for="colcve">Color:</label>
-    <div class="controls">
-      <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span3" readonly class="readonly"/>
+ <div class="control-group">
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Color:</span>
+      <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span4" class="readonly"/>
+    	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
-  </div>
+ </div>
 <br/><br/>
 
-  <div class="control-group">
-    <label class="control-label" for="colcve">TALLA {{item.talla_label}} <small>({{item.talla_cve}})</small>:</label>
-    <div class="controls">
-      <input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="span3" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
+ <div class="control-group">
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Talla <strong>{{item.talla_label}}</strong>:</span>
+      		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="span2" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
+    	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
-  </div>
+ </div>
+
+<div class="btn-group">
+	<button type="button" class="btn" ng-click="minusCant(1)">-1</button>
+	<button type="button" class="btn" ng-click="plusCant(1)">+1</button>
+	<button type="button" class="btn" ng-click="minusCant(10)">-10</button>
+	<button type="button" class="btn" ng-click="plusCant(10)">+10</button>
+</div>
 <br/><br/>
 
   <div class="form-actions">
@@ -58,16 +69,6 @@
     <p><span class="help-inline"><em class="text-info">Last read: {{lastScanInput}}</em></span></p>
   </div>
 
-
-<div>
-<pre class="pre">
-item = {{item | json}}
-</pre>
-<pre class="pre">
-ubicacion = {{ubicacion | json}}
-</pre>
-</div>
-
 </form><!-- div itemForm -->
 
 
@@ -76,6 +77,7 @@ ubicacion = {{ubicacion | json}}
 <script>
 
 // http://plnkr.co/edit/vU2y87
+
 
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
@@ -134,6 +136,8 @@ var user={
 };
 
 function AxAppController( $scope, $http ) {
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
 	$scope.getUrl = '/Articulos/getItemByCve';
 	$scope.addUrl = '/Invfisicosmovil/addItem';
 
@@ -150,7 +154,7 @@ function AxAppController( $scope, $http ) {
 
 	$scope.lastCve='';
 
-	$scope.cantidad='';			// This is the Controller's Ubication Model
+	$scope.cantidad=0;			// This is the Controller's Ubication Model
 	
 	// We have all the required data in our form?
 	$scope.isDataComplete = function() {
@@ -159,71 +163,118 @@ function AxAppController( $scope, $http ) {
 	
 	// Save and push this record to the server
 	$scope.save = function() {
-		console.log($scope.item);
-		alert($scope.item.articulo_cve+' :: '+$scope.printLabel+' :: '+$scope.isKit+' :: '+
-				$scope.item.talla[0].cant + $scope.item.talla[0].label );
+		console.log("Envia Forma: "+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.item.talla_index);
+		$scope.item.cantidad=$scope.cantidad;
+
+		$http.get('/Invfisicosmovil/additem?articulo_id='+$scope.item.articulo_id+'&color_id='+$scope.item.color_id+
+		'&talla_index='+$scope.item.talla_index+'&cantidad='+$scope.item.cantidad
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && typeof response.data!='string') {
+				alert('Respuesta: '+response.data.message);
+				$scope.cantidad=0;
+				$scope.item.articulo_cve='';
+				$scope.item.articulo_descrip='';
+				$scope.item.color_cve='';
+				$scope.item.color_id='';
+				$scope.item.talla_index=null;
+				$scope.item.talla_label='';
+				if($('#ubicacioncve').val()!='') {
+					$('#artcve').focus();
+				}
+				else {
+					$('#ubicacioncve').focus();				
+				}
+			
+			}
+			else {
+				alert('ERROR IRRECUPERABLE...'+response.data);
+			}
+   		});
+
+	};
+
+	// Save and push this record to the server
+
+	$scope.submit = function() {
+		alert('Un submit');
 	};
 
 
 	$scope.getUbicacion = function() {
 		console.log('Get Ubicacion: '+$scope.ubicacion.cve);
-	//	alert('Get Ubicacion:'+$scope.ubicacion.cve);
 
-			$http.get('/Invfisicosmovil/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
-				if(typeof response.data != 'undefined') {
-					if(typeof response.data.result != 'undefined' ||
-						typeof response.data.result == 'string' ||
-						response.data.result=='error') {
-						if(typeof response.data.errorMessage == 'string') {
-							alert('Error: '+response.data.errorMessage);						
-						}
+		$http.get('/Invfisicosmovil/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
+			if(typeof response.data != 'undefined') {
+				if(typeof response.data.result != 'undefined' ||
+					typeof response.data.result == 'string' ||
+					response.data.result=='error') {
+					if(typeof response.data.errorMessage == 'string') {
+						alert('Error: '+response.data.errorMessage);						
 					}
-					else {
-						$scope.ubicacion=response.data;
-					}
-
 				}
-       		});
-
-
+				else {
+					$scope.ubicacion=response.data;
+				}
+			}
+		});
 	};
 
 	$scope.getItemByCve = function() {
 		console.log('Get By Cve Item: '+$scope.item.articulo_cve);
 
-			$http.get('/Articulos/getItemByCve/'+$scope.item.articulo_cve).then(function(response) {
-				if(typeof response.data != 'undefined') {
-					if(typeof response.data.result != 'undefined' ||
-						typeof response.data.result == 'string') {
-					//	alert('Error');
-					}
-					else {
-						$scope.item=response.data;
-					}
+		$http.get('/Articulos/getItemByCve/'+$scope.item.articulo_cve).then(function(response) {
+			if(typeof response.data != 'undefined') {
+			if(typeof response.data.result != 'undefined' ||
+				typeof response.data.result == 'string') {
+				alert('Error');
+			}
+			else {
+				$scope.item=response.data;
+			}
 
-				}
-       		});
-
-
+			}
+       	});
 	};
 
 	$scope.getItem = function() {
 		console.log('Get Item: '+$scope.item.articulo_cve);
-			$http.get('/Invfisicosmovil/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
-				if(typeof response.data != 'undefined') {
-					if(typeof response.data.result != 'undefined' ||
-						typeof response.data.result == 'string') {
-						alert('Error');
-					}
-					else {
-						$scope.item=response.data;
-					}
-
+		$http.get('/Invfisicosmovil/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
+			if(typeof response.data != 'undefined') {
+				if(typeof response.data.result != 'undefined' ||
+					typeof response.data.result == 'string') {
+					alert('Error');
 				}
-       		});
-
-
+				else {
+					$scope.item=response.data;
+				}
+			}
+       	});
 	};
+
+
+	$scope.minusCant = function(value) {
+		var oldValue=parseInt($scope.cantidad);
+		if(oldValue-value>=0) {
+			$scope.cantidad=(oldValue>0?oldValue:0) - value;
+		}
+		else {
+			$scope.cantidad=0;
+		}
+	}
+
+	$scope.plusCant = function(value) {
+		var oldValue=parseInt($scope.cantidad);
+		$scope.cantidad=(oldValue>0?oldValue:0) + value;
+	}
+
+	$('#ubicacioncve').bind('blur', function() {
+		$scope.ubicacion.cve=$('#ubicacioncve').val();
+		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
+			$scope.lastUbicacionCve=$scope.ubicacion.cve;
+			$scope.getUbicacion();
+		}
+	});
+
 /*
 	$('#artcve').bind('blur', function() {
 		$scope.item.articulo_cve=$('#artcve').val();
@@ -233,14 +284,6 @@ function AxAppController( $scope, $http ) {
 		}
 	});
 */
-	$('#ubicacioncve').bind('blur', function() {
-		$scope.ubicacion.cve=$('#ubicacioncve').val();
-		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
-			$scope.lastUbicacionCve=$scope.ubicacion.cve;
-			$scope.getUbicacion();
-		}
-	});
-
 
 	$('#scanInput').bind('blur', function() {
 		var theValue=$scope.scanInput;
@@ -271,8 +314,12 @@ function AxAppController( $scope, $http ) {
 
 				$scope.getUbicacion();
 				
-				var el=document.getElementById('artcve');
-				el.focus();
+				if($('#artcve').val()!='') {
+					$('#edtcantidad').focus();
+				}
+				else {
+					$('#artcve').focus();				
+				}
 			}
 			
 			if(theType=='p') {
@@ -291,9 +338,12 @@ function AxAppController( $scope, $http ) {
 				$scope.getItem();
 				$scope.cantidad='';
 
-				var el=document.getElementById('edtcantidad');
-				el.focus();
-			
+				if($('#ubicacioncve').val()!='') {
+					$('#edtcantidad').focus();
+				}
+				else {
+					$('#ubicacioncve').focus();				
+				}
 			}
 			
 			console.log('Processed scanner input:' + theValue);
@@ -345,6 +395,16 @@ function AxAppController( $scope, $http ) {
     <label class="checkbox" for="printLbl">Imprimir etiquetas
     <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   </label>
+
+
+<div>
+<pre class="pre">
+item = {{item | json}}
+</pre>
+<pre class="pre">
+ubicacion = {{ubicacion | json}}
+</pre>
+</div>
 
 */
 
