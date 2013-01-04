@@ -690,16 +690,16 @@ function viewpdf($id = null) {
 				'talla_id'=>$rs['Articulo']['talla_id'],
 				'talla_cve'=>trim($rs['Talla']['tadescrip']),
 				'talla'=>array(
-					array('label'=>$rs['Talla']['tat0'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat1'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat2'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat3'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat4'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat5'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat6'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat7'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat8'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat9'], 'cant'=>'')
+					array('label'=>$rs['Talla']['tat0'], 'index'=>'0'),
+					array('label'=>$rs['Talla']['tat1'], 'index'=>'1'),
+					array('label'=>$rs['Talla']['tat2'], 'index'=>'2'),
+					array('label'=>$rs['Talla']['tat3'], 'index'=>'3'),
+					array('label'=>$rs['Talla']['tat4'], 'index'=>'4'),
+					array('label'=>$rs['Talla']['tat5'], 'index'=>'5'),
+					array('label'=>$rs['Talla']['tat6'], 'index'=>'6'),
+					array('label'=>$rs['Talla']['tat7'], 'index'=>'7'),
+					array('label'=>$rs['Talla']['tat8'], 'index'=>'8'),
+					array('label'=>$rs['Talla']['tat9'], 'index'=>'9')
 				),
 				'color'=>$color
 

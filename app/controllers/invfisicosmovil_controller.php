@@ -22,12 +22,19 @@ class InvfisicosmovilController extends MasterDetailAppController {
 
 		if(
 			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
-			isset($theData['color_id']) && $theData['color_id']>0 &&
+			isset($theData['color_id']) &&
 			isset($theData['talla_index']) && $theData['articulo_id']>=0 &&
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
 			if(!isset($theData['ubicacion_id'])) $theData['ubicacion_id']=1;
+			
+			if($theData['color_id']==0) {
+				$rsfirstcolor=$this->ArticuloColor->find('first', array('articulo_id'=>$theData['articulo_id']) );
+				if(!$rsfirstcolor || !isset($rsfirstcolor['ArticuloColor']['color_id'])) {
+					$theData['color_id']=$rsfirstcolor['ArticuloColor']['color_id'];
+				}
+			}
 			
 			$cadena='Art:'.$theData['articulo_id'].
 					' Color:'.$theData['color_id'].
@@ -64,7 +71,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 				// Success...
 				$out=array(
 					'result'=>'recibido',
-					'message'=>$marbete_id
+					'message'=>'GUARDADO MARBETE: '.$marbete_id
 				);
 
 			}
@@ -109,7 +116,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		if(!isset($ubicacion_id) || !($ubicacion_id>0) ) $ubicacion_id=1;
 		$rsubica=$this->Ubicacion->findById($ubicacion_id);
 		$ubicacion_cve=($rsubica && isset($rsubica['Ubicacion']['cve'])) ? trim($rsubica['Ubicacion']['cve']):'';
-
+		
 		// Get Color's data
 		if(!isset($color_id) || !($color_id>0) ) $color_id=1;
 		$rscolor=$this->Color->findById($color_id);
@@ -133,14 +140,15 @@ A025,150,0,5,1,1,N,"'.$color_cve.'"
 A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
 A450,225,0,5,1,1,N,"CANT:'.$cantidad.'"
 B050,300,0,1,2,3,75,N,"t%p,id%'.$articulo_id.',c%'.$color_id.',t%'.$talla_index.'"
-A050,400,0,4,1,1,N,"MARBETE: 9999999"
+A050,400,0,4,1,1,N,"MARBETE: '.$marbete_id.'"
 A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
-B050,425,0,1,4,6,100,N,"t%M,id%'.$ubicacion_id.'"
+B050,425,0,1,4,6,100,N,"t%m,id%'.$marbete_id.'"
 P1
 ';					
-			$this->Axfile->StringToFile('/home/www/junior20cake/app/webroot/'.
-										'files/tmp/tmp.marbete.'.$articulo_cve.'.label.txt',
-										$label);
+			$filename='/home/www/junior20cake/app/webroot/'.
+					'files/tmp/tmp.marbete.'.$articulo_cve.'.label.txt';
+			$this->Axfile->StringToFile($filename, $label);
+			system("lpr -P barcodes-viaducto01 $filename > /dev/null");
 		}
 		
 	}
@@ -172,16 +180,16 @@ P1
 				'talla_id'=>$rs['Articulo']['talla_id'],
 				'talla_cve'=>trim($rs['Talla']['tadescrip']),
 				'talla'=>array(
-					array('label'=>$rs['Talla']['tat0'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat1'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat2'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat3'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat4'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat5'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat6'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat7'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat8'], 'cant'=>''),
-					array('label'=>$rs['Talla']['tat9'], 'cant'=>'')
+					array('label'=>$rs['Talla']['tat0'], 'index'=>'0'),
+					array('label'=>$rs['Talla']['tat1'], 'index'=>'1'),
+					array('label'=>$rs['Talla']['tat2'], 'index'=>'2'),
+					array('label'=>$rs['Talla']['tat3'], 'index'=>'3'),
+					array('label'=>$rs['Talla']['tat4'], 'index'=>'4'),
+					array('label'=>$rs['Talla']['tat5'], 'index'=>'5'),
+					array('label'=>$rs['Talla']['tat6'], 'index'=>'6'),
+					array('label'=>$rs['Talla']['tat7'], 'index'=>'7'),
+					array('label'=>$rs['Talla']['tat8'], 'index'=>'8'),
+					array('label'=>$rs['Talla']['tat9'], 'index'=>'9')
 				),
 				'color'=>$color
 

@@ -37,10 +37,20 @@
  </div>
 <br/><br/>
 
+
  <div class="control-group">
     <div class="controls input">
 		<div class="input-prepend">
-			<span class="add-on">Talla <strong>{{item.talla_label}}</strong>:</span>
+			<select id="thetallaindex" name="TheTallaIndex" ng-model="currentTalla" ng-options="t.label for t in item.talla"></select>
+    	</div>
+    </div>
+    <span class="help-inline hide">Woohoo!</span>
+ </div>
+
+ <div class="control-group">
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Talla <strong>{{currentTalla.label}}</strong>:</span>
       		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="span2" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
     	</div>
     </div>
@@ -112,16 +122,16 @@ var item={
 	talla_index : '',
 	talla_label : '',
 	talla: [
-		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''},
- 		{cant : '', label : ''}
+		{index : 0, label : ''},
+ 		{index : 1, label : ''},
+ 		{index : 2, label : ''},
+ 		{index : 3, label : ''},
+ 		{index : 4, label : ''},
+ 		{index : 5, label : ''},
+ 		{index : 6, label : ''},
+ 		{index : 7, label : ''},
+ 		{index : 8, label : ''},
+ 		{index : 9, label : ''}
 	],
 	color: [
 		{id:1, cve:'UNICO'}
@@ -161,6 +171,8 @@ function AxAppController( $scope, $http ) {
 
 	$scope.lastCve='';
 
+	$scope.currentTalla='';
+
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
 	
 	// We have all the required data in our form?
@@ -173,6 +185,10 @@ function AxAppController( $scope, $http ) {
 		console.log("Envia Forma: "+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.item.talla_index);
 		$scope.item.cantidad=$scope.cantidad;
 
+		if($scope.item.talla_index) {
+		
+		}
+		
 		$http.get('/Invfisicosmovil/additem?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
@@ -183,12 +199,13 @@ function AxAppController( $scope, $http ) {
 		).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
-					alert('GUARDADO MARBETE: '+response.data.message);
+					alert(response.data.message);
 					$scope.cantidad=0;
+					$scope.item.articulo_id=null,
 					$scope.item.articulo_cve='';
 					$scope.item.articulo_descrip='';
 					$scope.item.color_cve='';
-					$scope.item.color_id='';
+					$scope.item.color_id=0;
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
 					if($('#ubicacioncve').val()!='') { 
@@ -246,6 +263,8 @@ function AxAppController( $scope, $http ) {
 			}
 			else {
 				$scope.item=response.data;
+				$scope.item.color_id=$scope.item.color[0].id;
+				$scope.item.color_cve=$scope.item.color[0].cve;
 			}
 
 			}
@@ -291,7 +310,7 @@ function AxAppController( $scope, $http ) {
 		}
 	});
 
-/*
+
 	$('#artcve').bind('blur', function() {
 		$scope.item.articulo_cve=$('#artcve').val();
 		if($scope.item.articulo_cve!=$scope.lastCve) {
@@ -299,7 +318,6 @@ function AxAppController( $scope, $http ) {
 			$scope.getItemByCve();
 		}
 	});
-*/
 
 	$('#scanInput').bind('blur', function() {
 		var theValue=$scope.scanInput;
@@ -348,6 +366,8 @@ function AxAppController( $scope, $http ) {
 				$scope.item.articulo_id=theId;
 				$scope.item.color_id=theColorId;
 				$scope.item.talla_index=theTallaIndex;
+				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
+
 				$scope.lastScanInput=theValue;
 				
 //				alert('id::'+$scope.item.articulo_id+' color_id::'+$scope.item.color_id+' talla_index::'+theTallaIndex);
@@ -381,11 +401,6 @@ function AxAppController( $scope, $http ) {
 			var Articulo = $resource('/Invfisicosmovil/getItemByCve/:cve',
  				{cve:$scope.item.articulo_cve} 	);
 
-	<select>
-		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
-	</select>
-
-
   <div class="control-group">
   <div class="controls controls-row">
 <?php for($i=5; $i<10; $i++ ): ?> 
@@ -406,7 +421,6 @@ function AxAppController( $scope, $http ) {
   </div>
   </div>
 
-
   <div class="control-group">
     <label class="checkbox" for="printLbl">Imprimir etiquetas
     <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
@@ -421,6 +435,12 @@ item = {{item | json}}
 ubicacion = {{ubicacion | json}}
 </pre>
 </div>
+
+
+<select>
+		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
+</select>
+
 
 */
 
