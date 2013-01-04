@@ -21,33 +21,63 @@
 	<integer>201</integer>
 	<key>metaData</key>
 	<dict>
+		<key>app/controllers/invfisicos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>39</integer>
+				<key>line</key>
+				<integer>121</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>96</integer>
+		</dict>
 		<key>app/controllers/invfisicosmovil_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>25</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>32</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>30</integer>
+			<integer>10</integer>
 		</dict>
 		<key>app/controllers/ubicaciones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>120</integer>
+				<integer>153</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>95</integer>
+			<integer>113</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>140</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>153</integer>
+			</dict>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -68,28 +98,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>47</integer>
 				<key>line</key>
-				<integer>265</integer>
+				<integer>172</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>209</integer>
-		</dict>
-		<key>app/views/layouts/almacenmovil.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<integer>156</integer>
 		</dict>
 		<key>app/views/layouts/desktop.ctp</key>
 		<dict>
@@ -111,12 +127,12 @@
 		<string>app/views/layouts/desktop.ctp</string>
 		<string>app/controllers/invfisicosmovil_controller.php</string>
 		<string>app/controllers/ubicaciones_controller.php</string>
+		<string>app/controllers/invfisicos_controller.php</string>
 		<string>app/views/invfisicosmovil/index.ctp</string>
-		<string>app/views/layouts/almacenmovil.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{27, 0}, {946, 878}}</string>
+	<string>{{47, 0}, {946, 878}}</string>
 </dict>
 </plist>

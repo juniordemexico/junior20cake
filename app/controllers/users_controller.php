@@ -31,7 +31,7 @@ class UsersController extends MyAppController {
 
 	function login() {
 		$this->set('redirect', $this->Auth->loginRedirect);
-		
+
 		if($this->Auth->User('id')>0) {
 			$this->User->read(null, $this->Auth->User('id'));
 			if ($this->User->saveField('lastlogin',  date('Y-m-d H:i:s'))) {

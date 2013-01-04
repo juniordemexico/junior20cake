@@ -4,7 +4,7 @@
 class InvfisicosmovilController extends MasterDetailAppController {
 	var $name='Invfisicosmovil';
 
-	var $uses = array('Invfisico', 'Invfisicodetail', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion' );
+	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion' );
 
 	var $layout = 'almacenmovil';
 
@@ -27,17 +27,58 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
+			if(!isset($theData['ubicacion_id'])) $theData['ubicacion_id']=1;
+			
 			$cadena='Art:'.$theData['articulo_id'].
-					' Col:'.$theData['color_id'].
+					' Color:'.$theData['color_id'].
 					' Talla:'.$theData['talla_index'].
-					' CANTIDAD:'.$theData['cantidad'];
-					
-			$out=array(
-				'result'=>'recibido',
-				'message'=>$cadena
-			);
+					' CANTIDAD:'.$theData['cantidad'].
+					' Etiqueta: '.$theData['printlabel'].
+					' Ubicacion: '.$theData['ubicacion_id'];
+
+
+			$data=array(
+				'invfisico_id'=>1,
+				'ubicacion_id'=>$theData['ubicacion_id'],
+				'articulo_id'=>$theData['articulo_id'],
+				'color_id'=>$theData['color_id'],
+				'talla_index'=>$theData['talla_index'],
+				'cant'=>$theData['cantidad'],
+				'tipomovinvfisico_id'=>1,
+				'st'=>'A',
+				'user_id'=>1
+				);
+			
+			$this->data['Invfisicodetail']=$data;
+			$this->Invfisicodetail->create();
+
+			if($this->Invfisicodetail->save($this->data)) {
+			// Print the Inventory's label for this entry....
+
+				if(isset($theData['printlabel']) && $theData['printlabel']) {
+					$this->printlabel($theData['articulo_id'], $theData['color_id'], $theData['talla_index'],
+									$theData['cantidad'], $theData['ubicacion_id']);
+				}
+
+				$marbete_id=$this->Invfisicodetail->id;
+				// Success...
+				$out=array(
+					'result'=>'recibido',
+					'message'=>$marbete_id
+				);
+
+			}
+			else {
+				$out=array(
+					'result'=>'error',
+					'message'=>'ERROR AL GUARDAR'
+				);
+
+			}
+			
 		}
 		else {
+			// Error...
 			$out=array(
 				'result'=>'error',
 				'message'=>'Error en la Solicitud'
@@ -47,6 +88,63 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		echo json_encode($out);
 	}
 
+/*
+	public function printlabelByMarbete($id=null) {
+		if(!$id || !($id>0)) return false;
+		$rs=$this->Invfisicodetail->
+	}
+*/	
+	public function printlabel($articulo_id=null, $color_id=1, $talla_index=0, $cantidad=0, $ubicacion_id=null) {
+		// If we don't have a Product
+		if(!$articulo_id) {
+			return;
+		}
+
+		// Get Articulos's data...
+		$rs=$this->Articulo->findById($articulo_id);
+		if(!$rs || !isset($rs['Articulo']['arcveart'])) return false;
+		$articulo_cve=trim($rs['Articulo']['arcveart']);
+
+		// Get Ubicacion's data, if we got it...
+		if(!isset($ubicacion_id) || !($ubicacion_id>0) ) $ubicacion_id=1;
+		$rsubica=$this->Ubicacion->findById($ubicacion_id);
+		$ubicacion_cve=($rsubica && isset($rsubica['Ubicacion']['cve'])) ? trim($rsubica['Ubicacion']['cve']):'';
+
+		// Get Color's data
+		if(!isset($color_id) || !($color_id>0) ) $color_id=1;
+		$rscolor=$this->Color->findById($color_id);
+		$color_cve=($rscolor && isset($rscolor['Color']['cve'])) ? trim($rscolor['Color']['cve']):'';
+
+		// Get Tallas's data
+		if(!isset($talla_index) || !($talla_index>=0) ) $talla_index=0;
+		$rstalla=$this->Talla->findById($rs['Articulo']['talla_id']);
+		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$talla_index]):'';
+		
+		$rs=$this->Articulo->findById($articulo_id);
+		if($rs) {
+			$label='
+
+N
+D14
+A025,025,0,4,1,1,N,"'.date('Y/m/d H:i:s').'"
+A450,025,0,4,1,1,N,"Oper: '.$this->Auth->User('username').'"
+A025,75,0,5,1,1,N,"'.$articulo_cve.'"
+A025,150,0,5,1,1,N,"'.$color_cve.'"
+A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
+A450,225,0,5,1,1,N,"CANT:'.$cantidad.'"
+B050,300,0,1,2,3,75,N,"t%p,id%'.$articulo_id.',c%'.$color_id.',t%'.$talla_index.'"
+A050,400,0,4,1,1,N,"MARBETE: 9999999"
+A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
+B050,425,0,1,4,6,100,N,"t%M,id%'.$ubicacion_id.'"
+P1
+';					
+			$this->Axfile->StringToFile('/home/www/junior20cake/app/webroot/'.
+										'files/tmp/tmp.marbete.'.$articulo_cve.'.label.txt',
+										$label);
+		}
+		
+	}
+	
 	public function getItemByCve($cve=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;

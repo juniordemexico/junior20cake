@@ -52,8 +52,15 @@
 	<button type="button" class="btn" ng-click="plusCant(1)">+1</button>
 	<button type="button" class="btn" ng-click="minusCant(10)">-10</button>
 	<button type="button" class="btn" ng-click="plusCant(10)">+10</button>
+	<button type="button" class="btn" ng-click="minusCant(100)">-100</button>
+	<button type="button" class="btn" ng-click="plusCant(100)">+100</button>
 </div>
-<br/><br/>
+<br/><br/><br/>
+
+  <div class="control-group">
+    <label class="checkbox" for="printLbl">Imprimir etiquetas
+    <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
+  </label>
 
   <div class="form-actions">
   <button type="submit" id="submit" value="sumbit"
@@ -166,28 +173,37 @@ function AxAppController( $scope, $http ) {
 		console.log("Envia Forma: "+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.item.talla_index);
 		$scope.item.cantidad=$scope.cantidad;
 
-		$http.get('/Invfisicosmovil/additem?articulo_id='+$scope.item.articulo_id+'&color_id='+$scope.item.color_id+
-		'&talla_index='+$scope.item.talla_index+'&cantidad='+$scope.item.cantidad
+		$http.get('/Invfisicosmovil/additem?'+
+				'articulo_id='+$scope.item.articulo_id+
+				'&color_id='+$scope.item.color_id+
+				'&talla_index='+$scope.item.talla_index+
+				'&cantidad='+$scope.item.cantidad+
+				'&ubicacion_id='+$scope.ubicacion.id+
+				'&printlabel='+$scope.printLabel
 		).then(function(response) {
-			if(typeof response.data != 'undefined' && typeof response.data!='string') {
-				alert('Respuesta: '+response.data.message);
-				$scope.cantidad=0;
-				$scope.item.articulo_cve='';
-				$scope.item.articulo_descrip='';
-				$scope.item.color_cve='';
-				$scope.item.color_id='';
-				$scope.item.talla_index=null;
-				$scope.item.talla_label='';
-				if($('#ubicacioncve').val()!='') {
-					$('#artcve').focus();
+			if(typeof response.data != 'undefined') {
+				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
+					alert('GUARDADO MARBETE: '+response.data.message);
+					$scope.cantidad=0;
+					$scope.item.articulo_cve='';
+					$scope.item.articulo_descrip='';
+					$scope.item.color_cve='';
+					$scope.item.color_id='';
+					$scope.item.talla_index=null;
+					$scope.item.talla_label='';
+					if($('#ubicacioncve').val()!='') { 
+						$('#artcve').focus();
+					}
+					else {
+						$('#ubicacioncve').focus();
+					}				
 				}
 				else {
-					$('#ubicacioncve').focus();				
+					alert('Respuesta Desconocida...'+response.data);
 				}
-			
 			}
 			else {
-				alert('ERROR IRRECUPERABLE...'+response.data);
+					alert('ERROR IRRECUPERABLE...'+response.data);
 			}
    		});
 
