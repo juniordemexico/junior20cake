@@ -145,6 +145,11 @@ var item={
 
 };
 
+var user={
+	id: '1',
+	username: 'IDD'
+}
+
 var ubicacion={
 	id :0 ,
 	cve : "",
@@ -170,7 +175,7 @@ function AxAppController( $scope, $http ) {
 	$scope.lastUbicacionCve='';			// This is the Controller's Ubication Model
 	
 	$scope.isKit = false;		// We have a product kit or package with more than one units?
-	$scope.printLabel = false;  // We need to print a barcode label after save the data?
+	$scope.printLabel = true;  // We need to print a barcode label after save the data?
 
 	$scope.scanInput = '';		// Every barcode scanner's reads are redirected through this
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
