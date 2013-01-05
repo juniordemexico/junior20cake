@@ -1,95 +1,104 @@
 <div id="formContainer" class="row">
 <form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
-	name="itemForm" class="form span5">
+	name="itemForm" class="form well span5">
  
-  <div class="control-group span5">
+  <div class="control-group">
     <div class="controls input">
 		<div class="input-prepend">
 			<span class="add-on">Ubicación:</span>
-      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="input-large"/>
+      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="span2"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
  <div>Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></div>
-<hr/>	
+<br/><br/>	
 
-  <div class="control-group span5">
+  <div class="control-group">
     <div class="controls input">
 		<div class="input-prepend">
 			<span class="add-on">Producto:</span>
-      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="input-large" />
+      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="span4"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
  <div><strong>{{item.articulo_descrip}}</strong></div>
-<hr/>	
+<br/><br/>	
  
- <div class="control-group span5">
+ <div class="control-group">
     <div class="controls input">
 		<div class="input-prepend">
 			<span class="add-on">Color:</span>
-      		<input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="input-large" />
+      <input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="span4" class="readonly"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
-<hr/><br/><br/><br/>
-
-<div class="btn-group span5">
-	<button type="button" class="btn  btn-info btn-small" 
-			ng-model="currentTalla"
-			ng-repeat="oneTalla in item.talla"
-			ng-click="$parent.currentTalla=$parent.item.talla[$index]"
-			ng-show="$parent.item.talla[$index].label" >{{oneTalla.label}}</button>
-</div>
 <br/><br/>
 
- <div class="control-group span5">
+
+
+ <div class="control-group">
     <div class="controls input">
-		<div class="input-prepend">
-			<span class="add-on">Piezas talla <strong>{{currentTalla.label}}</strong>:</span>
-      		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-medium" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
     	</div>
     </div>
     <span class="help-inline hide">Woohoo!</span>
  </div>
 
-<div class="btn-group span5">
-	<button type="button" class="btn btn-small" ng-click="minusCant(1)">-1</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(1)">+1</button>
-	<button type="button" class="btn btn-small" ng-click="minusCant(10)">-10</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(10)">+10</button>
-	<button type="button" class="btn btn-small" ng-click="minusCant(100)">-100</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(100)">+100</button>
-</div>
-<hr/><br/><br/><br/><br/>
+ <div class="control-group">
+    <div class="controls input">
+		<div class="input-prepend">
+			<select id="thetallaindex" name="TheTallaIndex" ng-model="currentTalla" ng-options="t.label for t in item.talla"></select>
+    	</div>
+    </div>
+    <span class="help-inline hide">Woohoo!</span>
+ </div>
 
-  <div class="control-group span5">
+ <div class="control-group">
+    <div class="controls input">
+		<div class="input-prepend">
+			<span class="add-on">Piezas Talla <strong>{{currentTalla.label}}</strong>:</span>
+      		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="span2" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
+    	</div>
+    </div>
+    <span class="help-inline hide">Woohoo!</span>
+ </div>
+
+<div class="btn-group">
+	<button type="button" class="btn" ng-click="minusCant(1)">-1</button>
+	<button type="button" class="btn" ng-click="plusCant(1)">+1</button>
+	<button type="button" class="btn" ng-click="minusCant(10)">-10</button>
+	<button type="button" class="btn" ng-click="plusCant(10)">+10</button>
+	<button type="button" class="btn" ng-click="minusCant(100)">-100</button>
+	<button type="button" class="btn" ng-click="plusCant(100)">+100</button>
+</div>
+<br/><br/><br/>
+
+  <div class="control-group">
     <label class="checkbox" for="printLbl">Imprimir etiquetas
     <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   </label>
 
-  <div class="form-actions span5">
-  <button ng:click="save()" ng:disabled="{{isDataComplete}}"
-	type="button" class="btn btn-primary btn-block">Guardar</button>
+  <div class="form-actions">
   <button type="submit" id="submit" value="sumbit"
 	style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
+  <button ng:click="save()" ng:disabled="{{isDataComplete}}"
+	type="button" class="btn btn-primary btn-block">Guardar</button>
   </div>
 
-  <div class="control-group span5">
+  <div class="control-group">
     <div class="controls">
       <input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4" placeholder="Scanner Input"/>
     </div>
     <p><span class="help-inline"><em class="text-info">Last read: {{lastScanInput}}</em></span></p>
   </div>
 
-  <div class="control-group span5">
-    <div class="controls"><label class="label">Último: {{lastRecord}}</label></div>
+  <div class="control-group">
+    <div class="controls">
+		Último Registro: {{lastRecord}}
+    </div>
   </div>
-
-<div>
 
 </form><!-- div itemForm -->
 
@@ -178,7 +187,7 @@ function AxAppController( $scope, $http ) {
 
 	$scope.currentTalla='';
 	
-	$scope.lastRecord='';
+	$scope.lastRecord={};
 
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
 	
@@ -213,7 +222,7 @@ function AxAppController( $scope, $http ) {
 				'&ubicacion_id='+$scope.ubicacion.id+
 				'&printlabel='+$scope.printLabel
 		).then(function(response) {
-			$scope.lastRecord=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
+			$scope.lastRecord={cve:$scope.item.articulo_cve, color:$scope.item.color_cve, talla:$scope.currentTalla.label, cant:$scope.cantidad};
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
 					alert(response.data.message);
@@ -227,8 +236,8 @@ function AxAppController( $scope, $http ) {
 */
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
+					$scope.currentTalla={index: null, label:''};
 					$scope.cantidad=0;
-					$scope.currentTalla={};
 					if($('#ubicacioncve').val()!='') { 
 						$('#thetallaindex').focus();
 					}
@@ -307,7 +316,13 @@ function AxAppController( $scope, $http ) {
        	});
 	};
 
-
+	$scope.changeCurrentTalla = function(newIndex) {
+		$scope.currentTalla={index: $scope.item.talla[newIndex].index, label: $scope.item.talla[newIndex].label};
+		$scope.item.talla_index=$scope.currentTalla.index;
+		$scope.item.talla_label=$scope.currentTalla.label;
+		alert($scope.item.talla_label);
+	}
+	
 	$scope.minusCant = function(value) {
 		var oldValue=parseInt($scope.cantidad);
 		if(oldValue-value>=0) {
@@ -462,9 +477,6 @@ ubicacion = {{ubicacion | json}}
 		<option id="{{item.color[0].id}}">{{item.color[0].cve}}</option>
 </select>
 
-
-
-
  <div class="control-group">
     <div class="controls input">
 		<div class="input-prepend">
@@ -474,6 +486,26 @@ ubicacion = {{ubicacion | json}}
     <span class="help-inline hide">Woohoo!</span>
  </div>
 
+
+
+
+<div>
+<pre class="pre">
+currentTalla = {{currentTalla | json}}
+</pre>
+<pre class="pre">
+item = {{item | json}}
+</pre>
+<pre class="pre">
+ubicacion = {{ubicacion | json}}
+</pre>
+</div>
+
+<div class="btn-group">
+	<button type="button" class="btn" 
+			ng-repeat="oneTalla in item.talla"
+			ng-click="changeCurrentTalla($index)">{{oneTalla.label}}</button>
+</div>
 
 */
 

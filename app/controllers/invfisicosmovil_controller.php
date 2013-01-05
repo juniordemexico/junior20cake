@@ -23,7 +23,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		if(
 			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
 			isset($theData['color_id']) &&
-			isset($theData['talla_index']) && $theData['articulo_id']>=0 &&
+			isset($theData['talla_index']) && $theData['talla_index']>=0 &&
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
@@ -43,7 +43,6 @@ class InvfisicosmovilController extends MasterDetailAppController {
 					' Etiqueta: '.$theData['printlabel'].
 					' Ubicacion: '.$theData['ubicacion_id'];
 
-
 			$data=array(
 				'invfisico_id'=>1,
 				'ubicacion_id'=>$theData['ubicacion_id'],
@@ -62,16 +61,16 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			if($this->Invfisicodetail->save($this->data)) {
 			// Print the Inventory's label for this entry....
 
+				$marbete_id=$this->Invfisicodetail->id;
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
 					$this->printlabel($theData['articulo_id'], $theData['color_id'], $theData['talla_index'],
-									$theData['cantidad'], $theData['ubicacion_id']);
+									$theData['cantidad'], $theData['ubicacion_id'],$marbete_id);
 				}
 
-				$marbete_id=$this->Invfisicodetail->id;
 				// Success...
 				$out=array(
 					'result'=>'recibido',
-					'message'=>'GUARDADO MARBETE: '.$marbete_id
+					'message'=>'GUARDADO MARBETE: '.$marbete_id.(isset($theData['printlabel']) && $theData['printlabel']?' Impreso':'')
 				);
 
 			}
@@ -101,7 +100,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$rs=$this->Invfisicodetail->
 	}
 */	
-	public function printlabel($articulo_id=null, $color_id=1, $talla_index=0, $cantidad=0, $ubicacion_id=null) {
+	public function printlabel($articulo_id=null, $color_id=1, $talla_index=0, $cantidad=0, $ubicacion_id=null, $marbete_id=null) {
 		// If we don't have a Product
 		if(!$articulo_id) {
 			return;
@@ -146,7 +145,7 @@ B050,425,0,1,4,6,100,N,"t%m,id%'.$marbete_id.'"
 P1
 ';					
 			$filename='/home/www/junior20cake/app/webroot/'.
-					'files/tmp/tmp.marbete.'.$articulo_cve.'.label.txt';
+					'files/tmp/tmp.marbete.'.$marbete_id.'.label.txt';
 			$this->Axfile->StringToFile($filename, $label);
 			system("lpr -P barcodes-viaducto01 $filename > /dev/null");
 		}

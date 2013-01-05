@@ -40,14 +40,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>32</integer>
+				<integer>133</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>10</integer>
+			<integer>125</integer>
 		</dict>
 		<key>app/controllers/ubicaciones_controller.php</key>
 		<dict>
@@ -56,28 +56,42 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>153</integer>
+				<integer>132</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>113</integer>
+			<integer>101</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>140</integer>
+				<integer>131</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>153</integer>
+				<integer>132</integer>
 			</dict>
+		</dict>
+		<key>app/controllers/users_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>8</integer>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -98,14 +112,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>172</integer>
+				<integer>70</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>156</integer>
+			<integer>61</integer>
 		</dict>
 		<key>app/views/layouts/desktop.ctp</key>
 		<dict>
@@ -126,6 +140,7 @@
 	<array>
 		<string>app/views/layouts/desktop.ctp</string>
 		<string>app/controllers/invfisicosmovil_controller.php</string>
+		<string>app/controllers/users_controller.php</string>
 		<string>app/controllers/ubicaciones_controller.php</string>
 		<string>app/controllers/invfisicos_controller.php</string>
 		<string>app/views/invfisicosmovil/index.ctp</string>
@@ -133,6 +148,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{47, 0}, {946, 878}}</string>
+	<string>{{31, 0}, {946, 878}}</string>
 </dict>
 </plist>
