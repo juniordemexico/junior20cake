@@ -9,10 +9,9 @@
       		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="input-large"/>
     	</div>
     </div>
-    <span class="help-inline hide">Woohoo!</span>
+    <span class="help-inline">Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></span>
  </div>
- <div>Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></div>
-<hr/>	
+<hr/><br/><br/><br/>
 
   <div class="control-group span5">
     <div class="controls input">
@@ -21,24 +20,27 @@
       		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="input-large" />
     	</div>
     </div>
-    <span class="help-inline hide">Woohoo!</span>
+    <span class="help-inline"><strong>{{item.articulo_descrip}}</strong></span>
  </div>
- <div><strong>{{item.articulo_descrip}}</strong></div>
-<hr/>	
+<hr/><br/><br/><br/>
  
- <div class="control-group span5">
+  <div class="control-group span5">
     <div class="controls input">
-		<div class="input-prepend">
-			<span class="add-on">Color:</span>
-      		<input type="text" id="colcve" name="colorCve" ng-model="item.color_cve" class="input-large" />
-    	</div>
+	<ul class="span4">
+		<li class="btn btn-info btn-small"
+			ng-model="currentColor"
+			ng-repeat="oneColor in item.color"
+			ng-click="$parent.currentColor=$parent.item.color[$index]"
+			>{{oneColor.cve}}</button>
+	</ul>
     </div>
-    <span class="help-inline hide">Woohoo!</span>
+    <span class="help-inline"><strong>{{currentColor.cve}}</strong></span>
  </div>
 <hr/><br/><br/><br/>
 
+
 <div class="btn-group span5">
-	<button type="button" class="btn  btn-info btn-small" 
+	<button type="button" class="btn btn-warning btn-small" 
 			ng-model="currentTalla"
 			ng-repeat="oneTalla in item.talla"
 			ng-click="$parent.currentTalla=$parent.item.talla[$index]"
@@ -49,7 +51,7 @@
  <div class="control-group span5">
     <div class="controls input">
 		<div class="input-prepend">
-			<span class="add-on">Piezas talla <strong>{{currentTalla.label}}</strong>:</span>
+			<span class="add-on">Piezas Talla &nbsp;&nbsp;&nbsp;<strong>{{currentTalla.label}}</strong>:</span>
       		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-medium" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
     	</div>
     </div>
@@ -64,13 +66,13 @@
 	<button type="button" class="btn btn-small" ng-click="minusCant(100)">-100</button>
 	<button type="button" class="btn btn-small" ng-click="plusCant(100)">+100</button>
 </div>
-<hr/><br/><br/><br/><br/>
+<hr/><br/><br/><br/>
 
   <div class="control-group span5">
     <label class="checkbox" for="printLbl">Imprimir etiquetas
     <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   </label>
-
+</div>
   <div class="form-actions span5">
   <button ng:click="save()" ng:disabled="{{isDataComplete}}"
 	type="button" class="btn btn-primary btn-block">Guardar</button>
@@ -139,7 +141,6 @@ var item={
  		{index : 9, label : ''}
 	],
 	color: [
-		{id:1, cve:'UNICO'}
 	]
 
 };
@@ -176,7 +177,8 @@ function AxAppController( $scope, $http ) {
 
 	$scope.lastCve='';
 
-	$scope.currentTalla='';
+	$scope.currentTalla={};
+	$scope.currentColor={};
 	
 	$scope.lastRecord='';
 
@@ -205,6 +207,9 @@ function AxAppController( $scope, $http ) {
 				'&printlabel='+$scope.printLabel
 				);
 */
+		$scope.item.color_id=$scope.currentColor.id;
+		$scope.item.color_cve=$scope.currentColor.cve;
+		
 		$http.get('/Invfisicosmovil/additem?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
@@ -227,8 +232,8 @@ function AxAppController( $scope, $http ) {
 */
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
-					$scope.cantidad=0;
 					$scope.currentTalla={};
+					$scope.cantidad=0;
 					if($('#ubicacioncve').val()!='') { 
 						$('#thetallaindex').focus();
 					}
@@ -284,8 +289,10 @@ function AxAppController( $scope, $http ) {
 			}
 			else {
 				$scope.item=response.data;
+
 				$scope.item.color_id=$scope.item.color[0].id;
 				$scope.item.color_cve=$scope.item.color[0].cve;
+				$scope.currentColor={id: $scope.item.id, cve: $scope.item.cve};
 			}
 
 			}
@@ -388,6 +395,7 @@ function AxAppController( $scope, $http ) {
 				$scope.item.color_id=theColorId;
 				$scope.item.talla_index=theTallaIndex;
 				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
+				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
 
 				$scope.lastScanInput=theValue;
 				

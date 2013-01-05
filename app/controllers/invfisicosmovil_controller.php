@@ -286,7 +286,7 @@ P1
 
 		$out=array(
 			'result'=>'error',
-			'errorMessage'=>'Producto Inválido',
+			'errorMessage'=>'Ubicación Inválida',
 		);
 
 		if($rs && isset($rs['Ubicacion']['id']) && $rs['Ubicacion']['id']>0) {
