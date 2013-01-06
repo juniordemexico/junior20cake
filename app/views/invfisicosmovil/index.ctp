@@ -1,96 +1,112 @@
-<div id="formContainer" class="row">
+<div id="formContainer" class="row almacenmovil">
 <form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
-	name="itemForm" class="form span5">
+	name="itemForm" class="form">
  
-  <div class="control-group span5">
-    <div class="controls input">
-		<div class="input-prepend">
-			<span class="add-on">Ubicación:</span>
+<div id="ubicacionContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Ubicación</span> &nbsp;&nbsp;<strong><small>Zona</small> {{ubicacion.zona}} &nbsp;&nbsp;<small>Fila</small> {{ubicacion.fila}} &nbsp;&nbsp;<small>Espacio</small> {{ubicacion.espacio}}</strong></legend>
+  	<div class="control-group">
+    	<div class="input">
       		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="input-large"/>
     	</div>
-    </div>
-    <span class="help-inline">Zona: <strong>{{ubicacion.zona}}</strong> Fila:<strong>{{ubicacion.fila}}</strong> Espacio:<strong>{{ubicacion.espacio}}</strong></span>
- </div>
-<hr/><br/><br/><br/>
+ 	</div>
+</div>
 
-  <div class="control-group span5">
-    <div class="controls input">
-		<div class="input-prepend">
-			<span class="add-on">Producto:</span>
+<div id="productoContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Producto</span> &nbsp;&nbsp; <strong><em>{{item.articulo_descrip}}</em></strong></legend>
+  	<div class="control-group">
+    	<div class="input">
       		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="input-large" />
     	</div>
-    </div>
-    <span class="help-inline"><strong>{{item.articulo_descrip}}</strong></span>
- </div>
-<hr/><br/><br/><br/>
- 
-  <div class="control-group span5">
-    <div class="controls input">
-	<ul class="span4">
-		<li class="btn btn-info btn-small"
+    	<span class="help-inline hide">&nbsp;</span>
+ 	</div>
+</div>
+
+<div id="colorContainer" class="section-container" style="margin-top: 40px;"> 
+	<legend><span class="text-info">Color</span> &nbsp;&nbsp;<em>{{currentColor.cve}}</em></legend>
+	<div class="btn-group">
+		<button type="button" 
+			class="btn btn-info btn-small"
+			id="btnColor{{$index}}"
 			ng-model="currentColor"
 			ng-repeat="oneColor in item.color"
-			ng-click="$parent.currentColor=$parent.item.color[$index]"
-			>{{oneColor.cve}}</button>
-	</ul>
-    </div>
-    <span class="help-inline"><strong>{{currentColor.cve}}</strong></span>
- </div>
-<hr/><br/><br/><br/>
+			ng-click="$parent.currentColor=$parent.item.color[$index]">
+			{{oneColor.cve}}
+		</button>
+   	</div>
+</div>
 
-
-<div class="btn-group span5">
-	<button type="button" class="btn btn-warning btn-small" 
+<div id="tallaContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Talla</span> &nbsp;&nbsp;<em>{{currentTalla.label}}</em></legend>
+	<div class="btn-group">
+		<button
+			type="button" 
+			class="btn btn-warning btn-small" 
+			id="btnTalla{{$index}}"
 			ng-model="currentTalla"
 			ng-repeat="oneTalla in item.talla"
 			ng-click="$parent.currentTalla=$parent.item.talla[$index]"
-			ng-show="$parent.item.talla[$index].label" >{{oneTalla.label}}</button>
+			ng-show="$parent.item.talla[$index].label">
+			{{oneTalla.label}}
+		</button>
+	</div>
+    <span class="help-inline hide">&nbsp;</span>
 </div>
-<br/><br/>
 
- <div class="control-group span5">
-    <div class="controls input">
-		<div class="input-prepend">
-			<span class="add-on">Piezas Talla &nbsp;&nbsp;&nbsp;<strong>{{currentTalla.label}}</strong>:</span>
-      		<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-medium" title="{{item.talla_label}}" placeholder="{{item.talla_label}}"/>
+<div id="cantidadContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<em>{{cantidad}}</em></legend>
+	<div class="control-group">
+		<div class="input">
+   			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="{{currentTalla.label}}" placeholder="{{currentTalla.label}}" />
+  		</div>
+    	<span class="help-inline hide">&nbsp;</span>
+	</div>
+	<div class="btn-group">
+		<button type="button" class="btn btn-small" ng-click="minusCant(1)">-1</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(1)">+1</button>
+		<button type="button" class="btn btn-small" ng-click="minusCant(10)">-10</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(10)">+10</button>
+		<button type="button" class="btn btn-small" ng-click="minusCant(100)">-100</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(100)">+100</button>
+	</div>
+</div>
+
+
+<div id="printlabelContainer" class="section-container" style="margin-top: 40px;">
+  	<div class="control-group">
+    	<label class="checkbox" for="printLbl">Imprimir etiquetas
+    		<input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
+  		</label>
+	</div>
+</div>
+
+
+<div id="cantidadContainer" class="section-container" style="margin-top: 40px;">
+  <div id="actionsContainer" class="form-actions section-container">
+  	<button ng:click="save()" ng:disabled="{{isDataComplete}}"
+		type="button" class="btn btn-primary btn-block">Guardar</button>
+  	<button type="submit" id="submit" value="sumbit"
+		style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
+  </div>
+</div>
+
+<div id="scannerContainer" class="section-container" style="margin-top: 40px;">
+	<div class="control-group">
+		<span class="help-inline"><em class="text-info">Última Captura: {{lastRecord}}</em></span>
+		<br/></br>
+    	<div class="controls">
+      		<input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="" placeholder="Scanner Input"/>
     	</div>
-    </div>
-    <span class="help-inline hide">Woohoo!</span>
- </div>
-
-<div class="btn-group span5">
-	<button type="button" class="btn btn-small" ng-click="minusCant(1)">-1</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(1)">+1</button>
-	<button type="button" class="btn btn-small" ng-click="minusCant(10)">-10</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(10)">+10</button>
-	<button type="button" class="btn btn-small" ng-click="minusCant(100)">-100</button>
-	<button type="button" class="btn btn-small" ng-click="plusCant(100)">+100</button>
+   		<span class="help-inline"><em class="text-info">Última Lectura: {{lastScanInput}}</em></span>
+  		</div>
+	</div>
 </div>
-<hr/><br/><br/><br/>
 
-  <div class="control-group span5">
-    <label class="checkbox" for="printLbl">Imprimir etiquetas
-    <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
-  </label>
-</div>
-  <div class="form-actions span5">
-  <button ng:click="save()" ng:disabled="{{isDataComplete}}"
-	type="button" class="btn btn-primary btn-block">Guardar</button>
-  <button type="submit" id="submit" value="sumbit"
-	style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
-  </div>
 
-  <div class="control-group span5">
-    <div class="controls">
-      <input type="text" id="scanInput" name="scanInput" ng-model="scanInput" class="span4" placeholder="Scanner Input"/>
-    </div>
-    <p><span class="help-inline"><em class="text-info">Last read: {{lastScanInput}}</em></span></p>
-  </div>
-
-  <div class="control-group span5">
-    <div class="controls"><label class="label">Último: {{lastRecord}}</label></div>
-  </div>
-
+<div id="lastrecordContainer" class="section-container" style="margin-top: 40px;">
+  	<div class="control-group">
+    	<div class="controls">
+  		</div>
+	</div>
 <div>
 
 </form><!-- div itemForm -->
@@ -151,11 +167,11 @@ var user={
 }
 
 var ubicacion={
-	id :0 ,
-	cve : "",
-	zona : "",
-	fila : "",
-	espacio: ""
+	id : 1,
+	cve : "A00-0000",
+	zona : "A",
+	fila : "01",
+	espacio: "0000"
 };
 
 var user={
@@ -227,14 +243,6 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
 					alert(response.data.message);
-					$scope.cantidad=0;
-/*
-					$scope.item.articulo_id=null;
-					$scope.item.articulo_cve='';
-					$scope.item.articulo_descrip='';
-					$scope.item.color_cve='';
-					$scope.item.color_id=0;
-*/
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
 					$scope.currentTalla={};
@@ -275,6 +283,7 @@ function AxAppController( $scope, $http ) {
 					if(typeof response.data.errorMessage == 'string') {
 						alert('Error: '+response.data.errorMessage);						
 					}
+					$scope.ubicacion=ubicacion;
 				}
 				else {
 					$scope.ubicacion=response.data;
@@ -290,7 +299,9 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
-//				alert('Error');
+				alert('Error');
+				$scope.item.articulo_descrip='';
+				$scope.item.articulo_id='';
 			}
 			else {
 				$scope.item=response.data;
@@ -340,6 +351,13 @@ function AxAppController( $scope, $http ) {
 		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
 			$scope.lastUbicacionCve=$scope.ubicacion.cve;
 			$scope.getUbicacion();
+			if($('#artcve').val()!='') {
+				$('#edtcantidad').focus();
+			}
+			else {
+				$('#artcve').focus();				
+			}
+
 		}
 	});
 
@@ -349,6 +367,12 @@ function AxAppController( $scope, $http ) {
 		if($scope.item.articulo_cve!=$scope.lastCve) {
 			$scope.lastCve=$scope.item.articulo_cve;
 			$scope.getItemByCve();
+			if($scope.currentColor.id>0) {
+				$('#btnTalla0').focus();
+			}
+			else {
+				$('#btnColor0').focus();				
+			}
 		}
 	});
 
