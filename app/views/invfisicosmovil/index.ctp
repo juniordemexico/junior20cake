@@ -1,28 +1,32 @@
 <div id="formContainer" class="row almacenmovil">
 <form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
 	name="itemForm" class="form">
+
+<div id="userContainer" class="section-container" style="margin-top: 10px;">
+	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>
+</div>
  
-<div id="ubicacionContainer" class="section-container" style="margin-top: 40px;">
+<div id="ubicacionContainer" class="section-container" style="margin-top: 32px;">
 	<legend><span class="text-info">Ubicación</span> &nbsp;&nbsp;<strong><small>Zona</small> {{ubicacion.zona}} &nbsp;&nbsp;<small>Fila</small> {{ubicacion.fila}} &nbsp;&nbsp;<small>Espacio</small> {{ubicacion.espacio}}</strong></legend>
   	<div class="control-group">
     	<div class="input">
-      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="input-large"/>
+      		<input type="text" id="ubicacioncve" name="ubicacionCve" ng-model="ubicacion.cve" class="input-large" placeholder="Clave de Ubicación..."/>
     	</div>
  	</div>
 </div>
 
-<div id="productoContainer" class="section-container" style="margin-top: 40px;">
+<div id="productoContainer" class="section-container" style="margin-top: 32px;">
 	<legend><span class="text-info">Producto</span> &nbsp;&nbsp; <strong><em>{{item.articulo_descrip}}</em></strong></legend>
   	<div class="control-group">
     	<div class="input">
-      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="input-large" />
+      		<input type="text" id="artcve" name="articuloCve" ng-model="item.articulo_cve" class="input-large" placeholder="Clave del Producto..."/>
     	</div>
     	<span class="help-inline hide">&nbsp;</span>
  	</div>
 </div>
 
-<div id="colorContainer" class="section-container" style="margin-top: 40px;"> 
-	<legend><span class="text-info">Color</span> &nbsp;&nbsp;<em>{{currentColor.cve}}</em></legend>
+<div id="colorContainer" class="section-container" style="margin-top: 32px;"> 
+	<legend><span class="text-info">Color</span> &nbsp;&nbsp;<strong><em>{{currentColor.cve}}</em></strong></legend>
 	<div class="btn-group">
 		<button type="button" 
 			class="btn btn-info btn-small"
@@ -35,8 +39,8 @@
    	</div>
 </div>
 
-<div id="tallaContainer" class="section-container" style="margin-top: 40px;">
-	<legend><span class="text-info">Talla</span> &nbsp;&nbsp;<em>{{currentTalla.label}}</em></legend>
+<div id="tallaContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">Talla</span> &nbsp;&nbsp;<strong><em>{{currentTalla.label}}</em></strong></legend>
 	<div class="btn-group">
 		<button
 			type="button" 
@@ -52,11 +56,11 @@
     <span class="help-inline hide">&nbsp;</span>
 </div>
 
-<div id="cantidadContainer" class="section-container" style="margin-top: 40px;">
-	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<em>{{cantidad}}</em></legend>
+<div id="cantidadContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></legend>
 	<div class="control-group">
 		<div class="input">
-   			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="{{currentTalla.label}}" placeholder="{{currentTalla.label}}" />
+   			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
   		</div>
     	<span class="help-inline hide">&nbsp;</span>
 	</div>
@@ -71,17 +75,17 @@
 </div>
 
 
-<div id="printlabelContainer" class="section-container" style="margin-top: 40px;">
+<div id="printlabelContainer" class="section-container" style="margin-top: 32px;">
   	<div class="control-group">
-    	<label class="checkbox" for="printLbl">Imprimir etiquetas
+    	<label class="checkbox" for="printLbl"> Imprimir etiqueta
     		<input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   		</label>
 	</div>
 </div>
 
 
-<div id="cantidadContainer" class="section-container" style="margin-top: 40px;">
-  <div id="actionsContainer" class="form-actions section-container">
+<div id="actionsContainer" class="section-container" style="margin-top: 32px;">
+  <div class="form-actions section-container">
   	<button ng:click="save()" ng:disabled="{{isDataComplete}}"
 		type="button" class="btn btn-primary btn-block">Guardar</button>
   	<button type="submit" id="submit" value="sumbit"
@@ -89,7 +93,18 @@
   </div>
 </div>
 
-<div id="scannerContainer" class="section-container" style="margin-top: 40px;">
+<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">ReImprimir Etiqueta de Marbete</span> &nbsp;&nbsp;</strong></legend>
+	<div class="control-group">
+ 			<div class="input-append">
+      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Número de Marbete..." />
+			<button type="button" class="btn" ng-click="requestReprintLabel()">Reimprimir</button>
+    		</div>
+     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
+	</div>
+</div>
+
+<div id="scannerContainer" class="section-container" style="margin-top: 32px;">
 	<div class="control-group">
 		<span class="help-inline"><em class="text-info">Última Captura: {{lastRecord}}</em></span>
 		<br/></br>
@@ -100,14 +115,6 @@
   		</div>
 	</div>
 </div>
-
-
-<div id="lastrecordContainer" class="section-container" style="margin-top: 40px;">
-  	<div class="control-group">
-    	<div class="controls">
-  		</div>
-	</div>
-<div>
 
 </form><!-- div itemForm -->
 
@@ -188,21 +195,21 @@ function AxAppController( $scope, $http ) {
 	$scope.user = user;			// This is the Controller's User Model
 	$scope.item = item;			// This is the Controller's main Model
 	$scope.ubicacion=ubicacion;			// This is the Controller's Ubication Model
-	$scope.lastUbicacionCve='';			// This is the Controller's Ubication Model
 	
-	$scope.isKit = false;		// We have a product kit or package with more than one units?
 	$scope.printLabel = true;  // We need to print a barcode label after save the data?
-
-	$scope.scanInput = '';		// Every barcode scanner's reads are redirected through this
-	$scope.lastScanInput = '';	// Holds the last processed scanner read
-
-	$scope.lastCve='';
 
 	$scope.currentTalla={};
 	$scope.currentColor={};
+	$scope.scanInput = '';		// Every barcode scanner's reads are redirected through this
 	
+	$scope.lastCve='';
+	$scope.lastUbicacionCve='';			// This is the Controller's Ubication Model
 	$scope.lastRecord='';
+	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
+	$scope.reprintLabel='';
+	$scope.reprintLabelMessage='';
+	
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
 	
 	// We have all the required data in our form?
@@ -299,7 +306,7 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
-				alert('Error');
+				alert('Error: '+response.data.message);
 				$scope.item.articulo_descrip='';
 				$scope.item.articulo_id='';
 			}
@@ -330,6 +337,15 @@ function AxAppController( $scope, $http ) {
        	});
 	};
 
+	$scope.requestReprintLabel = function() {
+		$http.get('/Invfisicosmovil/imprimemarbete/'+$scope.reprintLabel).then(function(response) {
+			if(typeof response.data != 'undefined') {
+				$scope.reprintLabelMessage='Se imprimió marbete ' + $scope.reprintLabel;
+				$scope.reprintLabel='';
+			}
+       	});
+
+	}
 
 	$scope.minusCant = function(value) {
 		var oldValue=parseInt($scope.cantidad);
