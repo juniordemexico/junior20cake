@@ -181,11 +181,6 @@ var ubicacion={
 	espacio: "0000"
 };
 
-var user={
-	user_id : '1',
-	username : 'IDD',
-};
-
 function AxAppController( $scope, $http ) {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -496,7 +491,7 @@ function AxAppController( $scope, $http ) {
   </div>
 
   <div class="control-group">
-    <label class="checkbox" for="printLbl">Imprimir etiquetas
+    <label class="checkbox" for="printLbl">Imprimir etiqueta
     <input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   </label>
 
