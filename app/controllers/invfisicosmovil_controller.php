@@ -60,17 +60,18 @@ class InvfisicosmovilController extends MasterDetailAppController {
 
 			if($this->Invfisicodetail->save($this->data)) {
 			// Print the Inventory's label for this entry....
-
-				$marbete_id=$this->Invfisicodetail->id;
+				$data['id']=$this->Invfisicodetail->id;
+				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
-					$this->printlabel($theData['articulo_id'], $theData['color_id'], $theData['talla_index'],
-									$theData['cantidad'], $theData['ubicacion_id'],$marbete_id);
+					$this->_printlabel($data);
+//					$this->_printlabel($theData['articulo_id'], $theData['color_id'], $theData['talla_index'],
+//									$theData['cantidad'], $theData['ubicacion_id'], $data['marbete_id']);
 				}
 
 				// Success...
 				$out=array(
 					'result'=>'recibido',
-					'message'=>'GUARDADO MARBETE: '.$marbete_id.(isset($theData['printlabel']) && $theData['printlabel']?' Impreso':'')
+					'message'=>'GUARDADO MARBETE: '.$data['id'].(isset($theData['printlabel']) && $theData['printlabel']?' Impreso':'')
 				);
 
 			}
@@ -100,56 +101,101 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$rs=$this->Invfisicodetail->
 	}
 */	
-	public function printlabel($articulo_id=null, $color_id=1, $talla_index=0, $cantidad=0, $ubicacion_id=null, $marbete_id=null) {
+	function cancelamarbete($id=null) {
+		if(!$id || !is_numeric($id) || !($id>0)) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			exit;
+		}
+		$data=$this->Invfisicodetail->findById($id);
+		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
+			$this->Invfisicodetail->read(null, $id);
+			if($this->Invfisicodetail->saveField('st', 'C')) {
+				$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
+										'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '.
+										'SE CANCELÓ.',
+										'success');				
+			}
+			else {
+				$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO se pudo Cancelar', 
+										'error');				
+			}
+		}
+		else {
+			$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO Existe', 
+									'error');			
+		}
+	}
+
+	function imprimemarbete($id=null) {
+		if(!$id || !is_numeric($id) || !($id>0)) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			exit;
+		}
+		$data=$this->Invfisicodetail->findById($id);
+		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
+			$this->_printlabel($data['Invfisicodetail']);
+			$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
+									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '.
+									'Se imprimió.',
+									'success');			
+		}
+		else {
+			$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO Existe', 
+									'error');			
+		}
+	}
+	
+	function _printlabel($data=array()) {
 		// If we don't have a Product
-		if(!$articulo_id) {
-			return;
+		if(!$data || !is_array($data) || !isset($data['articulo_id'])) {
+			return false;
 		}
 
 		// Get Articulos's data...
-		$rs=$this->Articulo->findById($articulo_id);
+		$rs=$this->Articulo->findById($data['articulo_id']);
 		if(!$rs || !isset($rs['Articulo']['arcveart'])) return false;
 		$articulo_cve=trim($rs['Articulo']['arcveart']);
 
 		// Get Ubicacion's data, if we got it...
-		if(!isset($ubicacion_id) || !($ubicacion_id>0) ) $ubicacion_id=1;
-		$rsubica=$this->Ubicacion->findById($ubicacion_id);
+		if(!isset($data['ubicacion_id']) || !($data['ubicacion_id']>0) ) $data['ubicacion_id']=1;
+		$rsubica=$this->Ubicacion->findById($data['ubicacion_id']);
 		$ubicacion_cve=($rsubica && isset($rsubica['Ubicacion']['cve'])) ? trim($rsubica['Ubicacion']['cve']):'';
 		
 		// Get Color's data
-		if(!isset($color_id) || !($color_id>0) ) $color_id=1;
-		$rscolor=$this->Color->findById($color_id);
+		if(!isset($data['color_id']) || !($data['color_id']>0) ) $data['color_id']=1;
+		$rscolor=$this->Color->findById($data['color_id']);
 		$color_cve=($rscolor && isset($rscolor['Color']['cve'])) ? trim($rscolor['Color']['cve']):'';
 
 		// Get Tallas's data
-		if(!isset($talla_index) || !($talla_index>=0) ) $talla_index=0;
+		if(!isset($data['talla_index']) || !($data['talla_index']>=0) ) $data['talla_index']=0;
 		$rstalla=$this->Talla->findById($rs['Articulo']['talla_id']);
-		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$talla_index]):'';
+		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$data['talla_index']]):'';
 		
-		$rs=$this->Articulo->findById($articulo_id);
+		$rs=$this->Articulo->findById($data['articulo_id']);
 		if($rs) {
 			$label='
 
 N
 D14
-A025,025,0,4,1,1,N,"'.date('Y/m/d H:i:s').'"
+A025,025,0,4,1,1,N,"'.$data['created'].'"
 A450,025,0,4,1,1,N,"Oper: '.$this->Auth->User('username').'"
 A025,75,0,5,1,1,N,"'.$articulo_cve.'"
 A025,150,0,5,1,1,N,"'.$color_cve.'"
 A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
-A450,225,0,5,1,1,N,"CANT:'.$cantidad.'"
-B050,300,0,1,2,3,75,N,"t%p,id%'.$articulo_id.',c%'.$color_id.',t%'.$talla_index.'"
-A050,400,0,4,1,1,N,"MARBETE: '.$marbete_id.'"
+A450,225,0,5,1,1,N,"CANT:'.(int)$data['cant'].'"
+B050,300,0,1,2,3,75,N,"t%p,id%'.$data['articulo_id'].',c%'.$data['color_id'].',t%'.$data['talla_index'].'"
+A050,400,0,4,1,1,N,"MARBETE: '.$data['id'].'"
 A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
-B050,425,0,1,4,6,100,N,"t%m,id%'.$marbete_id.'"
+B050,425,0,1,4,6,100,N,"t%m,id%'.$data['id'].'"
 P1
 ';					
 			$filename='/home/www/junior20cake/app/webroot/'.
-					'files/tmp/tmp.marbete.'.$marbete_id.'.label.txt';
+					'files/tmp/tmp.marbete.'.$data['id'].'.label.txt';
 			$this->Axfile->StringToFile($filename, $label);
 			system("lpr -P barcodes-viaducto01 $filename > /dev/null");
+			return true;
 		}
-		
+		return false;
 	}
 	
 	public function getItemByCve($cve=null) {

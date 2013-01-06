@@ -162,8 +162,8 @@ var item={
 };
 
 var user={
-	id: '1',
-	username: 'IDD'
+	id: <?php echo $session->read('Auth.User.id')?>,
+	username: '<?php echo $session->read('Auth.User.username');?>'
 }
 
 var ubicacion={
