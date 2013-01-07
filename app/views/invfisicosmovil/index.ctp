@@ -2,11 +2,11 @@
 <form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
 	name="itemForm" class="form">
 
-<div id="userContainer" class="section-container" style="margin-top: 10px;">
+<div id="userContainer" class="section-container" style="margin-top: 4px;">
 	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>
 </div>
  
-<div id="ubicacionContainer" class="section-container" style="margin-top: 32px;">
+<div id="ubicacionContainer" class="section-container" style="margin-top: 16px;">
 	<legend><span class="text-info">Ubicación</span> &nbsp;&nbsp;<strong><small>Zona</small> {{ubicacion.zona}} &nbsp;&nbsp;<small>Fila</small> {{ubicacion.fila}} &nbsp;&nbsp;<small>Espacio</small> {{ubicacion.espacio}}</strong></legend>
   	<div class="control-group">
     	<div class="input">
@@ -65,28 +65,41 @@
     	<span class="help-inline hide">&nbsp;</span>
 	</div>
 	<div class="btn-group">
-		<button type="button" class="btn btn-small" ng-click="minusCant(1)">-1</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(1)">+1</button>
-		<button type="button" class="btn btn-small" ng-click="minusCant(10)">-10</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(10)">+10</button>
-		<button type="button" class="btn btn-small" ng-click="minusCant(100)">-100</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(100)">+100</button>
+		<button type="button" class="btn btn-small" ng-click="minusCant(1)">&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(1)">&nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-small" ng-click="minusCant(10)">&nbsp;&nbsp;&nbsp;-10&nbsp;&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(10)">&nbsp;&nbsp;&nbsp;+10&nbsp;&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-small" ng-click="minusCant(100)">&nbsp;&nbsp;&nbsp;-100&nbsp;&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-small" ng-click="plusCant(100)">&nbsp;&nbsp;&nbsp;+100&nbsp;&nbsp;&nbsp;</button>
 	</div>
 </div>
 
 
-<div id="printlabelContainer" class="section-container" style="margin-top: 32px;">
-  	<div class="control-group">
-    	<label class="checkbox" for="printLbl"> Imprimir etiqueta
+<div id="printlabelContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Impresión de Marbete</span> &nbsp;&nbsp;<strong><em>{{currentPrinter.cve}}</em></strong></legend>
+  	<div class="control-row">
+    	<label class="checkbox" for="printLbl"> Imprimir la etiqueta en la impresora:
     		<input type="checkbox" id="printLbl" name="printLabel" ng-model="printLabel" class="checkbox"/>
   		</label>
 	</div>
+	<div class="btn-group">
+		<button
+			type="button" 
+			class="btn btn-small" 
+			id="btnPrinterSelect{{$index}}"
+			ng-model="currentPrinter"
+			ng-repeat="onePrinter in printer"
+			ng-click="$parent.currentPrinter=$parent.printer[$index]"
+			>
+			{{onePrinter.cve}}
+		</button>
+	</div>
 </div>
 
 
-<div id="actionsContainer" class="section-container" style="margin-top: 32px;">
+<div id="actionsContainer" class="section-container" style="margin-top: 24px;">
   <div class="form-actions section-container">
-  	<button ng:click="save()" ng:disabled="{{isDataComplete}}"
+  	<button ng-click="save()" ng-disabled="disableSaveBtn"
 		type="button" class="btn btn-primary btn-block">Guardar</button>
   	<button type="submit" id="submit" value="sumbit"
 		style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
@@ -98,9 +111,20 @@
 	<div class="control-group">
  			<div class="input-append">
       		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Número de Marbete..." />
-			<button type="button" class="btn" ng-click="requestReprintLabel()">Reimprimir</button>
+			<button type="button" class="btn" ng-click="requestReprintLabel()"><i class="icon icon-print"></i> Reimprimir</button>
     		</div>
      <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
+	</div>
+</div>
+
+<div id="cancelMarbeteContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">Cancelar Marbete</span> &nbsp;&nbsp;</strong></legend>
+	<div class="control-group">
+ 			<div class="input-append">
+      		<input type="text" id="cancelMarbete" name="cancelMarbete" ng-model="cancelMarbete" placeholder="Número de Marbete..." />
+			<button type="button" class="btn" ng-click="requestCancelMarbete()"><i class="icon icon-trash"></i> Cancelar</button>
+    		</div>
+     <span class="help-inline" ng-show="cancelMarbeteMessage"><strong><em class="text-warning">{{cancelMarbeteMessage}}</em></strong></span>
 	</div>
 </div>
 
@@ -168,6 +192,11 @@ var item={
 
 };
 
+var printer=[
+	{id: 11, cve: 'Zebra 01'},
+	{id: 13, cve: 'Zebra 03'}
+];
+
 var user={
 	id: <?php echo $session->read('Auth.User.id')?>,
 	username: '<?php echo $session->read('Auth.User.username');?>'
@@ -187,31 +216,39 @@ function AxAppController( $scope, $http ) {
 	$scope.getUrl = '/Articulos/getItemByCve';
 	$scope.addUrl = '/Invfisicosmovil/addItem';
 
-	$scope.user = user;			// This is the Controller's User Model
-	$scope.item = item;			// This is the Controller's main Model
+	$scope.printer = printer;			// This is the Controller's User Model
+	$scope.user = user;					// This is the Controller's User Model
+	$scope.item = item;					// This is the Controller's main Model
 	$scope.ubicacion=ubicacion;			// This is the Controller's Ubication Model
 	
 	$scope.printLabel = true;  // We need to print a barcode label after save the data?
 
 	$scope.currentTalla={};
 	$scope.currentColor={};
+	$scope.currentPrinter=printer[0];
+	
 	$scope.scanInput = '';		// Every barcode scanner's reads are redirected through this
 	
 	$scope.lastCve='';
-	$scope.lastUbicacionCve='';			// This is the Controller's Ubication Model
+	$scope.lastUbicacionCve='';		// This is the Controller's Ubication Model
 	$scope.lastRecord='';
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
 	$scope.reprintLabel='';
 	$scope.reprintLabelMessage='';
+
+	$scope.cancelMarbete='';
+	$scope.cancelMarbeteMessage='';
 	
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
 	
 	// We have all the required data in our form?
+	$scope.disableSaveBtn=false;
+/*
 	$scope.isDataComplete = function() {
 		return false;  
 	};
-	
+*/	
 	// Save and push this record to the server
 	$scope.save = function() {
 		console.log("Envia Forma: "+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.item.talla_index);
@@ -232,19 +269,23 @@ function AxAppController( $scope, $http ) {
 */
 		$scope.item.color_id=$scope.currentColor.id;
 		$scope.item.color_cve=$scope.currentColor.cve;
-		
+
+		$scope.disableSaveBtn=true;
+
 		$http.get('/Invfisicosmovil/additem?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
 				'&talla_index='+$scope.currentTalla.index+
 				'&cantidad='+$scope.cantidad+
 				'&ubicacion_id='+$scope.ubicacion.id+
-				'&printlabel='+$scope.printLabel
+				'&printlabel='+$scope.printLabel+
+				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
 			$scope.lastRecord=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
-					alert(response.data.message);
+//					alert(response.data.message);
+					axAlert(response.data.message, 'success', false);
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
 					$scope.currentTalla={};
@@ -257,12 +298,15 @@ function AxAppController( $scope, $http ) {
 					}				
 				}
 				else {
-					alert('Respuesta Desconocida...'+response.data);
+					axAlert(response.data.message, 'error', false);
 				}
 			}
 			else {
-					alert('ERROR IRRECUPERABLE...'+response.data);
+					axAlert('Error Irrecuperable...'+response.data, 'error', false);
+//					alert('ERROR IRRECUPERABLE...'+response.data);
 			}
+			$scope.disableSaveBtn=false;
+
    		});
 
 	};
@@ -283,7 +327,7 @@ function AxAppController( $scope, $http ) {
 					typeof response.data.result == 'string' ||
 					response.data.result=='error') {
 					if(typeof response.data.errorMessage == 'string') {
-						alert('Error: '+response.data.errorMessage);						
+						axAlert('Ubicación Inválida', 'warning', false);
 					}
 					$scope.ubicacion=ubicacion;
 				}
@@ -301,7 +345,8 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
-				alert('Error: '+response.data.message);
+//				alert('Error: '+response.data.message);
+				axAlert('Producto Inválido', 'warning', false);
 				$scope.item.articulo_descrip='';
 				$scope.item.articulo_id='';
 			}
@@ -324,6 +369,7 @@ function AxAppController( $scope, $http ) {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string') {
 					alert('Error');
+					axAlert('Error al solicitar el Producto', 'warning', false);
 				}
 				else {
 					$scope.item=response.data;
@@ -335,8 +381,20 @@ function AxAppController( $scope, $http ) {
 	$scope.requestReprintLabel = function() {
 		$http.get('/Invfisicosmovil/imprimemarbete/'+$scope.reprintLabel).then(function(response) {
 			if(typeof response.data != 'undefined') {
-				$scope.reprintLabelMessage='Se imprimió marbete ' + $scope.reprintLabel;
+				$scope.reprintLabelMessage='Se Reimprimió Marbete ' + $scope.reprintLabel;
+				axAlert('Marbete '+$scope.reprintLabel+' impreso.', 'info', false);
 				$scope.reprintLabel='';
+			}
+       	});
+
+	}
+
+	$scope.requestCancelMarbete = function() {
+		$http.get('/Invfisicosmovil/cancelamarbete/'+$scope.cancelMarbete).then(function(response) {
+			if(typeof response.data != 'undefined') {
+				$scope.cancelMarbeteMessage='Se CANCELO marbete ' + $scope.cancelMarbete;
+				axAlert('Marbete <strong>'+$scope.cancelMarbete+'</strong> CANCELADO.', 'success', false);
+				$scope.cancelMarbete='';
 			}
        	});
 

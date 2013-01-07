@@ -63,6 +63,9 @@ class User extends AppModel
 		'Group',
 	);
 
+	public $hasMany = array(
+	);
+
 /*
  * Static methods that can be used to retrieve the logged in user
  * from anywhere
@@ -124,6 +127,11 @@ public static function get($path) {
 
   return $value[0];
 }
+
+public function getDefaultPrinter($type='Default') {
+	
+}
+
 
 }
 

@@ -4,11 +4,12 @@
 class InvfisicosmovilController extends MasterDetailAppController {
 	var $name='Invfisicosmovil';
 
-	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion' );
+	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer' );
 
 	var $layout = 'almacenmovil';
 
-
+	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
+	
 	public function index() {
 		$this->set('title_for_layout', "Inventario Físico");	
 		
@@ -35,13 +36,13 @@ class InvfisicosmovilController extends MasterDetailAppController {
 					$theData['color_id']=$rsfirstcolor['ArticuloColor']['color_id'];
 				}
 			}
-			
-			$cadena='Art:'.$theData['articulo_id'].
-					' Color:'.$theData['color_id'].
-					' Talla:'.$theData['talla_index'].
-					' CANTIDAD:'.$theData['cantidad'].
-					' Etiqueta: '.$theData['printlabel'].
-					' Ubicacion: '.$theData['ubicacion_id'];
+
+			if(!isset($theData['selectedprinter']) || !($theData['selectedprinter']>0) ) {
+				$this->currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
+			}
+			else {
+				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
+			}
 
 			$data=array(
 				'invfisico_id'=>1,
@@ -52,26 +53,24 @@ class InvfisicosmovilController extends MasterDetailAppController {
 				'cant'=>$theData['cantidad'],
 				'tipomovinvfisico_id'=>1,
 				'st'=>'A',
-				'user_id'=>1
+				'user_id'=>$this->Auth->user('id')
 				);
 			
 			$this->data['Invfisicodetail']=$data;
 			$this->Invfisicodetail->create();
 
 			if($this->Invfisicodetail->save($this->data)) {
-			// Print the Inventory's label for this entry....
+				// Print the Inventory's label for this entry....
 				$data['id']=$this->Invfisicodetail->id;
 				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
 					$this->_printlabel($data);
-//					$this->_printlabel($theData['articulo_id'], $theData['color_id'], $theData['talla_index'],
-//									$theData['cantidad'], $theData['ubicacion_id'], $data['marbete_id']);
 				}
 
 				// Success...
 				$out=array(
 					'result'=>'recibido',
-					'message'=>'GUARDADO MARBETE: '.$data['id'].(isset($theData['printlabel']) && $theData['printlabel']?' Impreso':'')
+					'message'=>'GUARDADO MARBETE: '.$data['id'].(isset($theData['printlabel']) && $theData['printlabel']?' Impreso en '.$this->currentPrinter['cve']:'')
 				);
 
 			}
@@ -88,7 +87,12 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			// Error...
 			$out=array(
 				'result'=>'error',
-				'message'=>'Error en la Solicitud'
+				'message'=>'Error en la Solicitud'.(
+					(!isset($theData['articulo_id']) || !($theData['articulo_id']>0) ? ' Falta el Articulo.' : '').
+					(!isset($theData['color_id']) || !($theData['color_id']>0) ? ' Falta el Color.' : '').
+					(!isset($theData['talla_index']) || !($theData['talla_index']>=0) ? ' Falta la Talla.' : '').
+					(!isset($theData['cantidad']) || !($theData['cantidad']>0) ? ' Falta la Cantidad.' : '')
+					)
 			);
 		}
 
@@ -136,8 +140,8 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			$this->_printlabel($data['Invfisicodetail']);
 			$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
 									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '.
-									'Se imprimió.',
-									'success');			
+									'Se imprimió en '.$this->currentPrinter['cve'].'.',
+									'success');
 		}
 		else {
 			$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO Existe', 
@@ -192,8 +196,13 @@ P1
 			$filename='/home/www/junior20cake/app/webroot/'.
 					'files/tmp/tmp.marbete.'.$data['id'].'.label.txt';
 			$this->Axfile->StringToFile($filename, $label);
-			system("lpr -P barcodes-viaducto01 $filename > /dev/null");
-			return true;
+
+			$rsprinter=$this->Printer->findById($this->currentPrinter['id']);
+			if($rsprinter && isset($rsprinter['Printer']['id']) && $rsprinter['Printer']['id']>0 ) {
+				$this->currentPrinter=$rsprinter['Printer'];
+				system("lpr -P ".$this->currentPrinter['printqueue']." $filename > /dev/null");
+				return true;
+			}
 		}
 		return false;
 	}

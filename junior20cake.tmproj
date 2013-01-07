@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/invfisicosmovil_controller.php</string>
+	<string>app/views/invfisicosmovil/index.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -40,28 +40,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>33</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>193</integer>
+				<integer>202</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>173</integer>
-		</dict>
-		<key>app/controllers/pedidos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>13</integer>
-				<key>line</key>
-				<integer>168</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>158</integer>
+			<integer>182</integer>
 		</dict>
 		<key>app/controllers/ubicaciones_controller.php</key>
 		<dict>
@@ -92,20 +78,6 @@
 				<key>line</key>
 				<integer>40</integer>
 			</dict>
-		</dict>
-		<key>app/controllers/users_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>33</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>8</integer>
 		</dict>
 		<key>app/models/articulo.php</key>
 		<dict>
@@ -148,6 +120,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+		</dict>
+		<key>app/models/user.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>66</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>54</integer>
 		</dict>
 		<key>app/views/elements/requestdata.ctp</key>
 		<dict>
@@ -198,37 +184,23 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>44</integer>
 				<key>line</key>
-				<integer>298</integer>
+				<integer>68</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>275</integer>
-		</dict>
-		<key>app/views/invfisicosmovil/view.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>51</integer>
 		</dict>
 		<key>app/views/layouts/almacenmovil.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>87</integer>
 				<key>line</key>
-				<integer>55</integer>
+				<integer>10</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -254,13 +226,11 @@
 	<array>
 		<string>app/views/layouts/desktop.ctp</string>
 		<string>app/controllers/invfisicosmovil_controller.php</string>
-		<string>app/controllers/pedidos_controller.php</string>
 		<string>app/models/invfisicodetail.php</string>
-		<string>app/views/invfisicosmovil/view.ctp</string>
-		<string>app/controllers/users_controller.php</string>
 		<string>app/controllers/ubicaciones_controller.php</string>
 		<string>app/controllers/invfisicos_controller.php</string>
 		<string>app/views/invfisicosmovil/index.ctp</string>
+		<string>app/models/user.php</string>
 		<string>app/views/layouts/almacenmovil.ctp</string>
 		<string>app/views/elements/requestdata.ctp</string>
 		<string>app/models/articulo.php</string>
@@ -269,6 +239,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{86, 0}, {946, 878}}</string>
+	<string>{{-1845, -40}, {930, 851}}</string>
 </dict>
 </plist>
