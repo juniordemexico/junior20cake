@@ -17,7 +17,7 @@ class Articulo extends AppModel
 	public $title = 'arcveart';
 	public $longTitle = 'ardescrip';
 	public $stField = 'arst';
-	
+	public $recursive= 0;
 	public $tipoarticulo=0;
 
 	public $_schema = array(
@@ -80,7 +80,7 @@ class Articulo extends AppModel
 			'joinTable'=>'articulos_colores',
 			'foreignKey'=>'articulo_id',
 			'associationForeignKey'=>'color_id',
-			'unique'=>true,
+//			'unique'=>true,
 		)
 	);
 
@@ -233,7 +233,7 @@ class Articulo extends AppModel
 			$tipoarticulo=0;
 		}
 
-		$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve'), 'conditions'=>array('Color.st'=>'A', 'tipoarticulo_ids LIKE'=>'%'.$tipoarticulo.'%') ));
+		$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve'), 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1) ));
 		$divisas = $this->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
 		$unidades = $this->Unidad->find('list', array('fields' => array('Unidad.id', 'Unidad.cve')));
 		$lineas = $this->Linea->find('list', array('fields' => array('Linea.id', 'Linea.licve'), 'conditions'=>array('Linea.tipoarticulo_id'=>$tipoarticulo) ) );

@@ -4,7 +4,7 @@
 class InvfisicosController extends MasterDetailAppController {
 	var $name='Invfisicos';
 
-	var $uses = array('Invfisico', 'Almacen', 'Articulo', 'Color');
+	var $uses = array('Invfisico', 'Invfisicodetail', 'Almacen', 'Articulo', 'Color');
 
 	var $cacheAction = array('view',
 							);
@@ -33,7 +33,15 @@ class InvfisicosController extends MasterDetailAppController {
 		if(!$conteo) {
 			$conteo=1;
 		}
-		$this->set('items', $this->Invfisico->getConteos(1, null) );
+
+		$filter = $this->Filter->process($this);
+		print_r($filter);
+		/*
+		$this->set('items', $this->paginate('Invfisicodetail'=>array(
+			'conditions'=>$filter);
+		);
+*/
+		$this->set('items', $this->Invfisicodetail->getConteos(1, null) );
 	}
 
 	public function delete($id) {

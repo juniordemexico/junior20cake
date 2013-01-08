@@ -56,6 +56,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 				'user_id'=>$this->Auth->user('id')
 				);
 			
+			$existeConteo2=$this->Invfisicodetail->Value;
 			$this->data['Invfisicodetail']=$data;
 			$this->Invfisicodetail->create();
 
