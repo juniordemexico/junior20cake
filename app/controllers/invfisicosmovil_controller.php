@@ -44,6 +44,17 @@ class InvfisicosmovilController extends MasterDetailAppController {
 				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
 			}
 
+			if(!isset($theData['conteo'])) {
+				$theData['conteo']=1;
+			}
+
+			if($theData['conteo']==1) {
+				$tipomovinvfisico_id=1;
+			}
+			else {
+				$tipomovinvfisico_id=100;				
+			}
+			
 			$data=array(
 				'invfisico_id'=>1,
 				'ubicacion_id'=>$theData['ubicacion_id'],
@@ -51,12 +62,12 @@ class InvfisicosmovilController extends MasterDetailAppController {
 				'color_id'=>$theData['color_id'],
 				'talla_index'=>$theData['talla_index'],
 				'cant'=>$theData['cantidad'],
-				'tipomovinvfisico_id'=>1,
+				'tipomovinvfisico_id'=>$tipomovinvfisico_id,
 				'st'=>'A',
 				'user_id'=>$this->Auth->user('id')
 				);
 			
-			$existeConteo2=$this->Invfisicodetail->Value;
+//			$existeConteo2=$this->Invfisicodetail->Value;
 			$this->data['Invfisicodetail']=$data;
 			$this->Invfisicodetail->create();
 

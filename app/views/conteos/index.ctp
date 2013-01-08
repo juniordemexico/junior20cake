@@ -25,6 +25,7 @@ echo $form->create('Conteos', array('inputDefaults' => array(
 				<th class="precio"><?php //echo $form->text('Invfisicodenormal.conteo_1',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Cant 1', 'class' => 'search-query precio'));?></th>
 				<th class="precio"><?php //echo $form->text('Invfisicodenormal.conteo_2',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Cant 2', 'class' => 'search-query precio'));?></th>
 				<th class="precio"><?php //echo $form->text('Invfisicodenormal.conteo_2',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Cant 2', 'class' => 'search-query precio'));?></th>
+				<th class="st"><?php echo $form->text('Articulo.arst', array('id'=>'st', 'label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query st'));?></th>
 				<th class="id">
 				<?php
 				echo $this->Js->submit('Filtrar', array('update' => '#content'));
@@ -41,6 +42,7 @@ echo $form->create('Conteos', array('inputDefaults' => array(
 				<th class="precio"><?php echo $this->Paginator->sort('Exist','existencia'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Dif 1','Invfisicodenormal.conteo_1'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Dif 2','Invfisicodenormal.conteo_2'); ?></th>
+				<th class="id"><?php echo $this->Paginator->sort('ST','arst'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -65,6 +67,7 @@ echo $form->create('Conteos', array('inputDefaults' => array(
 				<td class="precio"><?php echo $this->Number->precision($item[0]['existencia'],0);?></td>
 				<td class="precio" title="<?php echo $item[0]['ubicacion_cves']?>"><?php echo '<em class="'.(abs($item[0]['conteo_1']-$item[0]['existencia'])<=1?'':(abs($item[0]['conteo_1']-$item[0]['existencia'])>100?'text-error':'text-info')).'">'.$this->Number->precision($item[0]['conteo_1']-$item[0]['existencia'],0).'</em>'; ?></td>
 				<td class="precio"><?php echo $item[0]['conteo_2']>0?$this->Number->precision($item[0]['conteo_2']-$item[0]['existencia'],0):''; ?></td>
+				<td class="id"><?php echo $item['Articulo']['arst']; ?></td>
 				<td class="id"><?php echo $item['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>

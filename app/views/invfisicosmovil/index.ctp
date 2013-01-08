@@ -5,7 +5,7 @@
 <div id="userContainer" class="section-container" style="margin-top: 4px;">
 	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>
 </div>
- 
+
 <div id="ubicacionContainer" class="section-container" style="margin-top: 16px;">
 	<legend><span class="text-info">Ubicación</span> &nbsp;&nbsp;<strong><small>Zona</small> {{ubicacion.zona}} &nbsp;&nbsp;<small>Fila</small> {{ubicacion.fila}} &nbsp;&nbsp;<small>Espacio</small> {{ubicacion.espacio}}</strong></legend>
   	<div class="control-group">
@@ -33,8 +33,8 @@
 			id="btnColor{{$index}}"
 			ng-model="currentColor"
 			ng-repeat="oneColor in item.color"
-			ng-click="$parent.currentColor=$parent.item.color[$index]">
-			{{oneColor.cve}}
+			ng-click="$parent.currentColor=$parent.item.color[$index]"> &nbsp;
+			&nbsp;{{oneColor.cve}}&nbsp;
 		</button>
    	</div>
 </div>
@@ -50,14 +50,14 @@
 			ng-repeat="oneTalla in item.talla"
 			ng-click="$parent.currentTalla=$parent.item.talla[$index]"
 			ng-show="$parent.item.talla[$index].label">
-			{{oneTalla.label}}
+			&nbsp;{{oneTalla.label}}&nbsp;
 		</button>
 	</div>
     <span class="help-inline hide">&nbsp;</span>
 </div>
 
 <div id="cantidadContainer" class="section-container" style="margin-top: 32px;">
-	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></legend>
+	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">Conteo</span> <em><strong>{{currentConteo}}</strong></em></legend>
 	<div class="control-group">
 		<div class="input">
    			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
@@ -71,6 +71,11 @@
 		<button type="button" class="btn btn-small" ng-click="plusCant(10)">&nbsp;&nbsp;&nbsp;+10&nbsp;&nbsp;&nbsp;</button>
 		<button type="button" class="btn btn-small" ng-click="minusCant(100)">&nbsp;&nbsp;&nbsp;-100&nbsp;&nbsp;&nbsp;</button>
 		<button type="button" class="btn btn-small" ng-click="plusCant(100)">&nbsp;&nbsp;&nbsp;+100&nbsp;&nbsp;&nbsp;</button>
+	</div>
+	<br/><br/>
+	<div class="btn-group">
+		<button type="button" class="btn btn-small btn-primary" ng-click="currentConteo=1"> Conteo 1 </button>
+		<button type="button" class="btn btn-small btn-primary" ng-click="currentConteo=2"> Conteo 2 </button>
 	</div>
 </div>
 
@@ -111,7 +116,7 @@
 	<div class="control-group">
  			<div class="input-append">
       		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Número de Marbete..." />
-			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()"><i class="icon icon-print"></i> Reimprimir</button>
+			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()"><i class="icon icon-print icon-white"></i> Reimprimir</button>
     		</div>
      <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
 	</div>
@@ -122,7 +127,7 @@
 	<div class="control-group">
  			<div class="input-append">
       		<input type="text" id="cancelMarbete" name="cancelMarbete" ng-model="cancelMarbete" placeholder="Número de Marbete..." />
-			<button type="button" class="btn btn-primary" ng-click="requestCancelMarbete()"><i class="icon icon-trash"></i> Cancelar</button>
+			<button type="button" class="btn btn-primary" ng-click="requestCancelMarbete()"><i class="icon icon-trash icon-white"></i> Cancelar</button>
     		</div>
      <span class="help-inline" ng-show="cancelMarbeteMessage"><strong><em class="text-warning">{{cancelMarbeteMessage}}</em></strong></span>
 	</div>
@@ -223,6 +228,7 @@ function AxAppController( $scope, $http ) {
 	
 	$scope.printLabel = true;  // We need to print a barcode label after save the data?
 
+	$scope.currentConteo=1;
 	$scope.currentTalla={};
 	$scope.currentColor={};
 	$scope.currentPrinter=printer[0];
@@ -257,16 +263,7 @@ function AxAppController( $scope, $http ) {
 		if($scope.item.talla_index) {
 		
 		}
-/*
-		alert('/Invfisicosmovil/additem?'+
-				'articulo_id='+$scope.item.articulo_id+
-				'&color_id='+$scope.item.color_id+
-				'&talla_index='+$scope.currentTalla.index+
-				'&cantidad='+$scope.cantidad+
-				'&ubicacion_id='+$scope.ubicacion.id+
-				'&printlabel='+$scope.printLabel
-				);
-*/
+
 		$scope.item.color_id=$scope.currentColor.id;
 		$scope.item.color_cve=$scope.currentColor.cve;
 
@@ -278,6 +275,7 @@ function AxAppController( $scope, $http ) {
 				'&talla_index='+$scope.currentTalla.index+
 				'&cantidad='+$scope.cantidad+
 				'&ubicacion_id='+$scope.ubicacion.id+
+				'&conteo='+$scope.currentConteo+
 				'&printlabel='+$scope.printLabel+
 				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
