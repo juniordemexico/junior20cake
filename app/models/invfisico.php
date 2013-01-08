@@ -54,4 +54,13 @@ class Invfisico extends AppModel
 		            'allowEmpty' => false
 	        ),
 	);
+
+	public function getConteos($id=null, $conteo=null) {
+		if(!$conteo) {
+			$conteo=null;
+		}
+		$rs=$this->Query->("SELECT Articulo.id, Articulo.arcveart ");
+		return ();
+	} 
+	
 }

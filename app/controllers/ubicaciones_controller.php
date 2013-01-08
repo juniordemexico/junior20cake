@@ -88,25 +88,21 @@ class UbicacionesController extends MasterDetailAppController {
 	
 	public function printLabel($zona=null, $fila=null, $espacio=null) {
 		$this->layout='plain';
-		$tmpPath='/home/www/junior20dev/app/files/tmp';
+		$tmpPath='/home/www/junior20cake/app/webroot/files/tmp';
 		if(!$zona) {
 			$this->Session->setFlash(__('invalid_item', true).' ('.$this->Ubicacion->id.')', 'error');
 			$this->redirect(array('action' => 'index'));			
 		}
 
 		$conditions= array(
-				'Ubicacion.zona'=>$zona,
-/*				'Ubicacion.fila ='=>$fila,
-
-				'Ubicacion.espacio >'=>'1000',
-				'Ubicacion.espacio <'=>'4999',
-				'SUBSTRING(Ubicacion.espacio FROM 3 for 2) <'=>'13',
-*/
-			);
+			'Ubicacion.zona'=>$zona,
+			'Ubicacion.fila'=>$fila,
+			'Ubicacion.espacio'=>$espacio,
+		);
 		
 		$options=array(
 			'offset'=>0,
-			'limit'=>433,
+//			'limit'=>433,
 			'order'=>array('Ubicacion.cve'),
 			'conditions'=>$conditions,
 			);
@@ -127,9 +123,9 @@ B225,65,0,1,2,10,75,N,"t%u,id%'.$item['Ubicacion']['id'].'"
 P4
 ';
 		}
-		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'.txt', $content);
+		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'-'.$espacio.'.txt', $content);
 
-		$shellout = shell_exec('/usr/bin/lpr -P Zebra_TLP2844 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'.txt');
+		$shellout = shell_exec('/usr/bin/lpr -P barcodes-viaducto03 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'-'.$espacio.'.txt');
 		$this->set(compact('content', 'items', 'shellout'));
 	}
 

@@ -12,6 +12,8 @@ class Invfisicodetail extends AppModel
 	var $belongsTo = array(
 		'Invfisico',
 		'Ubicacion',
+		'Articulo',
+		'Color'
 		);
 
 	var $validate = array(

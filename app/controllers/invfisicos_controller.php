@@ -11,7 +11,7 @@ class InvfisicosController extends MasterDetailAppController {
 	var $layout = 'default';
 
 
-	function index() {
+	public function index() {
 		$this->Invfisico->recursive = 0;
 		$this->paginate = array(
 								'update' => '#content',
@@ -29,8 +29,14 @@ class InvfisicosController extends MasterDetailAppController {
 		$this->set('items', $this->paginate($filter));
 	}
 
+	public function conteo($conteo=1) {
+		if(!$conteo) {
+			$conteo=1;
+		}
+		$this->set('items', $this->Invfisico->getConteos(1, null) );
+	}
 
-	function delete($id) {
+	public function delete($id) {
 		$this->autoRender=false;
 
 		if (!$id) {
@@ -46,7 +52,7 @@ class InvfisicosController extends MasterDetailAppController {
 	}
 
 
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('invalid_item', true));
 			exit;
@@ -70,7 +76,7 @@ class InvfisicosController extends MasterDetailAppController {
 
 	}
 
-	function add() { 
+	public function add() { 
 		if (!empty($this->data)) {
 			if ($this->Almacen->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Almacen->id.')', 'success');
@@ -111,8 +117,6 @@ class InvfisicosController extends MasterDetailAppController {
 			);
 
 		$rs=$this->Articulo->find('all', $options);
-print_r($rs);
-die();
 		$items=array();
 		$content='';
 		foreach($rs as $item) {

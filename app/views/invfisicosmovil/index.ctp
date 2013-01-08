@@ -111,7 +111,7 @@
 	<div class="control-group">
  			<div class="input-append">
       		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Número de Marbete..." />
-			<button type="button" class="btn" ng-click="requestReprintLabel()"><i class="icon icon-print"></i> Reimprimir</button>
+			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()"><i class="icon icon-print"></i> Reimprimir</button>
     		</div>
      <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
 	</div>
@@ -122,7 +122,7 @@
 	<div class="control-group">
  			<div class="input-append">
       		<input type="text" id="cancelMarbete" name="cancelMarbete" ng-model="cancelMarbete" placeholder="Número de Marbete..." />
-			<button type="button" class="btn" ng-click="requestCancelMarbete()"><i class="icon icon-trash"></i> Cancelar</button>
+			<button type="button" class="btn btn-primary" ng-click="requestCancelMarbete()"><i class="icon icon-trash"></i> Cancelar</button>
     		</div>
      <span class="help-inline" ng-show="cancelMarbeteMessage"><strong><em class="text-warning">{{cancelMarbeteMessage}}</em></strong></span>
 	</div>
