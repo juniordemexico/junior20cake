@@ -25,7 +25,7 @@ class ConteosController extends MasterDetailAppController {
 
 					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
 					'joins'=>array(
-						array(	'table' => 'Invfisicomodelodenormals',
+						array(	'table' => 'Invfisicomodeldenormals',
 								'alias' => 'Invfisicodenormal',
 								'type' => 'INNER',
 								'conditions' => array(

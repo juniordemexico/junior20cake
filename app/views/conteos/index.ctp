@@ -71,7 +71,7 @@ echo $form->create('Conteos', array('inputDefaults' => array(
 					<?php echo '<em class="'.(abs($item[0]['conteo_1']-$item[0]['existencia']-$item[0]['existenciaz'])<10?'':(abs($item[0]['conteo_1']-$item[0]['existencia']-$item[0]['existenciaz'])>=100?'text-error':'text-warning')).'">'.$this->Number->precision($item[0]['conteo_1']-$item[0]['existencia']-$item[0]['existenciaz'],0).'</em>'; ?>
 				</td>
 				<td class="precio" title="<?php echo $item[0]['ubicacion_cves_2']?>">
-					<?php echo '<em class="'.(abs($item[0]['conteo_1']-$item[0]['existencia']-$item[0]['existenciaz'])<10?'':(abs($item[0]['conteo_1']-$item[0]['existencia']-$item[0]['existenciaz'])>=100?'text-error':'text-warning')).'">'.$item[0]['conteo_2']>0?$this->Number->precision($item[0]['conteo_2']-$item[0]['existencia']-$item[0]['existenciaz'],0):''; ?></td>
+					<?php echo '<em class="'.(abs($item[0]['conteo_2']-$item[0]['existencia']-$item[0]['existenciaz'])<10?'':(abs($item[0]['conteo_2']-$item[0]['existencia']-$item[0]['existenciaz'])>=100?'text-error':'text-warning')).'">'.($item[0]['conteo_2']?$this->Number->precision($item[0]['conteo_2']-$item[0]['existencia']-$item[0]['existenciaz'],0):'').'</em>'?></td>
 				<td class="id"><?php echo $item['Articulo']['arst']; ?></td>
 				<td class="id"><?php echo $item['Articulo']['id']; ?></td>
 			</tr>

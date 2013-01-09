@@ -84,7 +84,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		else {
 			$zipfilename=''.date('Ymd').'.zip';
 		}
-		$cmd='sudo find . -type f  -name "JME910405B83*.xml" \( -name "*B00*" -or -name "*B-*" \) -exec grep -il "YAZMIN " "{}" \; |sort | sudo zip /home/www/junior20cake/app/files/tmp/yazmin.xml.zip \@'
+		$cmd='sudo find . -type f  -name "JME910405B83*.xml" \( -name "*B00*" -or -name "*B-*" \) -exec grep -il "'.$cliente_str.'" "{}" \; |sort | zip /home/www/junior20cake/app/files/tmp/nuevomundo.xml.zip \@';
 
 	}
 
