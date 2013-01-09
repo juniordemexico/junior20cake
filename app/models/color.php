@@ -71,7 +71,7 @@ class Color extends AppModel
 	);
 
 	function beforeSave($options) {
-		$this->data['Color']['tipoarticulo_ids']=
+		$this->data['Color']['tipoarticulo_ids']=' '.
 										($this->data['Color']['tipoarticulo_id_0']?'0':'').
 										($this->data['Color']['tipoarticulo_id_1']?'1':'').
 										($this->data['Color']['tipoarticulo_id_2']?'2':'').

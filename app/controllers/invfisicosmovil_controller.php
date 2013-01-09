@@ -203,8 +203,9 @@ B050,300,0,1,2,3,75,N,"t%p,id%'.$data['articulo_id'].',c%'.$data['color_id'].',t
 A050,400,0,4,1,1,N,"MARBETE: '.$data['id'].'"
 A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
 B050,425,0,1,4,6,100,N,"t%m,id%'.$data['id'].'"
+A050,535,0,4,1,1,N,"'.(abs($data['tipomovinvfisico_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
 P1
-';					
+';				
 			$filename='/home/www/junior20cake/app/webroot/'.
 					'files/tmp/tmp.marbete.'.$data['id'].'.label.txt';
 			$this->Axfile->StringToFile($filename, $label);

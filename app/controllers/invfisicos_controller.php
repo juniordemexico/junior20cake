@@ -49,7 +49,7 @@ class InvfisicosController extends MasterDetailAppController {
 
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
-				$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Almacen->delete($id)) {
 			$this->Session->setFlash(__('item_has_been_deleted', true).': '.$id, 'success');

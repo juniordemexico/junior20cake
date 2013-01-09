@@ -233,7 +233,7 @@ class Articulo extends AppModel
 			$tipoarticulo=0;
 		}
 
-		$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve'), 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1) ));
+		$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve') ));// 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)
 		$divisas = $this->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
 		$unidades = $this->Unidad->find('list', array('fields' => array('Unidad.id', 'Unidad.cve')));
 		$lineas = $this->Linea->find('list', array('fields' => array('Linea.id', 'Linea.licve'), 'conditions'=>array('Linea.tipoarticulo_id'=>$tipoarticulo) ) );
