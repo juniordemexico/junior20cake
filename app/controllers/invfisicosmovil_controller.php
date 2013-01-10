@@ -117,6 +117,68 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$rs=$this->Invfisicodetail->
 	}
 */	
+	
+	public function pasasegundo($articulo_id=null) {
+		$this->autoRender=false;
+		if(!$articulo_id) {
+			echo "Error: No se Especifica el Articulo a Copiar";
+			exit;
+		}
+
+		$articulo=$this->Articulo->findById($articulo_id);
+
+
+		$options=array(		'order'=>array('Invfisicodetail.id'),
+							'conditions'=>array(
+								'Invfisicodetail.articulo_id'=>$articulo_id,
+								'Invfisicodetail.st'=>'A', 
+								'Invfisicodetail.tipomovinvfisico_id'=>1
+								));
+		$itemsPrimero=$this->Invfisicodetail->find('all', $options);
+
+		$out=array(	'result'=>'',
+					'message'=>''
+				);
+
+		if($itemsPrimero && count($itemsPrimero)>0 ) {
+			$total=0;
+			$count=0;
+			foreach($itemsPrimero as $item) {
+				$marbete_id=$item['Invfisicodetail']['id'];
+				$item['Invfisicodetail']['invfisicodetail_id']=$marbete_id;
+				$item['Invfisicodetail']['tipomovinvfisico_id']=100;
+				unset($item['Invfisicodetail']['id']);
+				unset($item['Invfisicodetail']['created']);
+				unset($item['Invfisicodetail']['modified']);
+				$data=array('Invfisicodetail'=>$item['Invfisicodetail']);
+				$total=$total+$data['Invfisicodetail']['cant'];
+				$count++;
+
+				$ok=true;
+				$this->Invfisicodetail->create();
+				if( $this->Invfisicodetail->save($item) ) {
+						// nice
+				}
+				else {
+					$ok=false;
+				}
+
+			}
+			if($ok) {
+				$out='Se copió '.$articulo['Articulo']['arcveart'].
+					'('.$total.' Pzas en '.$count.' Marbetes) al Segundo Conteo.';
+			}
+			else {
+					$out=	'Error al generar Segundo Conteo. Articulo: '.$articulo['Articulo']['arcveart'];				
+			}
+		}
+		else {
+			$out='No se encontro Primer Conteo. Articulo: '.$articulo['Articulo']['arcveart'];
+		}
+		echo $out;
+	}
+	
+	
 	function cancelamarbete($id=null) {
 		if(!$id || !is_numeric($id) || !($id>0)) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
