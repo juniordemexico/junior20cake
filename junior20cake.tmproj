@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/invfisicosmovil_controller.php</string>
+	<string>app/views/invfisicosmovil/materiales.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,61 +21,63 @@
 	<integer>254</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/conteos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>13</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>15</integer>
-		</dict>
-		<key>app/controllers/explosiones_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>128</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>120</integer>
-		</dict>
-		<key>app/controllers/invfisicos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>48</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>18</integer>
-		</dict>
 		<key>app/controllers/invfisicosmovil_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>line</key>
-				<integer>155</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>131</integer>
+			<integer>56</integer>
+		</dict>
+		<key>app/controllers/materiales_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>41</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>329</integer>
+			</dict>
+		</dict>
+		<key>app/models/articulo.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>238</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>218</integer>
 		</dict>
 		<key>app/models/invfisico.php</key>
 		<dict>
@@ -91,49 +93,33 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/conteos/index.ctp</key>
+		<key>app/views/elements/servicios/form.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>119</integer>
+				<integer>21</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>119</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>line</key>
-				<integer>352</integer>
+				<integer>346</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>338</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>318</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>352</integer>
-			</dict>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -149,35 +135,49 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/invfisicosmovil/index.ctp</key>
+		<key>app/views/invfisicosmovil/materiales.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>276</integer>
+				<integer>23</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>226</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/servicios/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>70</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/controllers/invfisicosmovil_controller.php</string>
-		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/controllers/conteos_controller.php</string>
-		<string>app/views/invfisicosmovil/index.ctp</string>
-		<string>app/controllers/invfisicos_controller.php</string>
-		<string>app/views/conteos/index.ctp</string>
 		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/invfisicosmovil/materiales.ctp</string>
+		<string>app/views/elements/servicios/form.ctp</string>
+		<string>app/controllers/invfisicosmovil_controller.php</string>
+		<string>app/models/articulo.php</string>
+		<string>app/views/servicios/index.ctp</string>
+		<string>app/controllers/materiales_controller.php</string>
 		<string>app/models/invfisico.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1766, 35}, {882, 847}}</string>
+	<string>{{41, 31}, {882, 847}}</string>
 </dict>
 </plist>

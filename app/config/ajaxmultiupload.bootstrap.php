@@ -11,4 +11,4 @@
  */
 
  	Configure::write ('AMU.directory', 'files');
-	Configure::write ('AMU.filesizeMB', '16');
+	Configure::write ('AMU.filesizeMB', '20');

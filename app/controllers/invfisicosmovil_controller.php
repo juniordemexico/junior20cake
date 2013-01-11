@@ -4,7 +4,7 @@
 class InvfisicosmovilController extends MasterDetailAppController {
 	var $name='Invfisicosmovil';
 
-	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer' );
+	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer', 'User' );
 
 	var $layout = 'almacenmovil';
 
@@ -15,6 +15,13 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		
 //		$this->set('items', $this->paginate($filter));
 	}
+
+	public function materiales() {
+		$this->set('title_for_layout', "Inv Físico Materiales");	
+		
+//		$this->set('items', $this->paginate($filter));
+	}
+
 
 	public function addItem() {
 		$this->autoRender=false;
@@ -213,7 +220,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
 			$this->_printlabel($data['Invfisicodetail']);
 			$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
-									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '.
+									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '. 
 									'Se imprimió en '.$this->currentPrinter['cve'].'.',
 									'success');
 		}
@@ -249,6 +256,8 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$rstalla=$this->Talla->findById($rs['Articulo']['talla_id']);
 		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$data['talla_index']]):'';
 		
+		$rsuser=$this->User->findById($data['user_id']);
+		$username=$rsuser['User']['username'];
 		$rs=$this->Articulo->findById($data['articulo_id']);
 		if($rs) {
 			$label='
@@ -256,7 +265,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 N
 D14
 A025,025,0,4,1,1,N,"'.$data['created'].'"
-A450,025,0,4,1,1,N,"Oper: '.$this->Auth->User('username').'"
+A450,025,0,4,1,1,N,"Oper: '.$username.'"
 A025,75,0,5,1,1,N,"'.$articulo_cve.'"
 A025,150,0,5,1,1,N,"'.$color_cve.'"
 A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
@@ -269,7 +278,7 @@ A050,535,0,4,1,1,N,"'.(abs($data['tipomovinvfisico_id'])>=100?'S  E  G  U  N  D 
 P1
 ';				
 			$filename='/home/www/junior20cake/app/webroot/'.
-					'files/tmp/tmp.marbete.'.$data['id'].'.label.txt';
+					'files/tmp/tmp.marbete.'.$data['id'].'.label.test.txt';
 			$this->Axfile->StringToFile($filename, $label);
 
 			$rsprinter=$this->Printer->findById($this->currentPrinter['id']);
