@@ -4,16 +4,13 @@
 class BodegasController extends MasterDetailAppController {
 	var $name='Bodegas';
 
-	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen','Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada');
+	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada');
 
 	var $layout = 'bodega';
 
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 	
 	public function beforeFilter() {
-		if($this->Auth->User('id')<>2) {
-			die("TIEMPO AGOTADO. DEPOSITE OTRA MONEDA ;)");
-		}
 		parent::beforeFilter();
 	}
 	
@@ -23,12 +20,11 @@ class BodegasController extends MasterDetailAppController {
 
 	public function ver() {
 		$this->Artmovbodegadetail->recursive = 1;
-		$this->Artmovbodegadetail->Articulo->recursive = 1;
 		$this->paginate = array(
 					'update' => '#content',
 					'evalScripts' => true,
 					'limit' => 20,
-					'fields'=>array('Articulo.*, Talla.*, Color.*, Artmovbodegadetail.*'
+					'fields'=>array('Artmovbodegadetail.*, Articulo.*, Talla.*, Color.*, Ubicacion.*'
 					),
 					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
 				);

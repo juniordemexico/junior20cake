@@ -13,11 +13,12 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 															))
 															);
 ?>
-	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
+	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover table-bodega">
 		<thead>
 			<tr class="row-filter">
 				<th class="cveart"><?php echo $form->text('Invfisicodetail.Folio', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Refer...', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Invfisicodetail.Created', array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Fecha...', 'class' => 'search-query datetime'));?></th>
+				<th class="cveart"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Articulo.arcveart', array('id'=>'cveart', 'label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Color.cve', array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Color...', 'class' => 'search-query cveart'));?></th>
 				<th class="st"><?php //echo $form->text('', array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Talla...', 'class' => 'search-query cveart'));?></th>
@@ -32,6 +33,7 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 			<tr class="row-labels">
 				<th class="refer"><?php echo $this->Paginator->sort('Refer','folio'); ?></th>
 				<th class="datetime"><?php echo $this->Paginator->sort('Fecha','created'); ?></th>
+				<th class="datetime"><?php echo $this->Paginator->sort('Ubicacion','Ubicacion.cve'); ?></th>
 				<th class="cveart"><?php echo $this->Paginator->sort('Producto','Articulo.arcveart'); ?></th>
 				<th class="cveart"><?php echo $this->Paginator->sort('Color','Color.cve'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('Talla','talla_index'); ?></th>
@@ -51,6 +53,7 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 			<tr id="<?php echo $thisID?>" cve="<?php echo $item['Artmovbodegadetail']['id']; ?>" class="t-row">
 				<td class="refer"><?php echo $item['Artmovbodegadetail']['folio'];?></td>
 				<td class="datetime"><?php echo $item['Artmovbodegadetail']['created'];?></td>
+				<td class="datetime"><?php echo $item['Ubicacion']['cve'];?></td>
 				<td class="cveart" title="<?php echo $item['Articulo']['ardescrip'];?>">
 					<?php echo $item['Articulo']['arcveart']; ?>
 				</td>

@@ -198,7 +198,8 @@ var ubicacion={
 var tipomov=[
 {id: -11, cve: 'SALIDA DIRECTA' },
 {id: -100, cve: 'ORDEN DE SURTIDO' },
-{id: -52, cve: 'CAMBIO UBICACION ORIGEN' }
+{id: -52, cve: 'CAMBIO UBICACION ORIGEN' },
+{id: 11, cve: 'CANC SALIDA DIRECTA' }
 ];
 
 function AxAppController( $scope, $http ) {

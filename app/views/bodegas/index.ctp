@@ -16,7 +16,7 @@
 		</div>
 	<li class="span4">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodega/ver">
+			<a class="btn btn-large btn-info" href="/Bodegas/ver">
 			<i class="icon icon-white icon-list"></i>
 			Consultar
 			</a>
@@ -24,7 +24,7 @@
 	</li>
 	<li class="span4">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodega/etiquetas">
+			<a class="btn btn-large btn-info" href="/Bodegas/etiquetas">
 			<i class="icon icon-white icon-barcode"></i>
 			Etiquetas
 			</a>

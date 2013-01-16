@@ -65,9 +65,3 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
 "/'+this.id);"
 , array('stop' => true));
 ?>
-
-<?php echo $this->WebAlert->sticky('Esta es una alerta chida'); ?>
-<?php echo $this->WebAlert->sticky('Esta es una alerta chida','success'); ?>
-<?php echo $this->WebAlert->sticky('Esta es una alerta chida','error'); ?>
-<?php echo $this->WebAlert->sticky('Esta es una alerta chida','alert'); ?>
-<?php echo $this->WebAlert->sticky('alera pues temporalmente, temporal para todos y cada uno'); ?>

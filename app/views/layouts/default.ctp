@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->

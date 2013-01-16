@@ -4,7 +4,7 @@
 </h1>
 </div>
 
-<div id="detailContent" class="row-fluid">
+<div id="detailContent" class="row-fluid" ng-controller="AxAppController">
 
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id'); ?>
@@ -12,7 +12,7 @@
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tabs-0" data-toggle="tab">Telas</a></li>
-		<li><a href="#tabs-1" data-toggle="tab">Habilitacion</a></li>
+		<li><a href="#tabs-1" data-toggle="tab">Habilitación</a></li>
 		<li><a href="#tabs-2" data-toggle="tab">Servicios</a></li>
 	</ul>
 
@@ -108,7 +108,7 @@
 				<td class="span3">
 
 				<div class="btn-group span3">
-					<button class="btn btn-info" data-costo="">
+					<button class="btn btn-info" data-value="">
 					<?php if(isset($item['Costo'][0]) ):?>
 					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
 					<?php endif;?>
@@ -196,6 +196,22 @@
 
 <?php echo $this->Form->end();?>
 
+<script>
+
+function AxAppController( $scope, $http ) {
+//	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
+	$scope.baseUrl = '/<?php echo $this->controller->name;?>';
+	$scope.setItemUrl = '/<?php echo $this->controller->name;?>/setItem';
+
+	$scope.printer = printer;			// This is the Controller's User Model
+
+	$scope.currentMaster=;
+
+}
+
+</script>
+
 <?php
 $this->Js->get('.detailDelete')->event(
 'click', "
@@ -212,7 +228,7 @@ function(result) {
 				$( '#'+theID ).remove();
 			}
 			else {
-				bootbox.alert( '<label class="label label-warning"><i class="icon icon-alert"></i> Atencion!</label><br/><code>'+data+'<code>' );
+				bootbox.alert( '<label class=\"label label-warning\"><i class=\"icon icon-alert\"></i> Atencion!</label><br/><code>'+data+'<code>' );
 			}
 			},
 		});
