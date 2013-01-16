@@ -1,7 +1,7 @@
 <ul class="thumbnails">
 	<li class="span4">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodega/entradas">
+			<a class="btn btn-large btn-info" href="/Bodegas/entradas">
 			<i class="icon icon-white icon-plus"></i>
 			Entradas
 			</a>
@@ -9,7 +9,7 @@
 	</li>
 	<li class="span4">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodega/salidas">
+			<a class="btn btn-large btn-info" href="/Bodegas/salidas">
 			<i class="icon icon-white icon-minus"></i>
 			Salidas
 			</a>

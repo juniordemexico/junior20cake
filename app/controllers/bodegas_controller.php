@@ -1,10 +1,10 @@
 <?php
 
 
-class BodegaController extends MasterDetailAppController {
-	var $name='Bodega';
+class BodegasController extends MasterDetailAppController {
+	var $name='Bodegas';
 
-	var $uses = array('Artmovbodegadetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer', 'User' );
+	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen','Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada');
 
 	var $layout = 'bodega';
 
@@ -19,6 +19,21 @@ class BodegaController extends MasterDetailAppController {
 	
 	public function index() {
 		$this->set('title_for_layout', "BODEGA VIADUCTO");	
+	}
+
+	public function ver() {
+		$this->Artmovbodegadetail->recursive = 1;
+		$this->Artmovbodegadetail->Articulo->recursive = 1;
+		$this->paginate = array(
+					'update' => '#content',
+					'evalScripts' => true,
+					'limit' => 20,
+					'fields'=>array('Articulo.*, Talla.*, Color.*, Artmovbodegadetail.*'
+					),
+					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
+				);
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($filter));
 	}
 
 	public function entradas() {

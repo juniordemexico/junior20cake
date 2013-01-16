@@ -65,7 +65,7 @@
 </div>
 
 <div id="cantidadContainer" class="section-container" style="margin-top: 32px;">
-	<legend><span class="text-info">Cantidad de Salida</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></em></legend>
+	<legend><span class="text-info">Cantidad de Entrada</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></em></legend>
 	<div class="control-group">
 		<div class="input">
    			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
@@ -195,17 +195,17 @@ var ubicacion={
 	espacio: "0000"
 };
 
-var tipomov=[
-{id: -11, cve: 'SALIDA DIRECTA' },
-{id: -100, cve: 'ORDEN DE SURTIDO' },
-{id: -52, cve: 'CAMBIO UBICACION ORIGEN' }
+var tipomov = [
+{id: 10, cve: 'ENTRADA DIRECTA' },
+{id: 20, cve: 'ORDEN DE PRODUCCIÓN' },
+{id: 50, cve: 'CAMBIO UBICACION DESTINO' }
 ];
 
 function AxAppController( $scope, $http ) {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 	$scope.getUrl = '/Articulos/getItemByCve';
-	$scope.addUrl = '/Bodega/addTransaction';
+	$scope.addUrl = '/Bodegas/addTransaction';
 
 	$scope.printer = printer;			// This is the Controller's User Model
 	$scope.user = user;					// This is the Controller's User Model
@@ -263,7 +263,7 @@ function AxAppController( $scope, $http ) {
 
 		$scope.disableSaveBtn=true;
 		
-		$http.get('/Bodega/addtransaction?'+
+		$http.get('/Bodegas/addtransaction?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
 				'&talla_index='+$scope.currentTalla.index+
@@ -315,7 +315,7 @@ function AxAppController( $scope, $http ) {
 	$scope.getUbicacion = function() {
 		console.log('Get Ubicacion: '+$scope.ubicacion.cve);
 
-		$http.get('/Bodega/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
+		$http.get('/Bodegas/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string' ||
@@ -358,7 +358,7 @@ function AxAppController( $scope, $http ) {
 
 	$scope.getItem = function() {
 		console.log('Get Item: '+$scope.item.articulo_cve);
-		$http.get('/Bodega/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
+		$http.get('/Bodegas/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string') {
@@ -373,7 +373,7 @@ function AxAppController( $scope, $http ) {
 	};
 
 	$scope.requestPrintLabel = function() {
-		$http.get('/Bodega/etiquetaarticulo/'+$scope.printLabel).then(function(response) {
+		$http.get('/Bodegas/etiquetaarticulo/'+$scope.printLabel).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				$scope.printLabelMessage='Imprimió Etiqueta ' + $scope.printLabel;
 				axAlert('Producto '+$scope.printLabel+' impreso.', 'info', false);
@@ -384,7 +384,7 @@ function AxAppController( $scope, $http ) {
 	}
 
 	$scope.requestCancelTransaction = function() {
-		$http.get('/Bodega/cancela/'+$scope.cancelTransaction).then(function(response) {
+		$http.get('/Bodegas/cancela/'+$scope.cancelTransaction).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				$scope.cancelTransactionMessage='Se CANCELO transaccion ' + $scope.cancelTransaction;
 				axAlert('Transacción <strong>'+$scope.cancelTransaction+'</strong> CANCELADO.', 'success', false);
@@ -519,7 +519,7 @@ function AxAppController( $scope, $http ) {
 	//		alert(theDataObject.T);
 
 
-			var Articulo = $resource('/Bodega/getItemByCve/:cve',
+			var Articulo = $resource('/Bodegas/getItemByCve/:cve',
  				{cve:$scope.item.articulo_cve} 	);
 
   <div class="control-group">
