@@ -2,7 +2,7 @@
 		<div id="desktopTitlebarWrapper">
 			<div id="desktopTitlebar">
 				<h1 class="applicationTitle">OGGI JEANS</h1>
-				<h2 class="tagline">JUNIOR DE MEXICO, SA DE CV<span class="taglineEm">AX-BOS</span></h2>
+				<h2 class="tagline">JUNIOR DE MEXICO, SA DE CV <span class="taglineEm">AxBOS</span></h2>
 				<div id="topNav">
 					<ul class="menu-right">
 						<li>USUARIO: <?php echo $session->read('Auth.User.username');?>.</li>

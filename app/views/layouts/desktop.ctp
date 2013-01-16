@@ -40,7 +40,9 @@
 
 	<style>	
 	/* This CSS should be placed in a style sheet. It is only here in order to not conflict with the other demos. */
-
+	body {
+		background: url('/img/wallpaper/imgBackground-oggi1.jpg') no-repeat;
+	}
 	#pageWrapper {
 		background: #777;
 	}

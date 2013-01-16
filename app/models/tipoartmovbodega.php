@@ -2,12 +2,12 @@
 
 //	cve VARCHAR(32) DEFAULT '' NOT NULL
 
-class Tipoarticulo extends AppModel 
+class Tipoartmovbodega extends AppModel 
 {
-	public $name = 'Tipoarticulo';
-	public $table = 'Tipoarticulos';
-	public $alias = 'Tipoarticulo';
-	public $cache=true;
+	public $name = 'Tipoartmovbodega';
+	public $table = 'Tipoartmovbodegas';
+	public $alias = 'Tipoartmovbodega';
+	public $cache = true;
 
 	public $validate = array(
 		'cve' => array(
@@ -24,9 +24,7 @@ class Tipoarticulo extends AppModel
 	);
 
 	public $hasMany = array(
-		'Articulo',
-		'Color',
-		'Linea',
+		'Artmovbodegadetail',
 	);
 
 

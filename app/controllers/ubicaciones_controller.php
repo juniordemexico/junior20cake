@@ -125,7 +125,7 @@ P4
 		}
 		$this->Axfile->StringToFile($tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'-'.$espacio.'.txt', $content);
 
-		$shellout = shell_exec('/usr/bin/lpr -P barcodes-viaducto03 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'-'.$espacio.'.txt');
+		$shellout = shell_exec('/usr/bin/lpr -P barcodes-viaducto01 '.$tmpPath.'/tmp.ubicaciones.label.'.$zona.$fila.'-'.$espacio.'.txt');
 		$this->set(compact('content', 'items', 'shellout'));
 	}
 

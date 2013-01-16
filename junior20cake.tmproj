@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/invfisicosmovil/materiales.ctp</string>
+	<string>app/models/temporada.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,31 +18,45 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>254</integer>
+	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/invfisicosmovil_controller.php</key>
+		<key>app/controllers/bodega_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>45</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>94</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>56</integer>
+			<integer>62</integer>
 		</dict>
-		<key>app/controllers/materiales_controller.php</key>
+		<key>app/models/artmovbodegadetail.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>41</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>24</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/models/invfisicodetail.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>24</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -62,43 +76,15 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>329</integer>
+				<integer>48</integer>
 			</dict>
 		</dict>
-		<key>app/models/articulo.php</key>
+		<key>app/models/temporada.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>238</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>218</integer>
-		</dict>
-		<key>app/models/invfisico.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/servicios/form.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>25</integer>
+				<integer>22</integer>
 				<key>line</key>
 				<integer>21</integer>
 			</dict>
@@ -107,19 +93,93 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/explosiones/edit.ctp</key>
+		<key>app/models/tipoarticulo.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>346</integer>
+				<integer>33</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
+		</dict>
+		<key>app/models/tipoartmovbodega.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>26</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>338</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/bodega/entradas.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>6</integer>
+				<key>line</key>
+				<integer>127</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>91</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>574</integer>
+			</dict>
+		</dict>
+		<key>app/views/bodega/salidas.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>231</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>207</integer>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -135,49 +195,36 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/invfisicosmovil/materiales.ctp</key>
+		<key>app/views/invfisicosmovil/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>75</integer>
 				<key>line</key>
-				<integer>23</integer>
+				<integer>4</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/servicios/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>70</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/explosiones/edit.ctp</string>
-		<string>app/views/invfisicosmovil/materiales.ctp</string>
-		<string>app/views/elements/servicios/form.ctp</string>
-		<string>app/controllers/invfisicosmovil_controller.php</string>
-		<string>app/models/articulo.php</string>
-		<string>app/views/servicios/index.ctp</string>
-		<string>app/controllers/materiales_controller.php</string>
-		<string>app/models/invfisico.php</string>
+		<string>app/controllers/bodega_controller.php</string>
+		<string>app/models/invfisicodetail.php</string>
+		<string>app/models/artmovbodegadetail.php</string>
+		<string>app/models/tipoarticulo.php</string>
+		<string>app/models/tipoartmovbodega.php</string>
+		<string>app/views/bodega/entradas.ctp</string>
+		<string>app/views/bodega/salidas.ctp</string>
+		<string>app/models/temporada.php</string>
+		<string>app/views/invfisicosmovil/index.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{41, 31}, {882, 847}}</string>
+	<string>{{-1863, 11}, {882, 847}}</string>
 </dict>
 </plist>

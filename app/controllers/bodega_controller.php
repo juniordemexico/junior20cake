@@ -1,34 +1,39 @@
 <?php
 
 
-class InvfisicosmovilController extends MasterDetailAppController {
-	var $name='Invfisicosmovil';
+class BodegaController extends MasterDetailAppController {
+	var $name='Bodega';
 
-	var $uses = array('Invfisicodetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer', 'User' );
+	var $uses = array('Artmovbodegadetail', 'Invfisico', 'Almacen', 'Articulo', 'Color', 'Talla', 'Ubicacion', 'Printer', 'User' );
 
-	var $layout = 'almacenmovil';
+	var $layout = 'bodega';
 
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
-
+	
 	public function beforeFilter() {
 		if($this->Auth->User('id')<>2) {
-			die("TIEMPO AGOTADO. DEPOSITE OTRA MONEDA :)");
+			die("TIEMPO AGOTADO. DEPOSITE OTRA MONEDA ;)");
 		}
 		parent::beforeFilter();
 	}
-
+	
 	public function index() {
-		$this->set('title_for_layout', "Inventario Físico");		
-//		$this->set('items', $this->paginate($filter));
+		$this->set('title_for_layout', "BODEGA VIADUCTO");	
 	}
 
-	public function materiales() {
-		$this->set('title_for_layout', "Inventario Físico Materiales");	
-		
-//		$this->set('items', $this->paginate($filter));
+	public function entradas() {
+		$this->set('title_for_layout', "BODEGA :: ENTRADAS");	
 	}
 
-	public function addItem() {
+	public function salidas() {
+		$this->set('title_for_layout', "BODEGA :: SALIDAS");	
+	}
+
+	public function movimientos() {
+		$this->set('title_for_layout', "BODEGA :: MOVIMIENTOS");	
+	}
+
+	public function addTransaction() {
 		$this->autoRender=false;
 		$theData=$this->params['url'];
 		unset($theData['url']);
@@ -37,6 +42,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
 			isset($theData['color_id']) &&
 			isset($theData['talla_index']) && $theData['talla_index']>=0 &&
+			isset($theData['tipoartmovbodega_id']) && $theData['tipoartmovbodega_id']<>0 &&
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
@@ -48,47 +54,43 @@ class InvfisicosmovilController extends MasterDetailAppController {
 					$theData['color_id']=$rsfirstcolor['ArticuloColor']['color_id'];
 				}
 			}
-
+/*
 			if(!isset($theData['selectedprinter']) || !($theData['selectedprinter']>0) ) {
 				$this->currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 			}
 			else {
 				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
 			}
+*/
 
-			if(!isset($theData['conteo'])) {
-				$theData['conteo']=1;
-			}
-
-			if($theData['conteo']==1) {
-				$tipomovinvfisico_id=1;
-			}
-			else {
-				$tipomovinvfisico_id=100;				
-			}
+//				$tipoartmovinv_id=;				
 			
 			$data=array(
-				'invfisico_id'=>1,
+				'folio'=>$theData['folio'],
+				'tipoartmovbodega_id'=>$theData['tipoartmovbodega_id'],
+				'almacen_id'=>1,
 				'ubicacion_id'=>$theData['ubicacion_id'],
 				'articulo_id'=>$theData['articulo_id'],
 				'color_id'=>$theData['color_id'],
 				'talla_index'=>$theData['talla_index'],
 				'cant'=>$theData['cantidad'],
-				'tipomovinvfisico_id'=>$tipomovinvfisico_id,
+				't'.$theData['talla_index']=>$theData['cantidad'],
+				'concep'=>'',
+				'transito_st'=>'',
 				'st'=>'A',
 				'user_id'=>$this->Auth->user('id')
 				);
 			
 //			$existeConteo2=$this->Invfisicodetail->Value;
-			$this->data['Invfisicodetail']=$data;
-			$this->Invfisicodetail->create();
+			$this->data['Artmovbodegadetail']=$data;
+			$this->Artmovbodegadetail->create();
 
-			if($this->Invfisicodetail->save($this->data)) {
+			if($this->Artmovbodegadetail->save($this->data)) {
 				// Print the Inventory's label for this entry....
-				$data['id']=$this->Invfisicodetail->id;
+				$data['id']=$this->Artmovbodegadetail->id;
 				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
-					$this->_printlabel($data);
+	//				$this->_printlabel($data);
 				}
 
 				// Success...
@@ -123,100 +125,7 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		echo json_encode($out);
 	}
 
-/*
-	public function printlabelByMarbete($id=null) {
-		if(!$id || !($id>0)) return false;
-		$rs=$this->Invfisicodetail->
-	}
-*/	
-	
-	public function pasasegundo($articulo_id=null) {
-		$this->autoRender=false;
-		if(!$articulo_id) {
-			echo "Error: No se Especifica el Articulo a Copiar";
-			exit;
-		}
-
-		$articulo=$this->Articulo->findById($articulo_id);
-
-
-		$options=array(		'order'=>array('Invfisicodetail.id'),
-							'conditions'=>array(
-								'Invfisicodetail.articulo_id'=>$articulo_id,
-								'Invfisicodetail.st'=>'A', 
-								'Invfisicodetail.tipomovinvfisico_id'=>1
-								));
-		$itemsPrimero=$this->Invfisicodetail->find('all', $options);
-
-		$out=array(	'result'=>'',
-					'message'=>''
-				);
-
-		if($itemsPrimero && count($itemsPrimero)>0 ) {
-			$total=0;
-			$count=0;
-			foreach($itemsPrimero as $item) {
-				$marbete_id=$item['Invfisicodetail']['id'];
-				$item['Invfisicodetail']['invfisicodetail_id']=$marbete_id;
-				$item['Invfisicodetail']['tipomovinvfisico_id']=100;
-				unset($item['Invfisicodetail']['id']);
-				unset($item['Invfisicodetail']['created']);
-				unset($item['Invfisicodetail']['modified']);
-				$data=array('Invfisicodetail'=>$item['Invfisicodetail']);
-				$total=$total+$data['Invfisicodetail']['cant'];
-				$count++;
-
-				$ok=true;
-				$this->Invfisicodetail->create();
-				if( $this->Invfisicodetail->save($item) ) {
-						// nice
-				}
-				else {
-					$ok=false;
-				}
-
-			}
-			if($ok) {
-				$out='Se copió '.$articulo['Articulo']['arcveart'].
-					'('.$total.' Pzas en '.$count.' Marbetes) al Segundo Conteo.';
-			}
-			else {
-					$out=	'Error al generar Segundo Conteo. Articulo: '.$articulo['Articulo']['arcveart'];				
-			}
-		}
-		else {
-			$out='No se encontro Primer Conteo. Articulo: '.$articulo['Articulo']['arcveart'];
-		}
-		echo $out;
-	}
-	
-	
-	function cancelamarbete($id=null) {
-		if(!$id || !is_numeric($id) || !($id>0)) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			exit;
-		}
-		$data=$this->Invfisicodetail->findById($id);
-		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
-			$this->Invfisicodetail->read(null, $id);
-			if($this->Invfisicodetail->saveField('st', 'C')) {
-				$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
-										'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '.
-										'SE CANCELÓ.',
-										'success');				
-			}
-			else {
-				$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO se pudo Cancelar', 
-										'error');				
-			}
-		}
-		else {
-			$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO Existe', 
-									'error');			
-		}
-	}
-
-	function imprimemarbete($id=null) {
+	function imprimeetiqueta($id=null) {
 		if(!$id || !is_numeric($id) || !($id>0)) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			exit;
@@ -224,13 +133,13 @@ class InvfisicosmovilController extends MasterDetailAppController {
 		$data=$this->Invfisicodetail->findById($id);
 		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
 			$this->_printlabel($data['Invfisicodetail']);
-			$this->Session->setFlash('Marbete <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
+			$this->Session->setFlash('Transacción <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
 									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '. 
 									'Se imprimió en '.$this->currentPrinter['cve'].'.',
 									'success');
 		}
 		else {
-			$this->Session->setFlash('El Marbete <strong>'.$id.'</strong> NO Existe', 
+			$this->Session->setFlash('El Transacción <strong>'.$id.'</strong> NO Existe', 
 									'error');			
 		}
 	}
@@ -295,7 +204,7 @@ P1
 		}
 		return false;
 	}
-	
+
 	public function getItemByCve($cve=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;
