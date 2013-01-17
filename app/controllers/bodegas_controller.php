@@ -4,7 +4,7 @@
 class BodegasController extends MasterDetailAppController {
 	var $name='Bodegas';
 
-	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada');
+	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
 
 	var $layout = 'bodega';
 
@@ -24,7 +24,7 @@ class BodegasController extends MasterDetailAppController {
 					'update' => '#content',
 					'evalScripts' => true,
 					'limit' => 20,
-					'fields'=>array('Artmovbodegadetail.*, Articulo.*, Talla.*, Color.*, Ubicacion.*'
+					'fields'=>array('Artmovbodegadetail.*, Articulo.*, Talla.*, Color.*, Ubicacion.*, Tipoartmovbodega.*'
 					),
 					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
 				);
@@ -74,7 +74,7 @@ class BodegasController extends MasterDetailAppController {
 			}
 */
 
-//				$tipoartmovinv_id=;				
+//				$tipoartmovinv_id=;
 			
 			$data=array(
 				'folio'=>$theData['folio'],
@@ -92,7 +92,6 @@ class BodegasController extends MasterDetailAppController {
 				'user_id'=>$this->Auth->user('id')
 				);
 			
-//			$existeConteo2=$this->Invfisicodetail->Value;
 			$this->data['Artmovbodegadetail']=$data;
 			$this->Artmovbodegadetail->create();
 
@@ -101,7 +100,7 @@ class BodegasController extends MasterDetailAppController {
 				$data['id']=$this->Artmovbodegadetail->id;
 				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
-	//				$this->_printlabel($data);
+//					$this->_printlabel($data);
 				}
 
 				// Success...

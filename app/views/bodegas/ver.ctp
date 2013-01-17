@@ -16,13 +16,14 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover table-bodega">
 		<thead>
 			<tr class="row-filter">
-				<th class="cveart"><?php echo $form->text('Invfisicodetail.Folio', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Refer...', 'class' => 'search-query cveart'));?></th>
+				<th class="refer"><?php echo $form->text('Invfisicodetail.Folio', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Refer...', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Invfisicodetail.Created', array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Fecha...', 'class' => 'search-query datetime'));?></th>
 				<th class="cveart"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Articulo.arcveart', array('id'=>'cveart', 'label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Color.cve', array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Color...', 'class' => 'search-query cveart'));?></th>
 				<th class="st"><?php //echo $form->text('', array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Talla...', 'class' => 'search-query cveart'));?></th>
 				<th class="precio"><?php echo $form->text('Artmovbodegadetail.cant',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Cantidad...', 'class' => 'search-query precio'));?></th>
+				<th class=""><?php echo $form->text('Tipoartmovbodega.cve', array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Tipo Transacción...', 'class' => 'search-query cveart'));?></th>
 				<th class="st"><?php echo $form->text('Artmovbodegadetail.st', array('id'=>'st', 'label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query st'));?></th>
 				<th class="id">
 				<?php
@@ -38,6 +39,7 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 				<th class="cveart"><?php echo $this->Paginator->sort('Color','Color.cve'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('Talla','talla_index'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Cantidad','cant'); ?></th>
+				<th class=""><?php echo $this->Paginator->sort('T Mov','Tipoartmovbodega.cve'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','st'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
@@ -60,6 +62,7 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 				<td class="cveart"><?php echo $item['Color']['cve']; ?></td>
 				<td class="st"><?php echo $item['Talla']['tat'.$item['Artmovbodegadetail']['talla_index']]; ?></td>
 				<td class="precio"><?php echo $this->Number->precision($item['Artmovbodegadetail']['cant'],0);?></td>
+				<td class=""><?php echo $item['Tipoartmovbodega']['cve']; ?></td>
 				<td class="st"><?php echo $item['Artmovbodegadetail']['st']; ?></td>
 				<td class="id"><?php echo $item['Artmovbodegadetail']['id']; ?></td>
 			</tr>

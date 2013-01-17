@@ -4,36 +4,25 @@ class MaterialesController extends MasterDetailAppController {
 	var $name='Materiales';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'ArticulosColor'
 	);
 
 	var $cacheAction = array('view');
 							
 	var $tipoarticulo_id = 1;
-	
-	public function beforeFilter() {
+
+	function beforeFilter() {
+		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
 		parent::beforeFilter();
 
-		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
-		
-		$this->Articulo->hasMany['Linea']=array("Linea.tipoarticulo_id=".$this->tipoarticulo_id);
+
 		if(isset($this->data['Articulo'])) {
+			$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
 			if(isset($this->data['Articulo']['arcveart'])) {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
-//			if(isset($this->data['Articulo']['tipoarticulo_id'])) {
-				$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
-//			}
 		}
 	}
-
-/*
-	public function beforeRender() {
-		if(isset($this->data['Articulo']['arcveart'])) {
-			$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
-		}
-	}
-*/
 
 	public function index() {
 		$this->paginate = array(
@@ -65,6 +54,7 @@ class MaterialesController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			exit;
 		}
+		$this->Articulo->recursive=1;
 		if (!empty($this->data)) {
 			if ($this->Articulo->save($this->data)) {
 //				$this->Axnotification->sendNotification(array('title'=>'Modificacion de producto',
@@ -87,8 +77,6 @@ class MaterialesController extends MasterDetailAppController {
 		}
 
 		$this->set($this->Articulo->loadDependencies($this->tipoarticulo_id));
-//				$divisas = $this->Articulo->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
-//				$this->set(compact('divisas'));
 
 	}
 

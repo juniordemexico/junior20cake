@@ -6,7 +6,7 @@ class ArticulosController extends MasterDetailAppController {
 	var $name='Articulos';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada', 'ArticulosColor'
 	);
 
 	var $cacheAction = array('view',
@@ -17,9 +17,8 @@ class ArticulosController extends MasterDetailAppController {
 	var $tipoarticulo_id = 0;
 
 	function beforeFilter() {
-		parent::beforeFilter();
-
 		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
+		parent::beforeFilter();
 
 		if(isset($this->data['Articulo'])) {
 			$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
@@ -129,7 +128,7 @@ class ArticulosController extends MasterDetailAppController {
 								'order' => array('Linea.licve', 'Articulo.arcveart'),
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip','Articulo.art',
 												'Articulo.arpva','Articulo.arpvb','Articulo.arpvc','Articulo.arpvd',
-												'Marca.macve','Linea.licve','Temporada.tecve',
+												'Marca.macve','Linea.licve','Temporada.tecve','Articulo.lento'
 												'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) existencia'),
 								'conditions' => array(	'Articulo.tipoarticulo_id'=>$this->tipoarticulo_id,
 								 						'Articulo.arst'=>'A', 

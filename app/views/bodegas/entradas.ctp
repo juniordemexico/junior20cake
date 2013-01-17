@@ -198,6 +198,7 @@ var ubicacion={
 var tipomov = [
 {id: 10, cve: 'ENTRADA DIRECTA' },
 {id: 20, cve: 'ORDEN DE PRODUCCIÓN' },
+{id: 110, cve: 'CANC PEDIDO' },
 {id: 50, cve: 'CAMBIO UBICACION DESTINO' },
 {id: -10, cve: 'CANC ENTRADA DIRECTA' }
 ];

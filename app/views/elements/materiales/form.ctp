@@ -35,13 +35,14 @@
 <div id="tabs-2" class="tab-pane">
 
 <div class="row-fliud">
+
 <div class="span8">
 <?php echo $this->TBS->input('Color', array('label'=>'Colores', 'multiple'=>'checkbox')); ?>
 </div>
 
 <div class="span4" id="related-records-container">
 <label class="label">Colores Actuales:</label>
-<?php if(isset($this->data['Color']) && sizeof($this->data['Color'])>0 && $mode=='edit'): ?>
+<?php if(isset($this->data['Color']) && count($this->data['Color'])>0 && $mode=='edit'): ?>
 <div class="related-records">
 <ul>
 <?php foreach($this->data['Color'] as $color): ?>
