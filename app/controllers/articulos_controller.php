@@ -36,7 +36,7 @@ class ArticulosController extends MasterDetailAppController {
 								'order' => array('Linea.licve', 'Articulo.arcveart'),
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
 												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
-												'Tipoarticulo.cve',
+												'Tipoarticulo.cve','Articulo.lento',
 												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve'),
 								'conditions' => array('Articulo.tipoarticulo_id'=>$this->tipoarticulo_id),
 								);
@@ -128,7 +128,7 @@ class ArticulosController extends MasterDetailAppController {
 								'order' => array('Linea.licve', 'Articulo.arcveart'),
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip','Articulo.art',
 												'Articulo.arpva','Articulo.arpvb','Articulo.arpvc','Articulo.arpvd',
-												'Marca.macve','Linea.licve','Temporada.tecve','Articulo.lento'
+												'Marca.macve','Linea.licve','Temporada.tecve','Articulo.lento',
 												'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) existencia'),
 								'conditions' => array(	'Articulo.tipoarticulo_id'=>$this->tipoarticulo_id,
 								 						'Articulo.arst'=>'A', 
@@ -206,6 +206,7 @@ class ArticulosController extends MasterDetailAppController {
 									'order' => array('Linea.licve', 'Articulo.arcveart'),
 									'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip','Articulo.art',
 													'Articulo.arpva','Articulo.arpvb','Articulo.arpvc','Articulo.arpvd',
+													'Articulo.lento',
 													'Marca.macve','Linea.licve','Temporada.tecve',
 													'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) existencia'),
 									'conditions' => array(	'Articulo.tipoarticulo_id'=>$this->tipoarticulo_id,

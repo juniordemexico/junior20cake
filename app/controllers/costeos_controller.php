@@ -47,9 +47,9 @@ class CosteosController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-//		$this->data=$this->Costeo->findByArticuloId($id);
-		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('items', $this->Explosion->getAllItemsWithAllCosts($id) );
+
+		$this->set('master', $this->Articulo->findById(null, $id) );
+		$this->set('details', $this->Explosion->getAllItemsWithAllCosts($id) );
 		$this->set('title_for_layout', 'Costeo::'.$this->data['Articulo']['arcveart'] );
 	}
 

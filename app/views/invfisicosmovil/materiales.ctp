@@ -1,5 +1,5 @@
 <div id="formContainer" class="row almacenmovil">
-<form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
+<form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" ng-cloack
 	name="itemForm" class="form">
 
 <div id="userContainer" class="section-container" style="margin-top: 4px;">

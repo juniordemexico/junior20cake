@@ -13,7 +13,7 @@ class ProveedoresController extends MasterDetailAppController {
 	var $cacheAction = array('view'
 							);
 
-	function index() {
+	public function index() {
 		$this->paginate = array(
 								'update' => '#content',
 								'evalScripts' => true,
@@ -28,7 +28,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('proveedores', $this->paginate($filter));
 	}
 
-	function costos() {
+	public function costos() {
 		$this->set('listAction', 'costos');
 		$this->set('title_for_layout', 'Costos por Proveedor');
 		$this->paginate = array(
@@ -47,7 +47,7 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 
-	function costoarticulo($id = null) {
+	public function costoarticulo($id = null) {
 		$this->set('listAction', 'costos');
 		$this->set('title_for_layout', 'Costos por Proveedor');
 		if (!$id && empty($this->data)) {
@@ -59,7 +59,8 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)")) );
 	}
 
-	function detailcostomaterial($id = null) {
+
+	public function detailcostomaterial($id = null) {
 		$this->layout='empty';
 		if($id) {
 			$this->data = $this->Proveedor->read(null, $id);
@@ -68,7 +69,7 @@ class ProveedoresController extends MasterDetailAppController {
 		}
 	}
 
-	function detailcostoservicio($id = null) {
+	public function detailcostoservicio($id = null) {
 		$this->layout='empty';
 		if($id) {
 			$this->data = $this->Proveedor->read(null, $id);
@@ -77,12 +78,12 @@ class ProveedoresController extends MasterDetailAppController {
 		}
 	}
 
-	function addCostoArticulo($id=null) {
+	public function addCostoArticulo($id=null) {
 		$this->autoRender=false;
 		if(!$id) {
  			echo __('item_could_not_be_deleted', true)." (id: $id)";
 			exit;
-		} 
+	} 
 
 	if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
 			$material_id=$this->Articulo->findByArcveart($material_cve);
@@ -115,7 +116,7 @@ class ProveedoresController extends MasterDetailAppController {
 			echo "ERROR Indeterminado";
 	}
 
-	function deleteCostoArticulo($id=null) {
+	public function deleteCostoArticulo($id=null) {
 		$this->autoRender=false;
 		
 		// Check if the ID was submited and if the specified item exists
@@ -135,7 +136,7 @@ class ProveedoresController extends MasterDetailAppController {
 		}
 	}
 
-	function view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
@@ -143,7 +144,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('proveedor', $this->Proveedor->read(null, $id));
 	}
 
-	function add() { 
+	public function add() { 
 		if (!empty($this->data)) {
 			if ($this->Proveedor->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
@@ -160,7 +161,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set(compact('paises'));
 	}
 
-	function delete($id) {
+	public function delete($id) {
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
@@ -173,7 +174,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
@@ -201,7 +202,7 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 	/* Text Field Autocomplete action */
-	function autoComplete() {
+	public function autoComplete() {
  		Configure::write ( 'debug', 0 );
 		$this->autoRender=false;
   		$this->layout = 'ajax';

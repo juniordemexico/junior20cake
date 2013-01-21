@@ -25,6 +25,7 @@
 							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'))
 							);
 ?>
+<?php echo $this->TBS->input('Articulo.lento', array('type'=>'checkbox', 'label'=>'Lento Desplazamiento')); ?>
 <?php echo $this->TBS->input('Articulo.arobser', array('label' => 'Observaciones', 'type'=>'textarea', 'placeholder'=>'Observaciones y Comentarios', 'ly_w'=>'4')); ?>
 </div>
 

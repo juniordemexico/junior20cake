@@ -23,6 +23,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="precio"><?php echo $form->text('arpva',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'PVA', 'class' => 'search-query precio'));?></th>
 				<th class="precio"><?php echo $form->text('arpvb',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'PVB', 'class' => 'search-query precio'));?></th>
 				<th class="precio">&nbsp;</th>
+				<th class="st"><?php echo $form->text('lento',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Lento...', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php
 				echo $this->Js->submit('Filtrar', array('update' => '#content'));
@@ -37,6 +38,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="precio"><?php echo $this->Paginator->sort('Precio A','arpva'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Precio B','arpvb'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Exist','existencia'); ?></th>
+				<th class="st"><?php echo $this->Paginator->sort('Lento','lento'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -66,6 +68,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 							<i class="icon icon-eye-open pull-right"></i>
 							</a>
 				</td>
+				<td class="st"><?php echo ($articulo['Articulo']['lento']=='1' ? '<i class="icon icon-ok"> </i>':''); ?></td>
 				<td class="id"><?php echo $articulo['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>

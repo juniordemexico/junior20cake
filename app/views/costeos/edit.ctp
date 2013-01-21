@@ -1,6 +1,6 @@
 <div class="page-header">
-<h1><?php e($articulo['Articulo']['arcveart']);?> 
-	<small><?php e($articulo['Articulo']['ardescrip']);?></small>
+<h1><?php e($master['Articulo']['arcveart']);?> 
+	<small><?php e($master['Articulo']['ardescrip']);?></small>
 </h1>
 </div>
 
@@ -42,7 +42,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($items['tela'] as $item): ?>
+			<?php foreach($details['tela'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="span2" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
@@ -100,7 +100,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($items['habilitacion'] as $item): ?>
+			<?php foreach($details['habilitacion'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
@@ -157,7 +157,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($items['servicio'] as $item): ?>
+			<?php foreach($details['servicio'] as $item): ?>
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>

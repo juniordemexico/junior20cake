@@ -18,8 +18,8 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 			<tr class="row-filter">
 				<th class="refer"><?php echo $form->text('Invfisicodetail.Folio', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Refer...', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Invfisicodetail.Created', array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Fecha...', 'class' => 'search-query datetime'));?></th>
-				<th class="cveart"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
-				<th class="cveart"><?php echo $form->text('Articulo.arcveart', array('id'=>'cveart', 'label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Clave', 'class' => 'search-query cveart'));?></th>
+				<th class="cveart"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Ubicación...', 'class' => 'search-query cveart'));?></th>
+				<th class="cveart"><?php echo $form->text('Articulo.arcveart', array('id'=>'cveart', 'label' => false, 'type' => 'search', 'maxLength' => '24', 'placeholder'=>'Producto...', 'class' => 'search-query cveart'));?></th>
 				<th class="cveart"><?php echo $form->text('Color.cve', array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Color...', 'class' => 'search-query cveart'));?></th>
 				<th class="st"><?php //echo $form->text('', array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Talla...', 'class' => 'search-query cveart'));?></th>
 				<th class="precio"><?php echo $form->text('Artmovbodegadetail.cant',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'Cantidad...', 'class' => 'search-query precio'));?></th>

@@ -1,6 +1,6 @@
-<div id="formContainer" class="row almacenmovil">
-<form id="itemForm" ng-submit="submit()" ng-controller="AxAppController" 
-	name="itemForm" class="form">
+<div id="formContainer" class="row almacenmovil table-bodega">
+<form id="itemForm" ng-submit="submit()" ng-controller="AxAppController"
+	name="itemForm" class="form ng-cloack">
 
 <div id="userContainer" class="section-container" style="margin-top: 4px;">
 	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>

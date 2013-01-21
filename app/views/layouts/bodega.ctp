@@ -20,7 +20,7 @@
 	<style>	
 	/* This CSS should be placed in a style sheet. It is only here in order to not conflict with the other demos. */
 	.table-bodega {
-		background: url('/img/wallpaper/warehouse_tarima_blue_trans.png') no-repeat center;		
+		background: url('/img/wallpaper/warehouse_tarima_blue_trans.png') no-repeat;		
 	}
 	</style>
 	

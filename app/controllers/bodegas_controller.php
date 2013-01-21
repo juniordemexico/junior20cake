@@ -32,6 +32,25 @@ class BodegasController extends MasterDetailAppController {
 		$this->set('items', $this->paginate($filter));
 	}
 
+	public function existenciaxubicacion() {
+		$this->uses = array('Artmovbodegaubicadenormal', 'Artmovbodegadetail', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
+		$this->Artmovbodegaubicadenormal->recursive = 1;
+		$this->paginate = array(
+					'update' => '#content',
+					'evalScripts' => true,
+					'limit' => 20,
+					'fields'=>array('Artmovbodegaubicadenormal.*, Articulo.*, Talla.*, Color.*, Ubicacion.*'
+					'joins'=>array(
+							array(
+								),
+						)
+					),
+					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
+				);
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($filter));
+	}
+
 	public function entradas() {
 		$this->set('title_for_layout', "BODEGA :: ENTRADAS");	
 	}

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/bodegas/ver.ctp</string>
+	<string>app/views/bodegas/entradas.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,61 +21,61 @@
 	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/bodegas_controller.php</key>
+		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>7</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>21</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/bodegas/index.ctp</key>
+		<key>app/views/bodegas/entradas.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>43</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/bodegas/salidas.ctp</key>
+		<key>app/views/costeos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>43</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>200</integer>
+				<integer>90</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>180</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/views/bodegas/ver.ctp</key>
+		<key>app/views/helpers/angular_js.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>31</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>31</integer>
+			<integer>52</integer>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -94,14 +94,14 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/bodegas/index.ctp</string>
-		<string>app/views/bodegas/ver.ctp</string>
-		<string>app/controllers/bodegas_controller.php</string>
-		<string>app/views/bodegas/salidas.ctp</string>
+		<string>app/controllers/proveedores_controller.php</string>
+		<string>app/views/helpers/angular_js.php</string>
+		<string>app/views/costeos/edit.ctp</string>
+		<string>app/views/bodegas/entradas.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1851, 24}, {882, 847}}</string>
+	<string>{{-1890, 36}, {882, 847}}</string>
 </dict>
 </plist>

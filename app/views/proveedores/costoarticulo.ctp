@@ -1,3 +1,4 @@
+<div ng-controller="AxAppController" class="ng-cloack">
 <div class="page-header">
 <h1><?php e($this->data['Proveedor']['prcvepro']);?> 
 	<small><?php e($this->data['Proveedor']['prnom']);?></small>
@@ -77,7 +78,7 @@
 										'autocomplete'=>array(
 											'url'=>'/Articulos/autocomplete/tipo:1',
 											'min-length'=>2,
-									'addHiddenField'=>array('Material.id'=>array('source'=>'id')) 
+											'addHiddenField'=>array('Material.id'=>array('source'=>'id')) 
 											),
 										)
 									);
@@ -169,7 +170,7 @@
 
 			</div>
 			<div class="controls input">
-			<input type="text" maxlength="8" id="edtServicioPcosto" name="data[ArticuloProveedor][ServicioPcosto]" 
+			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPcosto]" 
 			class="span2" title="Costo segun el proveedor especificado" />
 			</div>
 			<button id="submitServicio" class="btn" type="button"
@@ -212,6 +213,8 @@
 		<?php echo $this->Form->End();?>
 	</div>
 </div>
+
+</div> <!-- AxAppController ends -->
 
 <?php
 
@@ -290,11 +293,11 @@ $this->Js->get('#submitServicio')->event(
 var el=$('#'+this.id);
 var theProveedorID=$('#ProveedorId').val();
 var theCve=$('#edtServicioCve').val();
-var thePCosto=$('#edtServicioPCosto').val();
-var theUrl=el.data('url');
+var thePCosto = $('#edtServicioPCosto').val();
+var theUrl =el.data('url');
 
 $.ajax({
-	dataType: 'html', 
+	dataType: 'html',
 	type: 'post',
 	url: theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto,
 	success: function (data, textStatus) {
@@ -314,4 +317,3 @@ $.ajax({
 , array('stop' => true));
 
 ?>
-
