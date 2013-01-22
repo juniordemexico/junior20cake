@@ -1,10 +1,10 @@
+<div id="detailContent" class="row-fluid" ng-controller="AxAppController">
+
 <div class="page-header">
-<h1><?php e($master['Articulo']['arcveart']);?> 
-	<small><?php e($master['Articulo']['ardescrip']);?></small>
+<h1>{{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
 </h1>
 </div>
 
-<div id="detailContent" class="row-fluid" ng-controller="AxAppController">
 
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id'); ?>
@@ -29,7 +29,7 @@
 			<button id="btnMaterialSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentTelasTable">
+		<div id="detailContentTelaTable">
 		<table class="table table-condensed">
 			<thead>
 			<tr>
@@ -42,11 +42,10 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($details['tela'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="span2" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="span2"><?php e($item['Explosion']['cant'])?></td>
+			<tr id="{{itemTela.Explosion.id}}" class="t-row" ng-repeat="itemTela in currentTela">
+				<td class="span2" id="{{itemTela.Explosion.material_id}}">{{itemTela.Articulo.arcveart}}</td>
+				<td class="">{{itemTela.Articulo.ardescrip}}</td>
+				<td class="span1">{{itemTela.Explosion.cant}}</td>
 				<td class="span3">
 
 				<div class="btn-group span3">
@@ -59,17 +58,16 @@
 					<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">					
-					<?php foreach($item['Costo'] as $costo): ?>
-					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
-					<?php endforeach;?>
+						<li ng-repeat="itemCosto in itemTela.Costo">
+						{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+						</li>
   					</ul>
 				</div>
 
 				</td>
-				<td class="span1"><input type="checkbox" class="detailPropio" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class="span1"><input type="checkbox" class="detailPropio" id="propio[{{currentTela.Explosion.id}}" title="Marcar en caso de ser un insumo propio" <?php //e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
 				<td class="span1"><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
 			</tr>
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -87,7 +85,7 @@
 			<button id="btnHabilSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentHabilTable">
+		<div id="detailContentHabilitacionTable">
 		<table class="table table-condensed">
 			<thead>
 			<tr>
@@ -100,34 +98,32 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($details['habilitacion'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
-				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
+			<tr id="{{itemHabilitacion.Explosion.id}}" class="t-row" ng-repeat="itemHabilitacion in currentHabilitacion">
+				<td class="span2" id="{{itemHabilitacion.Explosion.material_id}}">{{itemHabilitacion.Articulo.arcveart}}</td>
+				<td class="">{{itemHabilitacion.Articulo.ardescrip}}</td>
+				<td class="span1">{{itemHabilitacion.Explosion.cant}}</td>
 				<td class="span3">
 
 				<div class="btn-group span3">
-					<button class="btn btn-info" data-value="">
-					<?php if(isset($item['Costo'][0]) ):?>
-					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
-					<?php endif;?>
+					<button class="btn btn-info">
+					{{itemHabilitacion.Explosion.costo}} 
+					{{itemHabilitacion.Costo[0].ArticuloProveedor.costo}}
+					({{itemHabilitacion.Costo[0].Proveedor.prcvepro}})
 					</button>
 					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 					<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">					
-					<?php foreach($item['Costo'] as $costo): ?>
-					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
-					<?php endforeach;?>
+					<li ng-repeat="itemCosto in itemHabilitacion.Costo">
+					{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+					</li>
   					</ul>
 				</div>
 
 				</td>
-				<td class="span1"><input type="checkbox" class="detailPropio" data-id="<?php e($item['Explosion']['id']) ?>" id="propio[<?php e($item['Explosion']['id']) ?>]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><input type="checkbox" class="detailPropio" data-id="{{itemHabilitacion.Explosion.id}}" id="propio[{{itemHabilitacion.Explosion.id}}]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
+				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="{{itemHabilitacion.Exposion.id}}"><i class="icon icon-trash"></i></button></td>
 			</tr>
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -145,7 +141,7 @@
 			<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentTelasTable">
+		<div id="detailContentServicioTable">
 		<table class="table table-condensed">
 			<thead>
 			<tr>
@@ -157,11 +153,10 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($details['servicio'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="span2"><?php e($item['Explosion']['cant'])?></td>
+			<tr id="{{itemServicio.Explosion.id}}" class="t-row" ng-repeat="itemServicio in currentServicio">
+				<td class="span2" id="{{itemServicio.Explosion.material_id}}">{{itemServicio.Articulo.arcveart}}</td>
+				<td class="">{{itemServicio.Articulo.ardescrip}}</td>
+				<td class="span1">{{itemServicio.Explosion.cant}}</td>
 				<td class="span3">
 
 				<div class="btn-group span3">
@@ -174,16 +169,15 @@
 					<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">					
-					<?php foreach($item['Costo'] as $costo): ?>
-					<li data-costo="" data-proveedorid=""><?php e($costo['ArticuloProveedor']['costo'])?> (<?php e($costo['Proveedor']['prcvepro'])?>)</li>
-					<?php endforeach;?>
+						<li ng-repeat="itemCosto in itemServicio.Costo">
+						{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+						</li>
   					</ul>
 				</div>
 
 				</td>
-				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="<?php e($item['Explosion']['id']) ?>"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="{{itemServicio.Explosion.id}}"><i class="icon icon-trash"></i></button></td>
 			</tr>
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -196,17 +190,22 @@
 
 <?php echo $this->Form->end();?>
 
+</div>
+
 <script>
 
 function AxAppController( $scope, $http ) {
 //	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 	$scope.baseUrl = '/<?php echo $this->controller->name;?>';
-	$scope.setItemUrl = '/<?php echo $this->controller->name;?>/setItem';
-
-	$scope.printer = printer;			// This is the Controller's User Model
-
-	$scope.currentMaster=;
+	$scope.changeAction = $scope.baseUrl+'setItem';
+	
+	$scope._data=<?php echo json_encode($this->data);?>;
+	
+	$scope.currentMaster=$scope._data.master;
+	$scope.currentTela=$scope._data.details.tela;
+	$scope.currentHabilitacion=$scope._data.details.habilitacion;
+	$scope.currentServicio=$scope._data.details.servicio;
 
 }
 

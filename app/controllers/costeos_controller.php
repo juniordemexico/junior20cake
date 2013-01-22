@@ -13,7 +13,6 @@ class CosteosController extends MasterDetailAppController {
 	var $cacheAction = array('view'
 							);
 
-
 	function index() {
 		$this->layout='default';
 
@@ -47,10 +46,13 @@ class CosteosController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-
-		$this->set('master', $this->Articulo->findById(null, $id) );
-		$this->set('details', $this->Explosion->getAllItemsWithAllCosts($id) );
-		$this->set('title_for_layout', 'Costeo::'.$this->data['Articulo']['arcveart'] );
+ 		Configure::write ( 'debug', 0 );
+		$this->data=array();
+		$this->data['master']=$this->Articulo->findById($id);
+		$this->data['details']=$this->Explosion->getAllItemsWithAllCosts($id);
+//		$this->set('master', $this->Articulo->findById(null, $id) );
+//		$this->set('details', $this->Explosion->getAllItemsWithAllCosts($id) );
+		$this->set('title_for_layout', 'Costeo::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
 	function add($id=null) {
@@ -99,11 +101,11 @@ class CosteosController extends MasterDetailAppController {
 			) {
 			$out=array(
 				'master'=>array(
-					'id'=>$master['Articulo']['id'];
-					'arcveart'=>$master['Articulo']['arcveart'];
-					'ardescrip'=>$master['Articulo']['ardescrip'];
-					'arst'=>$master['Articulo']['arst'];
-					'id'=>$master['Articulo']['id'];
+					'id'=>$master['Articulo']['id'],
+					'arcveart'=>$master['Articulo']['arcveart'],
+					'ardescrip'=>$master['Articulo']['ardescrip'],
+					'arst'=>$master['Articulo']['arst'],
+					'id'=>$master['Articulo']['id'],
 					),
 				'details'=>array(
 					),

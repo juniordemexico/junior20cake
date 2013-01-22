@@ -68,7 +68,7 @@
 	<legend><span class="text-info">Cantidad de Entrada</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></em></legend>
 	<div class="control-group">
 		<div class="input">
-   			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
+    			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
   		</div>
     	<span class="help-inline hide">&nbsp;</span>
 	</div>

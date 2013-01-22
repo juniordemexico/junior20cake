@@ -18,6 +18,7 @@ echo
 
 		'/js_files/core.js',
 		'/js/webui/angular.min.js',
+		'/js/webui/angular-resource.min.js',
 /*		'/js_files/ui.js', */
 		'/js_files/ui-util.js',
 	  
