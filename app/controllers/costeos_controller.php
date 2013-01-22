@@ -52,7 +52,7 @@ class CosteosController extends MasterDetailAppController {
 		$this->data['details']=$this->Explosion->getAllItemsWithAllCosts($id);
 //		$this->set('master', $this->Articulo->findById(null, $id) );
 //		$this->set('details', $this->Explosion->getAllItemsWithAllCosts($id) );
-		$this->set('title_for_layout', 'Costeo::'.$this->data['master']['Articulo']['arcveart'] );
+		$this->set('title_for_layout', 'Costeos::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
 	function add($id=null) {

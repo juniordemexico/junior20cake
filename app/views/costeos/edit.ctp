@@ -38,7 +38,6 @@
 				<th class="span2">Promedio</th>
 				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
-				<th class="span1">&nbsp</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -59,14 +58,13 @@
 					</button>
 					<ul class="dropdown-menu">					
 						<li ng-repeat="itemCosto in itemTela.Costo">
-						{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+						{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
 						</li>
   					</ul>
 				</div>
 
 				</td>
-				<td class="span1"><input type="checkbox" class="detailPropio" id="propio[{{currentTela.Explosion.id}}" title="Marcar en caso de ser un insumo propio" <?php //e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class="span1"><button type="button" class="btn btn-mini detailDelete"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><i class="icon icon-ok" ng-show="itemTela.Explosion.insumopropio"></i></td>
 			</tr>
 			</tbody>
 		</table>
@@ -94,7 +92,6 @@
 				<th class="span1">Cantidad</th>
 				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
-				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -115,14 +112,13 @@
 					</button>
 					<ul class="dropdown-menu">					
 					<li ng-repeat="itemCosto in itemHabilitacion.Costo">
-					{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+					{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
 					</li>
   					</ul>
 				</div>
 
 				</td>
-				<td class="span1"><input type="checkbox" class="detailPropio" data-id="{{itemHabilitacion.Explosion.id}}" id="propio[{{itemHabilitacion.Explosion.id}}]" title="Marcar en caso de ser un insumo propio" <?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" /></td>
-				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="{{itemHabilitacion.Exposion.id}}"><i class="icon icon-trash"></i></button></td>
+				<td class="span1"><i class="icon icon-ok" ng-show="itemHabilitacion.Explosion.insumopropio"></i></td>
 			</tr>
 			</tbody>
 		</table>
@@ -149,7 +145,6 @@
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
 				<th class="span3">Costo</th>
-				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -170,13 +165,11 @@
 					</button>
 					<ul class="dropdown-menu">					
 						<li ng-repeat="itemCosto in itemServicio.Costo">
-						{{itemCosto.ArticuloProveedor.costo}} {{itemCosto.Proveedor.prcvepro}}
+						{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
 						</li>
   					</ul>
 				</div>
-
 				</td>
-				<td class="span1"><button type="button" class="btn btn-mini detailDelete" data-id="{{itemServicio.Explosion.id}}"><i class="icon icon-trash"></i></button></td>
 			</tr>
 			</tbody>
 		</table>
