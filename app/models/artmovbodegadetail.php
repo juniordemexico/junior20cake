@@ -17,6 +17,7 @@ class Artmovbodegadetail extends AppModel
 		'Color',
 		'Talla',
 		'Tipoartmovbodega',
+		'User'
 		);
 
 	var $validate = array(

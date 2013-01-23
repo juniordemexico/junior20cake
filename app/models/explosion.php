@@ -21,7 +21,8 @@ class Explosion extends AppModel
 			'className'=>'Articulo',
 			'foreignKey'=>'material_id',
 			'conditions'=>'Material.tipoarticulo_id<>0',
-			)
+			),
+		'Proveedor'
 	);
 
 	var $validate = array(

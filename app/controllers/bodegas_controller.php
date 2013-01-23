@@ -11,6 +11,9 @@ class BodegasController extends MasterDetailAppController {
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 	
 	public function beforeFilter() {
+		if(isset($this->data['Bodega'])) {
+			$this->data['Artmovbodegadetail']=$this->data['Bodega'];
+		}
 		parent::beforeFilter();
 	}
 	
@@ -24,8 +27,7 @@ class BodegasController extends MasterDetailAppController {
 					'update' => '#content',
 					'evalScripts' => true,
 					'limit' => 20,
-					'fields'=>array('Artmovbodegadetail.*, Articulo.*, Talla.*, Color.*, Ubicacion.*, Tipoartmovbodega.*'
-					),
+					'fields'=>array('"ARTMOVBODEGADETAIL".*, "ARTICULO".*, "TALLA".*, "COLOR".*, "UBICACION".*, "TIPOARTMOVBODEGA".*, "USER".username'),
 					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
 				);
 		$filter = $this->Filter->process($this);
@@ -35,6 +37,7 @@ class BodegasController extends MasterDetailAppController {
 	public function existenciaxubicacion() {
 		$this->uses = array('Artmovbodegaubicadenormal', 'Artmovbodegadetail', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
 		$this->Artmovbodegaubicadenormal->recursive = 1;
+/*
 		$this->paginate = array(
 					'update' => '#content',
 					'evalScripts' => true,
@@ -47,6 +50,7 @@ class BodegasController extends MasterDetailAppController {
 					),
 					'conditions'=>array('Articulo.tipoarticulo_id'=>0),
 				);
+*/
 		$filter = $this->Filter->process($this);
 		$this->set('items', $this->paginate($filter));
 	}

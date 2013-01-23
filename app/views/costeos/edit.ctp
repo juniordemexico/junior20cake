@@ -22,7 +22,8 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" 
+			class="span2" placeholder="Clave de Tela..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
@@ -47,18 +48,20 @@
 				<td class="span1">{{itemTela.Explosion.cant}}</td>
 				<td class="span3">
 
-				<div class="btn-group span3">
-					<button class="btn btn-info" data-costo="">
-					<?php if(isset($item['Costo'][0]) ):?>
-					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
-					<?php endif;?>
-					</button>
-					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-					<span class="caret"></span>
-					</button>
+				<div class="btn-group">
+					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+						<strong>{{itemTela.Explosion.pcosto}}</strong>
+						({{itemTela.Proveedor.prcvepro}})
+
+						<span class="caret"></span>
+					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCosto in itemTela.Costo">
-						{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
+						<li ng-repeat="itemCostoTela in itemTela.Costo">
+						{{itemCostoTela.ArticuloProveedor.costo}}
+						<small>(
+						<strong>{{itemCostoTela.Proveedor.prcvepro}}</strong>
+						{{itemCostoTela.Proveedor.prnom}}
+						)</small>
 						</li>
   					</ul>
 				</div>
@@ -76,7 +79,8 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]"
+			class="span2" placeholder="Clave de Habilitación..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
@@ -100,20 +104,21 @@
 				<td class="">{{itemHabilitacion.Articulo.ardescrip}}</td>
 				<td class="span1">{{itemHabilitacion.Explosion.cant}}</td>
 				<td class="span3">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+						<strong>{{itemHabilitacion.Explosion.pcosto}}</strong>
+						({{itemHabilitacion.Proveedor.prcvepro}})
 
-				<div class="btn-group span3">
-					<button class="btn btn-info">
-					{{itemHabilitacion.Explosion.costo}} 
-					{{itemHabilitacion.Costo[0].ArticuloProveedor.costo}}
-					({{itemHabilitacion.Costo[0].Proveedor.prcvepro}})
-					</button>
-					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-					<span class="caret"></span>
-					</button>
+						<span class="caret"></span>
+					</a>
 					<ul class="dropdown-menu">					
-					<li ng-repeat="itemCosto in itemHabilitacion.Costo">
-					{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
-					</li>
+						<li ng-repeat="itemCostoHabilitacion in itemHabilitacion.Costo">
+						{{itemCostoHabilitacion.ArticuloProveedor.costo}} 
+						<small>(
+						<strong>{{itemCostoHabilitacion.Proveedor.prcvepro}}</strong>
+						{{itemCostoHabilitacion.Proveedor.prnom}}
+						)</small>
+						</li>
   					</ul>
 				</div>
 
@@ -130,7 +135,8 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" class="span2"
+			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]"
+			class="span2" placeholder="Clave de Servicio..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:3"
 			/>
@@ -153,19 +159,20 @@
 				<td class="">{{itemServicio.Articulo.ardescrip}}</td>
 				<td class="span1">{{itemServicio.Explosion.cant}}</td>
 				<td class="span3">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+						<strong>{{itemServicio.Explosion.pcosto}}</strong>
+						({{itemServicio.Proveedor.prcvepro}})
 
-				<div class="btn-group span3">
-					<button class="btn btn-info" data-costo="<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?>" data-proveedor-cve="<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>">
-					<?php if(isset($item['Costo'][0]) ):?>
-					<?php e($item['Costo'][0]['ArticuloProveedor']['costo'])?> (<?php e($item['Costo'][0]['Proveedor']['prcvepro'])?>)
-					<?php endif;?>
-					</button>
-					<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-					<span class="caret"></span>
-					</button>
+						<span class="caret"></span>
+					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCosto in itemServicio.Costo">
-						{{itemCosto.ArticuloProveedor.costo}} ({{itemCosto.Proveedor.prcvepro}})
+						<li ng-repeat="itemCostoServicio in itemServicio.Costo">
+						{{itemCostoServicio.ArticuloProveedor.costo}}
+						<small>(
+						<strong>{{itemCostoServicio.Proveedor.prcvepro}}</strong>
+						{{itemCostoServicio.Proveedor.prnom}}
+						)</small>
 						</li>
   					</ul>
 				</div>

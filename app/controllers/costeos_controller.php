@@ -50,8 +50,6 @@ class CosteosController extends MasterDetailAppController {
 		$this->data=array();
 		$this->data['master']=$this->Articulo->findById($id);
 		$this->data['details']=$this->Explosion->getAllItemsWithAllCosts($id);
-//		$this->set('master', $this->Articulo->findById(null, $id) );
-//		$this->set('details', $this->Explosion->getAllItemsWithAllCosts($id) );
 		$this->set('title_for_layout', 'Costeos::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
@@ -75,12 +73,16 @@ class CosteosController extends MasterDetailAppController {
 	function delete($id=null) {
 		$this->autoRender=false;
 		if (!$id) {
-			echo __('invalid_item', true);
+			echo json_encode(array('result'=>'error', 'message'=>echo __('invalid_item', true));
 			exit;
 		}
 		if ($this->Costeo->delete($id)) {
-			echo "OK";
+			$out=array(result=>'ok','message'=>'');
 		}
+		else {
+			$out=array(result=>'error','message'=>'El Item NO pudo ser Eliminado');
+		}
+		echo json_encode($out);
 	}
 
 	public function getItem($id=null) {
