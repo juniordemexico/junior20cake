@@ -1,17 +1,24 @@
 <div id="detailContent" class="row-fluid" ng-controller="AxAppController">
 
+<?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
+<?php echo $this->Form->hidden('Articulo.id'); ?>
+
 <div class="page-header">
 <h1>{{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
 </h1>
 </div>
 
-<?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
-<?php echo $this->Form->hidden('Articulo.id'); ?>
+<div class="well">
+	Telas: {{total.tela}} <br/>
+	Habilitación: {{total.habilitacion}}<br/>
+	Servicios: {{total.servicio}}<br/>
+	Costeo Total: {{total.tela+total.habilitacion+total.servicio}}<br/>
+</div>
 
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tabs-0" data-toggle="tab">Telas</a></li>
-		<li><a href="#tabs-1" data-toggle="tab">Habilitación</a></li>
+		<li><a href=" #tabs-1" data-toggle="tab">Habilitación</a></li>
 		<li><a href="#tabs-2" data-toggle="tab">Servicios</a></li>
 	</ul>
 
@@ -176,6 +183,17 @@ function AxAppController( $scope, $http ) {
 	$scope.currentHabilitacion=$scope._data.details.habilitacion;
 	$scope.currentServicio=$scope._data.details.servicio;
 
+	$scope.total= {global:1 ,tela: 5, habilitacion: 10, servicio: 25};
+/*
+	$scope.calculateTotals = function() {
+		var total={global: 0, tela: 0, habilitacion: 0, servicio: 0};
+		angular.forEach($scope.currentHabilitacion, function(item) {
+			total=total+=item.Explosion.pcosto;
+		});
+		
+		$scope.total.=total;
+	}
+*/
 	$scope.setCosto = function(explosion_id, proveedor_id) {
 		$http.get('/Costeos/setcosto/'+$scope.currentMaster.Articulo.id+
 		'?explosion_id='+explosion_id+'&proveedor_id='+proveedor_id
@@ -207,32 +225,3 @@ function AxAppController( $scope, $http ) {
 }
 
 </script>
-
-<?php
-$this->Js->get('.detailDelete')->event(
-'click', "
-var theID=this.parentElement.parentElement.id;
-bootbox.confirm('Seguro de ELIMINAR la partida ' + $('#'+theID).data('cve') + ' de la explosion ?', 
-function(result) {
-    if (result) {
-		$.ajax({
-			dataType: 'html', 
-			type: 'post', 
-			url: '/Explosiones/delete/'+theID,
-			success: function (data, textStatus) {
-			if(data=='OK') {
-				$( '#'+theID ).remove();
-			}
-			else {
-				bootbox.alert( '<label class=\"label label-warning\"><i class=\"icon icon-alert\"></i> Atencion!</label><br/><code>'+data+'<code>' );
-			}
-			},
-		});
-
-    }
-}
-);
-"
-, array('stop' => true));
-
-?>
