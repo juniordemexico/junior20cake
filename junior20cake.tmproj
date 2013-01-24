@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/costeos_controller.php</string>
+	<string>app/views/costeos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,14 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>10</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>37</integer>
+				<integer>69</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>20</integer>
+			<integer>48</integer>
 		</dict>
 		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
@@ -54,42 +54,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>109</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>48</integer>
-		</dict>
-		<key>app/views/barcodes/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>40</integer>
-				<key>line</key>
-				<integer>18</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/bodegas/entradas.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>65</integer>
+				<integer>25</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>39</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -98,12 +70,12 @@
 				<key>column</key>
 				<integer>33</integer>
 				<key>line</key>
-				<integer>39</integer>
+				<integer>191</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>31</integer>
+			<integer>164</integer>
 		</dict>
 		<key>app/views/costeos/index.ctp</key>
 		<dict>
@@ -119,49 +91,19 @@
 			<key>firstVisibleLine</key>
 			<integer>16</integer>
 		</dict>
-		<key>app/views/elements/includes_js.ctp</key>
+		<key>app/views/costeos/setcosto.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>3</integer>
+				<integer>36</integer>
 				<key>line</key>
-				<integer>23</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>11</integer>
-		</dict>
-		<key>app/views/helpers/angular_js.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>73</integer>
-				<key>line</key>
-				<integer>77</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>47</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>16</integer>
-				<key>line</key>
-				<integer>77</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>73</integer>
-				<key>line</key>
-				<integer>77</integer>
-			</dict>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
 		<dict>
@@ -177,20 +119,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/almacenmovil.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>16</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
@@ -198,16 +126,12 @@
 		<string>app/controllers/costeos_controller.php</string>
 		<string>app/models/explosion.php</string>
 		<string>app/views/costeos/index.ctp</string>
+		<string>app/views/costeos/setcosto.ctp</string>
 		<string>app/views/costeos/edit.ctp</string>
-		<string>app/views/layouts/almacenmovil.ctp</string>
-		<string>app/views/elements/includes_js.ctp</string>
-		<string>app/views/helpers/angular_js.php</string>
-		<string>app/views/barcodes/index.ctp</string>
-		<string>app/views/bodegas/entradas.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1890, 36}, {882, 847}}</string>
+	<string>{{-1881, 8}, {882, 847}}</string>
 </dict>
 </plist>

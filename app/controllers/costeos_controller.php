@@ -53,36 +53,38 @@ class CosteosController extends MasterDetailAppController {
 		$this->set('title_for_layout', 'Costeos::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
-	function add($id=null) {
+	function setcosto($id=null) {
+		$this->layout='json';
 		if(!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));			
 		} 
-		
-		if (!empty($this->data)) {
-			if ($this->Costeo->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true), 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
+Configure::write ( 'debug', 0 );
+
+		$theData=$this->params['url'];
+		unset($theData['url']);
+		$explosion_id=$theData['explosion_id'];
+		$proveedor_id=$theData['proveedor_id'];
+
+		$this->Explosion->read(null, $explosion_id);
+			if($this->Explosion->saveField('proveedor_id', $proveedor_id)) {
+				$this->data=array();
+				$this->data['result']='ok';
+				$this->data['message']='El Material '.$explosion_id.' cambio al costo del proveedor '.$proveedor_id;
+				$this->data['data']=array();
+				$this->data['data']['master']=$this->Articulo->findById($id);
+				$this->data['data']['details']=$this->Explosion->getAllItemsWithAllCosts($id);
 			}
-		}
-
-	}
-
-	function delete($id=null) {
-		$this->autoRender=false;
-		if (!$id) {
-			echo json_encode(array('result'=>'error', 'message'=>echo __('invalid_item', true));
-			exit;
-		}
-		if ($this->Costeo->delete($id)) {
-			$out=array(result=>'ok','message'=>'');
-		}
-		else {
-			$out=array(result=>'error','message'=>'El Item NO pudo ser Eliminado');
-		}
-		echo json_encode($out);
+			else {
+				$this->data['result']='error';
+				$this->data['message']='Error Guardando Material '.$explosion_id.' cambio al costo del proveedor '.$proveedor_id;
+			}
+/*		
+		echo json_encode(array('result'=>'ok',
+								'message'=>'El Material '.$material_id.' cambio al costo del proveedor '.$proveedor_id,
+								'data'=>$this->data
+						));
+*/
 	}
 
 	public function getItem($id=null) {

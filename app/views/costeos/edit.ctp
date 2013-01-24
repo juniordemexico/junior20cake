@@ -5,7 +5,6 @@
 </h1>
 </div>
 
-
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id'); ?>
 
@@ -19,16 +18,6 @@
 <div class="tab-content">
 
 <div id="tabs-0" class="tab-pane active">
-
-		<div class="controls controls-row well well-small">
-			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]" 
-			class="span2" placeholder="Clave de Tela..."
-			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
-			/>
-			<button id="btnMaterialSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
-		</div>
 
 		<div id="detailContentTelaTable">
 		<table class="table table-condensed">
@@ -48,7 +37,7 @@
 				<td class="span1">{{itemTela.Explosion.cant}}</td>
 				<td class="span3">
 
-				<div class="btn-group">
+				<div class="btn-group" ng-show="itemTela.Costo[0].ArticuloProveedor.proveedor_id>0">
 					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
 						<strong>{{itemTela.Explosion.pcosto}}</strong>
 						({{itemTela.Proveedor.prcvepro}})
@@ -56,7 +45,7 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCostoTela in itemTela.Costo">
+						<li ng-repeat="itemCostoTela in itemTela.Costo" ng-click="setCosto(itemTela.Explosion.id,itemCostoTela.ArticuloProveedor.proveedor_id)">
 						{{itemCostoTela.ArticuloProveedor.costo}}
 						<small>(
 						<strong>{{itemCostoTela.Proveedor.prcvepro}}</strong>
@@ -77,16 +66,6 @@
 
 <div id="tabs-1" class="tab-pane">
 
-		<div class="controls controls-row well well-small">
-			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]"
-			class="span2" placeholder="Clave de Habilitación..."
-			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
-			/>
-			<button id="btnHabilSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
-		</div>
-
 		<div id="detailContentHabilitacionTable">
 		<table class="table table-condensed">
 			<thead>
@@ -104,7 +83,7 @@
 				<td class="">{{itemHabilitacion.Articulo.ardescrip}}</td>
 				<td class="span1">{{itemHabilitacion.Explosion.cant}}</td>
 				<td class="span3">
-				<div class="btn-group">
+				<div class="btn-group" ng-show="itemHabilitacion.Costo[0].ArticuloProveedor.proveedor_id>0">
 					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
 						<strong>{{itemHabilitacion.Explosion.pcosto}}</strong>
 						({{itemHabilitacion.Proveedor.prcvepro}})
@@ -112,7 +91,7 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCostoHabilitacion in itemHabilitacion.Costo">
+						<li ng-repeat="itemCostoHabilitacion in itemHabilitacion.Costo" ng-click="setCosto(itemHabilitacion.Explosion.id,itemCostoHabilitacion.ArticuloProveedor.proveedor_id)">
 						{{itemCostoHabilitacion.ArticuloProveedor.costo}} 
 						<small>(
 						<strong>{{itemCostoHabilitacion.Proveedor.prcvepro}}</strong>
@@ -133,16 +112,6 @@
 
 <div id="tabs-2" class="tab-pane">
 
-		<div class="controls controls-row well well-small">
-			<!-- Typeahead term -->
-			<input type="text" maxlength="16" id="material_cve" name="data[Proveedor][material_cve]"
-			class="span2" placeholder="Clave de Servicio..."
-			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:3"
-			/>
-			<button id="btnServicioSubmit" class="btn" type="button"><i class="icon icon-plus-sign"></i> Agregar</button>
-		</div>
-
 		<div id="detailContentServicioTable">
 		<table class="table table-condensed">
 			<thead>
@@ -159,7 +128,7 @@
 				<td class="">{{itemServicio.Articulo.ardescrip}}</td>
 				<td class="span1">{{itemServicio.Explosion.cant}}</td>
 				<td class="span3">
-				<div class="btn-group">
+				<div class="btn-group" ng-show="itemServicio.Costo[0].ArticuloProveedor.proveedor_id>0">
 					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
 						<strong>{{itemServicio.Explosion.pcosto}}</strong>
 						({{itemServicio.Proveedor.prcvepro}})
@@ -167,7 +136,7 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCostoServicio in itemServicio.Costo">
+						<li ng-repeat="itemCostoServicio in itemServicio.Costo" ng-click="setCosto(itemServicio.Explosion.id,itemServicio.ArticuloProveedor.proveedor_id)">
 						{{itemCostoServicio.ArticuloProveedor.costo}}
 						<small>(
 						<strong>{{itemCostoServicio.Proveedor.prcvepro}}</strong>
@@ -206,6 +175,34 @@ function AxAppController( $scope, $http ) {
 	$scope.currentTela=$scope._data.details.tela;
 	$scope.currentHabilitacion=$scope._data.details.habilitacion;
 	$scope.currentServicio=$scope._data.details.servicio;
+
+	$scope.setCosto = function(explosion_id, proveedor_id) {
+		$http.get('/Costeos/setcosto/'+$scope.currentMaster.Articulo.id+
+		'?explosion_id='+explosion_id+'&proveedor_id='+proveedor_id
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope._data=response.data.data;
+
+				$scope.currentMaster=$scope._data.master;
+				$scope.currentTela=$scope._data.details.tela;
+				$scope.currentHabilitacion=$scope._data.details.habilitacion;
+				$scope.currentServicio=$scope._data.details.servicio;
+
+				axAlert(response.data.message, 'success', false);
+
+			}
+			else {
+				if(typeof response.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+			}
+       	});
+
+	}
 
 }
 

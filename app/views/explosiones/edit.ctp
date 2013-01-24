@@ -26,7 +26,7 @@
 			<input type="hidden" maxlength="16" id="TelaId" name="data[Explosion][TelaId]"/>
 
 			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" 
-			class="span2" placeholder="Tela..."
+			class="span2" placeholder="Clave de Tela..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
@@ -128,7 +128,7 @@
 			<input type="hidden" maxlength="16" id="HabilId" name="data[Explosion][HabilId]"/>
 
 			<input type="text" maxlength="16" id="edtHabilCve" name="data[Explosion][HabilCve]"
-			class="span2" placeholder="Material..."
+			class="span2" placeholder="Clave del Material..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
@@ -229,7 +229,7 @@
 			<input type="hidden" maxlength="16" id="ServicioId" name="data[Explosion][ServicioId]"/>
 
 			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]"
-			class="span2" placeholder="Servicio..."
+			class="span2" placeholder="Clave del Servicio..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			/> &nbsp;&nbsp;
