@@ -38,9 +38,15 @@ class FilterComponent extends Object {
     var $fieldFormatting    = array(
                     "string"=>array("%1\$s LIKE", "%%%2\$s%%"),
                     "text"=>array("%1\$s LIKE", "%%%2\$s%%"),
-                    "date"=>array("CAST(%1\$s AS VARCHAR(10)) LIKE", "%2\$s%%"),
-                    "datetime"=>array("CAST(%1\$s AS  VARCHAR(24)) LIKE", "%2\$s%%"),
-                    "timestamp"=>array("CAST(%1\$s AS VARCHAR(24)) LIKE", "%2\$s%%")
+                    "integer"=>array("CAST(%1\$s AS VARCHAR(16)) LIKE", "%2\$s%%"),
+                    "numeric"=>array("CAST(%1\$s AS VARCHAR(16)) LIKE", "%2\$s%%"),
+                    "decimal"=>array("CAST(%1\$s AS VARCHAR(16)) LIKE", "%2\$s%%"),
+                    "currency"=>array("CAST(%1\$s AS VARCHAR(16)) LIKE", "%2\$s%%"),
+                    "float"=>array("CAST(%1\$s AS VARCHAR(16)) LIKE", "%2\$s%%"),
+                    "date"=>array("CAST(%1\$s AS VARCHAR(10)) LIKE", "%%%2\$s%%"),
+                    "datetime"=>array("CAST(%1\$s AS  VARCHAR(24)) LIKE", "%%%2\$s%%"),
+                    "timestamp"=>array("CAST(%1\$s AS VARCHAR(24)) LIKE", "%%%2\$s%%"),
+                    "time"=>array("CAST(%1\$s AS VARCHAR(24)) LIKE", "%%%2\$s%%")
                     );
 
     /**
@@ -54,7 +60,7 @@ class FilterComponent extends Object {
      * @param object $controller the class of the controller which call this component
      * @access public
      */
-    function process(&$controller){
+    public function process(&$controller){
         $this->_prepareFilter($controller);
         $ret = $this->generateCondition($controller, $controller->data);
         return $ret;
@@ -65,7 +71,7 @@ class FilterComponent extends Object {
      * @param object Controller or The model in the controller which has been provided in the post
      * @param array $data data which is posted from the filter
      */
-    function generateCondition($object, $data=false){
+    public function generateCondition($object, $data=false){
         $ret = array();
         if(isset($data) && is_array($data)){
             //Loop for models
@@ -120,7 +126,7 @@ class FilterComponent extends Object {
      * @param object $controller
      * @return void
      */
-    function _prepareFilter(&$controller){
+    public function _prepareFilter(&$controller){
         if(isset($controller->data)){
             foreach($controller->data as $model=>$fields){
                 foreach($fields as $key=>$field){

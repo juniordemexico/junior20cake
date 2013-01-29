@@ -4,22 +4,36 @@
 <?php echo $this->Form->hidden('Articulo.id'); ?>
 
 <div class="page-header">
-<h1>{{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
+<h1>
+{{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
 </h1>
-</div>
 
 <div class="well">
-	Telas: {{total.tela}} <br/>
-	Habilitación: {{total.habilitacion}}<br/>
-	Servicios: {{total.servicio}}<br/>
-	Costeo Total: {{calculateTotal()}}<br/>
+<ul class="thumbnails">
+	<li class="span3"><h4>Telas: <em class="text-info">{{total.tela.importe | currency}}</em></h4></li>
+	<li class="span3"><h4>Habilitación: <em class="text-warning">{{total.habilitacion.importe | currency}}</em></h4></li>
+	<li class="span3"><h4>Servicios: <em class="text-success">{{total.servicio.importe | currency}}</em></h4></li>
+	<li class="span3"><h4>TOTAL: <em class="text-error">{{calculateTotal() | currency}}</em></h4></li>
+</ul>
+<div class="progress">
+  <div class="bar bar-info" style="width: {{total.tela.porcentaje}}%;"></div>
+  <div class="bar bar-warning" style="width: {{total.habilitacion.porcentaje}}%;"></div>
+  <div class="bar bar-success" style="width: {{total.servicio.porcentaje}}%;"></div>
+</div>
+
+<button type="button" class="btn btn-info btn-block" ng-show="1">
+A U T O R I Z A R &nbsp; C O S T E O
+</button>
+
+</div>
+
 </div>
 
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tabs-0" data-toggle="tab">Telas</a></li>
-		<li><a href=" #tabs-1" data-toggle="tab">Habilitación</a></li>
-		<li><a href="#tabs-2" data-toggle="tab">Servicios</a></li>
+		<li class="active"><a href="#tabs-0" data-toggle="tab" class="text-info">Telas</a></li>
+		<li><a href="#tabs-1" data-toggle="tab" class="text-warning">Habilitación</a></li>
+		<li><a href="#tabs-2" data-toggle="tab" class="text-success">Servicios</a></li>
 	</ul>
 
 <div class="tab-content">
@@ -35,6 +49,7 @@
 				<th class="span2">Promedio</th>
 				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
+				<th class="span2">Modificado</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -64,6 +79,7 @@
 
 				</td>
 				<td class="span1"><i class="icon icon-ok" ng-show="itemTela.Explosion.insumopropio"></i></td>
+				<td class="span2"><small>{{itemTela.Explosion.modified}}</small></td>
 			</tr>
 			</tbody>
 		</table>
@@ -82,6 +98,7 @@
 				<th class="span1">Cantidad</th>
 				<th class="span3">Costo</th>
 				<th class="span1">Inventario Propio</th>
+				<th class="span2">Modificado</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -91,7 +108,7 @@
 				<td class="span1">{{itemHabilitacion.Explosion.cant}}</td>
 				<td class="span3">
 				<div class="btn-group" ng-show="itemHabilitacion.Costo[0].ArticuloProveedor.proveedor_id>0">
-					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+					<a class="btn dropdown-toggle btn-warning" data-toggle="dropdown" href="#">
 						<strong>{{itemHabilitacion.Explosion.pcosto}}</strong>
 						({{itemHabilitacion.Proveedor.prcvepro}})
 
@@ -110,6 +127,7 @@
 
 				</td>
 				<td class="span1"><i class="icon icon-ok" ng-show="itemHabilitacion.Explosion.insumopropio"></i></td>
+				<td class="span2"><small>{{itemHabilitacion.Explosion.modified}}</small></td>
 			</tr>
 			</tbody>
 		</table>
@@ -127,6 +145,7 @@
 				<th class="">Descripcion</th>
 				<th class="span2">Cantidad</th>
 				<th class="span3">Costo</th>
+				<th class="span2">Modificado</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -136,15 +155,15 @@
 				<td class="span1">{{itemServicio.Explosion.cant}}</td>
 				<td class="span3">
 				<div class="btn-group" ng-show="itemServicio.Costo[0].ArticuloProveedor.proveedor_id>0">
-					<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+					<a class="btn dropdown-toggle btn-success" data-toggle="dropdown" href="#">
 						<strong>{{itemServicio.Explosion.pcosto}}</strong>
 						({{itemServicio.Proveedor.prcvepro}})
-
+						
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">					
-						<li ng-repeat="itemCostoServicio in itemServicio.Costo" ng-click="setCosto(itemServicio.Explosion.id,itemServicio.ArticuloProveedor.proveedor_id)">
-						{{itemCostoServicio.ArticuloProveedor.costo}}
+						<li ng-repeat="itemCostoServicio in itemServicio.Costo" ng-click="setCosto(itemServicio.Explosion.id,itemCostoServicio.ArticuloProveedor.proveedor_id)">
+						{{itemCostoServicio.ArticuloProveedor.costo}} 
 						<small>(
 						<strong>{{itemCostoServicio.Proveedor.prcvepro}}</strong>
 						{{itemCostoServicio.Proveedor.prnom}}
@@ -153,6 +172,7 @@
   					</ul>
 				</div>
 				</td>
+				<td class="span2"><small>{{itemServicio.Explosion.modified}}</small></td>
 			</tr>
 			</tbody>
 		</table>
@@ -193,7 +213,11 @@ function AxAppController( $scope, $http ) {
 	$scope.currentHabilitacion=$scope._data.details.habilitacion;
 	$scope.currentServicio=$scope._data.details.servicio;
 
-	$scope.total= {global:1 ,tela: 5, habilitacion: 10, servicio: 25};
+	$scope.total= {global: 0,
+					tela: {importe:0,porcentaje:0}, 
+					habilitacion: {importe:0,porcentaje:0}, 
+					servicio: {importe:0,porcentaje:0}
+					};
 
 	$scope.calculateTotal = function() {
 		// Total de Habilitacion
@@ -203,7 +227,7 @@ function AxAppController( $scope, $http ) {
 					(typeof item.Explosion.pcosto!='undefined'?item.Explosion.pcosto:0) 
 					);
 		});
-		$scope.total.tela=total;
+		$scope.total.tela.importe=total;
 
 		// Total de Habilitacion
 		total=0;
@@ -212,7 +236,7 @@ function AxAppController( $scope, $http ) {
 					(typeof item.Explosion.pcosto!='undefined'?item.Explosion.pcosto:0) 
 					);
 		});
-		$scope.total.habilitacion=total;
+		$scope.total.habilitacion.importe=total;
 
 		var total=0;
 		angular.forEach($scope.currentServicio, function(item) {
@@ -220,10 +244,19 @@ function AxAppController( $scope, $http ) {
 					(typeof item.Explosion.pcosto!='undefined'?item.Explosion.pcosto:0) 
 					);
 		});
-		$scope.total.servicio=total;
+		$scope.total.servicio.importe=total;
 
-		$scope.total.global=$scope.total.tela+$scope.total.habilitacion+$scope.total.servicio;
-		
+		// Calculate the Global Total
+		$scope.total.global=$scope.total.tela.importe+
+							$scope.total.habilitacion.importe+
+							$scope.total.servicio.importe;
+
+		// Calculate the group's percentages
+		$scope.total.tela.porcentaje=(100*$scope.total.tela.importe)/$scope.total.global;
+		$scope.total.habilitacion.porcentaje=(100*$scope.total.habilitacion.importe)/$scope.total.global;
+		$scope.total.servicio.porcentaje=(100*$scope.total.servicio.importe)/$scope.total.global;
+
+		// Returns the Global Total
 		return $scope.total.global;
 	}
 

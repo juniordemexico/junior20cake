@@ -21,6 +21,20 @@
 	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
+		<key>app/controllers/components/filter.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>68</integer>
+				<key>line</key>
+				<integer>47</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>13</integer>
+		</dict>
 		<key>app/controllers/costeos_controller.php</key>
 		<dict>
 			<key>caret</key>
@@ -68,14 +82,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>161</integer>
+				<integer>170</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>24</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>9</integer>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -128,10 +142,11 @@
 		<string>app/views/costeos/index.ctp</string>
 		<string>app/views/costeos/edit.ctp</string>
 		<string>app/views/bodegas/ver.ctp</string>
+		<string>app/controllers/components/filter.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1894, 39}, {882, 847}}</string>
+	<string>{{0, 31}, {882, 847}}</string>
 </dict>
 </plist>

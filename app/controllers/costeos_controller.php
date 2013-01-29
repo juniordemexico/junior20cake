@@ -88,42 +88,12 @@ Configure::write ( 'debug', 0 );
 	}
 
 	public function getItem($id=null) {
-		$this->autoRender();
-
-		$out=array('result'=>'','message'=>__('invalid_item', false));
-		
-		if( !$id || !($id>0) ) {
-			echo json_encode($out);
-			return false;
-		}
-		
-		$master=$this->Articulo->findById($id);
-		$details=$this->Articulo->Explosiones->findByArticulo_id($id);
-
-		if($master && is_array($master) && count($master)>0 &&
-			$details && is_array($details) && count($details)>0
-			) {
-			$out=array(
-				'master'=>array(
-					'id'=>$master['Articulo']['id'],
-					'arcveart'=>$master['Articulo']['arcveart'],
-					'ardescrip'=>$master['Articulo']['ardescrip'],
-					'arst'=>$master['Articulo']['arst'],
-					'id'=>$master['Articulo']['id'],
-					),
-				'details'=>array(
-					),
-				);
-			foreach($details as $detail) {
-//				$out['']
-			}
-		}
-		elseif(!$master || !is_array($master) || !(count($master)>0) ) {
-			$out=array('result'=>'error','message'=>'Producto Inválido');
-		}
-		elseif(!$details || !is_array($details) || !(count($details)>0) ) {
-			$out=array('result'=>'error','message'=>'El Producto NO tiene registrada una Explosión');
-		}	
+ 		Configure::write ( 'debug', 0 );
+		$this->layout='json';
+		$this->data=array();
+		$this->data['master']=$this->Articulo->findById($id);
+		$this->data['details']=$this->Explosion->getAllItemsWithAllCosts($id);
+		$this->set('title_for_layout', 'Costeos::'.$this->data['master']['Articulo']['arcveart'] );
 
 		echo json_encode($out);
 	}
