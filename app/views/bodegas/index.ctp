@@ -17,16 +17,16 @@
 	<li class="span4">
 		<div class="thumbnail">
 			<a class="btn btn-large btn-info" href="/Bodegas/ver">
-			<i class="icon icon-white icon-list"></i>
+			<i class="icon icon-white icon-list-alt"></i>
 			Consultar
 			</a>
 		</div>
 	</li>
 	<li class="span4">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodegas/etiquetas">
-			<i class="icon icon-white icon-barcode"></i>
-			Etiquetas
+			<a class="btn btn-large btn-info" href="/Bodegaexistencias">
+			<i class="icon icon-white icon-list-alt"></i>
+			Existencias por Ubicación
 			</a>
 		</div>
 	<li>

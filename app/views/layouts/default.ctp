@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="AxAppOggi" id="top">
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
@@ -15,7 +15,7 @@
 	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- Page's UI especific MVC code -->
-	<?php  //echo $this->AssetCompress->script('webapp.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php echo $this->element('includes_webui', array('request'=>$request, 'session'=>$session)); ?>
 
 	<?php echo $scripts_for_layout; ?>
 
@@ -32,7 +32,7 @@
 			<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
 				
 			<section id="MainSection">
-			<div class="row" id="wrapper">
+			<div class="row" id="wrapper" class="ng-cloak" ng-controller="AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>">
 			<div class="span12" id="content">
 
 				<div class="row" id="formMessagesContainer">
@@ -62,7 +62,7 @@
 <?php if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
 
 			</div> <!-- content -->
-			</div> <!-- wrapper -->
+			</div> <!-- wrapper and ngController AxCtrl_controller_action -->
 			</section> <!-- MainSection -->
 
 <!-- Global Page Footer -->

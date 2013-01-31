@@ -15,14 +15,18 @@
 echo
 	$this->Html->script(array(
 		// Javascript frameworks, libraries and utilities
-
 		'/js_files/core.js',
 		'/js/webui/angular.min.js',
 		'/js/webui/angular-resource.min.js',
-/*		'/js_files/ui.js', */
+		'/js/webui/angular-ui.min.js',
+		'/js/webui/ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js',
 		'/js_files/ui-util.js',
-	  
+		)).CR.
+	CR;
+
 /*
+		'/js_files/ui.js',
+
 		'load-image.min',
 
 		'jquery/jquery.min',
@@ -62,6 +66,4 @@ echo
 		
 		// AxBOS Core Application's Functions, Classes, Helpers, Simbols
 		'ax.core'
-*/				
-		)).CR.
-	CR;
+*/		

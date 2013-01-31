@@ -5,7 +5,7 @@ class CosteosController extends MasterDetailAppController {
 	var $name='Costeos';
 
 	var $uses = array(
-		'Articulo', 'Explosion', 'ArticuloProveedor', 'Linea', 'Marca', 'Temporada'
+		'Articulo', 'Explosion', 'ArticuloProveedor', 'Linea', 'Marca', 'Temporada', 'Proveedor'
 	);
 
 	var $layout = 'ajaxclean';
@@ -13,9 +13,17 @@ class CosteosController extends MasterDetailAppController {
 	var $cacheAction = array('view'
 							);
 
+	function beforeFilter() {
+
+		if(isset($this->data['Costeos'])) {
+			$this->data['Articulo']=$this->data['Costeos'];
+			unset($this->data['Costeos']);
+		}
+
+		parent::beforeFilter();
+	}
 	function index() {
 		$this->layout='default';
-
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
@@ -59,26 +67,32 @@ class CosteosController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));			
 		} 
-Configure::write ( 'debug', 0 );
+		Configure::write ( 'debug', 0 );
 
 		$theData=$this->params['url'];
 		unset($theData['url']);
 		$explosion_id=$theData['explosion_id'];
 		$proveedor_id=$theData['proveedor_id'];
 
-		$this->Explosion->read(null, $explosion_id);
-			if($this->Explosion->saveField('proveedor_id', $proveedor_id)) {
-				$this->data=array();
-				$this->data['result']='ok';
-				$this->data['message']='El Material '.$explosion_id.' cambio al costo del proveedor '.$proveedor_id;
-				$this->data['data']=array();
-				$this->data['data']['master']=$this->Articulo->findById($id);
-				$this->data['data']['details']=$this->Explosion->getAllItemsWithAllCosts($id);
-			}
-			else {
-				$this->data['result']='error';
-				$this->data['message']='Error Guardando Material '.$explosion_id.' cambio al costo del proveedor '.$proveedor_id;
-			}
+		$explosion=$this->Explosion->read(null, $explosion_id);
+		$proveedor=$this->Proveedor->findById($proveedor_id);
+
+		if($this->Explosion->saveField('proveedor_id', $proveedor_id)) {
+			$this->data=array();
+			$this->data['result']='ok';
+			$this->data['message']='El Material '.$explosion['Articulo']['arcveart'].
+									' cambio al Proveedor ('.$proveedor['Proveedor']['prcvepro'].') '.
+									$proveedor['Proveedor']['prnom'];
+			$this->data['data']=array();
+			$this->data['data']['master']=$this->Articulo->findById($id);
+			$this->data['data']['details']=$this->Explosion->getAllItemsWithAllCosts($id);
+		}
+		else {
+			$this->data['result']='error';
+			$this->data['message']='Error Guardando Material '.$explosion['Articulo']['arcveart'].
+									' para el Proveedor  ('.$proveedor['Proveedor']['prcvepro'].') '.
+									$proveedor['Proveedor']['prnom'];
+		}
 /*		
 		echo json_encode(array('result'=>'ok',
 								'message'=>'El Material '.$material_id.' cambio al costo del proveedor '.$proveedor_id,

@@ -35,6 +35,10 @@ class Cliente extends AppModel
 			'type' => 'integer',
 			'length' => 3
 		),
+		'seriefactura' => array(
+			'type' => 'string',
+			'length' => 4
+		),
 	);
 	
 	var $validate = array(
@@ -82,6 +86,21 @@ class Cliente extends AppModel
 				'allowEmpty' => false,
 				'on' => null,
 				'message' => 'Los posibles valores son: 0-Local, 1-Foráneo'
+			)
+		),
+		'seriefactura' => array(
+			'inlist' => array(
+				'rule' => array(
+					'inList',
+					array(
+						'A',
+						'B'
+					)
+				),
+				'required' => false,
+				'allowEmpty' => false,
+				'on' => null,
+				'message' => 'Elige serie A o B'
 			)
 		),
 		'clt' => array(

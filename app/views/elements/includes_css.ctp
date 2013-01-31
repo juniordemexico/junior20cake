@@ -8,8 +8,8 @@ echo
 	$this->Html->css(array(
 	'/css_files/core.css',
 	'/css_files/ui.css',
+	'/css/angular-ui.min.css',	
 	'/css_files/ui-responsive.css',
-	
 	// jQuery's styles and themes 
 //	'jquery-ui/custom-theme/jquery-ui-1.8.16.custom',
 /*

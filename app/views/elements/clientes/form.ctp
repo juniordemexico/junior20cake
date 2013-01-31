@@ -51,6 +51,7 @@
 <?php echo $this->TBS->input('Cliente.cldesc2', array('label' => 'Descuento 2', 'append'=>'%', 'ly_w'=>'1')); ?>
 <?php echo $this->TBS->input('Cliente.cldesc3', array('label' => 'Descuento 3', 'append'=>'%', 'ly_w'=>'1')); ?>
 <?php echo $this->TBS->input('Cliente.clplazo', array('label' => 'Plazo', 'append'=>'Días', 'ly_w'=>'1')); ?>
+<?php echo $this->TBS->input('Cliente.seriefactura', array('label' => 'Facturar con Serie', 'type' => 'text', 'ly_w'=>'1')); ?>
 </div>
 <div id="tabs-3" class="tab-pane">
 <?php echo $this->TBS->input('Cliente.clbancocve', array('label' => 'Su Banco', 'placeholder' => 'Banco del Cliente', 'ly_w'=>'4')); ?>
