@@ -12,7 +12,7 @@
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tabs-0" data-toggle="tab">Telas</a></li>
-		<li><a href="#tabs-1" data-toggle="tab">Habilitacion</a></li>
+		<li><a href="#tabs-1" data-toggle="tab">Habilitación</a></li>
 		<li><a href="#tabs-2" data-toggle="tab">Servicios</a></li>
 	</ul>
 
@@ -25,7 +25,7 @@
 
 			<input type="hidden" maxlength="16" id="TelaId" name="data[Explosion][TelaId]"/>
 
-			<input type="text" maxlength="16" id="edtTelaCve" name="data[Explosion][Telacve]" 
+			<input type="text" maxlength="24" id="edtTelaCve" name="data[Explosion][Telacve]" 
 			class="span2" placeholder="Clave de Tela..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
@@ -63,8 +63,11 @@
 			);
 			?>
 
-			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" placeholder="Trazo..." title="Especifique la cantidad requerida por unidad producida" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]" title="Marcar en caso de ser un insumo propio" />
+			Insumo Propio
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button id="submitTela" class="btn" type="button" 
 			data-url="/Explosiones/add"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
@@ -75,7 +78,7 @@
 			<tr>
 				<th class="span2">Tela</th>
 				<th class="">Descripcion</th>
-				<th class="span2">Promedio</th>
+				<th class="cant">Promedio</th>
 				<th class="span1">Inventario Propio</th>
 				<th class="span1">&nbsp</th>
 			</tr>
@@ -86,7 +89,18 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="cant"><input type="text" 
+								class="cant clickaction detailCantidad" 
+								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
+								title="Especifica la cantidad de la Tela" 
+								data-type="changeaction"
+								data-url="/Explosiones/changeCosto" 
+								data-id="<?php e($item['Explosion']['id']) ?>" 
+								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+								data-confirm=false 
+								value="<?php e($item['Explosion']['cant'])?>" 
+							/>
+				</td>
 				<td class=""><input type="checkbox" 
 								class="clickaction detailToggleInsumoPropio" 
 								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
@@ -127,13 +141,17 @@
 
 			<input type="hidden" maxlength="16" id="HabilId" name="data[Explosion][HabilId]"/>
 
-			<input type="text" maxlength="16" id="edtHabilCve" name="data[Explosion][HabilCve]"
+			<input type="text" maxlength="24" id="edtHabilCve" name="data[Explosion][HabilCve]"
 			class="span2" placeholder="Clave del Material..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
-			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" class="span1" placeholder="Cant..." title="Especifique la cantidad requerida por unidad producida" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" class="detailPropio" id="chkHabilInsumoPropio" name="data[Explosion][HabilPropio]" title="Marcar en caso de ser un insumo propio" />
+			Insumo Propio
+			&nbsp;&nbsp;&nbsp;&nbsp;
+
 			<button id="submitHabil" class="btn" type="button"
 			data-url="/Explosiones/add"
 			>
@@ -177,7 +195,7 @@
 			<tr>
 				<th class="span2">Material</th>
 				<th class="">Descripcion</th>
-				<th class="span2">Cantidad</th>
+				<th class="cant">Cantidad</th>
 				<th class="span1">Inventario Propio</th>
 				<th class="span1">&nbsp</th>
 			</tr>
@@ -187,7 +205,18 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class=""><?php e($item['Explosion']['cant'])?></td>
+				<td class="cant"><input type="text" 
+								class="cant clickaction detailCantidad" 
+								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
+								title="Especifica la cantidad del Material" 
+								data-type="changeaction"
+								data-url="/Explosiones/changeCosto" 
+								data-id="<?php e($item['Explosion']['id']) ?>" 
+								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+								data-confirm=false 
+								value="<?php e($item['Explosion']['cant'])?>" 
+							/>
+				</td>
 				<td class=""><input type="checkbox" 
 								class="clickaction detailToggleInsumoPropio" 
 								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
@@ -226,14 +255,14 @@
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
-			<input type="hidden" maxlength="16" id="ServicioId" name="data[Explosion][ServicioId]"/>
+			<input type="hidden" maxlength="24" id="ServicioId" name="data[Explosion][ServicioId]"/>
 
 			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]"
 			class="span2" placeholder="Clave del Servicio..."
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			/> &nbsp;&nbsp;
-			<input type="text" maxlength="16" id="edtServicioCant" name="data[Explosion][ServicioCant]" class="span1" title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="16" id="edtServicioCant" name="data[Explosion][ServicioCant]" class="span1" placeholder="Cant..." title="Especifique la cantidad requerida por unidad producida" />
 			<button id="submitServicio" class="btn" type="button"
 			data-url="/Explosiones/add"
 			>
@@ -278,7 +307,7 @@
 			<tr>
 				<th class="cveart">Servicio</th>
 				<th class="">Descripcion</th>
-				<th class="span2">Cantidad</th>
+				<th class="cant">Cantidad</th>
 				<th class="span1">Costo</th>
 			</tr>
 			</thead>
@@ -287,7 +316,18 @@
 			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
 				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
 				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="span1"><?php e($item['Explosion']['cant'])?></td>
+				<td class="cant"><input type="text" 
+								class="cant clickaction detailCantidad" 
+								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
+								title="Especifica la cantidad del material" 
+								data-type="changeaction"
+								data-url="/Explosiones/changeCosto" 
+								data-id="<?php e($item['Explosion']['id']) ?>" 
+								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+								data-confirm=false 
+								value="<?php e($item['Explosion']['cant'])?>" 
+							/>
+				</td>
 				<td class=""><button type="button" 
 									class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
@@ -350,6 +390,37 @@ function(result) {
 
 "
 , array('stop' => true));
+
+// Event for Changing an item's costo
+
+$this->Js->get('.detailCantidad')->event(
+'blur', "
+
+var el=$('#'+this.id);
+var theID=el.data('id');
+var theCve=el.data('value');
+var theValue=el.val();
+var theUrl=el.data('url');
+
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theID+'?value='+theValue,
+	success: function (data, textStatus) {
+		if(data=='OK') {
+			axAlert('Insumo ' + theCve + ' Actualizado con Costo ' + theValue, 'success', false);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
 
 // Event for Detail's Checkbox
 

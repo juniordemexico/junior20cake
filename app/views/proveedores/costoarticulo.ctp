@@ -22,7 +22,8 @@
 			<input type="text" maxlength="16" id="edtMaterialCve"  name="data[ArticuloProveedor][MaterialCve]"
 			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			data-auto complete-url="/Articulos/autocomplete/tipo:1"
+			placeholder="Clave del Material..."
 			/>
 
 			<?php
@@ -62,7 +63,7 @@
 			</div>
 			<div class="controls input">
 			<input type="text" maxlength="8" id="edtMaterialPCosto" name="data[ArticuloProveedor][MaterialPCosto]" class="span2"
-			title="Costo segun el proveedor especificado" />
+			placeholder="Costo..." title="Costo segun el proveedor especificado" />
 			</div>
 			<button id="submitMaterial" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
@@ -99,7 +100,20 @@
 			<?php foreach($materiales as $item):?>
 			<tr id="<?php e($item['ArticuloProveedor']['id']);?>" class="t-row">
 				<td class="" title="<?php e($item['Articulo']['ardescrip'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class="precio"><?php e($item['ArticuloProveedor']['costo'])?></td>
+				<td class="precio">
+					<input type="text" 
+						class="cant bluraction detailCosto" 
+						id="detailCantidad_<?php e($item['ArticuloProveedor']['id']) ?>"
+						title="Especifica el Costo del Material" 
+						placeholder="Costo..."
+						data-type="changeaction"
+						data-url="/Proveedores/changeCosto" 
+						data-id="<?php e($item['ArticuloProveedor']['id']) ?>" 
+						data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+						data-confirm=false 
+						value="<?php e($item['ArticuloProveedor']['costo'])?>" 
+					/>
+				</td>
 				<td class="fecha">NO</td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Articulo']['id']); ?>"
@@ -191,7 +205,19 @@
 			<?php foreach($servicios as $item):?>
 			<tr id="<?php e($item['ArticuloProveedor']['id']);?>" class="t-row">
 				<td class="" title="<?php e($item['Articulo']['ardescrip'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class="precio"><?php e($item['ArticuloProveedor']['costo'])?></td>
+				<td class="precio">
+					<input type="text" 
+						class="cant bluraction detailCosto" 
+						id="detailCosto_<?php e($item['ArticuloProveedor']['id'])?>"
+						title="Especifica el Costo del Material" 
+						data-type="changeaction"
+						data-url="/Proveedores/changeCosto" 
+						data-id="<?php e($item['ArticuloProveedor']['id']) ?>" 
+						data-value="<?php e(trim($item['Articulo']['arcveart']));?>"
+						data-confirm=false 
+						value="<?php e($item['ArticuloProveedor']['costo'])?>" 
+					/>
+				</td>
 				<td class="fecha">NO</td>
 				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
 									id="btnDelete_<?php e($item['Articulo']['id']); ?>"
@@ -304,6 +330,37 @@ $.ajax({
 		if(data.substring(0,2)=='OK') {
 			axAlert(data, 'success', false);
 			$('#detailContentServicioTable').load('/Proveedores/detailcostoservicio/'+theProveedorID);
+			return true;
+		}
+		else {
+			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
+			return false;
+		}
+	},
+});
+
+"
+, array('stop' => true));
+
+// Event for Changing an item's costo
+
+$this->Js->get('.detailCosto')->event(
+'blur', "
+var el=$('#'+this.id);
+var theID=el.data('id');
+var theCve=el.data('value');
+var theValue=el.val();
+var theUrl=el.data('url');
+
+if(!(theValue>0)) return;
+
+$.ajax({
+	dataType: 'html', 
+	type: 'post',
+	url: theUrl+'/'+theID+'?costo='+theValue,
+	success: function (data, textStatus) {
+		if(data=='OK') {
+			axAlert('Insumo ' + theCve + ' Actualizado con Costo ' + theValue, 'success', false);
 			return true;
 		}
 		else {

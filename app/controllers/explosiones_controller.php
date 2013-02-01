@@ -189,4 +189,46 @@ class ExplosionesController extends MasterDetailAppController {
 
 	}
 
+	function changeCosto($id=null, $value=-1) {
+		$this->autoRender=false;
+
+		// Check if the ID was submited and if the specified item exists
+		if (!$id) {
+			if(isset($this->params['named']['id'])) {
+				$id=$this->params['named']['id'];
+			}
+			elseif( isset($this->params['url']['id']) ) {
+				$id=$this->params['url']['id'];
+			}
+			else {
+				echo __('invalid_item', true).($id?" (id: $id)":'');			
+				exit;
+			}
+		}
+
+		$this->data=$this->Explosion->read(null, $id);
+		if (!($this->Explosion->id>0) ) {
+				echo __('invalid_item', true).($id?" (id: $id)":'');			
+				exit;			
+		}
+
+		if (!$value || $value<0) {
+			if( isset($this->params['url']['value']) ) {
+				$value=$this->params['url']['value'];
+			}
+			else {
+				echo __('invalid_item', true).($id?" (id: $id)":'');			
+				exit;
+			}
+		}
+
+		// Execute DB Operations
+		if ($this->Explosion->saveField('cant', $value) ) {
+			echo "OK";
+		}
+		else {
+			echo __('item_could_not_be_updated', true)." (id: $id)";				
+		}
+	}
+
 }

@@ -22,6 +22,7 @@ class CosteosController extends MasterDetailAppController {
 
 		parent::beforeFilter();
 	}
+
 	function index() {
 		$this->layout='default';
 		$this->paginate = array('update' => '#content',

@@ -81,39 +81,39 @@ class ProveedoresController extends MasterDetailAppController {
 	public function addCostoArticulo($id=null) {
 		$this->autoRender=false;
 		if(!$id) {
- 			echo __('item_could_not_be_deleted', true)." (id: $id)";
+ 			echo __('item_could_not_be_saved', true)." (id: $id)";
 			exit;
-	} 
+		} 
 
-	if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
-			$material_id=$this->Articulo->findByArcveart($material_cve);
-			if($material_id && isset($material_id['Articulo']['id'])) {
-				$material_id=$material_id['Articulo']['id'];
-				$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
-			}
-			else {
-				echo "NO se encontro $material_cve";
-				exit;
-			}
+		if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
+		$material_id=$this->Articulo->findByArcveart($material_cve);
+		if($material_id && isset($material_id['Articulo']['id'])) {
+			$material_id=$material_id['Articulo']['id'];
+			$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
+		}
+		else {
+			echo "NO se encontro $material_cve";
+			exit;
+		}
 
-			$pcosto=abs($this->params['named']['pcosto']);
+		$pcosto=abs($this->params['named']['pcosto']);
 
-			$record=array('ArticuloProveedor'=>array(
-								'proveedor_id'=>$id,
-								'articulo_id'=>$material_id,
-								'costo'=>$pcosto,
-			));
-			$this->ArticuloProveedor->create();
-			$palabra=($tipoarticulo_id==2?'Servicio': 'Insumo');
-			if( $this->ArticuloProveedor->save($record) ) {
-				echo "OK Costo de $material_cve guardado para este Proveedor";
-				exit;
-			}
-			else {
- 				echo __('item_could_not_be_saved', true)." (id: $material_id)";
-				exit;					
-			}
-			echo "ERROR Indeterminado";
+		$record=array('ArticuloProveedor'=>array(
+							'proveedor_id'=>$id,
+							'articulo_id'=>$material_id,
+							'costo'=>$pcosto,
+		));
+		$this->ArticuloProveedor->create();
+		$palabra=($tipoarticulo_id==2?'Servicio': 'Insumo');
+		if( $this->ArticuloProveedor->save($record) ) {
+			echo "OK Costo de $material_cve guardado para este Proveedor";
+			exit;
+		}
+		else {
+ 			echo __('item_could_not_be_saved', true)." (id: $material_id)";
+			exit;					
+		}
+		echo "ERROR Indeterminado";
 	}
 
 	public function deleteCostoArticulo($id=null) {
@@ -134,6 +134,29 @@ class ProveedoresController extends MasterDetailAppController {
 		else {
  			echo __('item_could_not_be_deleted', true)." (id: $id)";
 		}
+	}
+
+	public function changeCosto($id=null) {
+		$this->autoRender=false;
+		if(!$id) {
+ 			echo __('item_could_not_be_saved', true)." (id: $id)";
+			exit;
+		} 
+
+		if(isset($this->params['url']['id'])) $id=$this->params['url']['id'];
+		if(isset($this->params['url']['costo'])) $costo=abs($this->params['url']['costo']);
+
+		$this->data=$this->ArticuloProveedor->read(null, $id);
+
+		if( $this->ArticuloProveedor->saveField('costo', $costo) ) {
+			echo "OK"; //" El costo se actualizo a $costo";
+			exit;
+		}
+		else {
+ 			echo __('item_could_not_be_saved', true)." (id: $id)";
+			exit;					
+		}
+		echo "ERROR Indeterminado";
 	}
 
 	public function view($id = null) {

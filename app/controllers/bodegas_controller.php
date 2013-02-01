@@ -4,7 +4,7 @@
 class BodegasController extends MasterDetailAppController {
 	var $name='Bodegas';
 
-	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
+	var $uses = array(' ', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
 
 	var $layout = 'bodega';
 
