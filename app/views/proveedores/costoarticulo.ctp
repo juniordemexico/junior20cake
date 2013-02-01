@@ -147,6 +147,7 @@
 			class="span4"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
+			placeholder="Clave del Servicio..."
 			/>
 
 			<?php
@@ -185,7 +186,7 @@
 			</div>
 			<div class="controls input">
 			<input type="text" maxlength="8" id="edtServicioPCosto" name="data[ArticuloProveedor][ServicioPcosto]" 
-			class="span2" title="Costo segun el proveedor especificado" />
+			class="span2" placeholder="Costo..." title="Costo segun el proveedor especificado" />
 			</div>
 			<button id="submitServicio" class="btn" type="button"
 			data-url="/Proveedores/addCostoArticulo"
@@ -209,7 +210,8 @@
 					<input type="text" 
 						class="cant bluraction detailCosto" 
 						id="detailCosto_<?php e($item['ArticuloProveedor']['id'])?>"
-						title="Especifica el Costo del Material" 
+						title="Especifica el Costo del Sevicio"
+						placeholder="Costo..." 
 						data-type="changeaction"
 						data-url="/Proveedores/changeCosto" 
 						data-id="<?php e($item['ArticuloProveedor']['id']) ?>" 
