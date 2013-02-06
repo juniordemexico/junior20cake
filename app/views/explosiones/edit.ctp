@@ -27,8 +27,10 @@
 
 			<input type="text" maxlength="24" id="edtTelaCve" name="data[Explosion][Telacve]" 
 			class="span2" placeholder="Clave de Tela..."
+			ng-model="currentTela.arcveart"
 			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
 			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			title="{{currentTela.ardescrip}}" ui-reset=" 'kaka' "
 			/>
 
 			<?php
@@ -63,9 +65,14 @@
 			);
 			?>
 
-			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]" class="span1" placeholder="Trazo..." title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="8" id="edtTelaCant" name="data[Explosion][TelaCant]"
+				ng-model="currentTela.cant" class="span1"
+				placeholder="Trazo..." 
+				title="Especifique la cantidad requerida por unidad producida" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]" title="Marcar en caso de ser un insumo propio" />
+			<input type="checkbox" class="detailPropio" id="chkTelaInsumoPropio" name="data[Explosion][TelaPropio]"
+				ng-model="currentTela.insumopropio"
+				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button id="submitTela" class="btn" type="button" 
@@ -142,13 +149,21 @@
 			<input type="hidden" maxlength="16" id="HabilId" name="data[Explosion][HabilId]"/>
 
 			<input type="text" maxlength="24" id="edtHabilCve" name="data[Explosion][HabilCve]"
-			class="span2" placeholder="Clave del Material..."
-			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+				class="span2"
+				ng-model="currentHabilitacion.arcveart" ui-reset
+				data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+				data-autocomplete-url="/Articulos/autocomplete/tipo:1"
+			 	placeholder="Clave del Material..."
+				title="{{currentHabilitacion.ardescrip}}"
 			/>
-			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" class="span1" placeholder="Cant..." title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="8" id="edtHabilCant" name="data[Explosion][HabilCant]" 
+				ng-model="currentHabilitacion.cant" class="span1"
+				placeholder="Cant..." title="Especifique la cantidad requerida por unidad producida" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" class="detailPropio" id="chkHabilInsumoPropio" name="data[Explosion][HabilPropio]" title="Marcar en caso de ser un insumo propio" />
+			<input type="checkbox" class="detailPropio" id="chkHabilInsumoPropio" name="data[Explosion][HabilPropio]"
+				ng-model="currentHabilitacion.insumopropio"
+				title="Marcar en caso de ser un insumo propio"
+			/>
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -258,11 +273,16 @@
 			<input type="hidden" maxlength="24" id="ServicioId" name="data[Explosion][ServicioId]"/>
 
 			<input type="text" maxlength="16" id="edtServicioCve" name="data[Explosion][ServicioCve]"
-			class="span2" placeholder="Clave del Servicio..."
-			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
+				ng-model="currentServicio.arcveart" class="span2" 
+				placeholder="Clave del Servicio..." ui-reset
+				data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+				data-autocomplete-url="/Articulos/autocomplete/tipo:2"
+				title="{{currentServicio.ardescrip}}"
 			/> &nbsp;&nbsp;
-			<input type="text" maxlength="16" id="edtServicioCant" name="data[Explosion][ServicioCant]" class="span1" placeholder="Cant..." title="Especifique la cantidad requerida por unidad producida" />
+			<input type="text" maxlength="16" id="edtServicioCant" name="data[Explosion][ServicioCant]" class="span1"
+			ng-model="currentServicio.cant" 
+			placeholder="Cant..." 
+			title="Especifique la cantidad requerida por unidad producida" />
 			<button id="submitServicio" class="btn" type="button"
 			data-url="/Explosiones/add"
 			>
@@ -545,5 +565,45 @@ $.ajax({
 
 "
 , array('stop' => true));
-
 ?>
+
+<script>
+
+var emptyItem={id: null, arcveart: '', ardescrip: '', cant: '', insumopropio: 0};
+
+function AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>( $scope, $http ) {
+
+	/* Main View Configuration, Routes and other symbols */
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+	$scope.base={ 	
+				url: '/<?php e($this->name)?>',
+				controller: '<?php e($this->name)?>',
+				action: '<?php echo $this->action;?>'
+				};
+
+	$scope.user={
+				id: <?php e($session->read('Auth.User.id'));?>,
+				username: '<?php e($session->read('Auth.User.username'))?>',
+				group_id: <?php e($session->read('Auth.User.group_id'))?>
+				};
+				
+	$scope.actions={	setItem: $scope.base.url+'/'+$scope.base.controller+'/'+'additem',
+						changeItem: $scope.base.url+'/'+$scope.base.controller+'/'+'changeitem'
+					};
+
+	/* Sets the data object/array generated by the CakePHP's controller  */
+	// ------------Begin Controller's Data----------------------------------------
+	$scope._data=<?php e(json_encode($this->data));?>;
+	// ------------End Controller's Data------------------------------------------
+
+
+	/* Begins the angular controller's code specific to this View */
+
+	$scope.currentTela= JSON.parse(JSON.stringify(emptyItem));
+	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
+	$scope.currentServicios=JSON.parse(JSON.stringify(emptyItem));
+	
+	
+}
+
+</script>

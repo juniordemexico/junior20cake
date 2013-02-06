@@ -96,6 +96,16 @@ class AppController extends Controller {
 
 		// Set the default page's title
 		$this->pageTitle=$this->name;
+		if(isset($this->data[$this->Models[0]]['cve']) ) 
+			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['cve'];
+		if(isset($this->data[$this->Models[0]]['arcveart']) ) 
+			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['arcveart'];
+		if(isset($this->data[$this->Models[0]]['clcvecli']) ) 
+			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['clcvecli'];
+		if(isset($this->data[$this->Models[0]]['prcvepro']) ) 
+			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['prcvepro'];
+		if(isset($this->data[$this->Models[0]]['vecveven']) ) 
+			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['vecveven'];
 
 		// Check for autocomplete parameters and sanitize them
 /*
@@ -374,7 +384,7 @@ class ReportAppController extends AppController {
  *
  * @package default
  */
-abstract class AjaxController extends AppController {
+abstract class AjaxController extends MasterDetailAppController {
 
 /**
  * Override for the current HTTP-Status code

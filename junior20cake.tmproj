@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/costeos/edit.ctp</string>
+	<string>app/controllers/bodegas_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,61 +21,63 @@
 	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/bodegaexistencias_controller.php</key>
+		<key>app/controllers/bodegas_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>87</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>243</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>214</integer>
 		</dict>
-		<key>app/controllers/costeos_controller.php</key>
+		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>29</integer>
+				<integer>214</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>3</integer>
+			<integer>189</integer>
 		</dict>
-		<key>app/models/artmovbodegadetail.php</key>
+		<key>app/views/bodegas/entradas.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>7</integer>
+				<integer>323</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/artmovbodegaexistencia.php</key>
-		<dict>
-			<key>caret</key>
+			<integer>293</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>323</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>26</integer>
+				<key>line</key>
+				<integer>323</integer>
+			</dict>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -84,69 +86,27 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>218</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>185</integer>
-		</dict>
-		<key>app/views/costeos/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>47</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/includes_webui.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>4</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/requestdata.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>53</integer>
-				<key>line</key>
-				<integer>3</integer>
+				<integer>228</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>197</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>224</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>53</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>228</integer>
 			</dict>
 		</dict>
 		<key>app/views/helpers/embed.php</key>
@@ -163,21 +123,48 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>app/views/invfisicosmovil/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>203</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>189</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>199</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>203</integer>
+			</dict>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/controllers/bodegaexistencias_controller.php</string>
-		<string>app/views/costeos/index.ctp</string>
-		<string>app/controllers/costeos_controller.php</string>
+		<string>app/controllers/explosiones_controller.php</string>
 		<string>app/views/costeos/edit.ctp</string>
-		<string>app/views/elements/requestdata.ctp</string>
-		<string>app/models/artmovbodegadetail.php</string>
-		<string>app/models/artmovbodegaexistencia.php</string>
-		<string>app/views/elements/includes_webui.ctp</string>
+		<string>app/views/bodegas/entradas.ctp</string>
+		<string>app/controllers/bodegas_controller.php</string>
+		<string>app/views/invfisicosmovil/index.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1881, 35}, {882, 847}}</string>
+	<string>{{-1847, -10}, {872, 836}}</string>
 </dict>
 </plist>

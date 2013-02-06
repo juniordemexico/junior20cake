@@ -64,7 +64,7 @@ class DATABASE_CONFIG {
 		'driver' => 'firebird',
 		'persistent' => true,
 		'host' => '127.0.0.1',
-		'port' => '3050',
+		'port' => 3050,
 		'login' => 'SYSDBA',
 		'password' => 'larrykey',
 		'database' => '/home/db/JUNIOR.FDB',
@@ -72,6 +72,21 @@ class DATABASE_CONFIG {
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);
+
+	public $default = array(
+		'driver' => 'mongodb.mongodbSource',
+		'database' => 'driver(DATABASE_NAME)',
+		'host' => '127.0.0.1',
+		'port' => 27017,
+		/* optional auth fields
+		'login' => 'mongo',	
+		'password' => 'awesomeness',
+		'replicaset' => array('host' => 'mongodb://hoge:hogehoge@localhost:27021,localhost:27022/blog', 
+		                      'options' => array('replicaSet' => 'myRepl')
+				     ),
+		*/
+	);  
+
 /*
 	var $default = array(
 		'driver' => 'firebird',

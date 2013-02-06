@@ -4,11 +4,13 @@
 class BodegasController extends MasterDetailAppController {
 	var $name='Bodegas';
 
-	var $uses = array(' ', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
+	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
 
 	var $layout = 'bodega';
 
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
+
+	var $printLabelCounter=0;
 	
 	public function beforeFilter() {
 		if(isset($this->data['Bodega'])) {
@@ -88,14 +90,14 @@ class BodegasController extends MasterDetailAppController {
 					$theData['color_id']=$rsfirstcolor['ArticuloColor']['color_id'];
 				}
 			}
-/*
+
 			if(!isset($theData['selectedprinter']) || !($theData['selectedprinter']>0) ) {
 				$this->currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 			}
 			else {
 				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
 			}
-*/
+
 
 //				$tipoartmovinv_id=;
 			
@@ -123,15 +125,39 @@ class BodegasController extends MasterDetailAppController {
 				$data['id']=$this->Artmovbodegadetail->id;
 				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
-//					$this->_printlabel($data);
+					$this->printLabelCounter=0;
+					if(!isset($theData['printlabelperpackage']) || !$theData['printlabelperpackage'] ) {
+						// Etiquetas Individuales
+						$unidades=$data['cant'];
+						$paquetes=0;
+						$data['label_count']=$unidades;
+						$data['cant']=1;
+					}
+					else {
+						// Etiquetas Por Paquetes
+						$paquetes=(int)($data['cant']/10);
+						$unidades=$data['cant']-($paquetes*10);
+
+						// Imprime Paquetes
+						$data['cant']=10;
+						$data['label_count']=$paquetes;
+						$this->_printlabel($data);						
+
+						// Imprime Unidades
+						$data['cant']=1;
+						$data['label_count']=$unidades;
+						$this->_printlabel($data);					
+					}
 				}
 
 				// Success...
 				$out=array(
 					'result'=>'recibido',
-					'message'=>'GUARDADO MARBETE: '.$data['id'].(isset($theData['printlabel']) && $theData['printlabel']?' Impreso en '.$this->currentPrinter['cve']:'')
+					'message'=>'Transacción Guardada ('.$data['id'].') '.
+							(isset($theData['printlabel']) && $theData['printlabel']?
+							' Impresas '.($paquetes+$unidades).' etiquetas en '.$this->currentPrinter['cve']:
+							'')
 				);
-
 			}
 			else {
 				$out=array(
@@ -147,6 +173,7 @@ class BodegasController extends MasterDetailAppController {
 			$out=array(
 				'result'=>'error',
 				'message'=>'Error en la Solicitud'.(
+					(!isset($theData['tipoartmovbodega_id']) || !is_numeric($theData['tipoartmovbodega_id']) ? ' Falta el Tipo de Movimiento.' : '').
 					(!isset($theData['articulo_id']) || !($theData['articulo_id']>0) ? ' Falta el Articulo.' : '').
 					(!isset($theData['color_id']) || !($theData['color_id']>0) ? ' Falta el Color.' : '').
 					(!isset($theData['talla_index']) || !($theData['talla_index']>=0) ? ' Falta la Talla.' : '').
@@ -202,10 +229,28 @@ class BodegasController extends MasterDetailAppController {
 		if(!isset($data['talla_index']) || !($data['talla_index']>=0) ) $data['talla_index']=0;
 		$rstalla=$this->Talla->findById($rs['Articulo']['talla_id']);
 		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$data['talla_index']]):'';
+
+
+		// Get Label's Number of Copies
+		if(!isset($data['label_count']) || !is_numeric($data['label_count']) || !($data['label_count']>0) ) {
+			$label_count=1;
+		}
+		else {
+			$label_count=$data['label_count'];
+		}
+
+		// Get Label's 'Cantidad' field (number of items or piezes)
+		if(!isset($data['cant']) || !is_numeric($data['cant']) || !($data['cant']>0) ) {
+			$cant=$data['cant']=1;
+		}
+		else {
+			$cant=$data['cant'];
+		}
 		
 		$rsuser=$this->User->findById($data['user_id']);
 		$username=$rsuser['User']['username'];
 		$rs=$this->Articulo->findById($data['articulo_id']);
+		
 		if($rs) {
 			$label='
 
@@ -216,16 +261,14 @@ A450,025,0,4,1,1,N,"Oper: '.$username.'"
 A025,75,0,5,1,1,N,"'.$articulo_cve.'"
 A025,150,0,5,1,1,N,"'.$color_cve.'"
 A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
-A450,225,0,5,1,1,N,"CANT:'.(int)$data['cant'].'"
-B050,300,0,1,2,3,75,N,"t%p,id%'.$data['articulo_id'].',c%'.$data['color_id'].',t%'.$data['talla_index'].'"
-A050,400,0,4,1,1,N,"MARBETE: '.$data['id'].'"
-A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
-B050,425,0,1,4,6,100,N,"t%m,id%'.$data['id'].'"
-A050,535,0,4,1,1,N,"'.(abs($data['tipomovinvfisico_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
-P1
-';				
+A450,225,0,5,1,1,N,"CANT: *'.$cant.'*"
+B050,300,0,1,2,3,75,N,"t%p,id%'.$data['articulo_id'].',c%'.$data['color_id'].',t%'.$data['talla_index'].',p%'.$data['cant'].'"
+A050,400,0,4,1,1,N,"TRANSACCION: '.$data['id'].'"
+B050,425,0,1,4,6,100,N,"t%t,id%'.$data['id'].'"
+P'.$label_count.'
+';
 			$filename='/home/www/junior20cake/app/webroot/'.
-					'files/tmp/tmp.marbete.'.$data['id'].'.label.test.txt';
+					'files/tmp/tmp.'.$data['id'].'.'.($this->printLabelCounter++).'.label.txt';
 			$this->Axfile->StringToFile($filename, $label);
 
 			$rsprinter=$this->Printer->findById($this->currentPrinter['id']);
@@ -236,6 +279,13 @@ P1
 			}
 		}
 		return false;
+
+/*
+A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
+
+A050,535,0,4,1,1,N,"'.(abs($data['tipomovinvfisico_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
+
+*/
 	}
 
 	public function getItemByCve($cve=null) {

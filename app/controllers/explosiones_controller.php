@@ -212,6 +212,13 @@ class ExplosionesController extends MasterDetailAppController {
 				exit;			
 		}
 
+		if( isset($this->params['url']['value']) && $this->params['url']['value']>0) {
+			$value=$this->params['url']['value'];
+		}
+		else {
+			return( e(json_encode(array('result'=>'error', 'mesage'=>__('invalid_item', true))) );
+		}
+		
 		if (!$value || $value<0) {
 			if( isset($this->params['url']['value']) ) {
 				$value=$this->params['url']['value'];
