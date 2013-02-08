@@ -67,7 +67,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 						'name' => trim($result['Factura']['farefer']),
 						'download' => true,
 						'extension' => $format,
-						'path' => APP . 'files'.DS.'facturaselectronicas' . DS);
+						'path' => APP . 'files'.DS.'facturaselectronicas'.DS. $format . DS);
 		$this->set($params);
 	}
 

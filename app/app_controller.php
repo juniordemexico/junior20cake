@@ -526,3 +526,22 @@ abstract class AjaxController extends MasterDetailAppController {
 	}
 
 }
+
+/*
+
+JSON RESPONSES FOR PAGINATION
+
+public $paginate = array(
+    'limit' => 25,
+    'order' => array(
+        'User.name' => 'asc'
+    )
+);
+
+public function index() {
+	$users = $this->paginate('User');
+	if ($this->request->is('ajax')) return new CakeResponse(array('body' => json_encode($this->paginate())));
+	$this->set('users', $users);
+}
+
+*/

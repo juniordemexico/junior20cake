@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/bodegas_controller.php</string>
+	<string>app/app_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,19 +21,33 @@
 	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
+		<key>app/app_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>535</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>508</integer>
+		</dict>
 		<key>app/controllers/bodegas_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>87</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>243</integer>
+				<integer>432</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>214</integer>
+			<integer>410</integer>
 		</dict>
 		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
@@ -49,35 +63,33 @@
 			<key>firstVisibleLine</key>
 			<integer>189</integer>
 		</dict>
+		<key>app/models/behaviors/json_column.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>105</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>67</integer>
+		</dict>
 		<key>app/views/bodegas/entradas.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>10</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>323</integer>
+				<integer>115</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>293</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>6</integer>
-				<key>line</key>
-				<integer>323</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>26</integer>
-				<key>line</key>
-				<integer>323</integer>
-			</dict>
+			<integer>97</integer>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -160,11 +172,13 @@
 		<string>app/views/costeos/edit.ctp</string>
 		<string>app/views/bodegas/entradas.ctp</string>
 		<string>app/controllers/bodegas_controller.php</string>
+		<string>app/models/behaviors/json_column.php</string>
+		<string>app/app_controller.php</string>
 		<string>app/views/invfisicosmovil/index.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1847, -10}, {872, 836}}</string>
+	<string>{{419, 37}, {872, 836}}</string>
 </dict>
 </plist>

@@ -264,6 +264,7 @@ A025,225,0,5,1,1,N,"TALLA: '.$talla_label.'"
 A450,225,0,5,1,1,N,"CANT: *'.$cant.'*"
 B050,300,0,1,2,3,75,N,"t%p,id%'.$data['articulo_id'].',c%'.$data['color_id'].',t%'.$data['talla_index'].',p%'.$data['cant'].'"
 A050,400,0,4,1,1,N,"TRANSACCION: '.$data['id'].'"
+A450,400,0,4,1,1,N,"REFER: '.$data['folio'].'"
 B050,425,0,1,4,6,100,N,"t%t,id%'.$data['id'].'"
 P'.$label_count.'
 ';
