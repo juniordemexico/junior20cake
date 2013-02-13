@@ -97,7 +97,13 @@ class BodegasController extends MasterDetailAppController {
 			else {
 				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
 			}
-
+			if(isset($theData['printlabelperpackage'])) {
+				if($theData['printlabelperpackage']==1 || $theData['printlabelperpackage']=='1' ||
+					$theData['printlabelperpackage']=='true' || $theData['printlabelperpackage']==true)
+					$theData['printlabelperpackage']=true;
+				else
+					$theData['printlabelperpackage']=false;					
+			}
 
 //				$tipoartmovinv_id=;
 			
@@ -126,12 +132,13 @@ class BodegasController extends MasterDetailAppController {
 				$data['created']=date('Y/m/d H:i:s');
 				if(isset($theData['printlabel']) && $theData['printlabel']) {
 					$this->printLabelCounter=0;
-					if(!isset($theData['printlabelperpackage']) || !$theData['printlabelperpackage'] ) {
+					if(!isset($theData['printlabelperpackage']) || !$theData['printlabelperpackage']) {
 						// Etiquetas Individuales
 						$unidades=$data['cant'];
 						$paquetes=0;
-						$data['label_count']=$unidades;
+						$data['label_count']=$data['cant'];
 						$data['cant']=1;
+						$this->_printlabel($data);						
 					}
 					else {
 						// Etiquetas Por Paquetes
@@ -141,12 +148,12 @@ class BodegasController extends MasterDetailAppController {
 						// Imprime Paquetes
 						$data['cant']=10;
 						$data['label_count']=$paquetes;
-						$this->_printlabel($data);						
+						if($paquetes>0) $this->_printlabel($data);						
 
 						// Imprime Unidades
 						$data['cant']=1;
 						$data['label_count']=$unidades;
-						$this->_printlabel($data);					
+						if($unidades>0) $this->_printlabel($data);					
 					}
 				}
 
@@ -232,7 +239,7 @@ class BodegasController extends MasterDetailAppController {
 
 
 		// Get Label's Number of Copies
-		if(!isset($data['label_count']) || !is_numeric($data['label_count']) || !($data['label_count']>0) ) {
+		if(!isset($data['label_count']) || !is_numeric($data['label_count']) || !($data['label_count']>=1) ) {
 			$label_count=1;
 		}
 		else {
@@ -240,7 +247,7 @@ class BodegasController extends MasterDetailAppController {
 		}
 
 		// Get Label's 'Cantidad' field (number of items or piezes)
-		if(!isset($data['cant']) || !is_numeric($data['cant']) || !($data['cant']>0) ) {
+		if(!isset($data['cant']) || !is_numeric($data['cant']) || !($data['cant']>=1) ) {
 			$cant=$data['cant']=1;
 		}
 		else {
@@ -251,7 +258,7 @@ class BodegasController extends MasterDetailAppController {
 		$username=$rsuser['User']['username'];
 		$rs=$this->Articulo->findById($data['articulo_id']);
 		
-		if($rs) {
+		if($data['label_count']<>0 && $rs) {
 			$label='
 
 N
@@ -275,7 +282,7 @@ P'.$label_count.'
 			$rsprinter=$this->Printer->findById($this->currentPrinter['id']);
 			if($rsprinter && isset($rsprinter['Printer']['id']) && $rsprinter['Printer']['id']>0 ) {
 				$this->currentPrinter=$rsprinter['Printer'];
-				system("lpr -P ".$this->currentPrinter['printqueue']." $filename > /dev/null");
+			//	system("lpr -P ".$this->currentPrinter['printqueue']." $filename > /dev/null");
 				return true;
 			}
 		}

@@ -131,7 +131,15 @@
   	<button type="submit" id="submit" value="sumbit"
 		style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
   </div>
-  <span class="help-inline"><em class="text-info">Último Mensaje: <strong>{{lastMessage}}</strong></em></span>
+  <div id="divUltimoMensaje" style="overflow-y: scroll; min-height: 32px; max-height: 150px;">
+	<ul>
+	<li ng-repeat="lastMessage in lastMessages">
+		<span class="help-inline">
+		<em class="text-info">Último Mensaje: <strong>{{lastMessage}}</strong></em>
+		</span>
+	</li>
+	</ul>
+  </div>
 </div>
 
 <div id="cancelContainer" class="section-container" style="margin-top: 32px;">
@@ -145,7 +153,7 @@
 	</div>
 </div>
 
-<div id="printContainer" class="section-container" style="margin-top: 32px;">
+<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
 	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
 	<div class="control-group">
  			<div class="input-append">
@@ -268,6 +276,7 @@ function AxAppController( $scope, $http ) {
 	$scope.lastCve='';
 	$scope.lastUbicacionCve='';		// This is the Controller's Ubication Model
 	$scope.lastMessage='';
+	$scope.lastMessages=[];
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
 	$scope.printLabel='';
@@ -278,7 +287,7 @@ function AxAppController( $scope, $http ) {
 
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
 
-	$scope.reprintLabel = false;  // For Isolated Label Print or Reprint
+	$scope.reprintLabel = '';  // For Isolated Label Print or Reprint
 
 	$scope.printLabel = false;  // We need to print a barcode label after save the data?
 	$scope.printLabelPerPackage = true;  // Print one label per Package
@@ -316,7 +325,6 @@ function AxAppController( $scope, $http ) {
 		}
 
 		$scope.disableSaveBtn=true;
-		
 		$http.get('/Bodegas/addtransaction?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
@@ -326,7 +334,7 @@ function AxAppController( $scope, $http ) {
 				'&tipoartmovbodega_id='+$scope.currentTipomov.id+
 				'&folio='+$scope.currentFolio+
 				'&printlabel='+$scope.printLabel+
-				'&printlabelperpackage='+$scope.printLabelPerPackage+
+				'&printlabelperpackage='+($scope.printLabelPerPackage?'1':'0')+
 				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
 			$scope.lastMessage=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
