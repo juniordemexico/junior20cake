@@ -197,11 +197,11 @@ class BodegasController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			exit;
 		}
-		$data=$this->Invfisicodetail->findById($id);
-		if($data && isset($data['Invfisicodetail']['id']) && $data['Invfisicodetail']['id']>0) {
-			$this->_printlabel($data['Invfisicodetail']);
-			$this->Session->setFlash('Transacción <strong>'.$data['Invfisicodetail']['articulo_id'].'</strong> '.
-									'Capturado el <strong>'.$data['Invfisicodetail']['created'].'</strong> '. 
+		$data=$this->Artmovbodegadetail->findById($id);
+		if($data && isset($data['Artmovbodegadetail']['id']) && $data['Artmovbodegadetail']['id']>0) {
+			$this->_printlabel($data['Artmovbodegadetail']);
+			$this->Session->setFlash('Transacción <strong>'.$data['Artmovbodegadetail']['articulo_id'].'</strong> '.
+									'Capturado el <strong>'.$data['Artmovbodegadetail']['created'].'</strong> '. 
 									'Se imprimió en '.$this->currentPrinter['cve'].'.',
 									'success');
 		}
@@ -282,7 +282,7 @@ P'.$label_count.'
 			$rsprinter=$this->Printer->findById($this->currentPrinter['id']);
 			if($rsprinter && isset($rsprinter['Printer']['id']) && $rsprinter['Printer']['id']>0 ) {
 				$this->currentPrinter=$rsprinter['Printer'];
-			//	system("lpr -P ".$this->currentPrinter['printqueue']." $filename > /dev/null");
+				system("lpr -P ".$this->currentPrinter['printqueue']." $filename > /dev/null");
 				return true;
 			}
 		}
@@ -291,9 +291,34 @@ P'.$label_count.'
 /*
 A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
 
-A050,535,0,4,1,1,N,"'.(abs($data['tipomovinvfisico_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
+A050,535,0,4,1,1,N,"'.(abs($data['Artmovbodegadetail_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
 
 */
+	}
+
+	function cancel($id=null) {
+		if(!$id || !is_numeric($id) || !($id>0)) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			exit;
+		}
+		$data=$this->Artmovbodegadetail->findById($id);
+		if($data && isset($data['Artmovbodegadetail']['id']) && $data['Artmovbodegadetail']['id']>0) {
+			$this->Artmovbodegadetail->read(null, $id);
+			if($this->Artmovbodegadetail->saveField('st', 'C')) {
+				$this->Session->setFlash('Transacción <strong>'.$data['Artmovbodegadetail']['articulo_id'].'</strong> '.
+										'Capturada el <strong>'.$data['Artmovbodegadetail']['created'].'</strong> '.
+										'SE CANCELÓ.',
+										'success');				
+			}
+			else {
+				$this->Session->setFlash('La transacción <strong>'.$id.'</strong> NO se pudo Cancelar', 
+										'error');				
+			}
+		}
+		else {
+			$this->Session->setFlash('La transacción <strong>'.$id.'</strong> NO Existe', 
+									'error');			
+		}
 	}
 
 	public function getItemByCve($cve=null) {

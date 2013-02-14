@@ -22,9 +22,7 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 				<th class="esedo"><?php echo $form->text('Estado.esedo',array('label' => '', 'type' => 'search', 'maxLength' => '32', 'placeholder' => 'Estado', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('prst',array('label' => '', 'type' => 'search', 'maxLength' => '1', 'placeholder' => 'ST', 'class' => 'search-query'));?></th>
 				<th class="id">
-				<?php
-				echo $this->Js->submit('Filtrar', array('update' => '#content'));
-				?>
+				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>	
 			</tr>
 			<tr>

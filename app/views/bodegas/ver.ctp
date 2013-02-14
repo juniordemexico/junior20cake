@@ -27,9 +27,7 @@ echo $form->create('Bodega', array('inputDefaults' => array(
 				<th class="st"><?php echo $form->text('st', array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query st'));?></th>
 				<th class="cveart"><?php echo $form->text('User.username', array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Usuario...', 'class' => 'search-query st'));?></th>
 				<th class="id">
-				<?php
-				echo $this->Js->submit('Filtrar', array('update' => '#content'));
-				?>
+				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>
 			</tr>
 			<tr class="row-labels">

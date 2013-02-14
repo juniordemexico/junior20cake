@@ -469,8 +469,8 @@ array('inline'=>false)
 		$formOptions = array('div');
 		list($options, $htmlOptions) = $this->Js->_getHtmlOptions($options, $formOptions);
 		if( isset($options['escape']) ) $htmlOptions['escape']=$options['escape'];
-		
-		$out = $this->Form->submit($caption, $htmlOptions);
+		$htmlOptions['type']='submit';
+		$out = $this->Form->button($caption, $htmlOptions);
 
 		$this->Js->get('#' . $htmlOptions['id']);
 

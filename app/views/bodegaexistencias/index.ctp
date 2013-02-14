@@ -22,9 +22,7 @@ echo $form->create('Bodegaexistencia', array('inputDefaults' => array(
 				<th class="cant"><?php echo $form->text('cant',array('label' => false, 'type' => 'number', 'maxLength' => '8', 'placeholder'=>'Existencia...', 'class' => 'search-query cant'));?></th>
 				<th class="refer"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Ubicación...', 'class' => 'search-query refer'));?></th>
 				<th class="id">
-				<?php
-				echo $this->Js->submit('Filtrar', array('update' => '#content'));
-				?>
+				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>
 			</tr>
 			<tr class="row-labels">

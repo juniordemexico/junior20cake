@@ -24,7 +24,7 @@ echo $form->create('Cliente',array('inputDefaults' => array(
 				<th class="cveven"><?php echo $form->text('Vendedor.vecveven',array('type' => 'search', 'maxLength' => '4', 'placeholder' => 'Vendedor', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('clst',array('type' => 'search', 'maxLength' => '1', 'placeholder' => 'st', 'class' => 'search-query'));?></th>
 				<th class="id">
-				<?php echo $this->TBS->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
+				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>	
 			</tr>
 			<tr class="row-labels">

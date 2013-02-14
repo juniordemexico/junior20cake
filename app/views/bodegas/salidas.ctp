@@ -65,33 +65,81 @@
 </div>
 
 <div id="cantidadContainer" class="section-container" style="margin-top: 32px;">
-	<legend><span class="text-info">Cantidad de Salida</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></em></legend>
+	<legend><span class="text-info">Cantidad</span> &nbsp;&nbsp;<strong><em>{{cantidad}}</em></strong></em>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-small" ng-click="minusCant(1)">&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-small" ng-click="plusCant(1)">&nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-small" ng-click="minusCant(10)">&nbsp;&nbsp;&nbsp;-10&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-small" ng-click="plusCant(10)">&nbsp;&nbsp;+10&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-small" ng-click="minusCant(100)">&nbsp;&nbsp;-100&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-small" ng-click="plusCant(100)">&nbsp;&nbsp;+100&nbsp;&nbsp;&nbsp;</button>
+		</div>
+	</legend>
 	<div class="control-group">
 		<div class="input">
-   			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad" class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
+    			<input type="text" id="edtcantidad" name="edtCantidad" ng-model="cantidad"
+ 					ng-change="calculateTotal()"
+					class="input-large" title="Talla {{currentTalla.label}}" placeholder="Cantidad en Talla  {{currentTalla.label}}" />
   		</div>
     	<span class="help-inline hide">&nbsp;</span>
 	</div>
-	<div class="btn-group">
-		<button type="button" class="btn btn-small" ng-click="minusCant(1)">&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(1)">&nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-small" ng-click="minusCant(10)">&nbsp;&nbsp;&nbsp;-10&nbsp;&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(10)">&nbsp;&nbsp;&nbsp;+10&nbsp;&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-small" ng-click="minusCant(100)">&nbsp;&nbsp;&nbsp;-100&nbsp;&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-small" ng-click="plusCant(100)">&nbsp;&nbsp;&nbsp;+100&nbsp;&nbsp;&nbsp;</button>
-	</div>
-	<br/><br/>
 </div>
 
+<div id="printlabelsContainer" class="section-container" style="margin-top: 40px;">
+	<legend><span class="text-info">Etiquetas</span> &nbsp;&nbsp;<strong ng-show="printLabel"><em>{{currentPrinter.cve}} &nbsp;&nbsp;
+	<small ng-show="printLabelPerPackage">( {{etiquetas.paquetes}} paquetes. {{etiquetas.unidades}} pzas. )</small>
+	<small ng-show="!printLabelPerPackage">( {{cantidad}} pzas. )</small>
+	</em></strong>
+		<div class="btn-group pull-right">
+			<button
+				type="button" 
+				class="btn btn-small" 
+				id="btnPrinterSelect{{$index}}"
+				ng-model="currentPrinter"
+				ng-repeat="onePrinter in printer"
+				ng-click="$parent.currentPrinter=$parent.printer[$index]"
+				>
+				{{onePrinter.cve}}
+			</button>
+		</div>
 
-<div id="actionsContainer" class="section-container" style="margin-top: 24px;">
+	</legend>
+	
+  	<div class="control-row">
+    	<label class="checkbox" for="printlabel"> Imprimir Etiquetas de Esta Salida
+    		<input type="checkbox" id="printlabel" name="printLabel" 
+				ng-model="printLabel" class="checkbox"
+			/>
+  		</label>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+    	<label class="checkbox" for="printlabelperpackage" ng-disabled="!printLabel"
+				title="Seleccionar para UNA Etiqueta Por Paquete. Y UNA por Pieza para los Picos.">
+			Por Paquetes &nbsp;&nbsp;<small>(de 10 unidades)</small>
+    		<input type="checkbox" id="printlabelperpackage" name="printLabelPerPackage" 
+				ng-model="printLabelPerPackage" ng-disabled="!printLabel"
+				class="checkbox"
+			/>
+  		</label>
+	</div>
+</div>
+
+<div id="actionsContainer" class="section-container" style="margin-top: 36px;">
   <div class="form-actions section-container">
-  	<button ng-click="save()" ng-disabled="disableSaveBtn"
-		type="button" class="btn btn-primary btn-block">Guardar</button>
+  	<button ng-click="save()" type="button" class="btn btn-primary btn-block">
+		Guardar
+	</button>
   	<button type="submit" id="submit" value="sumbit"
 		style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
   </div>
-  <span class="help-inline"><em class="text-info">Último Mensaje: <strong>{{lastMessage}}</strong></em></span>
+  <div id="divUltimoMensaje" style="overflow-y: scroll; min-height: 32px; max-height: 150px;">
+	<ul>
+	<li ng-repeat="lastMessage in lastMessages">
+		<span class="help-inline">
+		<em class="text-info">Último Mensaje: <strong>{{lastMessage}}</strong></em>
+		</span>
+	</li>
+	</ul>
+  </div>
 </div>
 
 <div id="cancelContainer" class="section-container" style="margin-top: 32px;">
@@ -105,14 +153,16 @@
 	</div>
 </div>
 
-<div id="printContainer" class="section-container" style="margin-top: 32px;">
+<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
 	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
 	<div class="control-group">
  			<div class="input-append">
-      		<input type="text" id="printlabel" name="printLabel" ng-model="printLabel" placeholder="Clave del Producto..." />
-			<button type="button" class="btn btn-primary" ng-click="requestPrintLabel()"><i class="icon icon-print icon-white"></i> Imprimir</button>
+      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Clave del Producto..." />
+			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()">
+				<i class="icon icon-print icon-white"></i> Imprimir
+			</button>
     		</div>
-     <span class="help-inline" ng-show="printLabelMessage"><strong><em class="text-warning">{{printLabelMessage}}</em></strong></span>
+     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
 	</div>
 </div>
 
@@ -215,8 +265,6 @@ function AxAppController( $scope, $http ) {
 	$scope.ubicacion=ubicacion;			// This is the Controller's Ubication Model
 	$scope.tipomov = tipomov;			// This is the Controller's Transaction Type
 	
-	$scope.printLabel = true;  // We need to print a barcode label after save the data?
-
 	$scope.currentFolio='';
 	$scope.currentTalla={};
 	$scope.currentColor={};
@@ -228,6 +276,7 @@ function AxAppController( $scope, $http ) {
 	$scope.lastCve='';
 	$scope.lastUbicacionCve='';		// This is the Controller's Ubication Model
 	$scope.lastMessage='';
+	$scope.lastMessages=[];
 	$scope.lastScanInput = '';	// Holds the last processed scanner read
 
 	$scope.printLabel='';
@@ -235,16 +284,28 @@ function AxAppController( $scope, $http ) {
 
 	$scope.cancelTransaction='';
 	$scope.cancelTransactionMessage='';
-	
+
 	$scope.cantidad=0;			// This is the Controller's Ubication Model
+
+	$scope.reprintLabel = '';  // For Isolated Label Print or Reprint
+
+	$scope.printLabel = false;  // We need to print a barcode label after save the data?
+	$scope.printLabelPerPackage = true;  // Print one label per Package
+	$scope.etiquetas={paquetes: 0, unidades: 0, unidadesxpaquete: 10};
 	
 	// We have all the required data in our form?
 	$scope.disableSaveBtn=false;
-/*
-	$scope.isDataComplete = function() {
-		return false;  
-	};
-*/	
+
+
+	$scope.calculateTotal = function() {
+		var paquetes=0;
+		var unidades=0;
+		var unidadesxpaquete=$scope.etiquetas.unidadesxpaquete;
+		$scope.etiquetas.paquetes=Math.floor($scope.cantidad/$scope.etiquetas.unidadesxpaquete);
+		$scope.etiquetas.unidades=$scope.cantidad-($scope.etiquetas.paquetes*$scope.etiquetas.unidadesxpaquete);
+		return (true);
+	}
+	
 	// Save and push this record to the server
 	$scope.save = function() {
 		console.log("Envia Forma: "+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.item.talla_index);
@@ -264,7 +325,6 @@ function AxAppController( $scope, $http ) {
 		}
 
 		$scope.disableSaveBtn=true;
-		
 		$http.get('/Bodegas/addtransaction?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
@@ -274,6 +334,7 @@ function AxAppController( $scope, $http ) {
 				'&tipoartmovbodega_id='+$scope.currentTipomov.id+
 				'&folio='+$scope.currentFolio+
 				'&printlabel='+$scope.printLabel+
+				'&printlabelperpackage='+($scope.printLabelPerPackage?'1':'0')+
 				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
 			$scope.lastMessage=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
@@ -375,7 +436,7 @@ function AxAppController( $scope, $http ) {
 	};
 
 	$scope.requestPrintLabel = function() {
-		$http.get('/Bodegas/etiquetaarticulo/'+$scope.printLabel).then(function(response) {
+		$http.get('/Bodegas/etiquetasalida/'+$scope.printLabel).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				$scope.printLabelMessage='Imprimió Etiqueta ' + $scope.printLabel;
 				axAlert('Producto '+$scope.printLabel+' impreso.', 'info', false);
@@ -404,11 +465,13 @@ function AxAppController( $scope, $http ) {
 		else {
 			$scope.cantidad=0;
 		}
+		$scope.calculateTotal();
 	}
 
 	$scope.plusCant = function(value) {
 		var oldValue=parseInt($scope.cantidad);
 		$scope.cantidad=(oldValue>0?oldValue:0) + value;
+		$scope.calculateTotal();
 	}
 
 	$('#ubicacioncve').bind('blur', function() {
