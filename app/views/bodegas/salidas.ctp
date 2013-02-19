@@ -106,7 +106,7 @@
 	</legend>
 	
   	<div class="control-row">
-    	<label class="checkbox" for="printlabel"> Imprimir Etiquetas de Esta Salida
+    	<label class="checkbox" for="printlabel"> Imprimir Etiquetas de Esta Entrada
     		<input type="checkbox" id="printlabel" name="printLabel" 
 				ng-model="printLabel" class="checkbox"
 			/>
@@ -130,16 +130,15 @@
 	</button>
   	<button type="submit" id="submit" value="sumbit"
 		style="z-index: -1; border: 0px none; margin: 0px; padding: 0px;width: 1px; height: 1px; background: transparent;"></button>
-  </div>
-  <div id="divUltimoMensaje" style="overflow-y: scroll; min-height: 32px; max-height: 150px;">
-	<ul>
-	<li ng-repeat="lastMessage in lastMessages">
-		<span class="help-inline">
-		<em class="text-info">Último Mensaje: <strong>{{lastMessage}}</strong></em>
-		</span>
-	</li>
+  	</div>
+	<em class="text-info">Actividad:</em>
+  	<div id="divUltimoMensaje" style="overflow-y: scroll; min-height: 32px; max-height: 100px;">
+	<ul  style="overflow-y: scroll; min-height: 32px; max-height: 100px;">
+		<li ng-repeat="lastMessage in lastMessages">
+			<span class="help-inline">{{lastMessage}}</span>
+		</li>
 	</ul>
-  </div>
+	</div>
 </div>
 
 <div id="cancelContainer" class="section-container" style="margin-top: 32px;">
@@ -315,12 +314,22 @@ function AxAppController( $scope, $http ) {
 		$scope.item.color_cve=$scope.currentColor.cve;
 
 		if(typeof $scope.ubicacion.id == 'undefined' || !($scope.ubicacion.id>0)) {
-			axAlert('Especifica el Tipo de Movimiento', 'warning', false);
+			axAlert('Especifica la Ubicación', 'warning', false);
 			return false;
 		}
 
 		if(!($scope.currentTipomov.id!=0)) {
 			axAlert('Especifica el Tipo de Movimiento', 'warning', false);
+			return false;
+		}
+
+		if(typeof $scope.currentColor.id == 'undefined' || !($scope.currentColor.id!=0)) {
+			axAlert('Especifica el Color', 'warning', false);
+			return false;
+		}
+
+		if(typeof $scope.currentTalla.index == 'undefined') {
+			axAlert('Especifica la Talla', 'warning', false);
 			return false;
 		}
 
@@ -333,15 +342,14 @@ function AxAppController( $scope, $http ) {
 				'&ubicacion_id='+$scope.ubicacion.id+
 				'&tipoartmovbodega_id='+$scope.currentTipomov.id+
 				'&folio='+$scope.currentFolio+
-				'&printlabel='+$scope.printLabel+
+				'&printlabel='+($scope.printLabel?'1':'0')+
 				'&printlabelperpackage='+($scope.printLabelPerPackage?'1':'0')+
 				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
-			$scope.lastMessage=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
 					axAlert(response.data.message, 'success', false);
-					$scope.lastMessage=response.data.message;
+					$scope.lastMessages.unshift(response.data._timestamp+': '+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.currentTalla.label+', '+$scope.cantidad+' pz (id: '+response.data._id+')');
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
 					$scope.currentTalla={};
@@ -355,7 +363,7 @@ function AxAppController( $scope, $http ) {
 				}
 				else {
 					axAlert(response.data.message, 'error', false);
-					$scope.lastMessage=response.data.message;
+					$scope.lastMessages.unshift(response.data.message);
 				}
 			}
 			else {
@@ -447,10 +455,11 @@ function AxAppController( $scope, $http ) {
 	}
 
 	$scope.requestCancelTransaction = function() {
-		$http.get('/Bodegas/cancela/'+$scope.cancelTransaction).then(function(response) {
+		$http.get('/Bodegas/cancel/'+$scope.cancelTransaction).then(function(response) {
 			if(typeof response.data != 'undefined') {
-				$scope.cancelTransactionMessage='Se CANCELO transaccion ' + $scope.cancelTransaction;
-				axAlert('Transacción <strong>'+$scope.cancelTransaction+'</strong> CANCELADO.', 'success', false);
+				$scope.cancelTransactionMessage='Se CANCELO la transacción ' + $scope.cancelTransaction;
+				axAlert('Transacción <strong>'+$scope.cancelTransaction+'</strong> CANCELADA.', 'success', false);
+				$scope.lastMessages.unshift('Transacción <strong>'+$scope.cancelTransaction+'</strong> CANCELADA.')
 				$scope.cancelTransaction='';
 			}
        	});

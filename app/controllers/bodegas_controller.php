@@ -163,7 +163,9 @@ class BodegasController extends MasterDetailAppController {
 					'message'=>'Transacción Guardada ('.$data['id'].') '.
 							(isset($theData['printlabel']) && $theData['printlabel']?
 							' Impresas '.($paquetes+$unidades).' etiquetas en '.$this->currentPrinter['cve']:
-							'')
+							''),
+					'_id'=>$data['id'],
+					'_timestamp'=>date('H:i:s')
 				);
 			}
 			else {
@@ -287,13 +289,6 @@ P'.$label_count.'
 			}
 		}
 		return false;
-
-/*
-A450,400,0,4,1,1,N,"UBICACION: '.$ubicacion_cve.'"
-
-A050,535,0,4,1,1,N,"'.(abs($data['Artmovbodegadetail_id'])>=100?'S  E  G  U  N  D  O    C  O  N  T  E  O':' ').'"
-
-*/
 	}
 
 	function cancel($id=null) {

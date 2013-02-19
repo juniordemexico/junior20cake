@@ -164,7 +164,7 @@
      <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
 	</div>
 </div>
-<div repeat	
+
 <div id="scannerContainer" class="section-container" style="margin-top: 32px;">
 	<div class="control-group">
     	<div class="controls">
@@ -315,12 +315,22 @@ function AxAppController( $scope, $http ) {
 		$scope.item.color_cve=$scope.currentColor.cve;
 
 		if(typeof $scope.ubicacion.id == 'undefined' || !($scope.ubicacion.id>0)) {
-			axAlert('Especifica el Tipo de Movimiento', 'warning', false);
+			axAlert('Especifica la Ubicación', 'warning', false);
 			return false;
 		}
 
 		if(!($scope.currentTipomov.id!=0)) {
 			axAlert('Especifica el Tipo de Movimiento', 'warning', false);
+			return false;
+		}
+
+		if(typeof $scope.currentColor.id == 'undefined' || !($scope.currentColor.id!=0)) {
+			axAlert('Especifica el Color', 'warning', false);
+			return false;
+		}
+
+		if(typeof $scope.currentTalla.index == 'undefined' || !($scope.currentTalla.index!=0)) {
+			axAlert('Especifica la Talla', 'warning', false);
 			return false;
 		}
 
@@ -337,11 +347,10 @@ function AxAppController( $scope, $http ) {
 				'&printlabelperpackage='+($scope.printLabelPerPackage?'1':'0')+
 				'&selectedprinter='+$scope.currentPrinter.id
 		).then(function(response) {
-	//		$scope.lastMessages.=$scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad;
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result=='string' && response.data.result=='recibido' ) {
 					axAlert(response.data.message, 'success', false);
-					$scope.lastMessages.unshift($scope.item.articulo_cve+' :: '+$scope.item.color_cve+' :: '+$scope.currentTalla.label+' >> '+$scope.cantidad);
+					$scope.lastMessages.unshift(response.data._timestamp+': '+$scope.item.articulo_cve+', '+$scope.item.color_cve+', '+$scope.currentTalla.label+', '+$scope.cantidad+' pz (id: '+response.data._id+')');
 					$scope.item.talla_index=null;
 					$scope.item.talla_label='';
 					$scope.currentTalla={};

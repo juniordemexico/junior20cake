@@ -45,16 +45,18 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		if($format=='pdf') {
 			// Search the related media file
+			$folder='pdf';
 			$filename=trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists(APP . 'files'.DS.'facturaselectronicas' . DS. $filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$result['Factura']['farefer'], 'error');
+			if(!file_exists(APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 		}
 		elseif ($format=='xml') {
 			// Search the related media file
+			$folder='xml';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists(APP . 'files'.DS.'facturaselectronicas' . DS. $filename)) {
+			if(!file_exists(APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
 				$this->Session->setFlash(__('file does not exist', true).': '.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
@@ -67,7 +69,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 						'name' => trim($result['Factura']['farefer']),
 						'download' => true,
 						'extension' => $format,
-						'path' => APP . 'files'.DS.'facturaselectronicas'.DS. $format . DS);
+						'path' => APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS);
 		$this->set($params);
 	}
 
@@ -88,6 +90,52 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 	}
 
+
+	public function procesaxml() {
+		$this->autoRender=false;
+		$this->layout='ajaxclean';
+		$theFacturas=$this->Factura->find('all', array(
+										'conditions'=>array('Factura.fafecha >='=>'2012/01/01', 
+															'Factura.fafecha <='=>'2012/12/31',
+															'Factura.faT'=>0,
+															'SUBSTRING(Factura.farefer FROM 1 FOR 1) '=>array('A','B')
+															),
+										'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha',
+														'Factura.crefec','Factura.modfec','Factura.fast'),
+										'limit'=>100000,
+										'order'=>'Factura.id DESC'
+										)
+									);
+		$xmlPath='/home/www/junior20cake/app/files/facturaselectronicas/xml';
+		$pdfPath='/home/www/junior20cake/app/files/facturaselectronicas/pdf';
+		$folios_no_encontrados=array();
+		foreach($theFacturas as $item) {
+			$id=$item['Factura']['id'];
+			$folio=$item['Factura']['farefer'];
+			$folio_serie=substr($item['Factura']['farefer'],0,1);
+			$folio_numero=substr($item['Factura']['farefer'],1,10);
+			$fecha=$item['Factura']['fafecha'];
+			if($folio_numero && is_numeric($folio_numero)) $folio_numero=(int)$folio_numero;
+			
+			$filename='JME910405B83-'.$folio.'.xml';
+			$filename2='JME910405B83 '.$folio_serie.'-'.$folio_numero.'.xml';
+			echo "Factura: $folio  Serie::$folio_serie  Numero::$folio_numero Filename::$filename Full-Path::$xmlPath / $filename<br/>\n\n";
+			if(file_exists($xmlPath.DS.$filename)) {
+				echo "El Archivo $xmlPath".DS."$filename Existe! <br/>\n\n"; 
+			}
+			elseif(file_exists($xmlPath.DS.$filename2)) {
+				echo "El Archivo $xmlPath".DS."$filename2 Existe y se RENOMBRO! <br/> \n\n";
+				rename($xmlPath.DS.$filename2, $xmlPath.DS.$filename);
+			}
+			else {
+				echo "NO SE ENCONTRO NINGUN ARCHIVO PARA LA FACTURA FOLIO:$folio FECHA:$fecha";
+				$folios_no_encontrados[]=array('id'=>$id,'farefer'=>$folio,'fafecha'=>$fecha);
+			}
+			echo "\n\n<br/>\n\n";
+		}
+		echo "TOTAL DE FOLIOS NO ENCONTRADOS: ".count($folios_no_encontrados)." <br/>\n\n";
+		pr($folios_no_encontrados);
+		die();
+	}
+
 }
-	
-?>
