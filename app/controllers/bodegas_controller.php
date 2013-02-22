@@ -175,7 +175,6 @@ class BodegasController extends MasterDetailAppController {
 				);
 
 			}
-			
 		}
 		else {
 			// Error...
@@ -194,26 +193,57 @@ class BodegasController extends MasterDetailAppController {
 		echo json_encode($out);
 	}
 
-	function imprimeetiqueta($id=null) {
+/*
+	public function printlabel() {
+		$this->autoRender=false;
+		$theData=$this->params['url'];
+		unset($theData['url']);
+		if(
+			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
+			isset($theData['color_id']) &&
+			isset($theData['talla_index']) && $theData['talla_index']>=0 &&
+			isset($theData['cantidad']) && $theData['cantidad']>0 
+			)
+		{
+
 		if(!$id || !is_numeric($id) || !($id>0)) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
+			echo json_encode(array(
+				'result'=>'error',
+				'message'=>'Error Imprimiendo etiquetas (id: '.$id.') ',
+				'_id'=>$id,
+				'_timestamp'=>date('H:i:s')
+			));
 			exit;
 		}
-		$data=$this->Artmovbodegadetail->findById($id);
-		if($data && isset($data['Artmovbodegadetail']['id']) && $data['Artmovbodegadetail']['id']>0) {
-			$this->_printlabel($data['Artmovbodegadetail']);
-			$this->Session->setFlash('Transacción <strong>'.$data['Artmovbodegadetail']['articulo_id'].'</strong> '.
-									'Capturado el <strong>'.$data['Artmovbodegadetail']['created'].'</strong> '. 
-									'Se imprimió en '.$this->currentPrinter['cve'].'.',
-									'success');
+
+		$theData=$this->params['url'];
+		unset($theData['url']);
+		
+		$data=$this->Articulo->findById($id);
+		if($data && isset($data['Articulo']['id']) && $data['Articulo']['id']>0) {
+			$this->_printlabel($data['Articulo']);
+				$out=array(
+				'result'=>'ok',
+				'message'=>'Etiquetas Impresas ('.$data['id'].') '.
+						(isset($theData['printlabel']) && $theData['printlabel']?
+						' Impresas '.($paquetes+$unidades).' etiquetas en '.$this->currentPrinter['cve']:
+						''),
+				'_id'=>$data['id'],
+				'_timestamp'=>date('H:i:s')
+			);
 		}
 		else {
-			$this->Session->setFlash('El Transacción <strong>'.$id.'</strong> NO Existe', 
-									'error');			
+				$out=array(
+				'result'=>'error',
+				'message'=>'Error Imprimiendo etiquetas (id: '.$id.') ',
+				'_id'=>$id,
+				'_timestamp'=>date('H:i:s')
+			);
 		}
+		echo json_encode($out);
 	}
-	
-	function _printlabel($data=array()) {
+*/	
+	public function _printlabel($data=array()) {
 		// If we don't have a Product
 		if(!$data || !is_array($data) || !isset($data['articulo_id'])) {
 			return false;
@@ -291,7 +321,7 @@ P'.$label_count.'
 		return false;
 	}
 
-	function cancel($id=null) {
+	public function cancel($id=null) {
 		if(!$id || !is_numeric($id) || !($id>0)) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			exit;
@@ -454,14 +484,6 @@ P'.$label_count.'
 		);
 
 		if($rs && isset($rs['Ubicacion']['id']) && $rs['Ubicacion']['id']>0) {
-			$color=array();
-			$color[]=array('id'=>1, 'cve'=>'NEGRO');
-
-
-			foreach($rs['Color'] as $item) {
-				$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
-			}
-	
 			$out=array(
 				'id'=>$rs['Ubicacion']['id'],
 				'cve'=>$rs['Ubicacion']['cve'],
@@ -469,7 +491,6 @@ P'.$label_count.'
 				'fila'=>$rs['Ubicacion']['fila'],
 				'espacio'=>$rs['Ubicacion']['espacio'],
 			);
-
 		}
 		else {
 			$out=array(

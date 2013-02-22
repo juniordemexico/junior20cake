@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/factura_electronica_controller.php</string>
+	<string>app/views/bodegas/entradas.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,19 +21,33 @@
 	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
+		<key>app/app_model.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>23</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>71</integer>
+		</dict>
 		<key>app/controllers/bodegas_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>304</integer>
+				<integer>491</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>287</integer>
+			<integer>465</integer>
 		</dict>
 		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
@@ -49,33 +63,49 @@
 			<key>firstVisibleLine</key>
 			<integer>103</integer>
 		</dict>
-		<key>app/controllers/factura_electronica_controller.php</key>
+		<key>app/views/bodegas/entradas.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>98</integer>
+				<integer>412</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>93</integer>
+			<integer>427</integer>
 		</dict>
-		<key>app/models/factura.php</key>
+		<key>app/views/bodegas/salidas.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>331</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>42</integer>
+			<integer>325</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>330</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>331</integer>
+			</dict>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -105,18 +135,34 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>app/views/invfisicosmovil/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>24</integer>
+				<key>line</key>
+				<integer>472</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>452</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/controllers/explosiones_controller.php</string>
 		<string>app/views/costeos/edit.ctp</string>
 		<string>app/controllers/bodegas_controller.php</string>
-		<string>app/controllers/factura_electronica_controller.php</string>
-		<string>app/models/factura.php</string>
+		<string>app/views/bodegas/entradas.ctp</string>
+		<string>app/views/invfisicosmovil/index.ctp</string>
+		<string>app/app_model.php</string>
+		<string>app/views/bodegas/salidas.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1906, 0}, {872, 836}}</string>
+	<string>{{24, 42}, {872, 836}}</string>
 </dict>
 </plist>

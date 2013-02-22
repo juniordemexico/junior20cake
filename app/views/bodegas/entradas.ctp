@@ -329,7 +329,7 @@ function AxAppController( $scope, $http ) {
 			return false;
 		}
 
-		if(typeof $scope.currentTalla.index == 'undefined' || !($scope.currentTalla.index!=0)) {
+		if(typeof $scope.currentTalla.index == 'undefined') {
 			axAlert('Especifica la Talla', 'warning', false);
 			return false;
 		}
@@ -369,10 +369,8 @@ function AxAppController( $scope, $http ) {
 			}
 			else {
 					axAlert('Error Irrecuperable...'+response.data, 'error', false);
-//					alert('ERROR IRRECUPERABLE...'+response.data);
 			}
 			$scope.disableSaveBtn=false;
-
    		});
 
 	};
@@ -385,7 +383,8 @@ function AxAppController( $scope, $http ) {
 
 
 	$scope.getUbicacion = function() {
-		console.log('Get Ubicacion: '+$scope.ubicacion.cve);
+
+		console.log('Get Ubicacion: ' + $scope.ubicacion.cve);
 
 		$http.get('/Bodegas/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
 			if(typeof response.data != 'undefined') {
@@ -411,7 +410,6 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
-//				alert('Error: '+response.data.message);
 				axAlert('Producto Inválido', 'warning', false);
 				$scope.item.articulo_descrip='';
 				$scope.item.articulo_id='';
@@ -485,7 +483,6 @@ function AxAppController( $scope, $http ) {
 	}
 
 	$('#ubicacioncve').bind('blur', function() {
-		$scope.ubicacion.cve=$('#ubicacioncve').val();
 		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
 			$scope.lastUbicacionCve=$scope.ubicacion.cve;
 			$scope.getUbicacion();
@@ -522,25 +519,29 @@ function AxAppController( $scope, $http ) {
 			if(theValue.substring(0,1)=='$') {
 				theValue=theValue.substring(1,32);
 			}
-			// Checks if the value already has json's brackets '{}'
-			if(theValue.substring(0,1)!='{') {
-				theValue='{' + theValue + '}';
-			}
-			
+
 			theValue=theValue.replace(/\%/g,':');
 			theValue=theValue.replace('t:u','"t":"u"');
 			theValue=theValue.replace('t:p','"t":"p"');
 			theValue=theValue.replace('id:','"id":');
-			var theType=theValue.substring(6,7);
-			$scope.lastScanInput=theValue;
+			theValue=theValue.replace('c:','"c":');
+			theValue=theValue.replace('t:','"t":');
+			theValue=theValue.replace('p:','"p":');
 
+			// Extracts the Label's type
+			$scope.lastScanInput=theValue;
+			console.log('RAW Scan:'+theValue);
+			var theType=theValue.substring(5,6);
+
+			// Trunk and Checks if the value already has json's brackets '{}'
+			var theValue=theValue.substring(8);
+			if(theValue.substring(0,1)!='{') theValue='{' + theValue.substring() + '}';
+			var theDataObj=jsonParse(theValue);
+			console.log('Scanned input to JSON string:' + theValue + 
+						' id:'+theDataObj.id);
 
 			if(theType=='u') {
-				var theData=theValue.substring(14,theValue.length-1);
-				$scope.ubicacion.cve=theData;
-				var el=$('#ubicacioncve');
-				el.val(theData);
-
+				$scope.ubicacion.cve=theDataObj.id;
 				$scope.getUbicacion();
 				
 				if($('#artcve').val()!='') {
@@ -550,25 +551,25 @@ function AxAppController( $scope, $http ) {
 					$('#artcve').focus();				
 				}
 			}
-			
+
 			if(theType=='p') {
-				var theData=theValue.substring(14,theValue.length-1);
-				var theData=theData.split(',');
-				var theId=theData[0];
-				var theColorId=theData[1].substring(2,theData[1].length);
-				var theTallaIndex=theData[2].substring(2,theData[2].length);
+				$scope.item.articulo_id=theDataObj.id;
+				$scope.item.color_id=theDataObj.c;
+				$scope.item.talla_index=theDataObj.t;
 				
-				$scope.item.articulo_id=theId;
-				$scope.item.color_id=theColorId;
-				$scope.item.talla_index=theTallaIndex;
 				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
 				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
 
 				$scope.lastScanInput=theValue;
 				
-//				alert('id::'+$scope.item.articulo_id+' color_id::'+$scope.item.color_id+' talla_index::'+theTallaIndex);
 				$scope.getItem();
-				$scope.cantidad='';
+				alert('tipo: '+(typeof theDataObj.p));
+				if(typeof theDataObj.p != 'undefined' && typeof theDataObj.p=='number' ) {
+					$scope.cantidad=theDataObj.p;
+				}
+				else {
+					$scope.cantidad=0;
+				}
 
 				if($('#ubicacioncve').val()!='') {
 					$('#edtcantidad').focus();
@@ -579,7 +580,6 @@ function AxAppController( $scope, $http ) {
 			}
 			
 			console.log('Processed scanner input:' + theValue);
-			
 			$scope.scanInput='';
 
 		}
