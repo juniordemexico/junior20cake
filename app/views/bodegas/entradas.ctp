@@ -432,7 +432,7 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string') {
-					alert('Error');
+				//	alert('Error');
 					axAlert('Error al solicitar el Producto', 'warning', false);
 				}
 				else {
@@ -556,16 +556,22 @@ function AxAppController( $scope, $http ) {
 				$scope.item.articulo_id=theDataObj.id;
 				$scope.item.color_id=theDataObj.c;
 				$scope.item.talla_index=theDataObj.t;
-				
-				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
-				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
 
 				$scope.lastScanInput=theValue;
 				
 				$scope.getItem();
-				alert('tipo: '+(typeof theDataObj.p));
+			//	alert('tipo: '+(typeof theDataObj.p));
 				if(typeof theDataObj.p != 'undefined' && typeof theDataObj.p=='number' ) {
 					$scope.cantidad=theDataObj.p;
+				}
+				else {
+					$scope.cantidad=0;
+				}
+
+				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
+				if(typeof theDataObj.c != 'undefined' && typeof theDataObj.c=='number' ) {
+				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
+ 					$scope.currentColor=theDataObj.p;
 				}
 				else {
 					$scope.cantidad=0;

@@ -19,6 +19,7 @@
 		<li><a id="lineasLinkCheck" href="/Lineas">Lineas</a></li>
 		<li><a id="marcasLinkCheck" href="/Marcas">Marcas</a></li>
 		<li><a id="temporadasLinkCheck" href="/Temporadas">Temporadas</a></li>
+		<li><a id="proporcionesLinkCheck" href="/Proporciones">Proporciones Prod</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Auxiliares</a></li>
 		<li><a id="unidadesLinkCheck" href="/Unidades">Unidades de Medida</a></li>
 	</ul>

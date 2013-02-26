@@ -193,11 +193,12 @@ class BodegasController extends MasterDetailAppController {
 		echo json_encode($out);
 	}
 
-/*
+
 	public function printlabel() {
 		$this->autoRender=false;
 		$theData=$this->params['url'];
 		unset($theData['url']);
+/*
 		if(
 			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
 			isset($theData['color_id']) &&
@@ -205,7 +206,7 @@ class BodegasController extends MasterDetailAppController {
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
-
+*/
 		if(!$id || !is_numeric($id) || !($id>0)) {
 			echo json_encode(array(
 				'result'=>'error',
@@ -240,9 +241,10 @@ class BodegasController extends MasterDetailAppController {
 				'_timestamp'=>date('H:i:s')
 			);
 		}
+
 		echo json_encode($out);
 	}
-*/	
+	
 	public function _printlabel($data=array()) {
 		// If we don't have a Product
 		if(!$data || !is_array($data) || !isset($data['articulo_id'])) {
