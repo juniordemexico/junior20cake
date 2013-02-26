@@ -444,7 +444,6 @@ P'.$label_count.'
 					array('label'=>$rs['Talla']['tat9'], 'cant'=>'')
 				),
 				'color'=>$color
-
 			);
 
 		}
