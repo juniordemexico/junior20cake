@@ -3,7 +3,11 @@
 	name="itemForm" class="form ng-cloack">
 
 <div id="userContainer" class="section-container" style="margin-top: 4px;">
-	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>
+	<legend><small>Usuario: <strong>{{user.username}}</strong></small>
+		<span class="pull-right">
+			<button id="btnScanFocus" name="btn_scan_focus" type="button" class="btn btn-mini" ng-click="scanFocus()">Leer Código</button>
+		</span>
+	</legend>
 </div>
 
 <div id="folioContainer" class="section-container" style="margin-top: 16px;">
@@ -152,19 +156,6 @@
 	</div>
 </div>
 
-<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
-	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
-	<div class="control-group">
- 			<div class="input-append">
-      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Clave del Producto..." />
-			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()">
-				<i class="icon icon-print icon-white"></i> Imprimir
-			</button>
-    		</div>
-     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
-	</div>
-</div>
-
 <div id="scannerContainer" class="section-container" style="margin-top: 32px;">
 	<div class="control-group">
     	<div class="controls">
@@ -188,7 +179,7 @@
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
-//		el.value='';
+	//	el.value='';
 		el.focus();
 
 //    $scope.$apply(function() {
@@ -411,15 +402,14 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
 				axAlert('Producto Inválido', 'warning', false);
-				$scope.item.articulo_descrip='';
-				$scope.item.articulo_id='';
+				var oldArticuloCve=$scope.item.articulo_cve;
+			//	$scope.item.articulo_descrip='';
+			//	$scope.item.articulo_id='';
+				$scope.item=item;
+				$scope.item.articulo_cve=oldArticuloCve;
 			}
 			else {
 				$scope.item=response.data;
-
-				$scope.item.color_id=$scope.item.color[0].id;
-				$scope.item.color_cve=$scope.item.color[0].cve;
-				$scope.currentColor={id: $scope.item.id, cve: $scope.item.cve};
 			}
 
 			}
@@ -427,16 +417,17 @@ function AxAppController( $scope, $http ) {
 	};
 
 	$scope.getItem = function() {
-		console.log('Get Item: '+$scope.item.articulo_cve);
+		console.log('Get Item: '+$scope.item.articulo_id);
 		$http.get('/Bodegas/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string') {
-				//	alert('Error');
 					axAlert('Error al solicitar el Producto', 'warning', false);
 				}
 				else {
 					$scope.item=response.data;
+					$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
+					$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
 				}
 			}
        	});
@@ -553,14 +544,25 @@ function AxAppController( $scope, $http ) {
 			}
 
 			if(theType=='p') {
+				$scope.lastScanInput=theValue;
+
+				// Set the label's specified Articulo Id or Cve
 				$scope.item.articulo_id=theDataObj.id;
 				$scope.item.color_id=theDataObj.c;
 				$scope.item.talla_index=theDataObj.t;
 
-				$scope.lastScanInput=theValue;
-				
-				$scope.getItem();
-			//	alert('tipo: '+(typeof theDataObj.p));
+				// Get the Articulo data
+				console.log('Label Articulo:' + theDataObj.id);
+				$scope.getItem(theDataObj.id, theDataObj.c, theDataObj.t, theDataObj.p);
+
+				// Set the label's specified Talla
+				console.log('Label Talla:' + theDataObj.t);
+
+				// Set the label's specified Color
+				console.log('Label Color:' + theDataObj.c);
+
+				// Set the label's specified Cantidad
+				console.log('Label Cantidad:' + theDataObj.p);
 				if(typeof theDataObj.p != 'undefined' && typeof theDataObj.p=='number' ) {
 					$scope.cantidad=theDataObj.p;
 				}
@@ -568,15 +570,7 @@ function AxAppController( $scope, $http ) {
 					$scope.cantidad=0;
 				}
 
-				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
-				if(typeof theDataObj.c != 'undefined' && typeof theDataObj.c=='number' ) {
-				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
- 					$scope.currentColor=theDataObj.p;
-				}
-				else {
-					$scope.cantidad=0;
-				}
-
+				// Set the focus
 				if($('#ubicacioncve').val()!='') {
 					$('#edtcantidad').focus();
 				}
@@ -586,12 +580,16 @@ function AxAppController( $scope, $http ) {
 			}
 			
 			console.log('Processed scanner input:' + theValue);
-			$scope.scanInput='';
-
 		}
-		
+
+		$scope.$apply( function(){$scope.scanInput=''; } );
+
 	});
 
+	$scope.scanFocus = function() {
+		var el=document.getElementById('scanInput').focus();
+		$scope.scanInput='';
+	};
 }
 
 /*
@@ -655,6 +653,20 @@ ubicacion = {{ubicacion | json}}
     <span class="help-inline hide">Woohoo!</span>
  </div>
 
+
+
+<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
+	<div class="control-group">
+ 			<div class="input-append">
+      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Clave del Producto..." />
+			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()">
+				<i class="icon icon-print icon-white"></i> Imprimir
+			</button>
+    		</div>
+     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
+	</div>
+</div>
 
 */
 

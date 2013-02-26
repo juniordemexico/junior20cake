@@ -3,7 +3,11 @@
 	name="itemForm" class="form ng-cloack">
 
 <div id="userContainer" class="section-container" style="margin-top: 4px;">
-	<legend><small>Usuario: <strong>{{user.username}}</strong></small></legend>
+	<legend><small>Usuario: <strong>{{user.username}}</strong></small>
+		<span class="pull-right">
+			<button id="btnScanFocus" name="btn_scan_focus" type="button" class="btn btn-mini" ng-click="scanFocus()">Leer Código</button>
+		</span>
+	</legend>
 </div>
 
 <div id="folioContainer" class="section-container" style="margin-top: 16px;">
@@ -106,7 +110,7 @@
 	</legend>
 	
   	<div class="control-row">
-    	<label class="checkbox" for="printlabel"> Imprimir Etiquetas de Esta Entrada
+    	<label class="checkbox" for="printlabel"> Imprimir Etiquetas de Esta Salida
     		<input type="checkbox" id="printlabel" name="printLabel" 
 				ng-model="printLabel" class="checkbox"
 			/>
@@ -152,19 +156,6 @@
 	</div>
 </div>
 
-<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
-	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
-	<div class="control-group">
- 			<div class="input-append">
-      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Clave del Producto..." />
-			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()">
-				<i class="icon icon-print icon-white"></i> Imprimir
-			</button>
-    		</div>
-     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
-	</div>
-</div>
-
 <div id="scannerContainer" class="section-container" style="margin-top: 32px;">
 	<div class="control-group">
     	<div class="controls">
@@ -188,7 +179,7 @@
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
-//		el.value='';
+	//	el.value='';
 		el.focus();
 
 //    $scope.$apply(function() {
@@ -197,7 +188,8 @@ angular.element(window).bind('keydown', function(e) {
 	}
 });
 
-var itemTalladetail={}
+var itemTalladetail={};
+
 var item={
 	user_id : '1',
 	username : 'IDD',
@@ -234,7 +226,7 @@ var printer=[
 var user={
 	id: <?php echo $session->read('Auth.User.id')?>,
 	username: '<?php echo $session->read('Auth.User.username');?>'
-}
+};
 
 var ubicacion={
 	id : 1,
@@ -368,10 +360,8 @@ function AxAppController( $scope, $http ) {
 			}
 			else {
 					axAlert('Error Irrecuperable...'+response.data, 'error', false);
-//					alert('ERROR IRRECUPERABLE...'+response.data);
 			}
 			$scope.disableSaveBtn=false;
-
    		});
 
 	};
@@ -384,7 +374,8 @@ function AxAppController( $scope, $http ) {
 
 
 	$scope.getUbicacion = function() {
-		console.log('Get Ubicacion: '+$scope.ubicacion.cve);
+
+		console.log('Get Ubicacion: ' + $scope.ubicacion.cve);
 
 		$http.get('/Bodegas/getubicacion/'+$scope.ubicacion.cve).then(function(response) {
 			if(typeof response.data != 'undefined') {
@@ -410,17 +401,15 @@ function AxAppController( $scope, $http ) {
 			if(typeof response.data != 'undefined') {
 			if(typeof response.data.result != 'undefined' ||
 				typeof response.data.result == 'string') {
-//				alert('Error: '+response.data.message);
 				axAlert('Producto Inválido', 'warning', false);
-				$scope.item.articulo_descrip='';
-				$scope.item.articulo_id='';
+				var oldArticuloCve=$scope.item.articulo_cve;
+			//	$scope.item.articulo_descrip='';
+			//	$scope.item.articulo_id='';
+				$scope.item=item;
+				$scope.item.articulo_cve=oldArticuloCve;
 			}
 			else {
 				$scope.item=response.data;
-
-				$scope.item.color_id=$scope.item.color[0].id;
-				$scope.item.color_cve=$scope.item.color[0].cve;
-				$scope.currentColor={id: $scope.item.id, cve: $scope.item.cve};
 			}
 
 			}
@@ -428,16 +417,17 @@ function AxAppController( $scope, $http ) {
 	};
 
 	$scope.getItem = function() {
-		console.log('Get Item: '+$scope.item.articulo_cve);
+		console.log('Get Item: '+$scope.item.articulo_id);
 		$http.get('/Bodegas/getitem/'+$scope.item.articulo_id+'/'+$scope.item.color_id+'/'+$scope.item.talla_index).then(function(response) {
 			if(typeof response.data != 'undefined') {
 				if(typeof response.data.result != 'undefined' ||
 					typeof response.data.result == 'string') {
-					alert('Error');
 					axAlert('Error al solicitar el Producto', 'warning', false);
 				}
 				else {
 					$scope.item=response.data;
+					$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
+					$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
 				}
 			}
        	});
@@ -484,7 +474,6 @@ function AxAppController( $scope, $http ) {
 	}
 
 	$('#ubicacioncve').bind('blur', function() {
-		$scope.ubicacion.cve=$('#ubicacioncve').val();
 		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
 			$scope.lastUbicacionCve=$scope.ubicacion.cve;
 			$scope.getUbicacion();
@@ -521,25 +510,29 @@ function AxAppController( $scope, $http ) {
 			if(theValue.substring(0,1)=='$') {
 				theValue=theValue.substring(1,32);
 			}
-			// Checks if the value already has json's brackets '{}'
-			if(theValue.substring(0,1)!='{') {
-				theValue='{' + theValue + '}';
-			}
-			
+
 			theValue=theValue.replace(/\%/g,':');
 			theValue=theValue.replace('t:u','"t":"u"');
 			theValue=theValue.replace('t:p','"t":"p"');
 			theValue=theValue.replace('id:','"id":');
-			var theType=theValue.substring(6,7);
-			$scope.lastScanInput=theValue;
+			theValue=theValue.replace('c:','"c":');
+			theValue=theValue.replace('t:','"t":');
+			theValue=theValue.replace('p:','"p":');
 
+			// Extracts the Label's type
+			$scope.lastScanInput=theValue;
+			console.log('RAW Scan:'+theValue);
+			var theType=theValue.substring(5,6);
+
+			// Trunk and Checks if the value already has json's brackets '{}'
+			var theValue=theValue.substring(8);
+			if(theValue.substring(0,1)!='{') theValue='{' + theValue.substring() + '}';
+			var theDataObj=jsonParse(theValue);
+			console.log('Scanned input to JSON string:' + theValue + 
+						' id:'+theDataObj.id);
 
 			if(theType=='u') {
-				var theData=theValue.substring(14,theValue.length-1);
-				$scope.ubicacion.cve=theData;
-				var el=$('#ubicacioncve');
-				el.val(theData);
-
+				$scope.ubicacion.cve=theDataObj.id;
 				$scope.getUbicacion();
 				
 				if($('#artcve').val()!='') {
@@ -549,26 +542,35 @@ function AxAppController( $scope, $http ) {
 					$('#artcve').focus();				
 				}
 			}
-			
+
 			if(theType=='p') {
-				var theData=theValue.substring(14,theValue.length-1);
-				var theData=theData.split(',');
-				var theId=theData[0];
-				var theColorId=theData[1].substring(2,theData[1].length);
-				var theTallaIndex=theData[2].substring(2,theData[2].length);
-				
-				$scope.item.articulo_id=theId;
-				$scope.item.color_id=theColorId;
-				$scope.item.talla_index=theTallaIndex;
-				$scope.currentTalla={index: $scope.item.talla_index, label: $scope.item.talla_label};
-				$scope.currentColor={id: $scope.item.color_id, cve: $scope.item.color_cve};
-
 				$scope.lastScanInput=theValue;
-				
-//				alert('id::'+$scope.item.articulo_id+' color_id::'+$scope.item.color_id+' talla_index::'+theTallaIndex);
-				$scope.getItem();
-				$scope.cantidad='';
 
+				// Set the label's specified Articulo Id or Cve
+				$scope.item.articulo_id=theDataObj.id;
+				$scope.item.color_id=theDataObj.c;
+				$scope.item.talla_index=theDataObj.t;
+
+				// Get the Articulo data
+				console.log('Label Articulo:' + theDataObj.id);
+				$scope.getItem(theDataObj.id, theDataObj.c, theDataObj.t, theDataObj.p);
+
+				// Set the label's specified Talla
+				console.log('Label Talla:' + theDataObj.t);
+
+				// Set the label's specified Color
+				console.log('Label Color:' + theDataObj.c);
+
+				// Set the label's specified Cantidad
+				console.log('Label Cantidad:' + theDataObj.p);
+				if(typeof theDataObj.p != 'undefined' && typeof theDataObj.p=='number' ) {
+					$scope.cantidad=theDataObj.p;
+				}
+				else {
+					$scope.cantidad=0;
+				}
+
+				// Set the focus
 				if($('#ubicacioncve').val()!='') {
 					$('#edtcantidad').focus();
 				}
@@ -578,13 +580,16 @@ function AxAppController( $scope, $http ) {
 			}
 			
 			console.log('Processed scanner input:' + theValue);
-			
-			$scope.scanInput='';
-
 		}
-		
+
+		$scope.$apply( function(){$scope.scanInput=''; } );
+
 	});
 
+	$scope.scanFocus = function() {
+		var el=document.getElementById('scanInput').focus();
+		$scope.scanInput='';
+	};
 }
 
 /*
@@ -648,6 +653,20 @@ ubicacion = {{ubicacion | json}}
     <span class="help-inline hide">Woohoo!</span>
  </div>
 
+
+
+<div id="reprintContainer" class="section-container" style="margin-top: 32px;">
+	<legend><span class="text-info">Imprimir Etiqueta de Producto</span> &nbsp;&nbsp;</strong></legend>
+	<div class="control-group">
+ 			<div class="input-append">
+      		<input type="text" id="reprintlabel" name="reprintLabel" ng-model="reprintLabel" placeholder="Clave del Producto..." />
+			<button type="button" class="btn btn-primary" ng-click="requestReprintLabel()">
+				<i class="icon icon-print icon-white"></i> Imprimir
+			</button>
+    		</div>
+     <span class="help-inline" ng-show="reprintLabelMessage"><strong><em class="text-warning">{{reprintLabelMessage}}</em></strong></span>
+	</div>
+</div>
 
 */
 

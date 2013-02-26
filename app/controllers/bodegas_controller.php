@@ -403,7 +403,6 @@ P'.$label_count.'
 	public function getItem($articulo_id=null,$color_id=null,$talla_index=null) {
 		$this->autoRender=false;
 		$this->Articulo->recursive=1;
-		
 		$rs=$this->Articulo->findById($articulo_id);
 		$out=array(
 			'result'=>'error',
@@ -416,8 +415,8 @@ P'.$label_count.'
 
 
 			foreach($rs['Color'] as $item) {
+				$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
 				if($item['id']==$color_id) {
-					$color[]=array('id'=>$item['id'], 'cve'=>trim($item['cve']) );
 					$color_cve=trim($item['cve']);		
 				}
 			}
