@@ -19,13 +19,14 @@
 	
 <div class="tab-content">
 <div id="tabs-0" class="tab-pane active">
-<?php echo $this->TBS->input('Articulo.arcveart', array('type' => 'text', 'label' => 'Código', 'ly_w'=>'2')); ?>
+<?php echo $this->TBS->input('Articulo.arcveart', array('type' => 'text', 'label' => 'Código', 'ly_w'=>'2', 'class'=>($mode=='edit'?'readonly':''), 'readonly'=>($mode=='edit'?'true':''))); ?>
 <?php echo $this->TBS->input('Articulo.ardescrip', array('type' => 'text', 'label' => 'Descripción', 'ly_w'=>'4')); ?>
 <?php echo $this->TBS->input('arst', array('type'=>'radiogroup', 'label'=>'Estatus', 
 							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'))
 							);
 ?>
 <?php echo $this->TBS->input('Articulo.lento', array('type'=>'checkbox', 'label'=>'Lento Desplazamiento')); ?>
+<?php echo $this->TBS->input('Articulo.arstcompterm', array('type'=>'checkbox', 'label'=>'Se Compra Terminado', 'title'=>'Marcalo en caso de que este producto se compre terminado')); ?>
 <?php echo $this->TBS->input('Articulo.arobser', array('label' => 'Observaciones', 'type'=>'textarea', 'placeholder'=>'Observaciones y Comentarios', 'ly_w'=>'4')); ?>
 </div>
 

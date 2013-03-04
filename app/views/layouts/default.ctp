@@ -32,7 +32,7 @@
 			<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
 				
 			<section id="MainSection">
-			<div class="row" id="wrapper" class="ng-cloak" ng-controller="AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>">
+			<div class="row" id="wrapper" class="ng-cloak" ng-controller="<?php e('AxCtrl'.ucfirst($this->name).ucfirst($this->action))?>">
 			<div class="span12" id="content">
 
 				<div class="row" id="formMessagesContainer">

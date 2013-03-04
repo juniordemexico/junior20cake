@@ -4,7 +4,7 @@ class ServiciosController extends MasterDetailAppController {
 	var $name='Servicios';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'ArticulosColor'
 	);
 
 	var $cacheAction = array('view');
@@ -49,7 +49,7 @@ class ServiciosController extends MasterDetailAppController {
 								'conditions' => array('Articulo.tipoarticulo_id'=>$this->tipoarticulo_id),
 								);
 		$filter = $this->Filter->process($this);
-		$this->set('articulos', $this->paginate($filter));
+		$this->set('articulos', $this->paginate("Articulo"));
 	}
 
 	public function view($id = null) {

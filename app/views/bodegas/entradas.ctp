@@ -1,13 +1,13 @@
 <div id="formContainer" class="row almacenmovil table-bodega">
 <form id="itemForm" ng-submit="submit()" ng-controller="AxAppController"
-	name="itemForm" class="form ng-cloack">
+	name="itemForm" class="form ng-cloak">
 
 <div id="userContainer" class="section-container" style="margin-top: 4px;">
 	<legend><small>Usuario: <strong>{{user.username}}</strong></small>
-		<span class="pull-right">
-			<button id="btnScanFocus" name="btn_scan_focus" type="button" class="btn btn-mini" ng-click="scanFocus()">Leer Código</button>
-		</span>
 	</legend>
+	<div>
+		<button id="btnScanFocus" name="btn_scan_focus" type="button" class="btn btn-mini" ng-click="scanFocus()">Leer Código</button>
+	</div>
 </div>
 
 <div id="folioContainer" class="section-container" style="margin-top: 16px;">
@@ -179,7 +179,6 @@
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
-	//	el.value='';
 		el.focus();
 
 //    $scope.$apply(function() {
@@ -433,6 +432,25 @@ function AxAppController( $scope, $http ) {
        	});
 	};
 
+	$scope.getTransaccion = function(id) {
+		if(typeof id== 'undefined') {
+			id = $scope.currentFolio;
+		}
+
+		console.log('Get Transaccion: '+$scope.item.articulo_id);
+		$http.get('/Bodegas/gettransaccion/'+id).then( function (response) {
+			if(typeof response.data != 'undefined') {
+				if(typeof response.data.result != 'undefined' ||
+					typeof response.data.result == 'string') {
+					axAlert('Error al solicitar la Transaccion', 'warning', false);
+				}
+				else {
+					$scope.currentFolio=response.data.folio;
+				}
+			}
+       	});
+	};
+
 	$scope.requestPrintLabel = function() {
 		$http.get('/Bodegas/etiquetaentrada/'+$scope.printLabel).then(function(response) {
 			if(typeof response.data != 'undefined') {
@@ -514,6 +532,8 @@ function AxAppController( $scope, $http ) {
 			theValue=theValue.replace(/\%/g,':');
 			theValue=theValue.replace('t:u','"t":"u"');
 			theValue=theValue.replace('t:p','"t":"p"');
+			theValue=theValue.replace('t:t','"t":"t"');
+			theValue=theValue.replace('t:f','"t":"f"');
 			theValue=theValue.replace('id:','"id":');
 			theValue=theValue.replace('c:','"c":');
 			theValue=theValue.replace('t:','"t":');
@@ -522,15 +542,18 @@ function AxAppController( $scope, $http ) {
 			// Extracts the Label's type
 			$scope.lastScanInput=theValue;
 			console.log('RAW Scan:'+theValue);
+//			alert('RAW Scan:'+theValue);
 			var theType=theValue.substring(5,6);
 
 			// Trunk and Checks if the value already has json's brackets '{}'
 			var theValue=theValue.substring(8);
 			if(theValue.substring(0,1)!='{') theValue='{' + theValue.substring() + '}';
 			var theDataObj=jsonParse(theValue);
+//			alert('Scanned input to JSON'+(typeof theDataObj.id));
 			console.log('Scanned input to JSON string:' + theValue + 
 						' id:'+theDataObj.id);
 
+			/* Ubicacion (t=u, id=ubicacion_id) */
 			if(theType=='u') {
 				$scope.ubicacion.cve=theDataObj.id;
 				$scope.getUbicacion();
@@ -543,7 +566,36 @@ function AxAppController( $scope, $http ) {
 				}
 			}
 
+			/* Transaccion (t=t, id=transaccion_id) */
+			if(theType=='t') {
+				var id=theDataObj.id;
+				
+				$scope.getTransaccion(id);
+				
+				if($('#folio').val()!='') {
+					$('#edtcantidad').focus();
+				}
+				else {
+					$('#folio').focus();				
+				}
+			}
+
+			/* Folio / Referencia (t=f, id=(string)folio ) */
+			if(theType=='f') {
+				var id=theDataObj.id;
+				$scope.currentFolio=theData.obj;
+				
+				if($('#folio').val()!='') {
+					$('#artcve').focus();
+				}
+				else {
+					$('#folio').focus();				
+				}
+			}
+
+			/* Producto con Talla. Color y Cantidad (t=p, id=articulo_id, c=color_id, t=talla_index, p=cantidad ) */
 			if(theType=='p') {
+//				alert('entre a decodificar');
 				$scope.lastScanInput=theValue;
 
 				// Set the label's specified Articulo Id or Cve

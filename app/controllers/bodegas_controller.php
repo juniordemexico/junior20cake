@@ -501,4 +501,42 @@ P'.$label_count.'
 		echo json_encode($out);
 	}
 
+	public function getTransaccion($id=null) {
+		$this->autoRender=false;
+		$this->Artmovbodegadetail->recursive=1;
+
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Transacción Inválida',
+		);
+		
+		if(!$id || empty($id)) {
+			echo json_encode($out);
+			return;
+		}
+		
+		if(is_numeric($id)) {
+			$rs=$this->Artmovbodegadetail->findById($id);
+		}
+		else {
+			$rs=$this->Artmovbodegadetail->findByFolio($id);
+		}
+
+		$out=array(
+			'result'=>'error',
+			'errorMessage'=>'Transacción Inválida',
+		);
+
+		if($rs && isset($rs['Artmovbodegadetail']['id']) && $rs['Artmovbodegadetail']['id']>0) {
+			$out=$rs['Artmovbodegadetail'];
+		}
+		else {
+			$out=array(
+				'result'=>'error',
+				'errorMessage'=>'Transacción Inválida',
+				);
+		}
+		echo json_encode($out);
+	}
+
 }

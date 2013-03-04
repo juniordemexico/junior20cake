@@ -326,6 +326,7 @@ function AxAppController( $scope, $http ) {
 		}
 
 		$scope.disableSaveBtn=true;
+		
 		$http.get('/Bodegas/addtransaction?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
@@ -433,6 +434,25 @@ function AxAppController( $scope, $http ) {
        	});
 	};
 
+	$scope.getTransaccion = function(id) {
+		if(typeof id== 'undefined') {
+			id = $scope.currentFolio;
+		}
+
+		console.log('Get Transaccion: '+$scope.item.articulo_id);
+		$http.get('/Bodegas/gettransaccion/'+id).then( function (response) {
+			if(typeof response.data != 'undefined') {
+				if(typeof response.data.result != 'undefined' ||
+					typeof response.data.result == 'string') {
+					axAlert('Error al solicitar la Transaccion', 'warning', false);
+				}
+				else {
+					$scope.currentFolio=response.data.folio;
+				}
+			}
+       	});
+	};
+
 	$scope.requestPrintLabel = function() {
 		$http.get('/Bodegas/etiquetasalida/'+$scope.printLabel).then(function(response) {
 			if(typeof response.data != 'undefined') {
@@ -514,6 +534,8 @@ function AxAppController( $scope, $http ) {
 			theValue=theValue.replace(/\%/g,':');
 			theValue=theValue.replace('t:u','"t":"u"');
 			theValue=theValue.replace('t:p','"t":"p"');
+			theValue=theValue.replace('t:t','"t":"t"');
+			theValue=theValue.replace('t:f','"t":"f"');
 			theValue=theValue.replace('id:','"id":');
 			theValue=theValue.replace('c:','"c":');
 			theValue=theValue.replace('t:','"t":');
@@ -531,6 +553,7 @@ function AxAppController( $scope, $http ) {
 			console.log('Scanned input to JSON string:' + theValue + 
 						' id:'+theDataObj.id);
 
+			/* Ubicacion (t=u, id=ubicacion_id) */
 			if(theType=='u') {
 				$scope.ubicacion.cve=theDataObj.id;
 				$scope.getUbicacion();
@@ -543,7 +566,36 @@ function AxAppController( $scope, $http ) {
 				}
 			}
 
+			/* Transaccion (t=t, id=transaccion_id) */
+			if(theType=='t') {
+				var id=theDataObj.id;
+				
+				$scope.getTransaccion(id);
+				
+				if($('#folio').val()!='') {
+					$('#edtcantidad').focus();
+				}
+				else {
+					$('#folio').focus();				
+				}
+			}
+
+			/* Folio / Referencia (t=f, id=(string)folio ) */
+			if(theType=='f') {
+				var id=theDataObj.id;
+				$scope.currentFolio=theData.obj;
+				
+				if($('#folio').val()!='') {
+					$('#artcve').focus();
+				}
+				else {
+					$('#folio').focus();				
+				}
+			}
+
+			/* Producto con Talla. Color y Cantidad (t=p, id=articulo_id, c=color_id, t=talla_index, p=cantidad ) */
 			if(theType=='p') {
+//				alert('entre a decodificar');
 				$scope.lastScanInput=theValue;
 
 				// Set the label's specified Articulo Id or Cve
@@ -590,6 +642,7 @@ function AxAppController( $scope, $http ) {
 		var el=document.getElementById('scanInput').focus();
 		$scope.scanInput='';
 	};
+
 }
 
 /*

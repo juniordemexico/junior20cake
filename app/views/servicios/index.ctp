@@ -6,7 +6,7 @@ $this->Paginator->options(array('update' => '#content',
 ?>
 
 <div class="gridWrapper">
-<?php 
+<?php
 echo $form->create('Articulo', array('inputDefaults' => array(
 															'label' => false,
 															'div'   => false
@@ -68,3 +68,9 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
 , array('stop' => true));
 ?>
 
+<!-- BEGINS WEBUI AngulaJS App Controller -->
+<script>
+function <?php e('AxCtrl'.ucfirst($this->name).ucfirst($this->action))?>( $scope, $http ) {
+}	
+<!-- ENDS WEBUI AngulaJS App Controller -->
+</script>
