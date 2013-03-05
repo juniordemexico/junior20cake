@@ -62,7 +62,7 @@
 <?php if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
 
 			</div> <!-- content -->
-			</div> <!-- wrapper and ngController AxCtrl_controller_action -->
+			</div> <!-- wrapper and ngController AxCtrlControllerAction -->
 			</section> <!-- MainSection -->
 
 <!-- Global Page Footer -->

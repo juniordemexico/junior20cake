@@ -65,6 +65,10 @@ class BodegasController extends MasterDetailAppController {
 		$this->set('title_for_layout', "BODEGA :: SALIDAS");	
 	}
 
+	public function etiquetas() {
+		$this->set('title_for_layout', "BODEGA :: ETIQUETAS");	
+	}
+
 	public function movimientos() {
 		$this->set('title_for_layout', "BODEGA :: MOVIMIENTOS");	
 	}
@@ -105,8 +109,6 @@ class BodegasController extends MasterDetailAppController {
 					$theData['printlabelperpackage']=false;					
 			}
 
-//				$tipoartmovinv_id=;
-			
 			$data=array(
 				'folio'=>$theData['folio'],
 				'tipoartmovbodega_id'=>$theData['tipoartmovbodega_id'],
@@ -194,11 +196,11 @@ class BodegasController extends MasterDetailAppController {
 	}
 
 
-	public function printlabel() {
+	public function printlabels() {
 		$this->autoRender=false;
 		$theData=$this->params['url'];
 		unset($theData['url']);
-/*
+
 		if(
 			isset($theData['articulo_id']) && $theData['articulo_id']>0 &&
 			isset($theData['color_id']) &&
@@ -206,38 +208,80 @@ class BodegasController extends MasterDetailAppController {
 			isset($theData['cantidad']) && $theData['cantidad']>0 
 			)
 		{
-*/
-		if(!$id || !is_numeric($id) || !($id>0)) {
-			echo json_encode(array(
-				'result'=>'error',
-				'message'=>'Error Imprimiendo etiquetas (id: '.$id.') ',
-				'_id'=>$id,
-				'_timestamp'=>date('H:i:s')
-			));
-			exit;
-		}
+			if(!isset($theData['ubicacion_id'])) $theData['ubicacion_id']=1;
+			
+			if($theData['color_id']==0) {
+				$rsfirstcolor=$this->ArticuloColor->find('first', array('articulo_id'=>$theData['articulo_id']) );
+				if(!$rsfirstcolor || !isset($rsfirstcolor['ArticuloColor']['color_id'])) {
+					$theData['color_id']=$rsfirstcolor['ArticuloColor']['color_id'];
+				}
+			}
 
-		$theData=$this->params['url'];
-		unset($theData['url']);
-		
-		$data=$this->Articulo->findById($id);
-		if($data && isset($data['Articulo']['id']) && $data['Articulo']['id']>0) {
-			$this->_printlabel($data['Articulo']);
-				$out=array(
-				'result'=>'ok',
-				'message'=>'Etiquetas Impresas ('.$data['id'].') '.
-						(isset($theData['printlabel']) && $theData['printlabel']?
+			if(!isset($theData['selectedprinter']) || !($theData['selectedprinter']>0) ) {
+				$this->currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
+			}
+			else {
+				$this->currentPrinter=array('id'=>$theData['selectedprinter']);
+			}
+			if(isset($theData['printlabelperpackage'])) {
+				if($theData['printlabelperpackage']==1 || $theData['printlabelperpackage']=='1' ||
+					$theData['printlabelperpackage']=='true' || $theData['printlabelperpackage']==true)
+					$theData['printlabelperpackage']=true;
+				else
+					$theData['printlabelperpackage']=false;					
+			}
+
+			$data=array(
+				'id'=>-1,
+				'folio'=>$theData['folio'],
+				'almacen_id'=>1,
+				'ubicacion_id'=>$theData['ubicacion_id'],
+				'articulo_id'=>$theData['articulo_id'],
+				'color_id'=>$theData['color_id'],
+				'talla_index'=>$theData['talla_index'],
+				'cant'=>$theData['cantidad'],
+				't'.$theData['talla_index']=>$theData['cantidad'],
+				'concep'=>'',
+				'transito_st'=>'',
+				'st'=>'A',
+				'user_id'=>$this->Auth->user('id')
+				);
+			
+			$this->data['Artmovbodegadetail']=$data;
+
+			$data['created']=date('Y/m/d H:i:s');
+			$this->printLabelCounter=0;
+			if(!isset($theData['printlabelperpackage']) || !$theData['printlabelperpackage']) {
+				// Etiquetas Individuales
+				$unidades=$data['cant'];
+				$paquetes=0;
+				$data['label_count']=$data['cant'];
+				$data['cant']=1;
+				$this->_printlabel($data);						
+			}
+			else {
+				// Etiquetas Por Paquetes
+				$paquetes=(int)($data['cant']/10);
+				$unidades=$data['cant']-($paquetes*10);
+
+					// Imprime Paquetes
+				$data['cant']=10;
+				$data['label_count']=$paquetes;
+				if($paquetes>0) $this->_printlabel($data);						
+
+					// Imprime Unidades
+				$data['cant']=1;
+				$data['label_count']=$unidades;
+				if($unidades>0) $this->_printlabel($data);					
+			}
+
+			// Success...
+			$out=array(
+				'result'=>'recibido',
+				'message'=>(isset($theData['printlabel']) && $theData['printlabel']?
 						' Impresas '.($paquetes+$unidades).' etiquetas en '.$this->currentPrinter['cve']:
 						''),
 				'_id'=>$data['id'],
-				'_timestamp'=>date('H:i:s')
-			);
-		}
-		else {
-				$out=array(
-				'result'=>'error',
-				'message'=>'Error Imprimiendo etiquetas (id: '.$id.') ',
-				'_id'=>$id,
 				'_timestamp'=>date('H:i:s')
 			);
 		}
@@ -270,7 +314,6 @@ class BodegasController extends MasterDetailAppController {
 		if(!isset($data['talla_index']) || !($data['talla_index']>=0) ) $data['talla_index']=0;
 		$rstalla=$this->Talla->findById($rs['Articulo']['talla_id']);
 		$talla_label=($rstalla && isset($rstalla['Talla']['id'])) ? trim($rstalla['Talla']['tat'.$data['talla_index']]):'';
-
 
 		// Get Label's Number of Copies
 		if(!isset($data['label_count']) || !is_numeric($data['label_count']) || !($data['label_count']>=1) ) {
