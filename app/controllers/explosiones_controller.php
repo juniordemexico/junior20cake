@@ -43,11 +43,13 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-//		$this->data=$this->Explosion->findByArticuloId($id);
-		
-		$this->set('articulo', $this->Articulo->read(null,$id) );
-		$this->set('explosion', $this->Explosion->getAllItems($id) );
-		$this->set('title_for_layout', 'Explosion::'.$this->data['Articulo']['arcveart'] );
+ 		Configure::write ( 'debug', 0 );
+
+		$this->data=array();
+		$this->data['master']=$this->Articulo->findById($id);
+		$this->data['details']=$this->Explosion->getAllItems($id);
+		$this->set('title_for_layout', 'Explosion::'.$this->data['master']['Articulo']['arcveart'] );
+
 	}
 
 	function add($id=null) {
@@ -57,7 +59,7 @@ class ExplosionesController extends MasterDetailAppController {
 			exit;
 		} 
 
-	if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
+		if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
 			$material_id=$this->Explosion->Material->findByArcveart($material_cve);
 			if($material_id && isset($material_id['Articulo']['id'])) {
 				$material_id=$material_id['Articulo']['id'];
@@ -126,24 +128,32 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 	}
 	
-	public function delete($id=null) {
+	public function deleteItem($id=null) {
 		$this->autoRender=false;
+		$this->data=array();
 		
 		// Check if the ID was submited and if the specified item exists
-		if (!$id && 
-			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
-			!$this->Explosion->read(null, $id)) {
-			echo __('invalid_item', true).($id?" (id: $id)":'');			
-			exit;
+		if (!$id || 
+			!$item=$this->Explosion->findById($id)) {
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$item['Explosion']['id'].')';
+			echo json_encode($this->data);
+			die();
 		}
-
+		
 		// Execute DB Operations
 		if ($this->Explosion->delete($id)) {
-			echo "OK";
+			$this->data['result']='ok';
+			$this->data['message']='El Material '.$item['Explosion']['id'].
+									' se elimino de la Explosión del Producto';
+			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
 		}
 		else {
- 			echo __('item_could_not_be_deleted', true)." (id: $id)";
+			$this->data['result']='error';
+			$this->data['message']='El Material '.$item['Explosion']['id'].
+									' NO se puedo eliminar ';
 		}
+		echo json_encode($this->data);
 	}
 
 	function toggleInsumoPropio($id=null, $newValue=-1) {
@@ -216,7 +226,7 @@ class ExplosionesController extends MasterDetailAppController {
 			$value=$this->params['url']['value'];
 		}
 		else {
-			return( e(json_encode(array('result'=>'error', 'mesage'=>__('invalid_item', true))) );
+			return( e(json_encode(array('result'=>'error', 'mesage'=>__('invalid_item', true)))) );
 		}
 		
 		if (!$value || $value<0) {

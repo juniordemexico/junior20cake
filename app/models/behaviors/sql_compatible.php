@@ -109,13 +109,10 @@ class SqlCompatibleBehavior extends ModelBehavior {
  * @access public
  */
 	public function beforeFind(&$Model, $query) {
-		if (is_array($query['order'])) {
-			$this->_translateOrders($Model, $query['order']);
-		}
 		if (is_array($query['conditions']) && $this->_translateConditions($Model, $query['conditions'])) {
 			return $query;
 		}
-		return $query;
+		return true;
 	}
 
 /**
@@ -134,28 +131,6 @@ class SqlCompatibleBehavior extends ModelBehavior {
 			$results = date('Y-M-d h:i:s', $results->sec);
 		}
 	}
-
-
-/**
- * translateOrders method
- * change order syntax from SQL style to Mongo style
- *
- * @param mixed $Model
- * @param mixed $orders
- * @return void
- * @access protected
- */
-	protected function _translateOrders(&$Model, &$orders) {
-		if(!empty($orders[0])) {
-			foreach($orders[0] as $key => $val) {
-				if(preg_match('/^(.+) (ASC|DESC)$/i', $val, $match)) {
-					$orders[0][$match[1]] = $match[2];
-					unset($orders[0][$key]);
-				}
-			}
-		}
-	}
-
 
 /**
  * translateConditions method
@@ -184,23 +159,6 @@ class SqlCompatibleBehavior extends ModelBehavior {
 					$part = array($key => $part);
 					$this->_translateConditions($Model, $part);
 					$conditions['$or'][] = $part;
-				}
-				$return = true;
-				continue;
-			}
-			if ($key === $Model->primaryKey && is_array($value)) {
-				//_id=>array(1,2,3) pattern, set  $in operator
-				$isMongoOperator = false;
-				foreach($value as $idKey => $idValue) {
-					//check a mongo operator exists
-					if(substr($idKey,0,1) === '$') {
-						$isMongoOperator = true;
-						continue;
-					}
-				}
-				unset($idKey, $idValue);
-				if($isMongoOperator === false) {
-					$conditions[$key] = array('$in' => $value);
 				}
 				$return = true;
 				continue;

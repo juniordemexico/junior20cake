@@ -73,20 +73,33 @@ class DATABASE_CONFIG {
 		'encoding' => 'utf8'
 	);
 
+/*
+	public $mongo = array(
+        'driver' => 'mongodb.mongodbSource',
+        'database' => 'JUNIORDOC',
+        'host' => '127.0.0.1',
+        'port' => 27017,
+        /* optional auth fields
+        'login' => 'mongo', 
+        'password' => 'awesomeness',    
+        */
+    );  
+*/
+/*
 	public $default = array(
 		'driver' => 'mongodb.mongodbSource',
 		'database' => 'driver(DATABASE_NAME)',
 		'host' => '127.0.0.1',
 		'port' => 27017,
-		/* optional auth fields
+		// optional auth fields
 		'login' => 'mongo',	
 		'password' => 'awesomeness',
 		'replicaset' => array('host' => 'mongodb://hoge:hogehoge@localhost:27021,localhost:27022/blog', 
 		                      'options' => array('replicaSet' => 'myRepl')
 				     ),
-		*/
+		
 	);  
-
+*/
 /*
 	var $default = array(
 		'driver' => 'firebird',

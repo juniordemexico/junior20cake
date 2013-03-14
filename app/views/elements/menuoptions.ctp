@@ -21,8 +21,6 @@
 						<li><a id="lineasLinkCheck" href="/Lineas">Lineas</a></li>
 						<li><a id="marcasLinkCheck" href="/Marcas">Marcas</a></li>
 						<li><a id="temporadasLinkCheck" href="/Temporadas">Temporadas</a></li>
-						<li><a id="tallasLinkCheck" href="/Tallas">Tallas</a></li>
-						<li><a id="proporcionesLinkCheck" href="/Proporciones">Proporciones Prod</a></li>
 						<li class="divider dividerhead"><a class="returnFalse" href="">Auxiliares</a></li>
 						<li><a id="paisesLinkCheck" href="/Paises">Paises</a></li>
 						<li><a id="estadosLinkCheck" href="/Estados">Estados</a></li>
@@ -33,6 +31,33 @@
 						<li><a id="divisasLinkCheck" href="/TipoCambio">Usuario:<?php echo $session->read('Auth.User.username');?> Grupo:<?php echo $session->read('Auth.User.group_id');?></a></li>
 					</ul>
 				</li>
+<li><a class="returnFalse" href="">Producción</a>	
+	<ul>
+		<li class="divider dividerhead"><a class="returnFalse" href="">Catálogos</a></li>
+		<li><a id="coloresLinkCheck" href="/Colores">Colores</a></li>
+		<li><a id="marcasLinkCheck" href="/Tallas">Tallas</a></li>
+		<li><a id="temporadasLinkCheck" href="/Temporadas">Temporadas</a></li>
+		<li><a id="proporcionesLinkCheck" href="/Proporciones">Proporciones</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="">Productos</a></li>
+		<li><a id="articulosLinkCheck" href="/Articulos">Productos</a></li>
+		<li><a id="articulosArchivosLinkCheck" href="/Articulos/archivos">Imagenes/Archivos Productos</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="">Materiales y Servicios</a></li>
+		<li><a id="materialesLinkCheck" href="/Materiales">Materiales</a></li>
+		<li><a id="materialesArchivosLinkCheck" href="/Materiales/archivos">Imagenes/Documentos Materiales</a></li>
+		<li><a id="serviciosLinkCheck" href="/Servicios">Servicios</a></li>
+		<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios">Imagenes/Documentos Servicios</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="">Costeos</a></li>
+		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedor/costos">Costos por Material/Proveedor</a></li>
+		<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="">Procesos de Manufactura</a></li>
+		<li><a id="articuloExplosionLinkCheck" href="/Articulos/explosiones">Explosion</a></li>
+	</ul>
+</li>
+<li><a class="returnFalse" href="">Almacén Producción</a>	
+	<ul>
+		<li><a id="serviciosArchivosLinkCheck" href="/Bodegamateriales">Bodega de Materiales</a></li>
+	</ul>
+</li>
 				<li><a class="returnFalse" href="">Almacén</a>	
 					<ul>
 						<li class="divider dividerhead"><a class="returnFalse" href="">Movimientos</a>

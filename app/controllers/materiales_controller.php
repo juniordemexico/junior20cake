@@ -15,7 +15,6 @@ class MaterialesController extends MasterDetailAppController {
 		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
 		parent::beforeFilter();
 
-
 		if(isset($this->data['Articulo'])) {
 			$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
 			if(isset($this->data['Articulo']['arcveart'])) {

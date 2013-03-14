@@ -22,6 +22,7 @@ class Explosion extends AppModel
 			'foreignKey'=>'material_id',
 			'conditions'=>'Material.tipoarticulo_id<>0',
 			),
+		'Color',
 		'Proveedor'
 	);
 

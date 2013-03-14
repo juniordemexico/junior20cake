@@ -1,8 +1,15 @@
-<div class="page-header">
+<?php
+
+$articulo=$this->data['master']['Articulo'];
+$explosion=$this->data['details'];
+?>
+<header>
+<div class="row-fluid page-header">
 <h1><?php e($articulo['Articulo']['arcveart']);?> 
 	<small><?php e($articulo['Articulo']['ardescrip']);?></small>
 </h1>
 </div>
+</header>
 
 <div id="detailContent" class="row-fluid">
 
@@ -79,62 +86,37 @@
 			data-url="/Explosiones/add"><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
 
-		<div id="detailContentTelaTable">
+		<div id="detailContentTelaTable" class="row">
 		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Tela</th>
-				<th class="">Descripcion</th>
-				<th class="cant">Promedio</th>
+				<th class="">Descripción</th>
+				<th class="span2">Color</th>
+				<th class="span1">Trazo</th>
 				<th class="span1">Inventario Propio</th>
-				<th class="span1">&nbsp</th>
+				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-
-			<?php foreach($explosion['tela'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="cant"><input type="text" 
-								class="cant clickaction detailCantidad" 
-								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
-								title="Especifica la cantidad de la Tela" 
-								data-type="changeaction"
-								data-url="/Explosiones/changeCosto" 
-								data-id="<?php e($item['Explosion']['id']) ?>" 
-								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-								data-confirm=false 
-								value="<?php e($item['Explosion']['cant'])?>" 
-							/>
+			<tr data-ng-repeat="item in details.tela" id="row_{{item.Explosion.id}}" class="item-row">
+				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="">{{item.Articulo.ardescrip}}</td>
+				<td class="span2">{{item.Color.cve}}</td>
+				<td class="span1">
+					<input type="text" class="cant" data-ng-model="item.Explosion.cant" title="Especifica la cantidad de la Tela" />
 				</td>
-				<td class=""><input type="checkbox" 
-								class="clickaction detailToggleInsumoPropio" 
-								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
-								title="Marcar en caso de ser un insumo propio" 
-								data-type="clickaction"
-								data-url="/Explosiones/toggleInsumoPropio" 
-								data-id="<?php e($item['Explosion']['id']) ?>" 
-								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-								data-confirm=false 
-								<?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" 
-							/>
+				<td class="span1">
+					<input type="checkbox" data-ng-model="item.Explosion.insumopropio" title="Marcar en caso de ser un insumo propio" />
 				</td>
-				<td class=""><button type="button" class="btn btn-mini clickaction detailDelete"
-									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
-									data-type="clickaction"
-									data-url="/Explosiones/delete" 
-									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-									data-confirm="label" 
-									data-confirm-msg="Seguro de Eliminar el Item?"
-									data-icon="trash">
-									<i class="icon icon-trash"></i>
-							</button>
+				<td class="span1">
+					<button type="button" class="btn btn-mini ax-btn-detail-delete"
+							data-ng-click="detailDelete(item.Explosion.id, item, true)"
+					>
+							<i class="icon icon-trash"></i>
+					</button>
 				</td>
 			</tr>
-
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -204,62 +186,37 @@
 			
 		</div>
 
-		<div id="detailContentHabilTable">
+		<div id="detailContentHabilTable" class="row">
 		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Material</th>
 				<th class="">Descripcion</th>
-				<th class="cant">Cantidad</th>
+				<th class="span2">Color</th>
+				<th class="span1">Cantidad</th>
 				<th class="span1">Inventario Propio</th>
-				<th class="span1">&nbsp</th>
+				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($explosion['habilitacion'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row" data-cve="<?php e($item['Articulo']['arcveart'])?>">
-				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="cant"><input type="text" 
-								class="cant clickaction detailCantidad" 
-								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
-								title="Especifica la cantidad del Material" 
-								data-type="changeaction"
-								data-url="/Explosiones/changeCosto" 
-								data-id="<?php e($item['Explosion']['id']) ?>" 
-								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-								data-confirm=false 
-								value="<?php e($item['Explosion']['cant'])?>" 
-							/>
+			<tr data-ng-repeat="item in details.habilitacion" id="row_{{item.Explosion.id}}" class="item-row">
+				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="">{{item.Articulo.ardescrip}}</td>
+				<td class="span2">{{item.Color.cve}}</td>
+				<td class="span1">
+					<input type="text" class="cant" data-ng-model="item.Explosion.cant" title="Especifica la cantidad de la Tela" />
 				</td>
-				<td class=""><input type="checkbox" 
-								class="clickaction detailToggleInsumoPropio" 
-								id="chkToggeInsumoPropio_<?php e($item['Explosion']['id']) ?>"
-								title="Marcar en caso de ser un insumo propio" 
-								data-type="clickaction"
-								data-url="/Explosiones/toggleInsumoPropio" 
-								data-id="<?php e($item['Explosion']['id']) ?>" 
-								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-								data-confirm=false 
-								<?php e($item['Explosion']['insumopropio']==1?'checked="true"':'');?>" 
-							/>
+				<td class="span1">
+					<input type="checkbox" data-ng-model="item.Explosion.insumopropio" data-ng-title="Marcar en caso de ser un insumo propio" />
 				</td>
-				<td class=""><button type="button"
-									class="btn btn-mini clickaction detailDelete"
-									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
-									title="Quitar el Insumo de la Explosion de Materiales" 
-									data-type="clickaction"
-									data-url="/Explosiones/delete" 
-									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-									data-confirm="label" 
-									data-confirm-msg="Seguro de Eliminar el Item?"
-									data-icon="trash">
-									<i class="icon icon-trash"></i>
-							</button>
+				<td class="span1">
+					<button type="button" class="btn btn-mini ax-btn-detail-delete"
+							data-ng-click="detailDelete(item.Explosion.id, item, true)"
+					>
+							<i class="icon icon-trash"></i>
+					</button>
 				</td>
 			</tr>
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -325,45 +282,27 @@
 		<table class="table table-condensed table-hover">
 			<thead>
 			<tr>
-				<th class="cveart">Servicio</th>
+				<th class="span2">Servicio</th>
 				<th class="">Descripcion</th>
-				<th class="cant">Cantidad</th>
-				<th class="span1">Costo</th>
+				<th class="span1">Cantidad</th>
+				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($explosion['servicio'] as $item): ?>
-			<tr id="<?php e($item['Explosion']['id']);?>" class="t-row">
-				<td class="cveart" id="<?php e($item['Explosion']['material_id'])?>"><?php e($item['Articulo']['arcveart'])?></td>
-				<td class=""><?php e($item['Articulo']['ardescrip'])?></td>
-				<td class="cant"><input type="text" 
-								class="cant clickaction detailCantidad" 
-								id="detailCantidad_<?php e($item['Explosion']['id']) ?>"
-								title="Especifica la cantidad del material" 
-								data-type="changeaction"
-								data-url="/Explosiones/changeCosto" 
-								data-id="<?php e($item['Explosion']['id']) ?>" 
-								data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-								data-confirm=false 
-								value="<?php e($item['Explosion']['cant'])?>" 
-							/>
+			<tr data-ng-repeat="item in details.servicio" id="row_{{item.Explosion.id}}" class="item-row">
+				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="">{{item.Articulo.ardescrip}}</td>
+				<td class="span1">
+					<input type="text" class="cant" data-ng-model="item.Explosion.cant" title="Especifica la cantidad de la Tela" />
 				</td>
-				<td class=""><button type="button" 
-									class="btn btn-mini clickaction detailDelete"
-									id="btnDelete_<?php e($item['Explosion']['id']); ?>"
-									title="Quitar el Servicio de la Explosion de Materiales" 
-									data-type="clickaction"
-									data-url="/Explosiones/delete" 
-									data-id="<?php e($item['Explosion']['id']); ?>" 
-									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
-									data-confirm="label" 
-									data-confirm-msg="Seguro de Eliminar el Item?"
-									data-icon="trash">
-									<i class="icon icon-trash"></i>
-							</button>
+				<td class="span1">
+					<button type="button" class="btn btn-mini ax-btn-detail-delete"
+							data-ng-click="detailDelete(item.Explosion.id, item, true)"
+					>
+							<i class="icon icon-trash"></i>
+					</button>
 				</td>
 			</tr>
-			<?php endforeach; ?>
 			</tbody>
 		</table>
 		</div>
@@ -571,7 +510,7 @@ $.ajax({
 
 var emptyItem={id: null, arcveart: '', ardescrip: '', cant: '', insumopropio: 0};
 
-function AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>( $scope, $http ) {
+function AxAppCtrl( $scope, $http ) {
 
 	/* Main View Configuration, Routes and other symbols */
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
@@ -586,6 +525,7 @@ function AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>( $scope, $http )
 				username: '<?php e($session->read('Auth.User.username'))?>',
 				group_id: <?php e($session->read('Auth.User.group_id'))?>
 				};
+
 				
 	$scope.actions={	setItem: $scope.base.url+'/'+$scope.base.controller+'/'+'additem',
 						changeItem: $scope.base.url+'/'+$scope.base.controller+'/'+'changeitem'
@@ -599,11 +539,64 @@ function AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>( $scope, $http )
 
 	/* Begins the angular controller's code specific to this View */
 
+	$scope.master=$scope._data.master;
+	$scope.details=$scope._data.details;
+
+/*
 	$scope.currentTela= JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentServicios=JSON.parse(JSON.stringify(emptyItem));
-	
-	
+*/	
+	// Set an Item's Cost
+	$scope.setCosto = function(explosion_id, proveedor_id) {
+		$http.get('/Costeos/setcosto/'+$scope.currentMaster.Articulo.id+
+		'?explosion_id='+explosion_id+'&proveedor_id='+proveedor_id
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope._data=response.data.data;
+
+				$scope.currentMaster=$scope._data.master;
+				$scope.currentTela=$scope._data.details.tela;
+				$scope.currentHabilitacion=$scope._data.details.habilitacion;
+				$scope.currentServicio=$scope._data.details.servicio;
+
+				axAlert(response.data.message, 'success', false);
+
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+			}
+       	});
+
+	}
+
+	$scope.detailDelete = function(id, itemObj, askConfirmation) {
+		alert('borrar:'+id+' objeto:'+itemObj.Articulo.arcveart+ ' url: /Explosiones/deleteItem/'+id);
+		
+		$http.get('/Explosiones/deleteItem/'+id
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.details=response.data.details;
+				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+			}
+       	});
+
+	}
 }
 
 </script>

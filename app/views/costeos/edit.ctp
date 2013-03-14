@@ -1,16 +1,18 @@
-<div id="detailContent" class="row-fluid">
-
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id'); ?>
 
+<header>
 <div class="page-header">
 <h1>
 <span tooltip-placement="right" tooltip="{{currentMaster.Articulo.ardescrip}}">{{currentMaster.Articulo.arcveart}}</span>
 
 {{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
 </h1>
+</div> <!-- div.page-header -->
+</header>
 
-<div class="well">
+
+<div id="summary" class="row-fluid well">
 <ul class="thumbnails">
 	<li class="span3"><h4>Telas: <em class="text-info">{{total.tela.importe | currency}}</em></h4></li>
 	<li class="span3"><h4>Habilitación: <em class="text-warning">{{total.habilitacion.importe | currency}}</em></h4></li>
@@ -27,9 +29,7 @@
 A U T O R I Z A R &nbsp; C O S T E O
 </button>
 
-</div>
-
-</div>
+</div> <!-- div#summary-->
 
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
@@ -187,16 +187,11 @@ A U T O R I Z A R &nbsp; C O S T E O
 
 <?php echo $this->Form->end();?>
 
-</div>
-
 <script>
-
-angular.module('AxAppOggi', ['ui']);
-angular.module('AxAppOggi', ['ui.bootstrap']);
 
 /* The Form's AngularJS Controller */
 
-function AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>( $scope, $http ) {
+function AxAppCtrl( $scope, $http ) {
 
 	/* Main View Configuration, Routes and other symbols */
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

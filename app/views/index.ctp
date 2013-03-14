@@ -25,7 +25,7 @@
 		</div>
 		</li>
 		<li class="span3">
-		<div class="thumbnail">		
+		<div class="thumbnail">
 		<?php echo $this->Html->link(
 					$this->Html->image('logos/cake.logo.png', array('alt' => 'CakePHP MVC Framework', 'border' => '0', 'class'=>'img-rounded')),
 					'http://www.cakephp.org/',
@@ -67,8 +67,8 @@
 					array('target' => '_blank', 'escape' => false, 'class'=>'thumbnail')
 				);
 		?>
-		<div>HTML5 Implemented Features</div>
-		</div>
+		<h3>HTML5</h3>
+		<p>The newest and most featured HTML specification</p>
 		</li>
 		<li class="span3">
 		<div class="thumbnail">		
@@ -78,8 +78,8 @@
 					array('target' => '_blank', 'escape' => false, 'class'=>'thumbnail')
 				);
 		?>
-		<div>CSS 3 User Interface's Presentation Styles</div>
-		</div>
+		<h3>CCS3 Cascade Style Sheets</h3>
+		<p>Brings all the Cascade Style Sheets visual style's new features</p>
 		</li>
 		<li class="span3">
 		<div class="thumbnail">		
@@ -89,8 +89,8 @@
 					array('target' => '_blank', 'escape' => false)
 				);
 		?>
-		<div>HTML, CSS and DOM Manipulation and Utility Framework</div>
-		</div>
+		<h3>Javascript Utility Framework</h3>
+		<p>Cross-Browser-Plataform HTML, CSS and DOM manipulation framework.</p>
 		</li>
 		<li class="span3">
 		<div class="thumbnail">		
@@ -100,8 +100,8 @@
 					array('target' => '_blank', 'escape' => false, 'class'=>'thumbnail')
 				);
 		?>
-		<div>Client-Side Dynamic User Interface's MVC Framework</div>
-		</div>
+		<h3>Client-Side Javascript MVC Framework</h3>
+		<p>At the core of the browser's user interface</p>
 		</li>		
 	</ul>
 

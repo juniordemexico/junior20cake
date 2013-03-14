@@ -11,10 +11,12 @@ class InvfisicosmovilController extends MasterDetailAppController {
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 
 	public function beforeFilter() {
+/*
 		if($this->Auth->User('id')<>2) {
 			die("TIEMPO AGOTADO. DEPOSITE OTRA MONEDA :)");
 		}
-		parent::beforeFilter();
+		parent::beforeFilter();	
+*/
 	}
 
 	public function index() {

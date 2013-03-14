@@ -1,4 +1,4 @@
 	<script>
-		angular.module('AxAppOggi', ['ui']);
-		angular.module('AxAppOggi', ['ui.bootstrap']);
+		angular.module('AxApp', ['ui']);
+		angular.module('AxApp', ['ui.bootstrap']);
 	</script>

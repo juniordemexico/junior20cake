@@ -30,6 +30,7 @@
 <?php echo $this->TBS->input('unidad_id', array('label' => 'Unidad')); ?>
 <?php echo $this->TBS->input('linea_id', array('label' => 'Linea')); ?>
 <?php echo $this->TBS->input('marca_id', array('label' => 'Marca')); ?>
+<?php echo $this->TBS->input('talla_id', array('label' => 'Grupo de Tallas')); ?>
 </div>
 
 <div id="tabs-2" class="tab-pane">

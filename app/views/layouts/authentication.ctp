@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="AxApp" id="top">
 <head>
+
 	<!-- Meta Tags, Charsets, Display/Device settings -->
 	<?php echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>
 
@@ -14,65 +15,58 @@
 	<?php echo $this->element('includes_js', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- Page's UI especific MVC code -->
-	<?php  //echo $this->AssetCompress->script('webapp.js'); //echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>
+	<?php echo $this->element('includes_webui', array('request'=>$request, 'session'=>$session)); ?>
 
 	<?php echo $scripts_for_layout; ?>
 
-
 	<title><?php echo $title_for_layout; ?></title>
-
-  <!--[if IE]>
-  <link rel="stylesheet" type="text/css" href="css/custom-theme/jquery.ui.1.8.16.ie.css"/>
-  <![endif]-->
 
 </head>
 
 <body>
 
-<div class="container">	
-	<div class="row">
-		<div class="span12">
+<div id="pageContainer" class="container ax-page-container">	
 
-			<section id="mainSection">
-				
-			<div class="row" id="wrapper">
+	<section id="sectionMain">
+	<div id="wrapper" class="row ng-cloak ax-page-wrapper" data-ng-controller="AxAppCtrl">
+			
+			<div id="content" class="row ax-page-content">
 
-			<section id="DynamicContentSection">
-				
-			<div class="span12" id="content">
+				<div id="formMessages" class="row ax-form-messages">
 
-				<div class="row" id="formMessages">
+<?php echo $this->TBS->myflashes(); ?>
 
-<?php echo $this->TBS->flashes(); ?>
+				</div> <!-- div#formMessages -->
 
-				</div> <!-- div formMessages -->
 
-				<div class="row" id="formContent">
+				<div id="formContent" class="row ax-form-content" >
 
 <?php echo $content_for_layout; ?>
 
-				</div> <!-- formContent row -->
+				</div> <!-- div#formContent -->
 
-				<div class="row" id="formScripts">
+				<section id="sectionWebAppCode">
+				<div id="formScripts" class="row hide ax-app-script">
 						
-<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
-</section>
 
-				</div> <!-- formScripts -->
+				</div> <!-- div#formScripts -->
+				</section> <!-- section#sectionWebAppCode -->
 
-<?php //if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
-				
-			</div> <!-- content -->
-			</div> <!-- wrapper -->
-			</section> <!-- MainSection -->
+				<section id="sectionDebug">
+<?php if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
+				</section> <!-- section#sectionDebug -->
 
-<!-- Global Page Footer -->
-<?php echo $this->element('pagefooter');?>
+			</div> <!-- div#content -->
+	</div> <!-- div#wrapper  and  ngController#AxAppCtrl -->
+	</section> <!-- section#sectionMain -->
 
-		</div> <!-- Span12-->
-	</div> <!-- Row-Fluid-->
-</div> <!-- Container-->
+	<!-- Global Page Footer -->
+	<section id="sectionFooter">
+	<?php echo $this->element('pagefooter');?>
+	</section> <!-- section#sectionFooter -->
+
+</div> <!-- div#pageContainer -->
 
 </body>
 </html>

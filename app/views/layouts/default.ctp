@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="AxAppOggi" id="top">
+<html lang="en" data-ng-app="AxApp" id="top">
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
@@ -25,52 +25,52 @@
 
 <body>
 
-<div class="container">	
-	<div class="row">
-		<div class="span12">
+<div id="pageContainer" class="container-fluid ax-page-container">	
 
-			<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
-				
-			<section id="MainSection">
-			<div class="row" id="wrapper" class="ng-cloak" ng-controller="<?php e('AxCtrl'.ucfirst($this->name).ucfirst($this->action))?>">
-			<div class="span12" id="content">
+	<section id="sectionToolBar">
+	<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
+	</section>  <!-- section#sectionToolbar -->
+	
+	<section id="sectionMain">
+	<div id="wrapper" class="row-fluid ng-cloak ax-page-wrapper" data-ng-controller="AxAppCtrl">
+			
+			<div id="content" class="row-fluid ax-page-content">
 
-				<div class="row" id="formMessagesContainer">
-				<div class="span12" id="formMessages">
+				<div id="formMessages" class="row-fluid ax-form-messages">
 
 <?php echo $this->TBS->myflashes(); ?>
 
-				</div> <!-- span formMessages -->
-				</div> <!-- row formMessagesContainer -->
+				</div> <!-- div#formMessages -->
 
-				<div class="row" id="formContent">
+
+				<div id="formContent" class="row-fluid ax-form-content" >
 
 <?php echo $content_for_layout; ?>
 
-				</div> <!-- formContent row -->
+				</div> <!-- div#formContent -->
 
-				<div class="row" id="formScriptsContainer">
-				<div class="span12" id="formScripts">
+				<section id="sectionWebAppCode">
+				<div id="formScripts" class="row-fluid hide ax-app-script">
 						
-<section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
-</section>
 
-				</div> <!-- formScripts -->
-				</div> <!-- formScriptsContainer -->
+				</div> <!-- div#formScripts -->
+				</section> <!-- section#sectionWebAppCode -->
 
+				<section id="sectionDebug">
 <?php if(Configure::Read('debug')>0) echo $this->element('debug'); ?>
+				</section> <!-- section#sectionDebug -->
 
-			</div> <!-- content -->
-			</div> <!-- wrapper and ngController AxCtrlControllerAction -->
-			</section> <!-- MainSection -->
+			</div> <!-- div#content -->
+	</div> <!-- div#wrapper  and  ngController#AxAppCtrl -->
+	</section> <!-- section#sectionMain -->
 
-<!-- Global Page Footer -->
-<?php echo $this->element('pagefooter');?>
+	<!-- Global Page Footer -->
+	<section id="sectionFooter">
+	<?php echo $this->element('pagefooter');?>
+	</section> <!-- section#sectionFooter -->
 
-		</div> <!-- Span12-->
-	</div> <!-- Row-Fluid-->
-</div> <!-- Container-->
+</div> <!-- div#pageContainer -->
 
 </body>
 </html>

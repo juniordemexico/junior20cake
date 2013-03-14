@@ -1,7 +1,6 @@
 
-<div class="row">
-<div class="span12" id="pagination-container">
-<div class="pagination centered">
+<div class="row-fluid" id="pagination-container">
+<div class="pagination text-center centered">
 <?php if( $paginator->hasNext() || $paginator->current()>1 ) :?>
 	<ul class="pagination">
 	<?php echo $paginator->first('<i class="icon icon-fast-backward"></i> '.__('first',true), array('tag'=>'li', 'separator'=>'', 'class'=>'first', 'escape'=>false), null, array('tag'=>'li', 'class'=>'first disabled'));?>
@@ -21,7 +20,7 @@
 		<?php endif;?>
 	</ul>
 	<?php endif;?>
-<div>
+<div class="row-fluid text-center center">
 <?php
 	echo '<label class="label">'.$paginator->counter(array(
 		'format' => __('Página %page% de %pages% ( %count% registros )', true),
@@ -31,6 +30,5 @@
 </div>
 </div> <!-- pagination -->
 
-</div> <!-- span12 -->
 </div> <!-- row-fluid -->
 

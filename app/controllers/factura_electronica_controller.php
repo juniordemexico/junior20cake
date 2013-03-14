@@ -95,20 +95,21 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->autoRender=false;
 		$this->layout='ajaxclean';
 		$theFacturas=$this->Factura->find('all', array(
-										'conditions'=>array('Factura.fafecha >='=>'2012/01/01', 
+										'conditions'=>array('Factura.fafecha >='=>'2010/01/01', 
 															'Factura.fafecha <='=>'2012/12/31',
 															'Factura.faT'=>0,
 															'SUBSTRING(Factura.farefer FROM 1 FOR 1) '=>array('A','B')
 															),
 										'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha',
 														'Factura.crefec','Factura.modfec','Factura.fast'),
-										'limit'=>100000,
 										'order'=>'Factura.id DESC'
 										)
 									);
 		$xmlPath='/home/www/junior20cake/app/files/facturaselectronicas/xml';
 		$pdfPath='/home/www/junior20cake/app/files/facturaselectronicas/pdf';
+		$logPath='/home/www/junior20cake/app/files/facturaselectronicas';
 		$folios_no_encontrados=array();
+		$folios_renombrados=array();
 		foreach($theFacturas as $item) {
 			$id=$item['Factura']['id'];
 			$folio=$item['Factura']['farefer'];
@@ -126,6 +127,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			elseif(file_exists($xmlPath.DS.$filename2)) {
 				echo "El Archivo $xmlPath".DS."$filename2 Existe y se RENOMBRO! <br/> \n\n";
 				rename($xmlPath.DS.$filename2, $xmlPath.DS.$filename);
+				$folios_renombrados[]=array('id'=>$id,'farefer'=>$folio,'fafecha'=>$fecha,'oldName'=>$filename2,'newName'=>$filename);
 			}
 			else {
 				echo "NO SE ENCONTRO NINGUN ARCHIVO PARA LA FACTURA FOLIO:$folio FECHA:$fecha";
@@ -135,6 +137,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		}
 		echo "TOTAL DE FOLIOS NO ENCONTRADOS: ".count($folios_no_encontrados)." <br/>\n\n";
 		pr($folios_no_encontrados);
+		$this->AxFile->StringToFile(json_encode($folios_no_encontrados), $logPath.'/folios_no_encontrados.json');
+		$this->AxFile->StringToFile(json_encode($folios_renombrados), $logPath.'/folios_renombrados.json');
 		die();
 	}
 

@@ -9,8 +9,8 @@
 class Articulo extends AppModel 
 {
 	public $name = 'Articulo';
-//	public $table = 'ARTICULOS';
-//	public $useTable = 'ARTICULOS';
+	public $table = 'Articulo';
+	public $useTable = 'Articulo';
 	public $alias = 'Articulo';
 
 	public $primaryKey = 'id';
