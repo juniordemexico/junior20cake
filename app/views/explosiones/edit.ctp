@@ -1,17 +1,10 @@
-<?php
-
-$articulo=$this->data['master']['Articulo'];
-$explosion=$this->data['details'];
-?>
 <header>
 <div class="row-fluid page-header">
-<h1><?php e($articulo['Articulo']['arcveart']);?> 
-	<small><?php e($articulo['Articulo']['ardescrip']);?></small>
-</h1>
+<h1>{{master.Articulo.arcveart}} <small>{{master.Articulo.ardescrip}}</small></h1>
 </div>
 </header>
 
-<div id="detailContent" class="row-fluid">
+<div id="detailContent" class="row">
 
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id', array("value"=>$articulo['Articulo']['id'])); ?>
@@ -107,7 +100,11 @@ $explosion=$this->data['details'];
 					<input type="text" class="cant" data-ng-model="item.Explosion.cant" title="Especifica la cantidad de la Tela" />
 				</td>
 				<td class="span1">
-					<input type="checkbox" data-ng-model="item.Explosion.insumopropio" title="Marcar en caso de ser un insumo propio" />
+					<input type="checkbox" 
+						ng-checked="item.Explosion.insumopropio==1"
+						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
+						title="Marcar en caso de ser un insumo propio"
+					/>
 				</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
@@ -204,10 +201,14 @@ $explosion=$this->data['details'];
 				<td class="">{{item.Articulo.ardescrip}}</td>
 				<td class="span2">{{item.Color.cve}}</td>
 				<td class="span1">
-					<input type="text" class="cant" data-ng-model="item.Explosion.cant" title="Especifica la cantidad de la Tela" />
+					<input type="text" class="cant" data-ng-model="item.Explosion.cant" data-ng-change="updateCantidad(item.Explosion.id,item.Explosion.cant)" title="Especifica la cantidad de la Tela" />
 				</td>
 				<td class="span1">
-					<input type="checkbox" data-ng-model="item.Explosion.insumopropio" data-ng-title="Marcar en caso de ser un insumo propio" />
+					<input type="checkbox" 
+						ng-checked="item.Explosion.insumopropio==1"
+						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
+						title="Marcar en caso de ser un insumo propio"
+					/>
 				</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
@@ -317,39 +318,6 @@ $explosion=$this->data['details'];
 
 <?php
 
-// Event for Detail's Delete Button
-$this->Js->get('.detailDelete')->event(
-'click', "
-
-var el=$('#'+this.id);
-var theID=el.data('id');
-var theCve=el.data('value');
-var theUrl=el.data('url');
-bootbox.confirm('Seguro de ELIMINAR la partida ' + theCve + ' de la explosion ?', 
-function(result) {
-    if (result) {
-		$.ajax({
-			dataType: 'html', 
-			type: 'post', 
-			url: theUrl+'/'+theID,
-			success: function (data, textStatus) {
-				if(data=='OK') {
-					$('#'+theID).remove();
-					axAlert('Insumo ' + theCve + ' Eliminado', 'success', false);
-					}
-				else {
-					axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-				}
-			},
-		});
-
-    }
-}
-);
-
-"
-, array('stop' => true));
-
 // Event for Changing an item's costo
 
 $this->Js->get('.detailCantidad')->event(
@@ -381,34 +349,6 @@ $.ajax({
 , array('stop' => true));
 
 
-// Event for Detail's Checkbox
-
-$this->Js->get('.detailToggleInsumoPropio')->event(
-'change', "
-
-var el=$('#'+this.id);
-var theID=el.data('id');
-var theCve=el.data('value');
-var theValue=(el.attr('checked')=='checked');
-var theUrl=el.data('url');
-$.ajax({
-	dataType: 'html', 
-	type: 'post',
-	url: theUrl+'/'+theID+'/value:'+theValue,
-	success: function (data, textStatus) {
-		if(data=='OK') {
-			axAlert('Insumo ' + theCve + ' Actualizado', 'success', false);
-			return true;
-		}
-		else {
-			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-			return false;
-		}
-	},
-});
-
-"
-, array('stop' => true));
 
 // Add Detail Button Event
 
@@ -577,9 +517,32 @@ function AxAppCtrl( $scope, $http ) {
 	}
 
 	$scope.detailDelete = function(id, itemObj, askConfirmation) {
-		alert('borrar:'+id+' objeto:'+itemObj.Articulo.arcveart+ ' url: /Explosiones/deleteItem/'+id);
-		
-		$http.get('/Explosiones/deleteItem/'+id
+		bootbox.confirm('Seguro de ELIMINAR la partida ' + itemObj.Articulo.arcveart + ' de la explosion ?', 
+		function(result) {
+    		if (result) {
+				$http.get('/Explosiones/deleteItem/'+id
+				).then(function(response) {
+				if(typeof response.data != 'undefined' && 
+					typeof response.data.result != 'undefined' && response.data.result=='ok') {
+					$scope.details=response.data.details;
+					axAlert(response.data.message, 'success', false);
+				}
+				else {
+					if(typeof response.data.result != 'undefined') {
+						axAlert(response.data.message, 'error', false);
+					}
+					else {
+						axAlert('Error Desconocido', 'error', false);
+					}
+				}
+       			});
+
+    		}
+		});
+	}
+
+	$scope.toggleInsumoPropio = function(id, itemObj) {
+		$http.get('/Explosiones/toggleInsumoPropio/'+id
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
@@ -597,6 +560,44 @@ function AxAppCtrl( $scope, $http ) {
        	});
 
 	}
+
+	$scope.updateCantidad = function(id, value) {
+
+		$http.get('/Explosiones/updateCantidad/'+id+'/'+value
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.details=response.data.details;
+//				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+			}
+       	});
+		
+	}
+
+/*
+	$('.detailCantidad').bind('blur', function() {
+		if($scope.ubicacion.cve!=$scope.lastUbicacionCve) {
+			$scope.lastUbicacionCve=$scope.ubicacion.cve;
+			$scope.getUbicacion();
+			if($('#artcve').val()!='') {
+				$('#edtcantidad').focus();
+			}
+			else {
+				$('#artcve').focus();				
+			}
+
+		}
+	});
+*/
+
 }
 
 </script>

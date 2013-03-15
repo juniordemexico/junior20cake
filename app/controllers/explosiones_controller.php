@@ -104,30 +104,6 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 	}
 
-	public function detailtela($id=null) {
-		$this->layout='empty';
-		if($id) {
-			$this->set('articulo', $this->Articulo->read(null,$id) );
-			$this->set('explosion', $this->Explosion->getAllItems($id) );
-		}
-	}
-	
-	public function detailhabil($id=null) {
-		$this->layout='empty';
-		if($id) {
-			$this->set('articulo', $this->Articulo->read(null,$id) );
-			$this->set('explosion', $this->Explosion->getAllItems($id) );
-		}
-	}
-	
-	public function detailservicio($id=null) {
-		$this->layout='empty';
-		if($id) {
-			$this->set('articulo', $this->Articulo->read(null,$id) );
-			$this->set('explosion', $this->Explosion->getAllItems($id) );
-		}
-	}
-	
 	public function deleteItem($id=null) {
 		$this->autoRender=false;
 		$this->data=array();
@@ -136,7 +112,7 @@ class ExplosionesController extends MasterDetailAppController {
 		if (!$id || 
 			!$item=$this->Explosion->findById($id)) {
 			$this->data['result']='error';
-			$this->data['message']='Item Inválido ('.$item['Explosion']['id'].')';
+			$this->data['message']='Item Inválido ('.$id.')';
 			echo json_encode($this->data);
 			die();
 		}
@@ -144,7 +120,7 @@ class ExplosionesController extends MasterDetailAppController {
 		// Execute DB Operations
 		if ($this->Explosion->delete($id)) {
 			$this->data['result']='ok';
-			$this->data['message']='El Material '.$item['Explosion']['id'].
+			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
 									' se elimino de la Explosión del Producto';
 			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
 		}
@@ -158,29 +134,28 @@ class ExplosionesController extends MasterDetailAppController {
 
 	function toggleInsumoPropio($id=null, $newValue=-1) {
 		$this->autoRender=false;
+		$this->data=array();
 
 		// Check if the ID was submited and if the specified item exists
 		if (!$id) {
-			if(isset($this->params['named']['id'])) {
-				$id=$this->params['named']['id'];
-			}
-			elseif( isset($this->params['url']['id']) ) {
-				$id=$this->params['url']['id'];
-			}
-			else {
-				echo __('invalid_item', true).($id?" (id: $id)":'');			
-				exit;
-			}
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$id.')';
+			echo json_encode($this->data);
+			die();
 		}
-		$this->data=$this->Explosion->read(null, $id);
-		if (!($this->Explosion->id>0) ) {
-				echo __('invalid_item', true).($id?" (id: $id)":'');			
-				exit;			
+
+		// Check if the ID was submited and if the specified item exists
+		if (!$id || 
+			!$item=$this->Explosion->read(null, $id)) {
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$id.')';
+			echo json_encode($this->data);
+			die();
 		}
 
 		// Determine field's new value
-		if($newValue==-1 && isset($this->Explosion->insumopropio)) {
-			$newValue=((int)$this->Explosion->insumopropio)*-1;
+		if($newValue==-1 && isset($item['Explosion']['insumopropio'])) {
+			$newValue=(int)$item['Explosion']['insumopropio']==1?0:1;
 		}
 		elseif($newValue>0 || $newValue=='on' || $newValue=='checked' || $newValue=='true' || $newValue==true) {
 			$newValue=1;
@@ -188,47 +163,45 @@ class ExplosionesController extends MasterDetailAppController {
 		else {
 			$newValue=0;
 		}
-
+		$this->data=array();
 		// Execute DB Operations
 		if ($this->Explosion->saveField('insumopropio', $newValue) ) {
-			echo "OK";
+			$this->data['result']='ok';
+			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
+									' se actualizo correctamente.';
+			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
 		}
 		else {
-			echo __('item_could_not_be_updated', true)." (id: $id)";				
+			$this->data['result']='error';
+			$this->data['message']='El Material '.$this->Explosion->id.
+									' NO se puedo actualizar ';
 		}
-
+		echo json_encode($this->data);		
 	}
 
-	function changeCosto($id=null, $value=-1) {
+	function updateCantidad($id=null, $value=0) {
 		$this->autoRender=false;
+		$this->data=array();
 
 		// Check if the ID was submited and if the specified item exists
-		if (!$id) {
-			if(isset($this->params['named']['id'])) {
-				$id=$this->params['named']['id'];
-			}
-			elseif( isset($this->params['url']['id']) ) {
-				$id=$this->params['url']['id'];
-			}
-			else {
-				echo __('invalid_item', true).($id?" (id: $id)":'');			
-				exit;
-			}
+		if (!$id || 
+			!$item=$this->Explosion->read(null, $id)) {
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$id.', '.$value.')';
+			echo json_encode($this->data);
+			die();
 		}
 
 		$this->data=$this->Explosion->read(null, $id);
-		if (!($this->Explosion->id>0) ) {
-				echo __('invalid_item', true).($id?" (id: $id)":'');			
-				exit;			
-		}
 
+/*
 		if( isset($this->params['url']['value']) && $this->params['url']['value']>0) {
 			$value=$this->params['url']['value'];
 		}
 		else {
 			return( e(json_encode(array('result'=>'error', 'mesage'=>__('invalid_item', true)))) );
 		}
-		
+*/		
 		if (!$value || $value<0) {
 			if( isset($this->params['url']['value']) ) {
 				$value=$this->params['url']['value'];
@@ -241,11 +214,17 @@ class ExplosionesController extends MasterDetailAppController {
 
 		// Execute DB Operations
 		if ($this->Explosion->saveField('cant', $value) ) {
-			echo "OK";
+			$this->data['result']='ok';
+			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
+									' se actualizo correctamente.';
+			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
 		}
 		else {
-			echo __('item_could_not_be_updated', true)." (id: $id)";				
+			$this->data['result']='error';
+			$this->data['message']='El Material '.$id.
+									' NO se pudo actualizar al costo '.$value;
 		}
+		echo json_encode($this->data);
 	}
 
 }

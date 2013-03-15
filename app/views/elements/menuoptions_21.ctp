@@ -31,7 +31,7 @@
 		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedor/costos">Costos por Material/Proveedor</a></li>
 		<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Procesos de Manufactura</a></li>
-		<li><a id="articuloExplosionLinkCheck" href="/Articulos/explosiones">Explosion</a></li>
+		<li><a id="articuloExplosionLinkCheck" href="/Explosiones">Explosion</a></li>
 	</ul>
 </li>
 <li><a class="returnFalse" href="">Almacén Producción</a>	
