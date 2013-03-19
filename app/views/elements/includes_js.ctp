@@ -17,7 +17,7 @@ echo
 		// Javascript frameworks, libraries and utilities
 		'/js_files/core.js',
 		'/js/webui/angular.min.js',
-		'/js/webui/angular-resource.min.js',
+//		'/js/webui/angular-resource.min.js',
 		'/js/webui/angular-ui.min.js',
 		'/js/webui/ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js',
 		'/js_files/ui-util.js',

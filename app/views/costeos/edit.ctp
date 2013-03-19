@@ -4,9 +4,8 @@
 <header>
 <div class="page-header">
 <h1>
-<span tooltip-placement="right" tooltip="{{currentMaster.Articulo.ardescrip}}">{{currentMaster.Articulo.arcveart}}</span>
-
-{{currentMaster.Articulo.arcveart}}	<small>{{currentMaster.Articulo.ardescrip}}</small>
+<span tooltip="{{currentMaster.Articulo.ardescrip}}">{{currentMaster.Articulo.arcveart}}</span>
+<small>{{currentMaster.Articulo.ardescrip}}</small>
 </h1>
 </div> <!-- div.page-header -->
 </header>

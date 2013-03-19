@@ -54,48 +54,87 @@ class ExplosionesController extends MasterDetailAppController {
 
 	function add($id=null) {
 		$this->autoRender=false;
-		if(!$id) {
- 			echo __('item_could_not_be_deleted', true)." (id: $id)";
-			exit;
-		} 
+		$this->data=array();
+		if (!$id) {
+			$this->data['result']='error';
+			$this->data['message']=__('invalid_item', true)." (id: $id)";
+			echo json_encode($this->data);
+			die();
+		}
+		if(!isset($this->params['named']['cve']) ||
+			!isset($this->params['named']['cant']) ||
+			!isset($this->params['named']['tipoexplosionid'])
+		) {
+			$this->data['result']='error';
+			$this->data['message']="Faltan Datos";
+			echo json_encode($this->data);
+			die();
+		}
+		$material_cve=strtoupper($this->params['named']['cve']);
+		$material=$this->Explosion->Material->findByArcveart($material_cve);
+		if(!$material || !isset($material['Articulo']['id'])) {
+			$this->data['result']='error';
+			$this->data['message']="NO se encontro $material_cve de tipo $tipoexplosionid";
+			echo json_encode($this->data);
+			die();
+		}
+		else {
+			$material_id=$material['Articulo']['id'];
+			$tipoarticulo_id=$material['Articulo']['tipoarticulo_id'];	
+		}
 
-		if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
-			$material_id=$this->Explosion->Material->findByArcveart($material_cve);
-			if($material_id && isset($material_id['Articulo']['id'])) {
-				$material_id=$material_id['Articulo']['id'];
-				$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
-			}
-			else {
-				echo "NO se encontro $material_cve de tipo $tipoexplosionid";
-				exit;
-			}
+		$color_id=isset($this->params['named']['color_id'])?$this->params['named']['color_id']:1;
+		$cant=$this->params['named']['cant'];
+		$insumopropio=isset($this->params['named']['insumopropio'])?$this->params['named']['insumopropio']:0;
+		$tipoexplosionid=isset($this->params['named']['tipoexplosionid'])?$this->params['named']['tipoexplosionid']:1;
 
-			$cant=abs($this->params['named']['cant']);
-			$insumopropio=isset($this->params['named']['insumopropio'])?$this->params['named']['insumopropio']:0;
-			$tipoexplosionid=$this->params['named']['tipoexplosionid'];
-
-			$record=array('Explosion'=>array(
-								'articulo_id'=>$id,
-								'material_id'=>$material_id,
-								'cant'=>$cant,
-								'insumopropio'=>$insumopropio,
-								'tipoarticulo_id'=>$tipoexplosionid
-			));
+		$record=array('Explosion'=>array(
+							'articulo_id'=>$id,
+							'material_id'=>$material_id,
+							'color_id'=>$color_id,
+							'cant'=>$cant,
+							'insumopropio'=>$insumopropio,
+							'tipoarticulo_id'=>$tipoexplosionid
+		));
 			
-				$this->Explosion->create();
-				$palabra=($tipoexplosionid==2?'Servicio': 'Insumo');
-				if( $this->Explosion->save($record) ) {
-					echo "OK $palabra $material_cve agregado a la explosión ($tipoexplosionid)";
-					exit;
-				}
-				else {
- 					echo __('item_could_not_be_saved', true)." (id: $material_id)";
-					exit;					
-				}
-			echo "ERROR Indeterminado";
-
+		$this->Explosion->create();
+		$palabra=($tipoexplosionid==2?'Servicio': 'Insumo');
+		if( $this->Explosion->save($record) ) {
+			$this->data['result']='ok';
+			$this->data['message']='El '.$palabra.' '.$material['Articulo']['arcveart'].
+									' se Agregó';
+			$this->data['details']=$this->Explosion->getAllItems($id);
+		}
+		else {
+			$this->data['result']='ok';
+			$this->data['message']=__('item_could_not_be_saved', true)." (id: $material_cve)";
+		}
+		echo json_encode($this->data);
 	}
 
+	public function getItemByCve($cve=null) {
+		$this->layout='json';
+		$this->autoRender=false;
+		$this->data=array();
+ 		Configure::write ( 'debug', 0 );
+
+		if(!$cve ||
+			!$item=$this->Articulo->findByArcveart($cve)) {
+			$this->data['result']='error';
+			$this->data['message']='Ese Material NO Existe ('.$cve.')';
+			echo json_encode($this->data);
+			die();				
+		}
+		$this->data['result']='ok';
+		$this->data['message']='Material ('.$cve.')';
+		$this->data['item']=array();
+		$this->data['item']=$item;
+		$this->data['item']['Articulo']['arcveart']=trim($this->data['item']['Articulo']['arcveart']);
+		$this->data['item']['ArticuloColor']=$this->Articulo->getArticuloColor($this->data['item']['Articulo']['id']);
+		echo json_encode($this->data);
+	}
+
+/*
 	public function getDetail($id=null, $type=null) {
 		if($id) {
 			$rs=$this->Explosion->getAllItems($id);
@@ -103,6 +142,7 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->set('articulo', $this->Articulo->read(null,$id) );
 		}
 	}
+*/
 
 	public function deleteItem($id=null) {
 		$this->autoRender=false;

@@ -9,8 +9,8 @@
 class Articulo extends AppModel 
 {
 	public $name = 'Articulo';
-//	public $table = 'ARTICULOS';
-//	public $useTable = 'ARTICULOS';
+	public $table = 'Articulo';
+	public $useTable = 'Articulo';
 	public $alias = 'Articulo';
 
 	public $primaryKey = 'id';
@@ -71,7 +71,6 @@ class Articulo extends AppModel
 			'foreignKey'=>'material_id',
 			),
 */		
-		'ArticuloColor'
 	);
 
 
@@ -221,18 +220,15 @@ class Articulo extends AppModel
 		}
 		return(parent::beforeSave($options));
 	}
-
+/*
 	public function getArticuloColor($id=null) {
-		if(!$id) $id=$this->id;
-		$items=$this->ArticuloColor->find('all', array('fields'=>array('Color.id','Color.cve'), 'conditions'=>array('ArticuloColor.articulo_id'=>$id)));
-		$out=array();
-		$i=0;
-		foreach($items as $item) {
-			$out[$i++]=array('id'=>$item['Color']['id'],'cve'=>$item['Color']['cve']);
+		if(!$id) {
+			$id=$this->id;
 		}
-		return ($out);
+		$items=$this->Color->findByArticulo_id($id);
+		return ($items['Color']);
 	}
-	
+*/	
 	public function loadDependencies( $tipoarticulo=0 ) {
 		// Determine the product's type
 		if( isset($tipoarticulo) && is_numeric(trim($tipoarticulo)) ) {
