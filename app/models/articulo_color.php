@@ -8,6 +8,9 @@ class ArticuloColor extends AppModel
 	var $alias = 'ArticuloColor';
 
 	public $belongsTo=array(
+		'Articulo',
 		'Color'
-		);
+	);
+	
+
 }

@@ -82,6 +82,5 @@
 </div> <!-- div tabs tabbable-->
 <?php
 echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
-
 echo $this->Form->end(); 
 ?>

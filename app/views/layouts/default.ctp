@@ -25,32 +25,32 @@
 
 <body>
 
-<div id="pageContainer" class="container-fluid ax-page-container" >	
+<div id="pageContainer" class="container ax-page-container" >	
 
 	<section id="sectionToolBar">
 	<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
 	</section>  <!-- section#sectionToolbar -->
 	
 	<section id="sectionMain">
-	<div id="wrapper" class="row-fluid ng-cloak ax-page-wrapper" ng-controller="AxAppCtrl">
+	<div id="wrapper" class="row ng-cloak ax-page-wrapper" ng-controller="AxAppCtrl">
 			
-			<div id="content" class="row-fluid ax-page-content">
+			<div id="content" class="row ax-page-content">
 
-				<div id="formMessages" class="row-fluid ax-form-messages">
+				<div id="formMessages" class="row ax-form-messages">
 
 <?php echo $this->TBS->myflashes(); ?>
 
 				</div> <!-- div#formMessages -->
 
 
-				<div id="formContent" class="row-fluid ax-form-content" >
+				<div id="formContent" class="row ax-form-content" >
 
 <?php echo $content_for_layout; ?>
 
 				</div> <!-- div#formContent -->
 
 				<section id="sectionWebAppCode">
-				<div id="formScripts" class="row-fluid hide ax-app-script">
+				<div id="formScripts" class="row hide ax-app-script">
 						
 <?php echo $this->Js->writeBuffer();?>
 

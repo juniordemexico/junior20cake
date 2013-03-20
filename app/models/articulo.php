@@ -71,7 +71,7 @@ class Articulo extends AppModel
 			'foreignKey'=>'material_id',
 			),
 */		
-		'ArticuloColor'
+	//	'ArticuloColor'
 	);
 
 
@@ -222,9 +222,13 @@ class Articulo extends AppModel
 		return(parent::beforeSave($options));
 	}
 
+
 	public function getArticuloColor($id=null) {
 		if(!$id) $id=$this->id;
-		$items=$this->ArticuloColor->find('all', array('fields'=>array('Color.id','Color.cve'), 'conditions'=>array('ArticuloColor.articulo_id'=>$id)));
+		$items=$this->query("SELECT Color.id, Color.cve 
+							FROM articulos_colores ArticuloColor
+							JOIN colores Color ON Color.id=ArticuloColor.color_id
+							WHERE ArticuloColor.articulo_id=$id");
 		$out=array();
 		$i=0;
 		foreach($items as $item) {

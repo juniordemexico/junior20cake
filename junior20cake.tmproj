@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/layouts/default.ctp</string>
+	<string>app/views/explosiones/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -28,27 +28,27 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>86</integer>
+				<integer>114</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>62</integer>
+			<integer>76</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>82</integer>
+				<integer>104</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>86</integer>
+				<integer>114</integer>
 			</dict>
 		</dict>
 		<key>app/controllers/explosiones_controller.php</key>
@@ -56,9 +56,23 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>38</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>86</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>66</integer>
+		</dict>
+		<key>app/models/articulo_color.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>8</integer>
+				<key>line</key>
+				<integer>9</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -70,29 +84,29 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>27</integer>
 				<key>line</key>
-				<integer>521</integer>
+				<integer>494</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>494</integer>
+			<integer>474</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>508</integer>
+				<integer>494</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>27</integer>
 				<key>line</key>
-				<integer>521</integer>
+				<integer>494</integer>
 			</dict>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
@@ -100,14 +114,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>line</key>
-				<integer>248</integer>
+				<integer>185</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>213</integer>
+			<integer>10</integer>
 		</dict>
 		<key>app/views/elements/includes_js.ctp</key>
 		<dict>
@@ -123,47 +137,33 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/explosiones/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>424</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>391</integer>
-		</dict>
-		<key>app/views/explosiones/index.ctp</key>
+		<key>app/views/elements/includes_webui.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>2</integer>
 				<key>line</key>
-				<integer>28</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>4</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/default.ctp</key>
+		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>61</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>34</integer>
+				<integer>18</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>25</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/webroot/js/ax.core.js</key>
 		<dict>
@@ -211,14 +211,14 @@
 	<key>openDocuments</key>
 	<array>
 		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/costeos/edit.ctp</string>
+		<string>app/models/articulo_color.php</string>
 		<string>app/webroot/js/ax.webapp.js</string>
 		<string>app/webroot/js/ax.core.js</string>
 		<string>app/views/bodegas/entradas.ctp</string>
 		<string>app/controllers/costeos_controller.php</string>
-		<string>app/views/costeos/edit.ctp</string>
-		<string>app/views/explosiones/index.ctp</string>
 		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/views/layouts/default.ctp</string>
+		<string>app/views/elements/includes_webui.ctp</string>
 		<string>app/views/elements/includes_js.ctp</string>
 		<string>app/webroot/js_files/ui.js</string>
 	</array>

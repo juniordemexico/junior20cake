@@ -11,7 +11,7 @@
 </header>
 
 
-<div id="summary" class="row-fluid well">
+<div id="summary" class="row well">
 <ul class="thumbnails">
 	<li class="span3"><h4>Telas: <em class="text-info">{{total.tela.importe | currency}}</em></h4></li>
 	<li class="span3"><h4>Habilitación: <em class="text-warning">{{total.habilitacion.importe | currency}}</em></h4></li>
@@ -29,7 +29,7 @@ A U T O R I Z A R &nbsp; C O S T E O
 </button>
 
 </div> <!-- div#summary-->
-
+<div class="row">
 <div id="tabs" class="tabbable">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tabs-0" data-toggle="tab" class="text-info">Telas</a></li>
@@ -183,7 +183,7 @@ A U T O R I Z A R &nbsp; C O S T E O
 </div> <!-- div tab-content -->
 
 </div> <!-- div tabbable -->
-
+</div>
 <?php echo $this->Form->end();?>
 
 <script>

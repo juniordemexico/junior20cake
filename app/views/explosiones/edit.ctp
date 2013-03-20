@@ -1,10 +1,8 @@
 <header>
-<div class="row-fluid page-header">
+<div class="row page-header">
 <h1><span tooltip="{{master.Articulo.ardescrip}}">{{master.Articulo.arcveart}}</span> <small>{{master.Articulo.ardescrip}}</small></h1>
 </div>
 </header>
-
-<div id="detailContent" class="row">
 
 <?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
 <?php echo $this->Form->hidden('Articulo.id', array("value"=>$articulo['Articulo']['id'])); ?>
@@ -26,14 +24,15 @@
 			<input type="text" maxlength="24" class="span2" id="edttelacve" name="edtTelaCve"
 			ng-model="currentTela.arcveart" ui-event="{ blur : 'getTelaByCve()' }"
 			placeholder="Clave de Tela..." title="{{currentTela.ardescrip}}"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
 			</span>
 			<?php
-//			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
-//			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
-/*
+//			bs-typeahead="typeaheadFn"
+
 			echo $this->Html->scriptBlock($this->Js->domReady("
-				var cvearttela_el = $('#edtTelaCve');
+				var cvearttela_el = $('#edttelacve');
 				cvearttela_el.typeahead({
 					source: function(typeahead, query) {
 						if(this.ajax_call)
@@ -52,14 +51,14 @@
 					},
 					property: 'value',
 
-//					onselect: function (obj) {
-//						AxAppCtrl.getItemByCve.val(obj.cve);
-//		        	}
+					onselect: function (obj) {
+
+		        	}
 			    });
 			"), 
 			array('inline'=>false)
 			);
-*/
+
 			?>
 			<select class="span2" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" >
 			</select>
@@ -125,9 +124,11 @@
 			<!-- Typeahead term -->			
 
 			<span tooltip="{{currentHabilitacion.ardescrip}}">
-			<input type="text" maxlength="24" class="span2"
+			<input type="text" maxlength="24" class="span2" id="edthabilitacioncve" name="edtHabilitacionCve"
 			ng-model="currentHabilitacion.arcveart" ui-event="{ blur : 'getHabilitacionByCve()' }"
 			placeholder="Clave del Material..." title="{{currentHabilitacion.ardescrip}}"
+				data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+				data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
 			</span>
 
@@ -148,35 +149,36 @@
 			</button>
 
 			<?php
-			/*
+//			bs-typeahead="typeaheadFn"
+
 			echo $this->Html->scriptBlock($this->Js->domReady("
-				var cvearthabil_el = $('#edtHabilCve');
+ 				var cvearthabil_el = $('#edthabilitacioncve');
 				cvearthabil_el.typeahead({
-				source: function(typeahead, query) {
-					if(this.ajax_call) this.ajax_call.abort();
-					this.ajax_call = $.ajax({
-					dataType: 'json',
-					data: {
-						keyword: query,
-//						proveedor_id: $('#Proveedor.id').val()
+					source: function(typeahead, query) {
+						if(this.ajax_call)
+							this.ajax_call.abort();
+						this.ajax_call = $.ajax({
+							dataType: 'json',
+							data: {
+								keyword: query,
+//								proveedor_id: $('#Proveedor.id').val()
+							},
+							url: cvearthabil_el.data('autocompleteUrl'),
+							success: function(data) {
+								typeahead.process(data);
+							}
+						});
 					},
-					url: cvearthabil_el.data('autocompleteUrl'),
-					success: function(data) {
-						typeahead.process(data);
-					}
-					});
-				},
-				property: 'value',
-				onselect: function (obj) {
-					$('#HabilId').val(obj.id);
-					$('#edtHabilCve').attr('title', obj.title);
-					axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Tela');
-					}
-				});
+					property: 'value',
+
+					onselect: function (obj) {
+
+		        	}
+			    });
 			"), 
 			array('inline'=>false)
 			);
-*/
+
 			?>
 			
 		</div>
@@ -227,8 +229,10 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
 			<span tooltip="{{currentSevicio.ardescrip}}">
-			<input type="text" maxlength="24" class="span2"
+			<input type="text" maxlength="24" class="span2" id="edtserviciocve" name="edtServicioCve"
 			ng-model="currentServicio.arcveart" ui-event="{ blur : 'getServicioByCve()' }"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
 			placeholder="Clave del Servicio..." title="{{currentServicio.ardescrip}}"
 			/>
 			</span>
@@ -243,9 +247,9 @@
 			</button>
 
 			<?php
-/*
+
 			echo $this->Html->scriptBlock($this->Js->domReady("
-				var cveartserv_el = $('#edtServicioCve');
+				var cveartserv_el = $('#edtserviciocve');
 				cveartserv_el.typeahead({
 				source: function(typeahead, query) {
 					if(this.ajax_call) this.ajax_call.abort();
@@ -260,18 +264,17 @@
 						typeahead.process(data);
 					}
 					});
-				},
-				property: 'value',
-				onselect: function (obj) {
-					$('#ServicioId').val(obj.id);
-					$('#edtServicioCve').attr('title', obj.title);
-					axAlert('<strong>'+obj.value+'</strong>'+'<br/>'+obj.title, 'info', false, 'Tela');
-					}
-				});
+					},
+					property: 'value',
+
+					onselect: function (obj) {
+
+		        	}
+			    });
 			"), 
 			array('inline'=>false)
 			);
-*/
+
 			?>
 
 		</div>
@@ -313,12 +316,9 @@
 </div> <!-- div tabbable -->
 
 <?php echo $this->Form->end();?>
-</div>
+
 
 <script>
-
-angular.module('AxApp', ['ui','ui.bootstrap']);
-
 
 var emptyItem={id: null, arcveart: '', ardescrip: '', cant: '', insumopropio: 0, Color:{}, ArticuloColor:[] };
 
@@ -361,6 +361,7 @@ var AxAppCtrl= function( $scope, $http ) {
 	$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
 
 	$scope.getTelaByCve = function() {
+		$scope.currentTela.arcveart=$('#edttelacve').val();
 		if($scope.currentTela.arcveart==$scope.oldValues.tela) {
 			return;
 		}
@@ -389,6 +390,7 @@ var AxAppCtrl= function( $scope, $http ) {
 	}
 
 	$scope.getHabilitacionByCve = function() {
+		$scope.currentHabilitacion.arcveart=$('#edthabilitacioncve').val();
 		if($scope.currentHabilitacion.arcveart==$scope.oldValues.habilitacion) {
 			return;
 		}
@@ -417,6 +419,7 @@ var AxAppCtrl= function( $scope, $http ) {
 	}
 
 	$scope.getServicioByCve = function() {
+		$scope.currentSevicio.arcveart=$('#edtserviciocve').val();
 		if($scope.currentServicio.arcveart==$scope.oldValues.servicio) {
 			return;
 		}
@@ -574,6 +577,23 @@ var AxAppCtrl= function( $scope, $http ) {
        	});
 		
 	}
+/*	
+	$scope.typeaheadFn = function(query, callback) {
+  		$http.get('/Articulos/autocomplete?term='+query).success(function(stations) {
+    	callback(stations); // This will automatically open the popup with retrieved results
+  	});
+}
+*/
+/*
+	$('#edttelacve').bind('change', function(event){
+		alert('hola');
+		alert($scope.currentTela.arcveart);
+  		$scope.$apply(function(scope){
+    		scope.currentTela.arcveart = event.target.value;
+  		});
+  		$scope.getTelaByCve();
+	});
+*/
 
 }
 
