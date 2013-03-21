@@ -96,6 +96,7 @@ class AppController extends Controller {
 
 		// Set the default page's title
 		$this->pageTitle=$this->name;
+/*
 		if(isset($this->data[$this->Models[0]]['cve']) ) 
 			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['cve'];
 		if(isset($this->data[$this->Models[0]]['arcveart']) ) 
@@ -106,7 +107,7 @@ class AppController extends Controller {
 			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['prcvepro'];
 		if(isset($this->data[$this->Models[0]]['vecveven']) ) 
 			$this->pageTitle=$this->name.'::'.$this->data[$this->Models[0]]['vecveven'];
-
+*/
 		// Check for autocomplete parameters and sanitize them
 /*
 		if(stristr('autocomplete', $this->action)) {
@@ -168,7 +169,7 @@ class AppController extends Controller {
 	}
 
 
-	public function autocomplete(string $keyword='', integer $type=0) {
+	public function autocomplete($keyword='', $type=0) {
  		Configure::write ( 'debug', 0 );
   		$this->layout = 'json';
 		$this->autoRender=false;
@@ -472,11 +473,12 @@ abstract class AjaxController extends MasterDetailAppController {
  * @access public
  * @link http://book.cakephp.org/view/984/Callbacks
  */
+/*
 	public function beforeRender() {
-		$this->_respond();
+//		$this->_respond();
 		return parent::beforeRender();
 	}
-
+*/
 /**
  * Turns the current controller setup into a JSON response for use
  * in Ajax requests. If the current request should not be responded to

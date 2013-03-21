@@ -21,15 +21,45 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
 			<span tooltip="{{currentTela.ardescrip}}">
-			<input type="text" maxlength="24" class="span2 ax-autocomplete" 
-			id="edttelacve" name="edtTelaCve"
-			data-ng-model="currentTela.arcveart" data-ng-init="bindTypeahead('edttelacve', 'getTelaByCve()')"
-			data-items="8" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1" data-ng-onselect-field="value"
+			<input type="text" maxlength="24" class="span2" id="edttelacve" name="edtTelaCve"
+			ng-model="currentTela.arcveart" ui-event="{ blur : 'getTelaByCve()' }"
 			placeholder="Clave de Tela..." title="{{currentTela.ardescrip}}"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
 			</span>
+			<?php
+//			bs-typeahead="typeaheadFn"
 
+			echo $this->Html->scriptBlock($this->Js->domReady("
+				var cvearttela_el = $('#edttelacve');
+				cvearttela_el.typeahead({
+					source: function(typeahead, query) {
+						if(this.ajax_call)
+							this.ajax_call.abort();
+						this.ajax_call = $.ajax({
+							dataType: 'json',
+							data: {
+								keyword: query,
+//								proveedor_id: $('#Proveedor.id').val()
+							},
+							url: cvearttela_el.data('autocompleteUrl'),
+							success: function(data) {
+								typeahead.process(data);
+							}
+						});
+					},
+					property: 'value',
+
+					onselect: function (obj) {
+
+		        	}
+			    });
+			"), 
+			array('inline'=>false)
+			);
+
+			?>
 			<select class="span2" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" >
 			</select>
 			<input type="text" maxlength="8"
@@ -93,13 +123,14 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->			
 
-			<input type="text" maxlength="24" class="span2 ax-autocomplete" 
-			id="edthabilitacioncve" name="edtHabilitacionCve"
-			data-ng-model="currentHabilitacion.arcveart" data-ng-init="bindTypeahead('edthabilitacioncve', 'getHabilitacionByCve()')"
-			data-items="8" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1" data-ng-onselect-field="value"
-			placeholder="Clave de Habilitacion..." title="{{currentHabilitacion.ardescrip}}"
+			<span tooltip="{{currentHabilitacion.ardescrip}}">
+			<input type="text" maxlength="24" class="span2" id="edthabilitacioncve" name="edtHabilitacionCve"
+			ng-model="currentHabilitacion.arcveart" ui-event="{ blur : 'getHabilitacionByCve()' }"
+			placeholder="Clave del Material..." title="{{currentHabilitacion.ardescrip}}"
+				data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+				data-autocomplete-url="/Articulos/autocomplete/tipo:1"
 			/>
+			</span>
 
 			<select class="span2" data-ng-model="currentHabilitacion.Color" data-ng-options="c.cve for c in currentHabilitacion.ArticuloColor" >
 			</select>
@@ -116,6 +147,39 @@
 			<button class="btn" type="button" data-ng-click="addHabilitacion()">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
+
+			<?php
+//			bs-typeahead="typeaheadFn"
+
+			echo $this->Html->scriptBlock($this->Js->domReady("
+ 				var cvearthabil_el = $('#edthabilitacioncve');
+				cvearthabil_el.typeahead({
+					source: function(typeahead, query) {
+						if(this.ajax_call)
+							this.ajax_call.abort();
+						this.ajax_call = $.ajax({
+							dataType: 'json',
+							data: {
+								keyword: query,
+//								proveedor_id: $('#Proveedor.id').val()
+							},
+							url: cvearthabil_el.data('autocompleteUrl'),
+							success: function(data) {
+								typeahead.process(data);
+							}
+						});
+					},
+					property: 'value',
+
+					onselect: function (obj) {
+
+		        	}
+			    });
+			"), 
+			array('inline'=>false)
+			);
+
+			?>
 			
 		</div>
 
@@ -165,12 +229,11 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->
 			<span tooltip="{{currentSevicio.ardescrip}}">
-			<input type="text" maxlength="24" class="span2 ax-autocomplete" 
-			id="edtserviciocve" name="edtServicioCve"
-			data-ng-model="currentServicio.arcveart" data-ng-init="bindTypeahead('edtserviciocve', 'getServicioByCve()')"
-			data-items="8" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:2" data-ng-onselect-field="value"
-			placeholder="Clave de Servicio..." title="{{currentServicio.ardescrip}}"
+			<input type="text" maxlength="24" class="span2" id="edtserviciocve" name="edtServicioCve"
+			ng-model="currentServicio.arcveart" ui-event="{ blur : 'getServicioByCve()' }"
+			data-items="10" data-provide="typeahead" data-type="json" data-min-length="2"
+			data-autocomplete-url="/Articulos/autocomplete/tipo:2"
+			placeholder="Clave del Servicio..." title="{{currentServicio.ardescrip}}"
 			/>
 			</span>
 
@@ -182,6 +245,38 @@
 			<button class="btn" type="button" data-ng-click="addServicio()">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
+
+			<?php
+
+			echo $this->Html->scriptBlock($this->Js->domReady("
+				var cveartserv_el = $('#edtserviciocve');
+				cveartserv_el.typeahead({
+				source: function(typeahead, query) {
+					if(this.ajax_call) this.ajax_call.abort();
+					this.ajax_call = $.ajax({
+					dataType: 'json',
+					data: {
+						keyword: query,
+//						proveedor_id: $('#Proveedor.id').val()
+					},
+					url: cveartserv_el.data('autocompleteUrl'),
+					success: function(data) {
+						typeahead.process(data);
+					}
+					});
+					},
+					property: 'value',
+
+					onselect: function (obj) {
+
+		        	}
+			    });
+			"), 
+			array('inline'=>false)
+			);
+
+			?>
+
 		</div>
 
 		<div id="detailContentServicioTable">
@@ -264,13 +359,13 @@ var AxAppCtrl= function( $scope, $http ) {
 	$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
-	
+
 	$scope.getTelaByCve = function() {
+		$scope.currentTela.arcveart=$('#edttelacve').val();
 		if($scope.currentTela.arcveart==$scope.oldValues.tela) {
 			return;
 		}
 		$scope.oldValues.tela=$scope.currentTela.arcveart;
-		
 		$http.get('/Explosiones/getItemByCve/'+$scope.currentTela.arcveart
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
@@ -289,13 +384,13 @@ var AxAppCtrl= function( $scope, $http ) {
 				else {
 					axAlert('Error Desconocido', 'error', false);
 				}
-				$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
-				$scope.currentTela.arcveart=$scope.oldValues.tela;
 			}
        	});
+	
 	}
 
 	$scope.getHabilitacionByCve = function() {
+		$scope.currentHabilitacion.arcveart=$('#edthabilitacioncve').val();
 		if($scope.currentHabilitacion.arcveart==$scope.oldValues.habilitacion) {
 			return;
 		}
@@ -324,6 +419,7 @@ var AxAppCtrl= function( $scope, $http ) {
 	}
 
 	$scope.getServicioByCve = function() {
+		$scope.currentSevicio.arcveart=$('#edtserviciocve').val();
 		if($scope.currentServicio.arcveart==$scope.oldValues.servicio) {
 			return;
 		}
@@ -481,32 +577,23 @@ var AxAppCtrl= function( $scope, $http ) {
        	});
 		
 	}
-
-	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
-	$scope.bindTypeahead = function (el_id, func) {
-	var	el=angular.element(document.getElementById(el_id));
-	el.typeahead({
-		source: function(typeahead, query) {
-			if(this.ajax_call) this.ajax_call.abort();
-			this.ajax_call = $.ajax({
-				dataType: 'json',
-				data: {	keyword: query },
-				url: el.data('autocompleteUrl'),
-				success: function(data) {
-					typeahead.process(data);
-				}
-			});
-		},
-		property: 'value',
-		onselect: function (obj) {
-			setTimeout( function() {
-				eval('$scope.'+el.data('ng-model')+' = obj.'+el.data('ng-onselect-field'));
-				eval('$scope.'+func);
-			}, 250);
-       	}
+/*	
+	$scope.typeaheadFn = function(query, callback) {
+  		$http.get('/Articulos/autocomplete?term='+query).success(function(stations) {
+    	callback(stations); // This will automatically open the popup with retrieved results
+  	});
+}
+*/
+/*
+	$('#edttelacve').bind('change', function(event){
+		alert('hola');
+		alert($scope.currentTela.arcveart);
+  		$scope.$apply(function(scope){
+    		scope.currentTela.arcveart = event.target.value;
+  		});
+  		$scope.getTelaByCve();
 	});
-		
-	}
+*/
 
 }
 

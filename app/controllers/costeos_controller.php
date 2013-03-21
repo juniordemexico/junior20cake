@@ -8,7 +8,7 @@ class CosteosController extends MasterDetailAppController {
 		'Articulo', 'Explosion', 'ArticuloProveedor', 'Linea', 'Marca', 'Temporada', 'Proveedor'
 	);
 
-	var $layout = 'ajaxclean';
+	var $layout = 'default';
 	
 	var $cacheAction = array('view'
 							);
@@ -24,7 +24,9 @@ class CosteosController extends MasterDetailAppController {
 	}
 
 	function index() {
-		$this->layout='default';
+//		if(!$this->RequestHandler->isAjax()) {
+//			$this->layout='default';
+//		}
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,

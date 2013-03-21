@@ -1,11 +1,11 @@
-<div class="span12 index-form" class="ng-cloak" ng-controller="AxCtrl_<?php e($this->name)?>_<?php e($this->action)?>">
+<div class="span12 index-form">
 <?php
 $this->Paginator->options(array('update' => '#content',
 								'evalScripts' => true,
 								));
 ?>
 
-<div class="gridWrapper">
+<div class="row gridWrapper">
 <?php 
 echo $form->create('Costeos',array('inputDefaults' => array(
 															'label' => false,
@@ -56,6 +56,17 @@ echo $form->create('Costeos',array('inputDefaults' => array(
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name, 'MyModel'=>'Articulo', 'MyRowClickAction' => 'edit')); ?>
 
 </div> <!-- index-form -->
+
+<!-- BEGIN: AxApp.AxAppCtrl AngularJS's Page Controller -->
+<script>
+
+// Page Controller (AngularJS)
+var AxAppCtrl = function($scope, $http) {
+	
+}
+</script>
+<!-- END: AxApp.AxAppCtrl AngularJS's Page Controller -->
+
 <?php echo 
 $this->Js->get('.t-row')->event(
 'click',

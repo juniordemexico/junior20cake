@@ -19,7 +19,7 @@ echo
 		'/js/webui/angular.min.js',
 //		'/js/webui/angular-resource.min.js',
 		'/js/webui/angular-ui.min.js',
-		'/js/webui/angular-strap.min.js',
+//		'/js/webui/angular-strap.min.js',
 		'/js/webui/ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js',
 		'/js_files/ui-util.js',
 		)).CR.

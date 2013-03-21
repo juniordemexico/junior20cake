@@ -1,3 +1,3 @@
 	<script>
-		angular.module('AxApp', ['ui','ui.bootstrap','$strap.directives']);
+		angular.module('AxApp', ['ui','ui.bootstrap']);
 	</script>

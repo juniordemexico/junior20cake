@@ -11,6 +11,6 @@ class ArticuloColor extends AppModel
 		'Articulo',
 		'Color'
 	);
-	
+
 
 }

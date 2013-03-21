@@ -1580,7 +1580,7 @@ function capitaliseFirstLetter(string)
         , items
         , q
 
-      if (results.length && typeof results[0] != "string")
+      if (results && results.length && typeof results[0] != "string")
           this.strings = false
 
       this.query = this.$element.val()

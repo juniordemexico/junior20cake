@@ -18,59 +18,43 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>253</integer>
+	<integer>228</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/costeos_controller.php</key>
+		<key>app/controllers/divisas_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>114</integer>
+				<integer>0</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>76</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>104</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>114</integer>
-			</dict>
+			<integer>40</integer>
 		</dict>
 		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>38</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>86</integer>
+				<integer>26</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>66</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/models/articulo_color.php</key>
+		<key>app/models/articulo.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>1</integer>
 				<key>line</key>
 				<integer>9</integer>
 			</dict>
@@ -79,35 +63,33 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/bodegas/entradas.ctp</key>
+		<key>app/models/articulo_color.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>494</integer>
+				<integer>12</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>474</integer>
-			<key>selectFrom</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/models/color.php</key>
+		<dict>
+			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>25</integer>
+				<integer>9</integer>
 				<key>line</key>
-				<integer>494</integer>
+				<integer>68</integer>
 			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>27</integer>
-				<key>line</key>
-				<integer>494</integer>
-			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>44</integer>
 		</dict>
 		<key>app/views/costeos/edit.ctp</key>
 		<dict>
@@ -123,28 +105,14 @@
 			<key>firstVisibleLine</key>
 			<integer>10</integer>
 		</dict>
-		<key>app/views/elements/includes_js.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>19</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>app/views/elements/includes_webui.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>65</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>1</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -156,9 +124,83 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>41</integer>
+				<integer>31</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>20</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>20</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>31</integer>
+				<key>line</key>
+				<integer>20</integer>
+			</dict>
+		</dict>
+		<key>app/views/layouts/ajax.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>4</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/default.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>49</integer>
+				<key>line</key>
+				<integer>57</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>36</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>76</integer>
+			</dict>
+		</dict>
+		<key>app/views/layouts/plain.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>29</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -211,20 +253,23 @@
 	<key>openDocuments</key>
 	<array>
 		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/layouts/default.ctp</string>
+		<string>app/views/layouts/plain.ctp</string>
+		<string>app/views/layouts/ajax.ctp</string>
+		<string>app/controllers/divisas_controller.php</string>
 		<string>app/views/costeos/edit.ctp</string>
 		<string>app/models/articulo_color.php</string>
 		<string>app/webroot/js/ax.webapp.js</string>
 		<string>app/webroot/js/ax.core.js</string>
-		<string>app/views/bodegas/entradas.ctp</string>
-		<string>app/controllers/costeos_controller.php</string>
 		<string>app/controllers/explosiones_controller.php</string>
 		<string>app/views/elements/includes_webui.ctp</string>
-		<string>app/views/elements/includes_js.ctp</string>
+		<string>app/models/articulo.php</string>
+		<string>app/models/color.php</string>
 		<string>app/webroot/js_files/ui.js</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1879, 41}, {952, 848}}</string>
+	<string>{{-1902, 33}, {952, 848}}</string>
 </dict>
 </plist>

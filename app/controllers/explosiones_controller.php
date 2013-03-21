@@ -13,7 +13,6 @@ class ExplosionesController extends MasterDetailAppController {
 							);
 
 	function index() {
-
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
