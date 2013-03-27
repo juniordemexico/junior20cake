@@ -34,7 +34,7 @@ class AppModel extends Model
 		}
 		
 		// Set the default fieldnames used in the response 
-		$this->autoCompleteDefaults['responseFieldnames']=array('id', 'value', 'title');
+		$this->autoCompleteDefaults['responseFieldnames']=array('id', 'text', 'title');
 
 /*
 		$this->autoCompleteDefaults['responseFieldnames']=array($this->primaryKey,
@@ -201,33 +201,70 @@ class AppModel extends Model
 		return $options;
 	}
 
-	public function autocomplete($keyword=null, $options ) {
+	public function autoComplete($keyword=null, $options=array() ) {
 		// Check for a valid keyword
+		$out=array();
 		if(!$keyword || empty($keyword)) {
 			return false;
 		}
 		
 		// If no $options['conditions'] passed, then automagically determine the query's conditions
+//		$options['conditons']=array($this->name.'.'.$this->title." LIKE '$keyword%'");
+//		$options['conditons']=array("Articulo.arcveart LIKE '$keyword%'");
+
+		if(!isset($options['fields'])) {
+			$options['fields']=$this->autoCompleteFields;
+		}
+		
 		if(!isset($options['conditions'])) {
-			$options['conditons']=array($this->title. 'LIKE'=>'%'.$keyword.'%');
+			$options['conditons']=array($this->name.'.'.$this->title." LIKE '$keyword%'");
 			$options['conditons'][]=array($this->stField=>'A');
 		}
-
+		if(!isset($options['conditions2'])) {
+			$options['conditons2']=array($this->title.' LIKE'=>'%'.$keyword.'%');
+			$options['conditons2'][]=array($this->stField=>'A');
+		}
+	
 		if(!isset($options['responseFieldnames']) && isset($this->autoCompleteDefaults['responseFieldnames']) ) {
 			$options['responseFieldnames']=$this->autoCompleteDefaults['responseFieldnames'];
 		}
+
+		if(!isset($options['limit'])) $options['limit']=16;
 		
 		// Merge autoCompleteDefaults with the passed $options paremeters
-		$options=array_merge($options);
+//		$options=array_merge($options);
 
 		// Get the RecordSet
 		$oldRecursive=$this->recursive;
 		$this->recursive=0;
-		$rs=$this->find('all', $options);
+
+		// Get the first Recordset of results (item codes starting with $keyword)
+		$rs1=$this->find('all', $options);
+		
+		// Get the second Recordset of results (item codes and descriptions that contains $keyword)
+
+		if(isset($options['conditions2'])) {
+			$options['conditions']=$options['conditions2'];
+			$rs2=$this->find('all', $options);
+		}
+		
 		$this->recursive=$oldRecursive;
 
-		// Do the iteration over the recordset's items in order to create the response array
-		
+		// Merge the Resultsets
+		if(isset($rs1) && isset($rs2)) {
+			$rs=Set::merge($rs1,$rs2);
+		}
+		elseif(isset($rs1) && !isset($rs2)) {
+			$rs=$rs1;
+		}
+		elseif(!isset($rs1) && isset($rs2)) {
+			$rs=$rs2;
+		}
+		else {
+			$rs=array();
+		}
+
+		// Iterate thru recordset's items in order to create the response array
 		if ($rs && sizeof($rs)>0) {
 			$out=array();
 			foreach($rs as $item) {
@@ -242,8 +279,6 @@ class AppModel extends Model
 							$record[$this->primaryKey]=$fields[$this->primaryKey];							
 						}
 					}
-		//			if(isset($fields[$this->primaryKey]) ) unset($fields[$this->primaryKey]);
-//					unset($fields['id']);
 
 					$i=0;
 					foreach( $fields as $fieldName=>$fieldValue ) {

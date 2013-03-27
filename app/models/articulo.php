@@ -214,6 +214,9 @@ class Articulo extends AppModel
 		)
 	);
 
+	var $autoCompleteFields=array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
+	);
+
 	function beforeSave($options) {
 		if (isset($this->data['Articulo']['art']) && empty($this->data['Articulo']['art']) && 
 			!is_numeric($this->data['Articulo']['art']) ) {
@@ -272,4 +275,8 @@ class Articulo extends AppModel
 		
 	}
 
+/*	public function autoComplete($keyword='', $options=array()) {
+		return parent::autoComplete($keyword,$options);
+	}
+*/
 }

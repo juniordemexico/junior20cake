@@ -20,7 +20,8 @@ echo
 //		'/js/webui/angular-resource.min.js',
 		'/js/webui/angular-ui.min.js',
 //		'/js/webui/angular-strap.min.js',
-		'/js/webui/ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js',
+		'/js/webui/ui-bootstrap-tpls-0.2.0.min.js',
+		'/js/jquery/select2.js',
 		'/js_files/ui-util.js',
 		)).CR.
 	CR;

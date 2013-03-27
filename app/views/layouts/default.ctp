@@ -25,11 +25,14 @@
 
 <body>
 
-<div id="pageContainer" class="container ax-page-container" >	
+<div id="toolBarContainer" class="container-fluid ax-page-container" >	
 
 	<section id="sectionToolBar">
 	<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
 	</section>  <!-- section#sectionToolbar -->
+</div>
+
+<div id="pageContainer" class="container ax-page-container" >	
 	
 	<section id="sectionMain">
 	<div id="wrapper" class="row ng-cloak ax-page-wrapper" ng-controller="AxAppCtrl">

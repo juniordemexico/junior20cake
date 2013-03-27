@@ -10,6 +10,7 @@ echo
 	'/css_files/ui.css',
 	'/css/angular-ui.min.css',	
 	'/css_files/ui-responsive.css',
+	'/css/jquery-ui/select2/select2.css',	
 	// jQuery's styles and themes 
 //	'jquery-ui/custom-theme/jquery-ui-1.8.16.custom',
 /*

@@ -60,16 +60,18 @@ var axAlert = function(txt, type, sticky, title, icon) {
 	// Get Time and Date
 	var currentDate = new Date();
 	  var day = currentDate.getDate();
-	  var month = currentDate.getMonth() + 1;
+	  var month = currentDate.getMonth()+1;
 	  var year = currentDate.getYear();
 	  var time = currentDate.getTime();
 	
 	var theTimestamp = day + '/' + month + '/' + year + ' ' + time; 
+
 	// Generate an unique id
+	// (well, it's supposed )
 
 	return $.gritter.add({
 		title: '<label class="label '+labelClass+'" style="width:95%;">'+title+' <span class="pull-right"><small><em>('+theTimestamp+')</em></small></span></label>',
-		text: txt,
+		text: 'nada'+txt,
 		image: '/img/icons/devine/white/'+iconClass,
 		fade_out_speed: 2000, // how fast the notices fade out
 		time: 5000, // hang on the screen for...
@@ -83,7 +85,7 @@ var AxFillFormFields = function(data,form) {
 	$.each(data,function(k,d) {
 		var model=k;
 		$.each(d,function(field,value) {
-			elID=model+capitaliseFirstLetter(field);
+			elID=model+ucFirst(field);
 			el=$('#'+form+' '+'#'+elID);
 			if(typeof $(el) != undefined) {
 				$(el).val(value);
@@ -93,7 +95,7 @@ var AxFillFormFields = function(data,form) {
 }
 
 /* Generic Utilities */
-function getUniqueId(prefix) {
+var getUniqueId = function(prefix) {
 	if(typeof prefix != 'object') {
 		prefix='';
 	}
@@ -102,7 +104,7 @@ function getUniqueId(prefix) {
 
 
 /* String functions */
-function capitaliseFirstLetter(string)
+var ucFirst = function (string)
 {
     return string[0].toUpperCase() + string.slice(1);
 }

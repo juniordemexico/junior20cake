@@ -170,7 +170,7 @@ class ArticulosController extends MasterDetailAppController {
 								);
 		$filter = $this->Filter->process($this);
 		$this->set('articulos', $this->paginate($filter));
-		$this->set('clickAction', 'explosion');
+		$this->set('clickAction', 'e xplosion');
 	}
 
 	function explosion($id = null) {
@@ -368,9 +368,7 @@ $response->userdata['name'] = 'Totals:';
 	public function autocomplete($keyword='', $tipo=0) {
  		Configure::write ( 'debug', 0 );
   		$this->layout = 'json';
-		$this->autoRender=false;
-
-		$keyword=trim(Sanitize::paranoid($keyword, array('.','_','-',' ')));
+//		$this->autoRender=false;
 
 		// If keyword comes into a 'named' parameter, take it first.
 		if(empty($keyword)) {
@@ -382,7 +380,15 @@ $response->userdata['name'] = 'Totals:';
 			// If keyword comes into the GET's named parameters (ie, /autocomplete/keyword:ABC )
 			elseif(isset($this->params['named']['keyword']) &&
 				!empty($this->params['named']['keyword'])) {
-				$keyword=$this->params['url']['keyword'];			
+				$keyword=$this->params['named']['keyword'];			
+			}
+			elseif(isset($this->params['named']['term']) &&
+				!empty($this->params['named']['term'])) {
+				$keyword=$this->params['named']['term'];			
+			}
+			elseif(isset($this->params['url']['term']) &&
+				!empty($this->params['url']['term'])) {
+				$keyword=$this->params['url']['term'];			
 			}
 			// The client didn't send any search term
 			else {
@@ -391,7 +397,8 @@ $response->userdata['name'] = 'Totals:';
 		}
 
 		// Sanitize and truncate the Keyword in order to search
-		$keyword=strtoupper(substr($keyword,0,32));
+		$keyword=trim(Sanitize::paranoid($keyword, array('.','_','-',' ')));
+		$keyword=strtoupper(substr($keyword,0,64));
 		if(empty($keyword)) {
 			exit;
 		}
@@ -406,91 +413,30 @@ $response->userdata['name'] = 'Totals:';
 		else {
 			$tipo=0;
 		}
-
-		/* Configure and Execute the Query */
-//		$this->Articulo['belongsTo']['Linea']=array('conditions'=>array("Linea.tipoarticulo_id=1"));
-
-//		$results = $this->Articulo->autoCompleteRecords();
 		
-//		echo "KAKA::".$keyword."($tipo)";
-/*		
-  		$results = $this->Articulo->find('all', array(
-			'order'=>'Articulo.arcveart ASC',
-			'limit'=>16,
-			'conditions' => array(
-					'Articulo.tipoarticulo_id'=>$tipo,
-					'Articulo.arst'=>'A',
-   					'OR' => array(
-    					'Articulo.arcveart LIKE'=> $keyword.'%',
-    					'Articulo.ardescrip LIKE'=> '%'.$keyword.'%',
-   						),
- 					)
-			));
-*/
 		$options=array(
-			'fields'=>array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
-							'Articulo.arpcosto', 'Articulo.arpva','Articulo.arpvb',
-							'Linea.licve', 'Marca.macve', 'Temporada.tecve'),
-			'limit'=>16,
-			'order'=>'Articulo.arcveart',
 			'conditions' => array(
+   					'Articulo.arcveart LIKE'=> $keyword.'%',
 					'Articulo.tipoarticulo_id'=>$tipo,
 					'Articulo.arst'=>'A',
-   					'OR' => array(
-    					'Articulo.arcveart LIKE'=> $keyword.'%',
-    					'Articulo.ardescrip LIKE'=> '%'.$keyword.'%',
-   						),
  					),
-			'responseFieldnames'=>array('id', 'value', 'title', 'pcosto'),
+/*
+			'conditions2' => array(
+   					'Articulo.ardescrip LIKE'=> '%'.$keyword.'%',
+					'Articulo.tipoarticulo_id'=>$tipo,
+					'Articulo.arst'=>'A',
+					),
+*/
 			);
 			
-		if ( $response=$this->Articulo->autoComplete( $keyword, $options ) ) {
-			echo json_encode($response);
+		if ( $response=$this->Articulo->autoComplete( $keyword, $options) ) {
+			$this->set('response', $response);
 		}
 		else {
 			return;
 		}
 	}
 
-	/* Text Field Autocomplete action */
-	function autoCompleteOLD() {
- 		Configure::write ( 'debug', 0 );
-		$this->autoRender=false;
-  		$this->layout = 'ajax';
-
-		/* Validate and Format the search term */
-		$keyword=strtoupper(substr(trim($this->params['url']['term']),0,32));
-
-		/* Configure and Execute the Query */
-		$this->Articulo->recursive=0;
-  		$articulos = $this->Articulo->find('all', array(
-			'fields'=>array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
-							'Linea.licve', 'Marca.macve','Temporada.tecve'),
-			'order'=>'Articulo.arcveart ASC',
-			'limit'=>16,
-			'conditions' => array(
-   					'OR' => array(
-/*    					'Articulo.id'=>(is_numeric($keyword)?$keyword:0),*/
-    					'Articulo.arcveart LIKE'=>$keyword.'%',
-    					'Articulo.ardescrip LIKE'=>'%'.$keyword.'%'
-   						),
-					'Articulo.arst'=>'A',
-					'Articulo.tipoarticulo_id'=>$this->tipoarticulo_id
-  					)
-			));
-
-		/* Create the dataset to be returned */
-		$response = array();
-		$i=0;
-		foreach($articulos as $articulo) {
-   			$response[$i]['id']=$articulo['Articulo']['id'];
-   			$response[$i]['value']=trim($articulo['Articulo']['arcveart']);
-   			$response[$i]['label']=trim($articulo['Articulo']['arcveart']) .' - '. $articulo['Articulo']['ardescrip'] . ' (' . $articulo['Linea']['licve'].')';
-   			$i++;
-  		}
-		/* Send the response in json format */
-  		echo json_encode($response);
-	}
 
 	function tallacolor($id=null) {
 		$this->layout = 'empty';
