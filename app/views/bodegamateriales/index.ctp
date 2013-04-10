@@ -24,7 +24,7 @@
 	</li>
 	<li class="span2">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodegaexistencias">
+			<a class="btn btn-large btn-info" href="/Materialexistencias">
 			<i class="icon icon-white icon-list-alt"></i>
 			Existencias
 			</a>
@@ -32,7 +32,7 @@
 	<li>
 	<li class="span2">
 		<div class="thumbnail">
-			<a class="btn btn-large btn-info" href="/Bodegamateriales/etiquetas">
+			<a class="btn btn-large btn-info" href="/Materialexistencias/etiquetas">
 			<i class="icon icon-white icon-barcode"></i>
 			Etiquetas
 			</a>

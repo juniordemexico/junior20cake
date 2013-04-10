@@ -61,7 +61,7 @@ class Ubicacion extends AppModel
 				'message' => 'Espacio consta de 4 digitos (0001, 0002 ... 9999)',
 				),
 			'menor100' => array(
-				'rule' => array('comparison', '<=', '100'),
+				'rule' => array('comparison', '<=', '9999'),
 				'message' => 'Espacio debe tener un valor entre 0001 y 0100',
 				),
 		),

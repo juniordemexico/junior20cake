@@ -1,10 +1,3 @@
-<div class="span12 index-form">
-<?php
-$this->Paginator->options(array('update' => '#content',
-								'evalScripts' => true,
-								));
-?>
-
 <div class="gridWrapper">
 <?php 
 echo $form->create('Proveedor', array('inputDefaults' => array(
@@ -15,7 +8,7 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 ?>
 	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
-			<tr id="trFilter">
+			<tr class="row-filter">
 				<th class="cvepro"><?php echo $form->text('prcvepro', array('label' => '', 'type' => 'search', 'maxLength' => '16', 'placeholder' => 'Clave', 'class' => 'search-query'));?></th>
 				<th class=""><?php echo $form->text('prnom',array('label' => '', 'type' => 'search', 'maxLength' => '64', 'placeholder' => 'Nombre o Razón Social', 'class' => 'search-query'));?></th>
 				<th class="atn"><?php echo $form->text('pratn',array('label' => '', 'type' => 'search', 'maxLength' => '32', 'placeholder' => 'At\'n', 'class' => 'search-query'));?></th>
@@ -27,7 +20,7 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 				?>
 				</th>	
 			</tr>
-			<tr>
+			<tr class="row-labels">
 				<th class="cvepro"><?php echo $this->Paginator->sort('Clave','prcvepro'); ?></th>
 				<th class=""><?php echo $this->Paginator->sort('Razon Social','prnom'); ?></th>
 				<th class="atn"><?php echo $this->Paginator->sort('At\'n','pratn'); ?></th>
@@ -55,8 +48,8 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-<?php echo $this->Form->end(); ?>
-</div> <!-- gridWrapper -->
+	<?php echo $this->Form->end(); ?>
+	</div> <!-- gridWrapper -->
 
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Proveedor','MyRowClickAction' => 'costoarticulo')); ?>
 

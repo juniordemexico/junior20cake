@@ -398,7 +398,7 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	$scope.addServicio = function() {
 		tipo=2;
 		$http.get('/Explosiones/add/'+$scope.master.Articulo.id+
-				'/cve:'+$scope.currentSevicio.Articulo.arcveart+'/color_id:'+$scope.currentServicio.Color.id+'/cant:'+$scope.currentServicio.cant+
+				'/cve:'+$scope.currentServicio.Articulo.arcveart+'/color_id:'+$scope.currentServicio.Color.id+'/cant:'+$scope.currentServicio.cant+
 				'/tipoexplosionid:'+tipo
 		).then(function(response) {
 		if(typeof response.data != 'undefined' && 
@@ -479,10 +479,10 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				}
 			}
        	});
-		
 	}
 
 	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
+/*
 	$scope.bindTypeahead = function (el_id, func) {
 	var	el=angular.element(document.getElementById(el_id));
 	el.typeahead({
@@ -505,9 +505,8 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 			}, 250);
        	}
 	});
-		
 	}
-
+*/
 	$scope.fieldTela = {
 		ajax: {
 			url: "/Articulos/autocomplete/tipo:1",
@@ -547,111 +546,4 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 });
 
 
-/*
-
-<p>
-<div class="input-append">
-<input type="text" name="data[Explosion][date]" data-ng-model="date" data-ui-date class="span2 ax-datepicker" placeholder="aaaa-mm-dd..." />
-<span class="add-on"><i class="icon icon-calendar"></i></span>
-</div>
-</p>
-
-<p>
-	<select ui-select2 ng-model="perro" data-placeholder="Estado...">
-			<option data-ng-repeat="item in datos" value="{{item}}">{{item}}</option>
-	</select>
-	<div class="pre">
-		Model: {{perro}}
-	</div>
-</p>
-
-			<input type="text" maxlength="24" class="span2 ax-autocomplete" 
-			id="edttelacve" name="edtTelaCve"
-			data-ng-model="currentTela.arcveart" data-ng-init="bindTypeahead('edttelacve', 'getTelaByCve()')"
-			data-items="8" data-provide="typeahead" data-type="json" data-min-length="2"
-			data-autocomplete-url="/Articulos/autocomplete/tipo:1" data-ng-onselect-field="value"
-			placeholder="Clave de Tela..." title="{{currentTela.ardescrip}}"
-			/>
-
-<body ng-controller="MainCtrl">
-  <h1>Select2 + AJAX Demos</h1>
-  <p><a href="https://gist.github.com/4279651">Fork the Original Gist</a></p>
-  <h3>Version 1</h3>
-  <p>Use a regular <code>&lt;select&gt;</code> tag and <code>ng-repeat</code></p>
-  <pre>Selected: {{version1model|json}}</pre>
-  <select ui-select2 ng-model="version1model" data-placeholder="-- Select One --" style="width:200px">
-    <option></option>
-    <option ng-repeat="item in items" value="{{item.id}}">{{item.text}}</option>
-  </select>
-  <h3>Version 2</h3>
-  <p>Write your own Select2 query function</p>
-  <pre>Selected: {{version2model|json}}</pre>
-  <input ui-select2="version2" ng-model="version2model" style="width:200px" />
-  <h3>Version 3</h3>
-  <p>Use the Select2 data property, and preserve the reference</p>
-  <pre>Selected: {{version3model|json}}</pre>
-  <input ui-select2="version3" ng-model="version3model" style="width:200px" />
-  <h3>Version 4</h3>
-  <p>Use the Select2 ajax property</p>
-  <pre>Selected: {{version4model|json}}</pre>
-  <input ui-select2="version4" ng-model="version4model" style="width:200px" />
-</body>
-</html>
-
-
-
-
-
-var app = angular.module('plunker', ['ui']);
-
-app.controller('MainCtrl', function($scope, $http) {
-  var items;
-  
-
- var items;
-  
-  $http.get('data.json').success(function(response){
-    // Version 1
-    $scope.items = response;
-    
-    // Version 2
-    items = response;
-    
-    // Version 3
-    angular.extend($scope.version3.data, response);
-  });
-
-  // Requires us to write comparison code ourselves :(
-  $scope.version2 = {
-    query: function (query) {
-      var data = {results: []};
-      angular.forEach(items, function(item, key){
-        if (query.term.toUpperCase() === item.text.substring(0, query.term.length).toUpperCase()) {
-          data.results.push(item);
-        }
-      });
-      query.callback(data);
-    }
-  };
-    
-  // Simply updating an existing reference :) (refer to $http.get() above)
-  $scope.version3 = {
-    data: []
-  };
-  
-  // Built-in support for ajax
-  $scope.version4 = {
-    ajax: {
-      url: "data.json",
-      data: function (term, page) {
-        return {}; // query params go here
-      },
-      results: function (data, page) { // parse the results into the format expected by Select2.
-        // since we are using custom formatting functions we do not need to alter remote JSON data
-        return {results: data};
-      }
-    }
-  }
-});
-*/
 </script>

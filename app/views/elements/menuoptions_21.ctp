@@ -36,7 +36,8 @@
 </li>
 <li><a class="returnFalse" href="">Almacén Producción</a>	
 	<ul>
-		<li><a id="serviciosArchivosLinkCheck" href="/Bodegamateriales">Bodega de Materiales</a></li>
+		<li><a id="bodegaMaterialesLinkCheck" href="/Bodegamateriales">Bodega de Materiales</a></li>
+		<li><a id="bodegaUbicacionesLinkCheck" href="/Ubicaciones">Catálogo de Ubicaciones</a></li>
 	</ul>
 </li>
 

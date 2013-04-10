@@ -7,8 +7,7 @@ $this->Paginator->options(array('update' => '#content',
 
 <div class="gridWrapper">
 <?php 
-echo $form->create('Bodegaexistencia', array( 'url'=>array('controller'=>'Bodegaexistencias'),
-											'inputDefaults' => array(
+echo $form->create('Materialexistencia', array('inputDefaults' => array(
 															'label' => false,
 															'div'   => false,
 															))
@@ -23,7 +22,7 @@ echo $form->create('Bodegaexistencia', array( 'url'=>array('controller'=>'Bodega
 				<th class="cant"><?php echo $form->text('cant',array('label' => false, 'type' => 'number', 'maxLength' => '8', 'placeholder'=>'Existencia...', 'class' => 'search-query cant'));?></th>
 				<th class="refer"><?php echo $form->text('Ubicacion.cve', array('label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Ubicación...', 'class' => 'search-query refer'));?></th>
 				<th class="id">
-				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'url'=>array('controller'=>'Bodegaexistencias'), 'class'=>'btn btn-mini', 'escape'=>false)); ?>
+				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>
 			</tr>
 			<tr class="row-labels">
@@ -118,6 +117,37 @@ function(result) {
 
 ?>
 
+<?php 
+/*
+echo 
+$this->Js->get('.t-row')->event(
+'click',
+'
+$( "#dialogArticuloExistencia" ).html(this.id); 
+$( "#dialogArticuloExistencia" ).dialog( "open" );
+'
+, array('stop' => true));
+
+
+
+				<td class="st">
+					<?php if( $item[0]['conteo_2']==0 || empty($item[0]['conteo_2']) ):?>
+							<button type="button" class="btn btn-mini btn-primary clickaction detailPasaSegundo"
+									id="btnPasaSegundo_<?php e($item['Articulo']['id']); ?>"
+									data-type="clickaction"
+									data-url="/Invfisicosmovil/pasasegundo" 
+									data-id="<?php e($item['Articulo']['id']); ?>" 
+									data-value="<?php e(trim($item['Articulo']['arcveart'])); ?>"
+									data-confirm="label" 
+									data-confirm-msg="¿Seguro de pasar al Segundo Conteo el Articulo?"
+									data-icon="ok">
+									<i class="icon icon-ok icon-white"></i>
+							</button>
+					<?php endif;?>
+				</td>
+
+*/
+?>
 
 <script>
 

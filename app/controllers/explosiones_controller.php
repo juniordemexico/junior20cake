@@ -101,7 +101,7 @@ class ExplosionesController extends MasterDetailAppController {
 		if( $this->Explosion->save($record) ) {
 			$this->data['result']='ok';
 			$this->data['message']='El '.$palabra.' '.$material['Articulo']['arcveart'].
-									' se Agregó';
+									' se Agregó a la Explosión';
 			$this->data['details']=$this->Explosion->getAllItems($id);
 		}
 		else {
@@ -120,9 +120,9 @@ class ExplosionesController extends MasterDetailAppController {
 		if(!$cve ||
 			!$item=$this->Articulo->findByArcveart($cve)) {
 			$this->data['result']='error';
-			$this->data['message']='Ese Material NO Existe ('.$cve.')';
+			$this->data['message']='Ese Item NO Existe ('.$cve.')';
 			echo json_encode($this->data);
-			die();				
+			exit();				
 		}
 		$this->data['result']='ok';
 		$this->data['message']='Material ('.$cve.')';

@@ -176,6 +176,7 @@
 // http://plnkr.co/edit/vU2y87
 
 
+/*
 angular.element(window).bind('keydown', function(e) {
 	if (e.keyCode === 16) {
 		el=document.getElementById('scanInput');
@@ -186,7 +187,7 @@ angular.element(window).bind('keydown', function(e) {
 //    });
 	}
 });
-
+*/
 var itemTalladetail={};
 
 var item={
@@ -319,16 +320,17 @@ function AxAppController( $scope, $http ) {
 			return false;
 		}
 
+/*
 		if(typeof $scope.currentTalla.index == 'undefined') {
 			axAlert('Especifica la Talla', 'warning', false);
 			return false;
 		}
-
+*/
 		$scope.disableSaveBtn=true;
 		$http.get('/Bodegas/addtransaction?'+
 				'articulo_id='+$scope.item.articulo_id+
 				'&color_id='+$scope.item.color_id+
-				'&talla_index='+$scope.currentTalla.index+
+				'&talla_index=0'+ //+$scope.currentTalla.index+
 				'&cantidad='+$scope.cantidad+
 				'&ubicacion_id='+$scope.ubicacion.id+
 				'&tipoartmovbodega_id='+$scope.currentTipomov.id+

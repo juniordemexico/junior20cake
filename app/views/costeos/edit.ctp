@@ -10,7 +10,6 @@
 </div> <!-- div.page-header -->
 </header>
 
-
 <div id="summary" class="row well">
 <ul class="thumbnails">
 	<li class="span3"><h4>Telas: <em class="text-info">{{total.tela.importe | currency}}</em></h4></li>

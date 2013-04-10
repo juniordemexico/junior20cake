@@ -54,9 +54,12 @@ class ProveedoresController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->data = $this->Proveedor->read(null, $id);
-		$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (1)")) );
-		$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)")) );
+
+		$this->data = array();
+		$this->data['master']=$this->Proveedor->read(null, $id);
+		$this->data['details']['Material']=$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (1)"));
+		$this->data['details']['Servicio']=$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)"));
+		$this->set('title_for_layout', 'Costos :: '.$this->data['master']['Proveedor']['prcvepro'] );
 	}
 
 
@@ -117,23 +120,31 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 	public function deleteCostoArticulo($id=null) {
+		$this->layout='json';
 		$this->autoRender=false;
+		$this->data=array();
 		
 		// Check if the ID was submited and if the specified item exists
-		if (!$id && 
-			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
-			!$this->ArticuloProveedor->read(null, $id)) {
-			echo __('invalid_item', true).($id?" (id: $id)":'');			
-			exit;
+		if (!$id || 
+			!$this->ArticuloProveedor->read(null, $id)
+			) {
+			$this->data['result']='error';
+			$this->data['message']='Ese Item NO Existe ('.$id.')';
+			echo json_encode($this->data);
+			exit();
 		}
+		$masterID=$this->ArticuloProveedor['proveedor_id'];
 
 		// Execute DB Operations
 		if ($this->ArticuloProveedor->delete($id)) {
-			echo "OK";
+			$this->data['details']['Material']=$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (1)"));
+			$this->data['details']['Servicio']=$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (2)"));
 		}
 		else {
- 			echo __('item_could_not_be_deleted', true)." (id: $id)";
+			$this->data['result']='error';
+			$this->data['message']='Ese Item NO Existe ('.$id.')';
 		}
+		echo json_encode($this->data);
 	}
 
 	public function changeCosto($id=null) {
@@ -223,6 +234,31 @@ class ProveedoresController extends MasterDetailAppController {
 		$paises = $this->Proveedor->Pais->find('list', array('fields' => array('Pais.id', 'Pais.papais')));
 		$this->set(compact('paises'));
 	}
+
+	public function getItemByCve($cve=null) {
+		$this->layout='json';
+		$this->autoRender=false;
+		$this->data=array();
+ 		Configure::write ( 'debug', 0 );
+
+		if(!$cve ||
+			!$item=$this->Articulo->findByArcveart($cve)) {
+			$this->data['result']='error';
+			$this->data['message']='Ese Material NO Existe ('.$cve.')';
+			echo json_encode($this->data);
+			exit();				
+		}
+
+		if($item['Articulo']['tipoarticulo_id']==2) $palabra='Servicio'; else $palabra='Material';
+		
+		$this->data['result']='ok';
+		$this->data['message']=$palabra.' ('.$cve.')';
+		$this->data['item']=array();
+		$this->data['item']=$item;
+		$this->data['item']['Articulo']['arcveart']=trim($this->data['item']['Articulo']['arcveart']);
+		echo json_encode($this->data);
+	}
+
 
 	/* Text Field Autocomplete action */
 	public function autoComplete() {

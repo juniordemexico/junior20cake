@@ -6,7 +6,7 @@ class BodegamaterialesController extends MasterDetailAppController {
 
 	var $uses = array('Artmovbodegadetail', 'Articulo', 'Color', 'Talla', 'Almacen', 'Ubicacion', 'Printer', 'User', 'Linea', 'Marca', 'Temporada', 'Tipoartmovbodega');
 
-	var $layout = 'bodega';
+	var $layout = 'bodegamaterial';
 
 	var $currentPrinter=array('id'=>11, 'cve'=>'Zebra01', 'printqueue'=>'barcodes-viaducto01');
 
@@ -115,7 +115,7 @@ class BodegamaterialesController extends MasterDetailAppController {
 			$data=array(
 				'folio'=>$theData['folio'],
 				'tipoartmovbodega_id'=>$theData['tipoartmovbodega_id'],
-				'almacen_id'=>1,
+				'almacen_id'=>100,
 				'ubicacion_id'=>$theData['ubicacion_id'],
 				'articulo_id'=>$theData['articulo_id'],
 				'color_id'=>$theData['color_id'],

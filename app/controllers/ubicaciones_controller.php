@@ -72,9 +72,8 @@ class UbicacionesController extends MasterDetailAppController {
 
 	function add() { 
 		if (!empty($this->data)) {
-			pr($this->data);
-//			$this->Ubicacion->create($this->data);
 			if ($this->Ubicacion->save($this->data, array('validate'=>false))) {
+				$this->Session->write($this->name+$this->action);
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Ubicacion->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -102,7 +101,6 @@ class UbicacionesController extends MasterDetailAppController {
 		
 		$options=array(
 			'offset'=>0,
-//			'limit'=>433,
 			'order'=>array('Ubicacion.cve'),
 			'conditions'=>$conditions,
 			);
