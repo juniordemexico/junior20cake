@@ -67,6 +67,7 @@
 <?php echo $this->TBS->input('divisa_id', array('label' => 'Divisa', 'ly_w'=>'1')); ?>
 <?php echo $this->TBS->input('Articulo.arpva', array('label' => 'Precio A', 'prepend'=>'$', 'ly_w'=>'1', 'format'=>'currency', 'placeholder'=>'Neto')); ?>
 <?php echo $this->TBS->input('Articulo.arpvb', array('label' => 'Precio B', 'prepend'=>'$', 'ly_w'=>'1', 'format'=>'currency', 'placeholder'=>'Bruto')); ?>
+<?php echo $this->TBS->input('Articulo.arpvc', array('label' => 'Precio Promoción', 'prepend'=>'$', 'ly_w'=>'1', 'format'=>'currency', 'placeholder'=>'Promoción...')); ?>
 <?php echo $this->TBS->input('Articulo.arimpu1', array('label' => 'Impuesto 1', 'append'=>'%', 'ly_w'=>'1', 'format'=>'currency', 'placeholder'=>'I.V.A.')); ?>
 <?php echo $this->TBS->input('Articulo.arimpu2', array('label' => 'Impuesto 2', 'append'=>'%', 'ly_w'=>'1', 'format'=>'currency')); ?>
 <?php echo $this->TBS->input('Articulo.ardesc1', array('label' => 'Descuento 1', 'append'=>'%', 'ly_w'=>'1', 'format'=>'currency')); ?>

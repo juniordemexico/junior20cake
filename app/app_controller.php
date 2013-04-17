@@ -20,6 +20,7 @@ class AppController extends Controller {
 		/*					'AxApiResponse',*/
 							'Filter',
 							'PaginationRecall',
+							'Webservice.Webservice',
 							'Gmail',
 							'Upload',
 							//'Gzip',

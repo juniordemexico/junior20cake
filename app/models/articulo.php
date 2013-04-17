@@ -33,7 +33,15 @@ class Articulo extends AppModel
 			'type' => 'float',
 			'length' => 7
 		),
-		'arpva' => array(
+		'arpvb' => array(
+			'type' => 'float',
+			'length' => 7
+		),
+		'arpvc' => array(
+			'type' => 'float',
+			'length' => 7
+		),
+		'arpvd' => array(
 			'type' => 'float',
 			'length' => 7
 		),

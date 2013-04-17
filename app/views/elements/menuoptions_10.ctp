@@ -14,7 +14,7 @@
 			<li><a id="materialesArchivosLinkCheck" href="/Materiales/archivos">Imagenes/Documentos Materiales</a></li>
 			<li><a id="serviciosLinkCheck" href="/Servicios">Servicios</a></li>
 			<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios">Imagenes/Documentos Servicios</a></li>
-			<li><a id="materialproveedorCostosLinkCheck" href="/Proveedor/costos">Costos por Material/Proveedor</a></li>
+			<li><a id="materialproveedorCostosLinkCheck" href="/Proveedores/costos">Costos por Material/Proveedor</a></li>
 			<li><a id="articuloExplosionLinkCheck" href="/Articulos/explosiones">Explosion</a></li>
 			<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
 			<li><a id="coloresLinkCheck" href="/Colores">Colores</a></li>

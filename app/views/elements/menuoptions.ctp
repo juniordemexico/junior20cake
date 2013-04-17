@@ -14,7 +14,7 @@
 						<li><a id="materialesArchivosLinkCheck" href="/Materiales/archivos">Imagenes/Documentos Materiales</a></li>
 						<li><a id="serviciosLinkCheck" href="/Servicios">Servicios</a></li>
 						<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios">Imagenes/Documentos Servicios</a></li>
-						<li><a id="materialproveedorCostosLinkCheck" href="/Proveedor/costos">Costos por Material/Proveedor</a></li>
+						<li><a id="materialproveedorCostosLinkCheck" href="/Proveedores/costos">Costos por Material/Proveedor</a></li>
 						<li><a id="articuloExplosionLinkCheck" href="/Explosiones">Explosion</a></li>
 						<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
 						<li><a id="coloresLinkCheck" href="/Colores">Colores</a></li>
@@ -47,7 +47,7 @@
 		<li><a id="serviciosLinkCheck" href="/Servicios">Servicios</a></li>
 		<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios">Imagenes/Documentos Servicios</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Costeos</a></li>
-		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedor/costos">Costos por Material/Proveedor</a></li>
+		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedores/costos">Costos por Material/Proveedor</a></li>
 		<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Procesos de Manufactura</a></li>
 		<li><a id="articuloExplosionLinkCheck" href="/Explosiones">Explosion</a></li>

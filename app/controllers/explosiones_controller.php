@@ -160,13 +160,13 @@ class ExplosionesController extends MasterDetailAppController {
 		if ($this->Explosion->delete($id)) {
 			$this->data['result']='ok';
 			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
-									' se elimino de la Explosión del Producto';
+									' se eliminó de la Explosión del Producto';
 			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
 		}
 		else {
 			$this->data['result']='error';
 			$this->data['message']='El Material '.$item['Explosion']['id'].
-									' NO se puedo eliminar ';
+									' NO se pudo eliminar ';
 		}
 		echo json_encode($this->data);
 	}

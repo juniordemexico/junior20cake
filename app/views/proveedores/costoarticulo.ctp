@@ -1,7 +1,6 @@
 <header>
 <div class="row page-header">
-<h1>{{master.Proveedor.prcvepro}} <small>{{master.Proveedor.prnom}}</small>
-</h1>
+<h1>{{master.Proveedor.prcvepro}} <small>{{master.Proveedor.prnom}}</small></h1>
 </div>
 </header>
 
@@ -52,7 +51,7 @@
 						value="{{item.ArticuloProveedor.costo}}" 
 					/>
 				</td>
-				<td class="fecha">{{item.ArticuloProveedor.fautoriza}}</td>
+				<td class="fecha"><span data-ng-hide="item.ArticuloProveedor.fautoriza">No</span>{{item.ArticuloProveedor.fautoriza}}</td>
 				<td class="st">
 					<button type="button" class="btn btn-mini"
 						data-ng-click="detailDelete(item.ArticuloProveedor.id, item, true)">
@@ -295,7 +294,7 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 		
 		$scope.oldValues.material=$scope.currentMaterial.Articulo.text;
 		
-		$http.get('/Proveedores/getItemByCve/'+$scope.currentMaterial.Articulo.text
+		$http.get('/Proveedores/getItemByCve.json?cve='+$scope.currentMaterial.Articulo.text
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
@@ -318,10 +317,11 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	}
 
 	$scope.detailDelete = function(id, itemObj, askConfirmation) {
-		bootbox.confirm('Seguro de ELIMINAR el costo de ' + itemObj.Articulo.arcveart + ' con el proveedor ' + $scope.master.Proveedor.prcvepro + '  ?', 
+		bootbox.confirm('Seguro de ELIMINAR el costo de ' + itemObj.Articulo.arcveart + 
+						' con el proveedor ' + $scope.master.Proveedor.prcvepro + ' ? ::'+itemObj.ArticuloProveedor.id, 
 		function(result) {
     		if (result) {
-				$http.get('/Proveedores/deleteCostoArticulo/'+id
+				$http.get('/Proveedores/deleteCostoArticulo.json?id='+itemObj.ArticuloProveedor.id
 				).then(function(response) {
 				if(typeof response.data != 'undefined' && 
 					typeof response.data.result != 'undefined' && response.data.result=='ok') {

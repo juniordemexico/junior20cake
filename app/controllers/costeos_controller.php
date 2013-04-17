@@ -44,7 +44,6 @@ class CosteosController extends MasterDetailAppController {
 													'Explosion.articulo_id=Articulo.id'
 											)
 										),
-
 									)
 								);
 		$filter = $this->Filter->process($this);

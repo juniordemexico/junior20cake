@@ -9,7 +9,7 @@ class ProveedoresController extends MasterDetailAppController {
 	);
 
 	var $layout = 'default';
-	
+
 	var $cacheAction = array('view'
 							);
 
@@ -54,12 +54,9 @@ class ProveedoresController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-
-		$this->data = array();
-		$this->data['master']=$this->Proveedor->read(null, $id);
-		$this->data['details']['Material']=$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (1)"));
-		$this->data['details']['Servicio']=$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)"));
-		$this->set('title_for_layout', 'Costos :: '.$this->data['master']['Proveedor']['prcvepro'] );
+		$this->data = $this->Proveedor->read(null, $id);
+		$this->set('materiales', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (1)")) );
+		$this->set('servicios', $this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$id AND Articulo.tipoarticulo_id IN (2)")) );
 	}
 
 
@@ -81,30 +78,31 @@ class ProveedoresController extends MasterDetailAppController {
 		}
 	}
 
-	public function addCostoArticulo($proveedor_id=null, $material_id=null) {
-		if(!$proveedor_id && isset($this->params['url']['proveedor_id']) ) $proveedor_id=$this->params['url']['proveedor_id'];
-		if(!$material_id && isset($this->params['url']['material_id']) ) $material_id=$this->params['url']['material_id'];
+	public function addCostoArticulo($id=null) {
+		$this->autoRender=false;
+		if(!$id) {
+ 			echo __('item_could_not_be_saved', true)." (id: $id)";
+			exit;
+		} 
 
-		//  If Material or Proveedor doesn't exists
-		if(!$proveedor_id || !$material_id) {
-			$this->set('result', 'error');
-			$this->set('message', __('item_could_not_be_saved', true)." (id: $id)" );
+		if(isset($this->params['named']['cve'])) $material_cve=strtoupper($this->params['named']['cve']);
+		$material_id=$this->Articulo->findByArcveart($material_cve);
+		if($material_id && isset($material_id['Articulo']['id'])) {
+			$material_id=$material_id['Articulo']['id'];
+			$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
+		}
+		else {
+			echo "NO se encontro $material_cve";
 			exit;
 		}
 
-		// Get the tipoarticulo_id field
-		$tipoarticulo_id=$this->Articulo->field('tipoarticulo_id', array('id' => $material_id));
-		if(!$tipoarticulo_id>0) {
-			$tipoarticulo_id=$material_id['Articulo']['tipoarticulo_id'];				
-		}
+		$pcosto=abs($this->params['named']['pcosto']);
 
 		$record=array('ArticuloProveedor'=>array(
 							'proveedor_id'=>$id,
 							'articulo_id'=>$material_id,
-							'costo'=>$this->params['url']['pcosto'],
+							'costo'=>$pcosto,
 		));
-
-		// Create the new record
 		$this->ArticuloProveedor->create();
 		$palabra=($tipoarticulo_id==2?'Servicio': 'Insumo');
 		if( $this->ArticuloProveedor->save($record) ) {
@@ -119,30 +117,22 @@ class ProveedoresController extends MasterDetailAppController {
 	}
 
 	public function deleteCostoArticulo($id=null) {
-		if(!$id && isset($this->params['url']['id']) ) $id=$this->params['url']['id'];
+		$this->autoRender=false;
 
 		// Check if the ID was submited and if the specified item exists
-		if (!$id || 
-			!$master=$this->ArticuloProveedor->findById($id)
-			) {
-			$this->set('result', 'error');
-			$this->set('message', 'Ese Item NO Existe ('.$id.')');
+		if (!$id && 
+			isset($this->params['url']['id']) && !($id=$this->params['url']['id']) &&
+			!$this->ArticuloProveedor->read(null, $id)) {
+			echo __('invalid_item', true).($id?" (id: $id)":'');			
 			exit;
 		}
-		$masterID=$master['ArticuloProveedor']['proveedor_id'];
 
 		// Execute DB Operations
 		if ($this->ArticuloProveedor->delete($id)) {
-			$this->set('result', 'ok');
-			$this->set('details', array(
-						'Material'=>$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (1)")),
-						'Sevicio'=>$this->ArticuloProveedor->Find('all',array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (2)"))
-						)
-			);
+			echo "OK";
 		}
 		else {
-			$this->set('result', 'error');
-			$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
+ 			echo __('item_could_not_be_deleted', true)." (id: $id)";
 		}
 	}
 
@@ -233,25 +223,6 @@ class ProveedoresController extends MasterDetailAppController {
 		$paises = $this->Proveedor->Pais->find('list', array('fields' => array('Pais.id', 'Pais.papais')));
 		$this->set(compact('paises'));
 	}
-
-	public function getItemByCve($cve=null) {
-		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
-		if(!$cve ||
-			!$item=$this->Articulo->findByArcveart($cve)
-			) {
-			$this->set('result', 'error');
-			$this->set('message', 'Ese Material NO Existe');
-			exit();
-		}
-
-		if($item['Articulo']['tipoarticulo_id']==2) $palabra='Servicio'; else $palabra='Material';
-		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
-
-		$this->set('result', 'ok');
-		$this->set('message', $palabra.' ('.$cve.')');
-		$this->set('item', $item);
-	}
-
 
 	/* Text Field Autocomplete action */
 	public function autoComplete() {
