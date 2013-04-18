@@ -22,6 +22,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="macve"><?php echo $form->text('Marca.macve',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Marca', 'class' => 'search-query macve'));?></th>
 				<th class="precio"><?php echo $form->text('arpva',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'PVA', 'class' => 'search-query precio'));?></th>
 				<th class="precio"><?php echo $form->text('arpvb',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'PVB', 'class' => 'search-query precio'));?></th>
+				<th class="precio"><?php echo $form->text('arpvc',array('label' => false, 'type' => 'search', 'maxLength' => '12', 'placeholder'=>'PVC', 'class' => 'search-query precio'));?></th>
 				<th class="precio">&nbsp;</th>
 				<th class="st"><?php echo $form->text('lento',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Lento...', 'class' => 'search-query'));?></th>
 				<th class="id">
@@ -37,6 +38,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="macve"><?php echo $this->Paginator->sort('Marca','Marca.macve'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Precio A','arpva'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Precio B','arpvb'); ?></th>
+				<th class="precio"><?php echo $this->Paginator->sort('Precio Promo','arpvc'); ?></th>
 				<th class="precio"><?php echo $this->Paginator->sort('Exist','existencia'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('Lento','lento'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
@@ -57,6 +59,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<td class="macve"><?php echo $articulo['Marca']['macve']; ?></td>
 				<td class="precio"><?php echo $this->Number->currency($articulo['Articulo']['arpva']); ?></td>
 				<td class="precio"><?php echo $this->Number->currency($articulo['Articulo']['arpvb']); ?></td>
+				<td class="precio"><?php echo $this->Number->currency($articulo['Articulo']['arpvc']); ?></td>
 				<td class="precio"><?php echo $this->Number->precision($articulo[0]['existencia'],0); ?>
 							<a href="/Articulos/tallacolor/<?php echo$articulo['Articulo']['id']; ?>/control:articulos/action:tallacolorexistenciadata" 
 							class="btnModalTallaColor"

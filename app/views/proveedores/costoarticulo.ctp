@@ -11,16 +11,17 @@
 		<h4>Materiales relacionados:</h4><br />
 
 		<div class="controls controls-row well well-small">
-			<input class="span2" data-ng-model="currentMaterial.Articulo"
-				data-ui-select2="fieldMaterial" data-ui-event="{ change : 'getMaterialByCve()' }" 
+			<input class="span2"
+				data-ui-select2="fieldMaterial" 
+				data-ng-model="currentMaterial.Articulo" 
+				data-ui-event="{ change : 'getMaterialByCve()' }"
 				data-item-placeholder="Clave de Material..."
 				title="{{currentMaterial.Articulo.ardescrip}}" />
 			<input type="text" maxlength="12" class="precio"
 				data-ng-model="currentMaterial.costo"
 				placeholder="Costo..." title="Costo según el proveedor especificado" />
 			<button id="submitMaterial" class="btn" type="button"
-			data-url="/Proveedores/addCostoArticulo"
-			data-ng-click="deleteCostoArticulo(item.ArticuloProveedor.id)" 
+			data-ng-click="addItem()"
 			data-ng-disabled="(!(currentMaterial.Articulo.id>0)||!(currentMaterial.costo>0))"
 			><i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
@@ -36,7 +37,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr data-ng-repeat="item in details.Material" id="row_{{item.ArticuloProveedor.id}}"
+			<tr data-ng-repeat="item in details.material" id="row_{{item.ArticuloProveedor.id}}"
 				class="item-row">
 				<td class="" title="{{item.Articulo.ardescrip}}">{{item.Articulo.arcveart}}</td>
 				<td class="precio">
@@ -44,11 +45,8 @@
 						class="cant bluraction detailCosto" 
 						title="Especifica el Costo del Material" 
 						placeholder="Costo..."
-						data-type="changeaction"
-						data-url="/Proveedores/changeCosto" 
-						data-id="{{item.ArticuloProveedor.id}}" 
-						data-value="{{item.Articulo.arcveart}}"
-						value="{{item.ArticuloProveedor.costo}}" 
+						data-ng-model="item.ArticuloProveedor.costo"
+						data-ui-event="{ blur : 'changeCosto(item)' }" 
 					/>
 				</td>
 				<td class="fecha"><span data-ng-hide="item.ArticuloProveedor.fautoriza">No</span>{{item.ArticuloProveedor.fautoriza}}</td>
@@ -68,30 +66,33 @@
 	<div id="detailContentServicio" class="span6">
 		<h4>Servicios relacionados:</h4><br />
 		<div class="controls controls-row well well-small">
-			<input class="span2" data-ng-model="details.Servicio.Articulo"
-				data-ui-select2="fieldServicio" data-ui-event="{ change : 'getServicioByCve()' }" 
+			<input class="span2"
+				data-ui-select2="fieldServicio"
+				data-ng-model="currentServicio.Articulo" 
+				data-ui-event="{ change : 'getServicioByCve()' }" 
 				data-item-placeholder="Clave de Servicio..."
 				title="{{currentServicio.Articulo.ardescrip}}" />
 			<input type="text" maxlength="12" class="precio"
 				data-ng-model="currentServicio.costo"
 				placeholder="Costo..." title="Costo según el proveedor especificado" />
 			<button id="submitServicio" class="btn" type="button"
-			data-url="/Proveedores/addCostoArticulo"
-			><i class="icon icon-plus-sign"></i> Agregar</button>
+			data-ng-click="addServicio()"
+			data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.costo>0))">
+			<i class="icon icon-plus-sign"></i> Agregar</button>
 		</div>
-		
+
 		<div id="detailContentServicioTable">
 		<table class="table table-condensed">
 			<thead>
 			<tr>
-				<th class="">Material</th>
+				<th class="">Servicio</th>
 				<th class="precio">Costo</th>
 				<th class="fecha">Autorizado</th>
 				<th class="st">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-			<tr data-ng-repeat="item in details.Servicio" id="row_{{item.ArticuloProveedor.id}}"
+			<tr data-ng-repeat="item in details.servicio" id="row_{{item.ArticuloProveedor.id}}"
 				class="item-row">
 				<td class="" title="{{item.Articulo.ardescrip}}">{{item.Articulo.arcveart}}</td>
 				<td class="precio">
@@ -99,11 +100,8 @@
 						class="cant bluraction detailCosto" 
 						title="Especifica el Costo del Servicio" 
 						placeholder="Costo..."
-						data-type="changeaction"
-						data-url="/Proveedores/changeCosto" 
-						data-id="{{item.ArticuloProveedor.id}}" 
-						data-value="{{item.Articulo.arcveart}}"
-						value="{{item.ArticuloProveedor.costo}}" 
+						data-ng-model="item.ArticuloProveedor.costo"
+						data-ui-event="{ blur : 'changeCosto(item)' }" 						
 					/>
 				</td>
 				<td class="fecha">{{item.ArticuloProveedor.fautoriza}}</td>
@@ -122,104 +120,6 @@
 	</div> <!-- detailContent -->
 <?php echo $this->Form->End();?>
 
-
-
-<?php
-
-$this->Js->get('#submitMaterial')->event(
-'click', "
-
-var el=$('#'+this.id);
-var theProveedorID=$('#ProveedorId').val();
-var theCve=$('#edtMaterialCve').val();
-var thePCosto=$('#edtMaterialPCosto').val();
-var theUrl=el.data('url');
-
-$.ajax({
-	dataType: 'html', 
-	type: 'post',
-	url: theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto,
-	success: function (data, textStatus) {
-		if(data.substring(0,2)=='OK') {
-			axAlert(data, 'success', false);
-			$('#detailContentMaterialTable').load('/Proveedores/detailcostomaterial/'+theProveedorID);
-			return true;
-		}
-		else {
-			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-			return false;
-		}
-	},
-});
-
-"
-, array('stop' => true));
-
-
-
-// Add Detail Button Event::SERVICIOS
-
-$this->Js->get('#submitServicio')->event(
-'click', "
-
-var el=$('#'+this.id);
-var theProveedorID=$('#ProveedorId').val();
-var theCve=$('#edtServicioCve').val();
-var thePCosto = $('#edtServicioPCosto').val();
-var theUrl =el.data('url');
-
-$.ajax({
-	dataType: 'html',
-	type: 'post',
-	url: theUrl+'/'+theProveedorID+'/cve:'+theCve+'/pcosto:'+thePCosto,
-	success: function (data, textStatus) {
-		if(data.substring(0,2)=='OK') {
-			axAlert(data, 'success', false);
-			$('#detailContentServicioTable').load('/Proveedores/detailcostoservicio/'+theProveedorID);
-			return true;
-		}
-		else {
-			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-			return false;
-		}
-	},
-});
-
-"
-, array('stop' => true));
-
-// Event for Changing an item's costo
-
-$this->Js->get('.detailCosto')->event(
-'blur', "
-var el=$('#'+this.id);
-var theID=el.data('id');
-var theCve=el.data('value');
-var theValue=el.val();
-var theUrl=el.data('url');
-
-if(!(theValue>0)) return;
-
-$.ajax({
-	dataType: 'html', 
-	type: 'post',
-	url: theUrl+'/'+theID+'?costo='+theValue,
-	success: function (data, textStatus) {
-		if(data=='OK') {
-			axAlert('Insumo ' + theCve + ' Actualizado con Costo ' + theValue, 'success', false);
-			return true;
-		}
-		else {
-			axAlert('Respuesta ('+textStatus+'):<br />'+data, 'error');
-			return false;
-		}
-	},
-});
-
-"
-, array('stop' => true));
-
-?>
 
 <script>
 
@@ -287,6 +187,96 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
     	}
   	};
 	
+	$scope.addItem = function() {
+		$http.get('/Proveedores/addCostoArticulo.json'+
+				'?proveedor_id='+$scope.master.Proveedor.id+
+				'&material_id='+$scope.currentMaterial.Articulo.id+
+				'&costo='+$scope.currentMaterial.costo
+		).then(function(response) {
+		if(typeof response.data != 'undefined' && 
+			typeof response.data.result != 'undefined' && response.data.result=='ok') {
+			$scope.details=response.data.details;
+			axAlert(response.data.message, 'success', false);
+		}
+		else {
+			if(typeof response.data.result != 'undefined') {
+				axAlert(response.data.message, 'error', false);
+			}
+			else {
+				axAlert('Error Desconocido', 'error', false);
+			}
+		}
+		});
+	}
+
+	$scope.addServicio = function() {
+		$http.get('/Proveedores/addCostoArticulo.json'+
+				'?proveedor_id='+$scope.master.Proveedor.id+
+				'&material_id='+$scope.currentServicio.Articulo.id+
+				'&costo='+$scope.currentServicio.costo
+		).then(function(response) {
+		if(typeof response.data != 'undefined' && 
+			typeof response.data.result != 'undefined' && response.data.result=='ok') {
+			$scope.details=response.data.details;
+			axAlert(response.data.message, 'success', false);
+		}
+		else {
+			if(typeof response.data.result != 'undefined') {
+				axAlert(response.data.message, 'error', false);
+			}
+			else {
+				axAlert('Error Desconocido', 'error', false);
+			}
+		}
+		});
+	}
+
+	$scope.changeCosto = function(itemObj) {
+		$http.get('/Proveedores/changeCosto.json'+
+		'?id='+itemObj.ArticuloProveedor.id+
+		'&costo='+itemObj.ArticuloProveedor.costo
+		).then(function(response) {
+		if(typeof response.data != 'undefined' && 
+			typeof response.data.result != 'undefined' && response.data.result=='ok') {					
+			$scope.details=response.data.details;
+			axAlert(response.data.message, 'success', false);
+		}
+		else {
+			if(typeof response.data.result != 'undefined') {
+				axAlert(response.data.message, 'error', false);
+			}
+			else {
+				axAlert('Error Desconocido', 'error', false);
+			}
+		}
+    	});	
+	}
+
+	$scope.detailDelete = function(id, itemObj, askConfirmation) {
+		bootbox.confirm('Seguro de ELIMINAR el costo de ' + itemObj.Articulo.arcveart + 
+						' con el proveedor ' + $scope.master.Proveedor.prcvepro + ' ?', 
+		function(result) {
+    		if (result) {
+				$http.get('/Proveedores/deleteCostoArticulo.json?id='+itemObj.ArticuloProveedor.id
+				).then(function(response) {
+				if(typeof response.data != 'undefined' && 
+					typeof response.data.result != 'undefined' && response.data.result=='ok') {					
+					$scope.details=response.data.details;
+					axAlert(response.data.message, 'success', false);
+				}
+				else {
+					if(typeof response.data.result != 'undefined') {
+						axAlert(response.data.message, 'error', false);
+					}
+					else {
+						axAlert('Error Desconocido', 'error', false);
+					}
+				}
+       			});
+    		}
+		});
+	}
+	
 	$scope.getMaterialByCve = function() {
 		if($scope.currentMaterial.Articulo.text==$scope.oldValues.material) {
 			return;
@@ -316,32 +306,33 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
        	});
 	}
 
-	$scope.detailDelete = function(id, itemObj, askConfirmation) {
-		bootbox.confirm('Seguro de ELIMINAR el costo de ' + itemObj.Articulo.arcveart + 
-						' con el proveedor ' + $scope.master.Proveedor.prcvepro + ' ? ::'+itemObj.ArticuloProveedor.id, 
-		function(result) {
-    		if (result) {
-				$http.get('/Proveedores/deleteCostoArticulo.json?id='+itemObj.ArticuloProveedor.id
-				).then(function(response) {
-				if(typeof response.data != 'undefined' && 
-					typeof response.data.result != 'undefined' && response.data.result=='ok') {
-					$scope.details=response.data.details;
-					axAlert(response.data.message, 'success', false);
+	$scope.getServicioByCve = function() {
+		if($scope.currentServicio.Articulo.text==$scope.oldValues.servicio) {
+			return;
+		}
+
+		$scope.oldValues.servicio=$scope.currentServicio.Articulo.text;
+		$http.get('/Proveedores/getItemByCve.json?cve='+$scope.currentServicio.Articulo.text
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.currentServicio.Articulo=response.data.item.Articulo;
+				$scope.currentServicio.Articulo.text=$scope.currentServicio.Articulo.arcveart;
+				$scope.currentServicio.costo=0;
+				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
 				}
 				else {
-					if(typeof response.data.result != 'undefined') {
-						axAlert(response.data.message, 'error', false);
-					}
-					else {
-						axAlert('Error Desconocido', 'error', false);
-					}
+					axAlert('Error Desconocido', 'error', false);
 				}
-       			});
-
-    		}
-		});
+				$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
+				$scope.currentServicio.Articulo.text=$scope.oldValues.servicio;
+			}
+       	});
 	}
-
 
 });
 

@@ -24,9 +24,6 @@ class CosteosController extends MasterDetailAppController {
 	}
 
 	function index() {
-//		if(!$this->RequestHandler->isAjax()) {
-//			$this->layout='default';
-//		}
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
@@ -95,16 +92,9 @@ class CosteosController extends MasterDetailAppController {
 									' para el Proveedor  ('.$proveedor['Proveedor']['prcvepro'].') '.
 									$proveedor['Proveedor']['prnom'];
 		}
-/*		
-		echo json_encode(array('result'=>'ok',
-								'message'=>'El Material '.$material_id.' cambio al costo del proveedor '.$proveedor_id,
-								'data'=>$this->data
-						));
-*/
 	}
 
 	public function getItem($id=null) {
- 		Configure::write ( 'debug', 0 );
 		$this->layout='json';
 		$this->data=array();
 		$this->data['master']=$this->Articulo->findById($id);
