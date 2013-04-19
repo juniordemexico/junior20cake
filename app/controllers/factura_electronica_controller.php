@@ -1,4 +1,5 @@
 <?php
+
 class FacturaElectronicaController extends MasterDetailAppController {
 
 	var $uses = array('Factura','Cliente','Vendedor','Divisa');
@@ -21,7 +22,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 								'limit' => 10,
 								'order' => array('Factura.farefer' => 'desc'),
 								'fields' => $this->tableFields,
-								'conditions' => array("Factura.crefec >" => date('Y-m-d', strtotime("-12 months")),'Factura.faT'=>'0'),
+								'conditions' => array("Factura.crefec >" => date('Y-m-d', strtotime("-36 months")),'Factura.faT'=>'0'),
 								'doJoinUservendedor'=>true,
 								'session' => $this->Auth->User(),
 								);
@@ -66,7 +67,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		// Send the requested media file
 		$this->view = 'Media';
 		$params = array('id' => $filename,
-						'name' => trim($result['Factura']['farefer']),
+						'name' => 'JME910405B83'.'-'.trim($result['Factura']['farefer']),
 						'download' => true,
 						'extension' => $format,
 						'path' => APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS);

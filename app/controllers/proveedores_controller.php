@@ -135,11 +135,14 @@ class ProveedoresController extends MasterDetailAppController {
 		// Execute DB Operations
 		if ($this->ArticuloProveedor->delete($id)) {
 			$this->set('result', 'ok');
+			$this->set('details', $this->ArticuloProveedor->getAllProveedorArticulo($provedor_id) );
+/*
 			$this->set('details', array(
 						'material'=>$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (1)")),
 						'servicio'=>$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (2)"))
 						)
 					);
+*/
 			return;
 		}			
 		$this->set('result', 'error');
@@ -150,28 +153,21 @@ class ProveedoresController extends MasterDetailAppController {
 		if(isset($this->params['url']['id'])) $id=$this->params['url']['id'];
 		if(isset($this->params['url']['costo'])) $costo=abs($this->params['url']['costo']);
 
-		if(!$id) {
+		if(!$id ||
+			!($item=$this->ArticuloProveedor->read(null, $id)) ) {
 			$this->set('result', 'error');
 			$this->set('message', 'Ese Item NO Existe ('.$id.')');
 			return;
-		} 
+		}
 
-		$this->data=$this->ArticuloProveedor->read(null, $id);
-		$masterID=$this->data['Articulo']['proveedor_id'];
-		
 		if( $this->ArticuloProveedor->saveField('costo', $costo) ) {
 			$this->set('result', 'ok');
-			$this->set('details', array(
-						'material'=>$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (1)")),
-						'servicio'=>$this->ArticuloProveedor->Find('all', array('conditions'=>"Articuloproveedor.proveedor_id=$masterID AND Articulo.tipoarticulo_id IN (2)"))
-						)
-					);
+			$this->set('details', $this->ArticuloProveedor->getAllProveedorArticulo($provedor_id) );
 			return;
 		}
 		$this->set('result', 'error');
 		$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
 	}
-
 
 	public function delete($id) {
 		if (!$id) {

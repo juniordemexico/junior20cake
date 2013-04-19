@@ -232,6 +232,8 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	}
 
 	$scope.changeCosto = function(itemObj) {
+		alert('CAMBIA COSTO:' + itemObj.Articulo.id + ' - ' + itemObj.Articulo.arcveart +
+			' - ' + itemObj.ArticuloProveedor.costo);
 		$http.get('/Proveedores/changeCosto.json'+
 		'?id='+itemObj.ArticuloProveedor.id+
 		'&costo='+itemObj.ArticuloProveedor.costo

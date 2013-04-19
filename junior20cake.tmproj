@@ -18,92 +18,36 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>272</integer>
+	<integer>244</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>14</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>5</integer>
-		</dict>
-		<key>app/config/bootstrap.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>18</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/config/core.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>16</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/config/routes.php</key>
+		<key>app/controllers/costeos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>15</integer>
+				<integer>94</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>67</integer>
 		</dict>
-		<key>app/controllers/costeos_controller.php</key>
+		<key>app/controllers/factura_electronica_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>35</integer>
+				<integer>29</integer>
 				<key>line</key>
-				<integer>78</integer>
+				<integer>22</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>54</integer>
-		</dict>
-		<key>app/controllers/explosiones_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>13</integer>
-				<key>line</key>
-				<integer>119</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>93</integer>
 		</dict>
 		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
@@ -112,105 +56,95 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>138</integer>
+				<integer>141</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>107</integer>
+			<integer>126</integer>
 		</dict>
-		<key>app/models/articulo.php</key>
+		<key>app/models/articulo_proveedor.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>35</integer>
+				<integer>27</integer>
 				<key>line</key>
-				<integer>245</integer>
+				<integer>15</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>9</integer>
-		</dict>
-		<key>app/plugins/webservice/README.textile</key>
-		<dict>
-			<key>caret</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>62</integer>
+				<integer>15</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>32</integer>
-		</dict>
-		<key>app/plugins/webservice/views/webservice.php</key>
-		<dict>
-			<key>caret</key>
+			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>40</integer>
 				<key>line</key>
-				<integer>116</integer>
+				<integer>15</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>85</integer>
 		</dict>
 		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>35</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>30</integer>
+				<integer>373</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/explosiones/index.ctp</key>
-		<dict>
-			<key>caret</key>
+			<integer>333</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>10</integer>
+				<integer>352</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>373</integer>
+			</dict>
 		</dict>
 		<key>app/views/proveedores/costoarticulo.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>323</integer>
+				<integer>238</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>305</integer>
+			<integer>220</integer>
 		</dict>
 		<key>app/views/proveedores/costos.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>60</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>25</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -225,19 +159,12 @@
 		<string>app/views/proveedores/costoarticulo.ctp</string>
 		<string>app/controllers/costeos_controller.php</string>
 		<string>app/controllers/proveedores_controller.php</string>
-		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/plugins/webservice/README.textile</string>
-		<string>app/models/articulo.php</string>
-		<string>app/app_controller.php</string>
-		<string>app/config/routes.php</string>
-		<string>app/config/core.php</string>
-		<string>app/config/bootstrap.php</string>
-		<string>app/plugins/webservice/views/webservice.php</string>
-		<string>app/views/explosiones/index.ctp</string>
+		<string>app/models/articulo_proveedor.php</string>
+		<string>app/controllers/factura_electronica_controller.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1888, 32}, {952, 848}}</string>
+	<string>{{-1899, 27}, {952, 848}}</string>
 </dict>
 </plist>
