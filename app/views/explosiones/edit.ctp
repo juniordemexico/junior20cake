@@ -38,7 +38,7 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addItem(1)" 
+			<button class="btn" type="button" data-ng-click="addTela()" 
 				data-ng-disabled="(!(currentTela.Articulo.id>0)||!(currentTela.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -107,7 +107,7 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addItem(2)" 
+			<button class="btn" type="button" data-ng-click="addHabilitacion()" 
 				data-ng-disabled="(!(currentHabilitacion.Articulo.id>0)||!(currentHabilitacion.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -168,7 +168,7 @@
 				placeholder="Cant..." 
 				title="Especifique la cantidad requerida por unidad producida" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addItem(3)" 
+			<button class="btn" type="button" data-ng-click="addServicio()" 
 				data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -254,14 +254,19 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
+
+	$scope.addTela = function () { $scope.addItem(1, $scope.currentTela ); }
+	$scope.addHabilitacion = function () { $scope.addItem(2, $scope.currentHabilitacion ); }
+	$scope.addServicio = function () { $scope.addItem(3, $scope.currentServicio ); }
+
+	$scope.addItem = function( tipoexplosion_id, current ) {
 	
-	$scope.addItem = function( tipoexplosion_id ) {
 		$http.get('/Explosiones/add.json'+
 				'?articulo_id='+$scope.master.Articulo.id+
-				'&material_id='+$scope.currentTela.Articulo.id+
-				'&color_id='+$scope.currentTela.Color.id+
-				'&cant='+$scope.currentTela.cant+
-				'&insumopropio='+($scope.currentTela.insumopropio==true?1:0)+
+				'&material_id='+current.Articulo.id+
+				'&color_id='+current.Color.id+
+				'&cant='+current.cant+
+				'&insumopropio='+(typeof current.insumopropio != 'undefined' && current.insumopropio==true?1:0)+
 				'&tipoexplosion_id='+tipoexplosion_id
 		).then(function(response) {
 		if(typeof response.data != 'undefined' && 

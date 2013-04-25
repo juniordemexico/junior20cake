@@ -17,13 +17,20 @@ class Explosion extends AppModel
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
-		'Material'=>array(
+		'Material' => array(
 			'className'=>'Articulo',
 			'foreignKey'=>'material_id',
 			'conditions'=>'Material.tipoarticulo_id<>0',
 			),
 		'Color',
 		'Proveedor'
+	);
+
+	public $hasOne = array(
+		'Explosiondato' => array(
+			'className'=>'Explosiondato',
+			'foreignKey'=>'articulo_id',
+			)	
 	);
 
 	var $validate = array(
@@ -59,19 +66,19 @@ class Explosion extends AppModel
 		$out=array();
 		// Telas
 		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
-															'Explosion.tipoarticulo_id=1', 
-															'Material.linea_id = 2102') ) );
+															'Explosion.tipoexplosion_id=1'
+														) ) );
 		$out['tela']=$rs;
 		
 		// Habilitacion
 		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
-															'Explosion.tipoarticulo_id=1',
-															'Material.linea_id <> 2102') ) );
+															'Explosion.tipoexplosion_id=2'
+														) ) );
 		$out['habilitacion']=$rs;
 		
 		// Servicios
 		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
-															'Explosion.tipoarticulo_id=2'), 
+															'Explosion.tipoexplosion_id=3'), 
 											'order'=> 'Material.linea_id, Explosion.id' ) );
 		$out['servicio']=$rs;
 
