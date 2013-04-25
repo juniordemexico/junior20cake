@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/proveedores_controller.php</string>
+	<string>app/views/explosiones/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,33 +21,19 @@
 	<integer>244</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/costeos_controller.php</key>
+		<key>app/controllers/explosiones_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>94</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>67</integer>
-		</dict>
-		<key>app/controllers/factura_electronica_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>29</integer>
-				<key>line</key>
 				<integer>22</integer>
+				<key>line</key>
+				<integer>63</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>52</integer>
 		</dict>
 		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
@@ -56,86 +42,98 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>141</integer>
+				<integer>221</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>183</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>203</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>221</integer>
+			</dict>
+		</dict>
+		<key>app/models/articulo.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>35</integer>
+				<key>line</key>
+				<integer>245</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>126</integer>
+			<integer>85</integer>
 		</dict>
 		<key>app/models/articulo_proveedor.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>15</integer>
+				<integer>8</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
+		</dict>
+		<key>app/views/elements/ToolBar.ctp</key>
+		<dict>
+			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>15</integer>
+				<integer>33</integer>
 			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>40</integer>
-				<key>line</key>
-				<integer>15</integer>
-			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>2</integer>
 		</dict>
 		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>373</integer>
+				<integer>380</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>333</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>352</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>373</integer>
-			</dict>
+			<integer>298</integer>
 		</dict>
 		<key>app/views/proveedores/costoarticulo.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>33</integer>
+				<integer>39</integer>
 				<key>line</key>
-				<integer>238</integer>
+				<integer>265</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>220</integer>
+			<integer>245</integer>
 		</dict>
 		<key>app/views/proveedores/costos.ctp</key>
 		<dict>
@@ -154,17 +152,18 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/views/elements/ToolBar.ctp</string>
 		<string>app/views/proveedores/costos.ctp</string>
 		<string>app/views/proveedores/costoarticulo.ctp</string>
-		<string>app/controllers/costeos_controller.php</string>
 		<string>app/controllers/proveedores_controller.php</string>
+		<string>app/models/articulo.php</string>
 		<string>app/models/articulo_proveedor.php</string>
-		<string>app/controllers/factura_electronica_controller.php</string>
+		<string>app/controllers/explosiones_controller.php</string>
+		<string>app/views/explosiones/edit.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1899, 27}, {952, 848}}</string>
+	<string>{{-1879, 13}, {952, 848}}</string>
 </dict>
 </plist>

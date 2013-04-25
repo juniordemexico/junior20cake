@@ -13,7 +13,8 @@
 					<?php echo $this->Html->link('<i class="icon icon-plus-sign icon-white"></i>  Agregar', array('action' => 'add'), array('escape'=>false)); ?>
 				</li>
 				<li class="divider-vertical">&nbsp;</li>
-				<?php if($this->action=='edit'): ?>
+				<?php if( $this->action=='edit' ): ?>
+				<?php if( isset($this->data[array_shift(array_keys($this->data))]['id']) ): ?>
 				<li>
 					<?php if(is_array($this->data)) {echo $this->Html->link('<i class="icon icon-trash"></i>  Eliminar', 
 										array('action' => 'delete', $this->data[array_shift(array_keys($this->data))]['id']), 
@@ -28,6 +29,7 @@
 
 
 				</li>
+<?php endif;?>
 <?php endif;?>
 			</ul>
 			<ul class="nav navvar pull-right">

@@ -6,20 +6,20 @@
 </div>
 </header>
 
-<?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form-search')); ?>
-<?php echo $this->Form->hidden('Articulo.id', array("value"=>$articulo['Articulo']['id'])); ?>
+<?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form')); ?>
 
-<div id="tabs" class="tabbable">
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tabs-0" data-toggle="tab">Telas</a></li>
-		<li><a href="#tabs-1" data-toggle="tab">Habilitación</a></li>
-		<li><a href="#tabs-2" data-toggle="tab">Servicios</a></li>
-	</ul>
+<tabs id="tabs">
 
-<div class="tab-content">
+<pane id="tabs-0" heading="Caracteristicas">
+	<div class="control-group">
+		<label for="ExplosiondatosMolde" class="control-label">Molde:</label>
+		<div class="controls input">
+			<input type="text" id="ExplosiondatosMolde" data-ng-model="master.Explosiondatos.molde" name="data[Explosiondatos][molde]" field="Explosiondatos.Molde" class="span4" maxlenght="32" placeholder="Código del Molde..." />
+		</div>
+	</div>
+</pane>
 
-<div id="tabs-0" class="tab-pane active">
-
+<pane id="tabs-1" heading="Telas">
 		<div class="controls controls-row well well-small">
 			<input class="span2" data-ng-model="currentTela.Articulo"
 				data-ui-select2="fieldTela" data-ui-event="{ change : 'getTelaByCve()' }" 
@@ -38,7 +38,7 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addTela()" 
+			<button class="btn" type="button" data-ng-click="addItem(1)" 
 				data-ng-disabled="(!(currentTela.Articulo.id>0)||!(currentTela.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -83,9 +83,9 @@
 		</table>
 		</div>
 
-</div> <!-- div tabs0 -->
+</pane> <!-- div tabs0 -->
 
-<div id="tabs-1" class="tab-pane">
+<pane id="tabs-2" heading="Habilitación">
 
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->			
@@ -107,7 +107,7 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addHabilitacion()" 
+			<button class="btn" type="button" data-ng-click="addItem(2)" 
 				data-ng-disabled="(!(currentHabilitacion.Articulo.id>0)||!(currentHabilitacion.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -153,9 +153,9 @@
 		</table>
 		</div>
 
-</div> <!-- div tabs1 -->
+</pane> <!-- div tabs1 -->
 
-<div id="tabs-2" class="tab-pane">
+<pane id="tabs-3" heading="Servicios">
 
 		<div class="controls controls-row well well-small">
 			<input class="span2" data-ng-model="currentServicio.Articulo"
@@ -168,7 +168,7 @@
 				placeholder="Cant..." 
 				title="Especifique la cantidad requerida por unidad producida" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addServicio()" 
+			<button class="btn" type="button" data-ng-click="addItem(3)" 
 				data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -204,11 +204,9 @@
 		</table>
 		</div>
 
-</div> <!-- div tabs2 -->
+</pane> <!-- div tabs2 -->
 
-</div> <!-- div tab-content -->
-
-</div> <!-- div tabbable -->
+</tabs> <!-- div tabbable -->
 
 <?php echo $this->Form->end();?>
 
@@ -257,104 +255,14 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
 	
-	$scope.getTelaByCve = function() {
-		if($scope.currentTela.Articulo.text==$scope.oldValues.tela) {
-			return;
-		}
-		
-		$scope.oldValues.tela=$scope.currentTela.Articulo.text;
-		
-		$http.get('/Explosiones/getItemByCve/'+$scope.currentTela.Articulo.text
-		).then(function(response) {
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				$scope.currentTela.Articulo=response.data.item.Articulo;
-				$scope.currentTela.Articulo.text=$scope.currentTela.Articulo.arcveart;
-				$scope.currentTela.ArticuloColor=response.data.item.ArticuloColor;
-				$scope.currentTela.Color=response.data.item.ArticuloColor[0];
-				$scope.currentTela.cant=0;
-				$scope.currentTela.insumopropio=0;
-				axAlert(response.data.message, 'success', false);
-			}
-			else {
-				if(typeof response.data.result != 'undefined') {
-					axAlert(response.data.message, 'error', false);
-				}
-				else {
-					axAlert('Error Desconocido', 'error', false);
-				}
-				$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
-				$scope.currentTela.Articulo.text=$scope.oldValues.tela;
-			}
-       	});
-	}
-
-	$scope.getHabilitacionByCve = function() {
-		if($scope.currentHabilitacion.Articulo.text==$scope.oldValues.habilitacion) {
-			return;
-		}
-		$scope.oldValues.habilitacion=$scope.currentHabilitacion.Articulo.text;
-		$http.get('/Explosiones/getItemByCve/'+$scope.currentHabilitacion.Articulo.text
-		).then(function(response) {
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				$scope.currentHabilitacion.Articulo=response.data.item.Articulo;
-				$scope.currentHabilitacion.Articulo.text=$scope.currentHabilitacion.Articulo.arcveart;
-				$scope.currentHabilitacion.ArticuloColor=response.data.item.ArticuloColor;
-				$scope.currentHabilitacion.Color=response.data.item.ArticuloColor[0];
-				$scope.currentHabilitacion.cant=0;
-				$scope.currentHabilitacion.insumopropio=0;
-				axAlert(response.data.message, 'success', false);
-			}
-			else {
-				if(typeof response.data.result != 'undefined') {
-					axAlert(response.data.message, 'error', false);
-				}
-				else {
-					axAlert('Error Desconocido', 'error', false);
-				}
-				$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
-				$scope.currentHabilitacion.Articulo.text=$scope.oldValues.habilitacion;
-			}
-       	});
-	
-	}
-
-	$scope.getServicioByCve = function() {
-		if($scope.currentServicio.Articulo.arcveart==$scope.oldValues.servicio) {
-			return;
-		}
-		$scope.oldValues.servicio=$scope.currentServicio.Articulo.text;
-		$http.get('/Explosiones/getItemByCve/'+$scope.currentServicio.Articulo.text
-		).then(function(response) {
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				$scope.currentServicio.Articulo=response.data.item.Articulo;
-				$scope.currentServicio.Articulo.text=$scope.currentServicio.Articulo.arcveart;
-				$scope.currentServicio.ArticuloColor=response.data.item.ArticuloColor;
-				$scope.currentServicio.Color=response.data.item.ArticuloColor[0];
-				$scope.currentServicio.cant=0;
-				axAlert(response.data.message, 'success', false);
-			}
-			else {
-				if(typeof response.data.result != 'undefined') {
-					axAlert(response.data.message, 'error', false);
-				}
-				else {
-					axAlert('Error Desconocido', 'error', false);
-				}
-				$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
-				$scope.currentServicio.Articulo.text=$scope.oldValues.servicio;
-			}
-       	});
-	
-	}
-
-	$scope.addTela = function() {
-		tipo=1;
-		$http.get('/Explosiones/add/'+$scope.master.Articulo.id+
-				'/cve:'+$scope.currentTela.Articulo.arcveart+'/color_id:'+$scope.currentTela.Color.id+'/cant:'+$scope.currentTela.cant+
-				'/insumopropio:'+($scope.currentTela.insumopropio==true?1:0)+'/tipoexplosionid:'+tipo
+	$scope.addItem = function( tipoexplosion_id ) {
+		$http.get('/Explosiones/add.json'+
+				'?articulo_id='+$scope.master.Articulo.id+
+				'&material_id='+$scope.currentTela.Articulo.id+
+				'&color_id='+$scope.currentTela.Color.id+
+				'&cant='+$scope.currentTela.cant+
+				'&insumopropio='+($scope.currentTela.insumopropio==true?1:0)+
+				'&tipoexplosion_id='+tipoexplosion_id
 		).then(function(response) {
 		if(typeof response.data != 'undefined' && 
 			typeof response.data.result != 'undefined' && response.data.result=='ok') {
@@ -369,58 +277,14 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				axAlert('Error Desconocido', 'error', false);
 			}
 		}
-       	});
+       	});	
 	}
 
-	$scope.addHabilitacion = function() {
-		tipo=1;
-		$http.get('/Explosiones/add/'+$scope.master.Articulo.id+
-				'/cve:'+$scope.currentHabilitacion.Articulo.arcveart+'/color_id:'+$scope.currentHabilitacion.Color.id+'/cant:'+$scope.currentHabilitacion.cant+
-				'/insumopropio:'+($scope.currentHabilitacion.insumopropio==true?1:0)+'/tipoexplosionid:'+tipo
-		).then(function(response) {
-		if(typeof response.data != 'undefined' && 
-			typeof response.data.result != 'undefined' && response.data.result=='ok') {
-			$scope.details=response.data.details;
-			axAlert(response.data.message, 'success', false);
-		}
-		else {
-			if(typeof response.data.result != 'undefined') {
-				axAlert(response.data.message, 'error', false);
-			}
-			else {
-				axAlert('Error Desconocido', 'error', false);
-			}
-		}
-       	});
-	}
-
-	$scope.addServicio = function() {
-		tipo=2;
-		$http.get('/Explosiones/add/'+$scope.master.Articulo.id+
-				'/cve:'+$scope.currentServicio.Articulo.arcveart+'/color_id:'+$scope.currentServicio.Color.id+'/cant:'+$scope.currentServicio.cant+
-				'/tipoexplosionid:'+tipo
-		).then(function(response) {
-		if(typeof response.data != 'undefined' && 
-			typeof response.data.result != 'undefined' && response.data.result=='ok') {
-			$scope.details=response.data.details;
-			axAlert(response.data.message, 'success', false);
-		}
-		else {
-			if(typeof response.data.result != 'undefined') {
-				axAlert(response.data.message, 'error', false);
-			}
-			else {
-				axAlert('Error Desconocido', 'error', false);
-			}
-		}
-       	});
-	}
-	
 	$scope.detailDelete = function(id, itemObj, askConfirmation) {
 		bootbox.confirm('Seguro de ELIMINAR la partida ' + itemObj.Articulo.arcveart + ' de la explosion ?', 
 		function(result) {
     		if (result) {
-				$http.get('/Explosiones/deleteItem/'+id
+				$http.get('/Explosiones/deleteItem.json?id='+id
 				).then(function(response) {
 				if(typeof response.data != 'undefined' && 
 					typeof response.data.result != 'undefined' && response.data.result=='ok') {
@@ -480,8 +344,110 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
        	});
 	}
 
-	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
 
+	$scope.getTelaByCve = function() {
+		if($scope.currentTela.Articulo.text==$scope.oldValues.tela) {
+			return;
+		}
+		
+		$scope.oldValues.tela=$scope.currentTela.Articulo.text;
+
+		$http.get('/Explosiones/getItemByCve.json'+
+				'?articulo_id='+$scope.master.Articulo.id+
+				'&cve='+$scope.currentTela.Articulo.text
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.currentTela.Articulo=response.data.item.Articulo;
+				$scope.currentTela.Articulo.text=$scope.currentTela.Articulo.arcveart;
+				$scope.currentTela.ArticuloColor=response.data.item.ArticuloColor;
+				$scope.currentTela.Color=response.data.item.ArticuloColor[0];
+				$scope.currentTela.cant=0;
+				$scope.currentTela.insumopropio=0;
+				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+				$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
+				$scope.currentTela.Articulo.text=$scope.oldValues.tela;
+			}
+       	});
+	}
+
+	$scope.getHabilitacionByCve = function() {
+		if($scope.currentHabilitacion.Articulo.text==$scope.oldValues.habilitacion) {
+			return;
+		}
+		$scope.oldValues.habilitacion=$scope.currentHabilitacion.Articulo.text;
+
+		$http.get('/Explosiones/getItemByCve.json'+
+				'?articulo_id='+$scope.master.Articulo.id+
+				'&cve='+$scope.currentHabilitacion.Articulo.text
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.currentHabilitacion.Articulo=response.data.item.Articulo;
+				$scope.currentHabilitacion.Articulo.text=$scope.currentHabilitacion.Articulo.arcveart;
+				$scope.currentHabilitacion.ArticuloColor=response.data.item.ArticuloColor;
+				$scope.currentHabilitacion.Color=response.data.item.ArticuloColor[0];
+				$scope.currentHabilitacion.cant=0;
+				$scope.currentHabilitacion.insumopropio=0;
+				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+				$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
+				$scope.currentHabilitacion.Articulo.text=$scope.oldValues.habilitacion;
+			}
+       	});	
+	}
+
+
+	$scope.getServicioByCve = function() {
+		if($scope.currentServicio.Articulo.arcveart==$scope.oldValues.servicio) {
+			return;
+		}
+		$scope.oldValues.servicio=$scope.currentServicio.Articulo.text;
+
+		$http.get('/Explosiones/getItemByCve.json'+
+				'?articulo_id='+$scope.master.Articulo.id+
+				'&cve='+$scope.currentServicio.Articulo.text
+		).then(function(response) {
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.currentServicio.Articulo=response.data.item.Articulo;
+				$scope.currentServicio.Articulo.text=$scope.currentServicio.Articulo.arcveart;
+				$scope.currentServicio.ArticuloColor=response.data.item.ArticuloColor;
+				$scope.currentServicio.Color=response.data.item.ArticuloColor[0];
+				$scope.currentServicio.cant=0;
+				axAlert(response.data.message, 'success', false);
+			}
+			else {
+				if(typeof response.data.result != 'undefined') {
+					axAlert(response.data.message, 'error', false);
+				}
+				else {
+					axAlert('Error Desconocido', 'error', false);
+				}
+				$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
+				$scope.currentServicio.Articulo.text=$scope.oldValues.servicio;
+			}
+       	});
+	
+	}
+
+
+	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
 	$scope.fieldTela = {
 		ajax: {
 			url: "/Articulos/autocomplete/tipo:1",
