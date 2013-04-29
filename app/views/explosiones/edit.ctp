@@ -6,27 +6,37 @@
 </div>
 </header>
 
-<?php echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form')); ?>
+<?php //echo $this->Form->create('Explosion', array('action'=>'/add', 'class'=>'form')); ?>
 
 <tabs id="tabs">
 
 <pane id="tabs-0" heading="Caracteristicas">
+<div data-ng-form="frmCaracteristicas">
 	<div class="control-group">
-		<label for="ExplosiondatosMolde" class="control-label">Molde:</label>
+		<label for="ExplosiondatoMolde" class="control-label">Molde:</label>
 		<div class="controls input">
-			<input type="text" id="ExplosiondatosMolde" data-ng-model="master.Explosiondatos.molde" name="data[Explosiondatos][molde]" field="Explosiondatos.Molde" class="span4" maxlenght="32" placeholder="Código del Molde..." />
+			<input type="text" id="ExplosiondatoMolde" name="data[Explosiondato][molde]" field="Explosiondato.Molde"
+				data-ng-model="master.Explosiondato.molde"
+				class="span3" maxlenght="32" placeholder="Código del Molde..." 
+			/>
 		</div>
 	</div>
+	<div class="toolbar well well-small round-corners">
+		<button type="submit" class="btn btn-primary" data-ng-click="setCaracteristicas()" data-ng-disabled="(frmCaracteristicas.$pristine || !frmCaracteristicas.$valid)">
+			<i class="icon icon-ok-circle icon-white"></i> Guardar
+		</button>
+	</div>
+</div>
 </pane>
 
 <pane id="tabs-1" heading="Telas">
 		<div class="controls controls-row well well-small">
-			<input class="span2" data-ng-model="currentTela.Articulo"
+			<input class="span3" data-ng-model="currentTela.Articulo"
 				data-ui-select2="fieldTela" data-ui-event="{ change : 'getTelaByCve()' }" 
 				data-item-placeholder="Clave de Tela..."
 				title="{{currentTela.Articulo.ardescrip}}" />
 
-			<select class="span2" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" >
+			<select class="span3" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" >
 			</select>
 			<input type="text" maxlength="8"
 				data-ng-model="currentTela.cant" class="span1"
@@ -38,21 +48,21 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addTela()" 
+			<button class="btn" type="button" data-ng-click="addItem(1, currentTela)" 
 				data-ng-disabled="(!(currentTela.Articulo.id>0)||!(currentTela.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
 		</div>
 
 		<div id="detailContentTelaTable">
-		<table class="table table-condensed table-hover">
+		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Tela</th>
 				<th class="">Descripción</th>
 				<th class="span2">Color</th>
 				<th class="span1">Trazo</th>
-				<th class="span1">Inventario Propio</th>
+				<th class="span2">Inventario Propio</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -64,7 +74,7 @@
 				<td class="span1">
 					<input type="text" class="cant" data-ng-model="item.Explosion.cant" ui-event="{ blur : 'updateCantidad(item.Explosion.id,item.Explosion.cant)' }" title="Especifica la cantidad de la Tela" />
 				</td>
-				<td class="span1">
+				<td class="span2">
 					<input type="checkbox" 
 						ng-checked="item.Explosion.insumopropio==1"
 						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
@@ -90,12 +100,12 @@
 		<div class="controls controls-row well well-small">
 			<!-- Typeahead term -->			
 
-			<input class="span2" data-ng-model="currentHabilitacion.Articulo"
+			<input class="span3" data-ng-model="currentHabilitacion.Articulo"
 				data-ui-select2="fieldHabilitacion" data-ui-event="{ change : 'getHabilitacionByCve()' }" 
 				data-item-placeholder="Clave de Material..."
 				title="{{currentHabilitacion.Articulo.ardescrip}}" />
 
-			<select class="span2" data-ng-model="currentHabilitacion.Color" data-ng-options="c.cve for c in currentHabilitacion.ArticuloColor" >
+			<select class="span3" data-ng-model="currentHabilitacion.Color" data-ng-options="c.cve for c in currentHabilitacion.ArticuloColor" >
 			</select>
 			<input type="text" maxlength="8"
 				data-ng-model="currentHabilitacion.cant" class="span1"
@@ -107,7 +117,7 @@
 				title="Marcar en caso de ser un insumo propio" />
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addHabilitacion()" 
+			<button class="btn" type="button" data-ng-click="addItem(2, currentHabilitacion)" 
 				data-ng-disabled="(!(currentHabilitacion.Articulo.id>0)||!(currentHabilitacion.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
@@ -115,14 +125,14 @@
 		</div>
 
 		<div id="detailContentHabilTable">
-		<table class="table table-condensed table-hover">
+		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Material</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Color</th>
 				<th class="span1">Cantidad</th>
-				<th class="span1">Inventario Propio</th>
+				<th class="span2">Inventario Propio</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -134,7 +144,7 @@
 				<td class="span1">
 					<input type="text" class="cant" ui-event="{ blur : 'updateCantidad(item.Explosion.id,item.Explosion.cant)' }" data-ng-model="item.Explosion.cant"  title="Especifica la cantidad del Material" />
 				</td>
-				<td class="span1">
+				<td class="span2">
 					<input type="checkbox" 
 						ng-checked="item.Explosion.insumopropio==1"
 						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
@@ -144,6 +154,7 @@
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
 							data-ng-click="detailDelete(item.Explosion.id, item, true)"
+							title="Quitar el Material de la Explosión"
 					>
 							<i class="icon icon-trash"></i>
 					</button>
@@ -153,12 +164,12 @@
 		</table>
 		</div>
 
-</pane> <!-- div tabs1 -->
+</pane> <!-- pane tabs1 -->
 
 <pane id="tabs-3" heading="Servicios">
 
 		<div class="controls controls-row well well-small">
-			<input class="span2" data-ng-model="currentServicio.Articulo"
+			<input class="span3" data-ng-model="currentServicio.Articulo"
 				data-ui-select2="fieldServicio" data-ui-event="{ change : 'getServicioByCve()' }" 
 				data-item-placeholder="Clave de Servicio..."
 				title="{{currentServicio.Articulo.ardescrip}}" />
@@ -168,14 +179,14 @@
 				placeholder="Cant..." 
 				title="Especifique la cantidad requerida por unidad producida" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addServicio()" 
+			<button class="btn" type="button" data-ng-click="addItem(3, currentServicio)" 
 				data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.cant>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
 		</div>
 
 		<div id="detailContentServicioTable">
-		<table class="table table-condensed table-hover">
+		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 			<tr>
 				<th class="span2">Servicio</th>
@@ -208,7 +219,7 @@
 
 </tabs> <!-- div tabbable -->
 
-<?php echo $this->Form->end();?>
+<?php //echo $this->Form->end();?>
 
 
 <script>
@@ -249,16 +260,34 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 	$scope.master=$scope._data.master;
 	$scope.details=$scope._data.details;
 
-	$scope.oldValues={"tela":"","habilitacion":"","servicio":""};
+	$scope.oldValues={"tela":"","habilitacion":"","servicio":"","molde":""};
 	
 	$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentHabilitacion=JSON.parse(JSON.stringify(emptyItem));
 	$scope.currentServicio=JSON.parse(JSON.stringify(emptyItem));
 
-	$scope.addTela = function () { $scope.addItem(1, $scope.currentTela ); }
-	$scope.addHabilitacion = function () { $scope.addItem(2, $scope.currentHabilitacion ); }
-	$scope.addServicio = function () { $scope.addItem(3, $scope.currentServicio ); }
+	if(!$scope.master.Explosiondato.molde) {
+		$scope.master.Explosiondato.molde='';
+	}
 
+	$scope.setCaracteristicas = function () {
+		$http.get('/Explosiones/setCaracteristicas.json'+
+				'?articulo_id='+$scope.master.Articulo.id+
+				'&molde='+$scope.master.Explosiondato.molde
+		).then(function(response) {
+
+		if(typeof response.data != 'undefined' && 
+			typeof response.data.result != 'undefined' && response.data.result=='ok') {
+			axAlert(response.data.message, 'success', false);
+			return;
+		}
+		axAlert( (typeof response.data.result != 'undefined')?
+				response.data.message:
+				'Error Desconocido',
+		 		response.data.result, false);
+       	});		
+	}
+	
 	$scope.addItem = function( tipoexplosion_id, current ) {
 	
 		$http.get('/Explosiones/add.json'+
@@ -269,19 +298,17 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				'&insumopropio='+(typeof current.insumopropio != 'undefined' && current.insumopropio==true?1:0)+
 				'&tipoexplosion_id='+tipoexplosion_id
 		).then(function(response) {
+
 		if(typeof response.data != 'undefined' && 
 			typeof response.data.result != 'undefined' && response.data.result=='ok') {
 			$scope.details=response.data.details;
 			axAlert(response.data.message, 'success', false);
+			return;
 		}
-		else {
-			if(typeof response.data.result != 'undefined') {
-				axAlert(response.data.message, 'error', false);
-			}
-			else {
-				axAlert('Error Desconocido', 'error', false);
-			}
-		}
+		axAlert( (typeof response.data.result != 'undefined')?
+				response.data.message:
+				'Error Desconocido',
+		 		response.data.result, false);
        	});	
 	}
 
@@ -317,17 +344,13 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				$scope.details=response.data.details;
 				axAlert(response.data.message, 'success', false);
+				return;
 			}
-			else {
-				if(typeof response.data.result != 'undefined') {
-					axAlert(response.data.message, 'error', false);
-				}
-				else {
-					axAlert('Error Desconocido', 'error', false);
-				}
-			}
+			axAlert( (typeof response.data.result != 'undefined')?
+					response.data.message:
+					'Error Desconocido',
+			 		response.data.result, false);
        	});
-
 	}
 
 	$scope.updateCantidad = function(id, value) {
@@ -337,15 +360,12 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				$scope.details=response.data.details;
 				axAlert(response.data.message, 'success', false);
+				return;
 			}
-			else {
-				if(typeof response.data.result != 'undefined') {
-					axAlert(response.data.message, 'error', false);
-				}
-				else {
-					axAlert('Error Desconocido', 'error', false);
-				}
-			}
+			axAlert( (typeof response.data.result != 'undefined')?
+					response.data.message:
+					'Error Desconocido',
+			 		response.data.result, false);
        	});
 	}
 

@@ -26,12 +26,14 @@ class Explosion extends AppModel
 		'Proveedor'
 	);
 
+/*
 	public $hasOne = array(
 		'Explosiondato' => array(
 			'className'=>'Explosiondato',
 			'foreignKey'=>'articulo_id',
 			)	
 	);
+*/
 
 	var $validate = array(
 		'articulo_id' => array(

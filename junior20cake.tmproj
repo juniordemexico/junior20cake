@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/explosiones/edit.ctp</string>
+	<string>app/controllers/explosiones_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,67 +26,37 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>48</integer>
 				<key>line</key>
-				<integer>63</integer>
+				<integer>96</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>52</integer>
+			<integer>88</integer>
 		</dict>
 		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>221</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>183</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>203</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>221</integer>
-			</dict>
-		</dict>
-		<key>app/models/articulo.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>245</integer>
+				<integer>179</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>85</integer>
+			<integer>156</integer>
 		</dict>
-		<key>app/models/articulo_proveedor.php</key>
+		<key>app/models/explosiondato.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>27</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -112,14 +82,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>380</integer>
+				<integer>285</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>298</integer>
+			<integer>334</integer>
 		</dict>
 		<key>app/views/proveedores/costoarticulo.ctp</key>
 		<dict>
@@ -156,14 +126,13 @@
 		<string>app/views/proveedores/costos.ctp</string>
 		<string>app/views/proveedores/costoarticulo.ctp</string>
 		<string>app/controllers/proveedores_controller.php</string>
-		<string>app/models/articulo.php</string>
-		<string>app/models/articulo_proveedor.php</string>
 		<string>app/controllers/explosiones_controller.php</string>
+		<string>app/models/explosiondato.php</string>
 		<string>app/views/explosiones/edit.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1879, 13}, {952, 848}}</string>
+	<string>{{0, 13}, {952, 848}}</string>
 </dict>
 </plist>

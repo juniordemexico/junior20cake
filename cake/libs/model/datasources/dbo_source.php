@@ -1508,7 +1508,7 @@ class DboSource extends DataSource {
 				return "SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}";
 			break;
 			case 'create':
-				return "INSERT INTO {$table} ({$fields}) VALUES ({$values}) RETURNING id";
+				return "INSERT INTO {$table} ({$fields}) VALUES ({$values}) RETURNING {$this->primaryKey}";
 			break;
 			case 'update':
 				if (!empty($alias)) {

@@ -4,7 +4,7 @@ class ExplosionesController extends MasterDetailAppController {
 	var $name='Explosiones';
 
 	var $uses = array(
-		'Articulo', 'Explosion', 'Color', 'Linea', 'Marca', 'Temporada'
+		'Articulo', 'Explosion', 'Explosiondato', 'Color', 'Linea', 'Marca', 'Temporada'
 	);
 
 	var $layout = 'default';
@@ -14,7 +14,7 @@ class ExplosionesController extends MasterDetailAppController {
 
 	var $tipoexplosiones = array('Habio', 'Tela', 'Material', 'Servicio');
 	
-	function index() {
+	public function index() {
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
@@ -38,7 +38,7 @@ class ExplosionesController extends MasterDetailAppController {
 		$this->set('articulos', $this->paginate($filter));
 	}
 
-	function edit( $id = null ) {
+	public function edit( $id = null ) {
 		$this->layout='default';
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
@@ -46,11 +46,12 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 		$this->data=array();
 		$this->data['master']=$this->Articulo->findById($id);
+		$this->data['master']['Explosiondato']['molde']=$this->Explosiondato->field('molde', array('articulo_id'=>$id));
 		$this->data['details']=$this->Explosion->getAllItems($id);
 		$this->set('title_for_layout', 'Explosion::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
-	function add($articulo_id=null) {
+	public function add($articulo_id=null) {
 		if(	!isset($this->params['url']['articulo_id']) ||
 			!isset($this->params['url']['material_id']) ||
 			!isset($this->params['url']['cant']) ||
@@ -93,6 +94,30 @@ class ExplosionesController extends MasterDetailAppController {
 		$this->set('message', __('item_could_not_be_saved', true)." (id: $material_id)" );
 	}
 
+	public function setCaracteristicas($articulo_id=null) {
+		
+		if(	!isset($this->params['url']['articulo_id'])
+		) {
+			$this->set('result', 'error');
+			$this->set('message', __('invalid_item', true) );
+			return;
+		}
+
+		$articulo_id=$this->params['url']['articulo_id'];
+		$item=$this->Explosiondato->findByArticulo_id($articulo_id);
+
+		if( isset($this->params['url']['molde']) ) $item['Explosiondato']['molde']=$this->params['url']['molde'];
+		if( isset($this->params['url']['datos']) ) $item['Explosiondato']['datos']=$this->params['url']['datos'];
+
+		if( $this->Explosiondato->save($item)) {
+			$this->set('result', 'ok');
+			$this->set('message', "Las Caracteristicas se guardaron correctamente");
+			return;
+		}
+		$this->set('result', 'error');
+		$this->set('message', __('item_could_not_be_saved', true) );
+	}
+	
 	public function deleteItem($id=null) {
 		// Check if the ID was submited and if the specified item exists
 		$id=$this->params['url']['id'];
@@ -118,7 +143,7 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 
-	function toggleInsumoPropio($id=null, $newValue=-1) {
+	public function toggleInsumoPropio($id=null, $newValue=-1) {
 		$this->autoRender=false;
 		$this->data=array();
 
@@ -165,7 +190,7 @@ class ExplosionesController extends MasterDetailAppController {
 		echo json_encode($this->data);		
 	}
 
-	function updateCantidad($id=null, $value=0) {
+	public function updateCantidad($id=null, $value=0) {
 		$this->autoRender=false;
 		$this->data=array();
 

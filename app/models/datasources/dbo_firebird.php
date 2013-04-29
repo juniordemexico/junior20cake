@@ -586,7 +586,72 @@ class DboFirebird extends DboSource {
 			$j++;
 		}
 	}
-  
+ 
+/**
+ * Renders a final SQL statement by putting together the component parts in the correct order
+ *
+ * @param string $type type of query being run.  e.g select, create, update, delete, schema, alter.
+ * @param array $data Array of data to insert into the query.
+ * @return string Rendered SQL expression to be run.
+ * @access public
+ */
+	function renderStatement($type, $data, $primaryKey='id') {
+
+		extract($data);
+
+		if (strtolower($type) == 'select') {
+			if (preg_match('/offset\s+([0-9]+)/i', $limit, $offset)) {
+				$limit = preg_replace('/\s*offset.*$/i', '', $limit);
+				preg_match('/top\s+([0-9]+)/i', $limit, $limitVal);
+				$offset = intval($offset[1]) + intval($limitVal[1]);
+				$rOrder = $this->__switchSort($order);
+				list($order2, $rOrder) = array($this->__mapFields($order), $this->__mapFields($rOrder));
+				return "SELECT * FROM (SELECT {$limit} * FROM (SELECT TOP {$offset} {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$order}) AS Set1 {$rOrder}) AS Set2 {$order2}";
+			}
+			return "SELECT {$limit} {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$order}";
+		}
+
+//		return parent::renderStatement($type, $data);
+
+		$aliases = null;
+
+		switch (strtolower($type)) {
+			case 'select':
+				return "SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}";
+			break;
+			case 'create':
+				return "INSERT INTO {$table} ({$fields}) VALUES ({$values}) RETURNING {$primaryKey}";
+			break;
+			case 'update':
+				if (!empty($alias)) {
+					$aliases = "{$this->alias}{$alias} {$joins} ";
+				}
+				return "UPDATE {$table} {$aliases}SET {$fields} {$conditions}";
+			break;
+			case 'delete':
+				if (!empty($alias)) {
+					$aliases = "{$this->alias}{$alias} {$joins} ";
+				}
+				return "DELETE {$alias} FROM {$table} {$aliases}{$conditions}";
+			break;
+			case 'schema':
+				foreach (array('columns', 'indexes', 'tableParameters') as $var) {
+					if (is_array(${$var})) {
+						${$var} = "\t" . join(",\n\t", array_filter(${$var}));
+					} else {
+						${$var} = '';
+					}
+				}
+				if (trim($indexes) != '') {
+					$columns .= ',';
+				}
+				return "CREATE TABLE {$table} (\n{$columns}{$indexes}){$tableParameters};";
+			break;
+			case 'alter':
+			break;
+		}
+	}
+
 /**
  * Builds final SQL statement
  *
@@ -595,6 +660,7 @@ class DboFirebird extends DboSource {
  * @return string
  * @access public
  */
+/*
 	function renderStatement($type, $data) {
 		extract($data);
 
@@ -611,6 +677,7 @@ class DboFirebird extends DboSource {
 		}
 		return parent::renderStatement($type, $data);
 	}
+*/
 
 /**
  * Fetches the next row from the current result set
@@ -705,7 +772,7 @@ class DboFirebird extends DboSource {
 			'values' => implode(', ', $valueInsert)
 		);
 
-		if ($this->execute($this->renderStatement('create', $query))) {
+		if ($this->execute($this->renderStatement('create', $query, $model->primaryKey))) {
 			if (empty($id)) {
 					$first=$this->fetchRow();
 						if(isset($first[$model->name][$model->primaryKey])) {
