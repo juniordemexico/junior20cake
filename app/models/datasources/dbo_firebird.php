@@ -692,7 +692,6 @@ class DboFirebird extends DboSource {
 
 			foreach ($row as $index => $field) {
 				list($table, $column) = $this->map[$index];
-
 				if (trim($table) == "") {
 					$resultRow[0][$column] = $row[$index];
 				} else {

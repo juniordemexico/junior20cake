@@ -9,24 +9,25 @@
 class Articulo extends AppModel 
 {
 	public $name = 'Articulo';
-//	public $table = 'ARTICULOS';
-//	public $useTable = 'ARTICULOS';
+//	public $table = 'Articulos';
+//	public $useTable = 'Articulos';
 	public $alias = 'Articulo';
 
 	public $primaryKey = 'id';
 	public $title = 'arcveart';
 	public $longTitle = 'ardescrip';
 	public $stField = 'arst';
+
 	public $recursive= 0;
 	public $tipoarticulo=0;
 
 	public $_schema = array(
 		'arcveart' => array  (
-			'type' => 'string', 
+			'type' => 'string',
 			'length' => 16
 		),
 		'ardescrip' => array(
-			'type' => 'string', 
+			'type' => 'string',
 			'length' => 64
 		),
 		'arpva' => array(
@@ -65,18 +66,10 @@ class Articulo extends AppModel
 
 	var $hasMany = array(
 		'ArticuloProveedor',
-//		'Pedidodet',
-//		'Facturadet',
 /*		'Explosion'=>array(
 			'className'=>'Explosion',
 			'foreignKey'=>'articulo_id',
 //			'dependent'=>true,
-			),
-*/
-/*
-		'ExplosionMaterial'=>array(
-			'className'=>'Explosion',
-			'foreignKey'=>'material_id',
 			),
 */		
 	//	'ArticuloColor'
@@ -243,7 +236,7 @@ class Articulo extends AppModel
 		$out=array();
 		$i=0;
 		foreach($items as $item) {
-			$out[$i++]=array('id'=>$item['Color']['id'],'cve'=>$item['Color']['cve']);
+			$out[$i++]=array( 'id'=>$item['Color']['id'], 'cve'=>$item['Color']['cve'] );
 		}
 		return ($out);
 	}

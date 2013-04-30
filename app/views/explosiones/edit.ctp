@@ -17,7 +17,8 @@
 		<div class="controls input">
 			<input type="text" id="ExplosiondatoMolde" name="data[Explosiondato][molde]" field="Explosiondato.Molde"
 				data-ng-model="master.Explosiondato.molde"
-				class="span3" maxlenght="32" placeholder="Código del Molde..." 
+				class="span3" maxlenght="32" placeholder="Código del Molde..."
+				title="Proporciona el código del molde usado para este producto"
 			/>
 		</div>
 	</div>
@@ -34,18 +35,23 @@
 			<input class="span3" data-ng-model="currentTela.Articulo"
 				data-ui-select2="fieldTela" data-ui-event="{ change : 'getTelaByCve()' }" 
 				data-item-placeholder="Clave de Tela..."
-				title="{{currentTela.Articulo.ardescrip}}" />
+				title="Proporciona el código de la Tela ({{currentTela.Articulo.ardescrip}})" 
+			/>
 
-			<select class="span3" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" >
+			<select class="span3" data-ng-model="currentTela.Color" data-ng-options="c.cve for c in currentTela.ArticuloColor" 
+			title="Elige el Color de la Tela"
+			/>
 			</select>
 			<input type="text" maxlength="8"
 				data-ng-model="currentTela.cant" class="span1"
 				placeholder="Trazo..." 
-				title="Especifique la cantidad requerida por unidad producida" />
+				title="Especifique la cantidad requerida por unidad producida" 
+			/>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" class="detailPropio"
 				data-ng-model="currentTela.insumopropio"
-				title="Marcar en caso de ser un insumo propio" />
+				title="Marcar en caso de ser un insumo propio"
+			/>
 			Insumo Propio
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn" type="button" data-ng-click="addItem(1, currentTela)" 
@@ -78,7 +84,6 @@
 					<input type="checkbox" 
 						ng-checked="item.Explosion.insumopropio==1"
 						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
-						title="Marcar en caso de ser un insumo propio"
 					/>
 				</td>
 				<td class="span1">
@@ -103,14 +108,18 @@
 			<input class="span3" data-ng-model="currentHabilitacion.Articulo"
 				data-ui-select2="fieldHabilitacion" data-ui-event="{ change : 'getHabilitacionByCve()' }" 
 				data-item-placeholder="Clave de Material..."
-				title="{{currentHabilitacion.Articulo.ardescrip}}" />
+				title="{{currentHabilitacion.Articulo.ardescrip}}"
+			/>
 
-			<select class="span3" data-ng-model="currentHabilitacion.Color" data-ng-options="c.cve for c in currentHabilitacion.ArticuloColor" >
+			<select class="span3" data-ng-model="currentHabilitacion.Color" data-ng-options="c.cve for c in currentHabilitacion.ArticuloColor"
+				title="Especifica el Color del Material"
+			/>
 			</select>
 			<input type="text" maxlength="8"
 				data-ng-model="currentHabilitacion.cant" class="span1"
 				placeholder="Cant..." 
-				title="Especifique la cantidad requerida por unidad producida" />
+				title="Especifique la cantidad requerida por unidad producida"
+			/>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" class="detailPropio"
 				data-ng-model="currentHabilitacion.insumopropio"
@@ -172,12 +181,14 @@
 			<input class="span3" data-ng-model="currentServicio.Articulo"
 				data-ui-select2="fieldServicio" data-ui-event="{ change : 'getServicioByCve()' }" 
 				data-item-placeholder="Clave de Servicio..."
-				title="{{currentServicio.Articulo.ardescrip}}" />
+				title="{{currentServicio.Articulo.ardescrip}}"
+			/>
 
 			<input type="text" maxlength="8"
 				data-ng-model="currentServicio.cant" class="span1"
 				placeholder="Cant..." 
-				title="Especifique la cantidad requerida por unidad producida" />
+				title="Especifique la cantidad requerida por unidad producida"
+			/>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn" type="button" data-ng-click="addItem(3, currentServicio)" 
 				data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.cant>0))">
@@ -374,7 +385,7 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 		if($scope.currentTela.Articulo.text==$scope.oldValues.tela) {
 			return;
 		}
-		
+
 		$scope.oldValues.tela=$scope.currentTela.Articulo.text;
 
 		$http.get('/Explosiones/getItemByCve.json'+

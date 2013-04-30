@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/explosiones_controller.php</string>
+	<string>app/views/materialmovimientos/index.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,56 +26,100 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>48</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>96</integer>
+				<integer>11</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>269</integer>
+			</dict>
+		</dict>
+		<key>app/controllers/materialmovimientos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>209</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>88</integer>
+			<integer>114</integer>
 		</dict>
 		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>179</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>156</integer>
-		</dict>
-		<key>app/models/explosiondato.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>27</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/elements/ToolBar.ctp</key>
+		<key>app/models/articulo.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>19</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/models/entsal.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>35</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/models/entsaldet.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>25</integer>
 		</dict>
 		<key>app/views/explosiones/edit.ctp</key>
 		<dict>
@@ -84,55 +128,57 @@
 				<key>column</key>
 				<integer>28</integer>
 				<key>line</key>
-				<integer>285</integer>
+				<integer>14</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>334</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/views/proveedores/costoarticulo.ctp</key>
+		<key>app/views/materialmovimientos/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>39</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>265</integer>
+				<integer>37</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>245</integer>
+			<integer>26</integer>
 		</dict>
-		<key>app/views/proveedores/costos.ctp</key>
+		<key>cake/libs/model/model.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>60</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>64</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>44</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/elements/ToolBar.ctp</string>
-		<string>app/views/proveedores/costos.ctp</string>
-		<string>app/views/proveedores/costoarticulo.ctp</string>
 		<string>app/controllers/proveedores_controller.php</string>
 		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/models/explosiondato.php</string>
+		<string>app/controllers/materialmovimientos_controller.php</string>
+		<string>app/models/articulo.php</string>
+		<string>app/views/materialmovimientos/index.ctp</string>
+		<string>app/models/entsal.php</string>
+		<string>app/models/entsaldet.php</string>
+		<string>cake/libs/model/model.php</string>
 		<string>app/views/explosiones/edit.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{0, 13}, {952, 848}}</string>
+	<string>{{-1889, 27}, {952, 848}}</string>
 </dict>
 </plist>

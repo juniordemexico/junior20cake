@@ -199,7 +199,7 @@ class Inflector {
 		'trousers', 'trout','tuna', 'Vermontese', 'Wenchowese', 'whiting', 'wildebeest',
 		'Yengeese',
 		'cxc','cxp','produccion','pedido','factura','pedidodet','facturadet','compradet',
-		'artmov','ctemov','promov','banmov','artexist'
+		'artmov','ctemov','promov','banmov','artexist', 'entsal', 'entsaldet'
 	);
 
 /**

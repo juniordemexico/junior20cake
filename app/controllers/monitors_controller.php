@@ -11,7 +11,8 @@ class MonitorsController extends AppController {
 	}
 	
 	function monitordbactive() {
-		$sql='SELECT u.mon$attachment_id, u.mon$state, u.mon$user,u.mon$remote_address
+		$sql='select u.mon$attachment_id, u.mon$state, u.mon$user,u.mon$remote_address,
+				u.mon$timestamp, u.mon$server_pid
 			FROM mon$attachments u
 			ORDER BY u.MON$ATTACHMENT_ID';
 		$dataset=$this->Linea->query($sql);
