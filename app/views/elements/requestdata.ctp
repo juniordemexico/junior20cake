@@ -1,6 +1,6 @@
-
-	<!-- Requested: <?php echo date('Y/m/d H:i:s');?> -->
-	<!-- Generated: <?php echo date('Y/m/d H:i:s');?> -->
+	<!-- Requested: <?php echo date('Y-m-d H:i:s', $_SERVER["REQUEST_TIME"]);?> -->
+	<!-- Generated: <?php $request['_timestamp']=date('Y-m-d H:i:s'); echo $request['_timestamp'];?> -->
+	<!-- Response Time: <?php echo round(microtime(true) - $_SERVER["REQUEST_TIME"],4).'s.' ?> -->
 	<!-- User: <?php echo $session->read('Auth.User.id')>0?$session->read('Auth.User.username').' (id: '.$session->read('Auth.User.id').' group:'.$session->read('Auth.User.group_id').')':'No Auth User';?> -->
 	<!-- ClientIP: <?php echo $request['client_ip']; ?> -->
 	<!-- Referer: <?php echo $request['client_referer']; ?> -->
@@ -8,4 +8,3 @@
 	<!-- URL: <?php echo $this->params['url']['url']; ?> -->
 	<!-- Querystring: <?php if(!empty($this->params['url'])) {foreach($this->params['url'] as $key=>$value) {if($key<>'url') echo $key.'='.$value.'  ';}} ?> -->
 	<!-- Controller: <?php echo $this->name; ?>  Action: <?php echo $this->action; ?> ID: <?php echo (isset($this->data['id'])?$this->data['id']:'n/a'); ?> -->
-

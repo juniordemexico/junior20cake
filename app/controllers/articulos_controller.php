@@ -6,7 +6,7 @@ class ArticulosController extends MasterDetailAppController {
 	var $name='Articulos';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada', 'ArticulosColor'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada', 'ArticulosColor', 'Artmov', 'Pedidodet'
 	);
 
 	var $cacheAction = array('view',
@@ -66,7 +66,6 @@ class ArticulosController extends MasterDetailAppController {
 				$this->redirect(array('action' => 'index'));
 			} 
 			else {
-			//	$dates = $this->Articulo->find(array('Articulo.id'=>$id),array('Articulo.created','Articulo.modified','Color.id','Color.cve'));
 				$dates=$this->Articulo->findById($id);
 				$this->data['Color']=$dates['Color'];
 				$this->data['Articulo']['created'] = $dates['Articulo']['created'];
@@ -76,13 +75,19 @@ class ArticulosController extends MasterDetailAppController {
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Articulo->read(null, $id);
+			$this->data['Articulo']['arcveart']=trim($this->data['Articulo']['arcveart']);
 			$this->set('title_for_layout', $this->name.'::'.$this->data['Articulo']['arcveart']);
 		}
 
+		$this->set('itemCodeReadOnly', 
+					$this->Artmov->field('articulo_id', array('articulo_id'=>$id))>0 ||
+					$this->Pedidodet->field('articulo_id', array('articulo_id'=>$id))>0
+					?1
+					:0 
+				);
 		$this->set($this->Articulo->loadDependencies($this->tipoarticulo_id));
 		$divisas = $this->Articulo->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
 		$this->set(compact('divisas'));
-
 	}
 
 	function add() { 

@@ -20,7 +20,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 								'fields' => array('Entsal.id', 'Entsal.esrefer', 'Entsal.esfecha',
 												'Entsal.estmov','Entsal.esconcep',
 												'Entsal.esst', 'Entsal.est',
-												'Entsal.crefec', 'Entsal.modfec'),
+												'Entsal.created', 'Entsal.modified'),
 //								'conditions' => array('Entsal.est'=>0),
 								);
 		$filter = $this->Filter->process($this);

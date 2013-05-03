@@ -259,7 +259,10 @@ class Articulo extends AppModel
 			 ));// 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)			
 		}
 		else {
-			$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve') ));// 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)
+			$colores = $this->Color->find('list', array(
+											'fields' => array('Color.id', 'Color.cve'), 
+											'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')),
+											'tipoarticulo_id_'.$tipoarticulo=>1),'order'=>array('Color.cve') )); // 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)
 		}
 
 		$divisas = $this->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));

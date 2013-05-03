@@ -19,15 +19,19 @@
 	
 <div class="tab-content">
 <div id="tabs-0" class="tab-pane active">
-<?php echo $this->TBS->input('Articulo.arcveart', array('type' => 'text', 'label' => 'Código', 'ly_w'=>'2', 'class'=>($mode=='edit'?'readonly':''), 'readonly'=>($mode=='edit'?'true':''))); ?>
+<?php echo $this->TBS->input('Articulo.arcveart', array('type' => 'text', 'label' => 'Código', 'ly_w'=>'2', 
+							'title'=>($mode=='edit' && $itemCodeReadOnly==1)?'Este producto YA tiene transacciones. No es posible editar su Código':'Proporciona el Código interno del producto',
+							'class'=>(($mode=='edit' && $itemCodeReadOnly==1)?'readonly':''), 'readonly'=>(($mode=='edit' && $itemCodeReadOnly==1)?'readonly':''?'true':''))); ?>
 <?php echo $this->TBS->input('Articulo.ardescrip', array('type' => 'text', 'label' => 'Descripción', 'ly_w'=>'4')); ?>
 <?php echo $this->TBS->input('arst', array('type'=>'radiogroup', 'label'=>'Estatus', 
-							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'))
-							);
+							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'),
+							'title'=>'Elige el Estatus del producto: Activo, Baja (descontinuado, eliminado), Suspendido (bloqueado temporalmente)'
+							));
 ?>
-<?php echo $this->TBS->input('Articulo.lento', array('type'=>'checkbox', 'label'=>'Lento Desplazamiento')); ?>
+<?php echo $this->TBS->input('Articulo.lento', array('type'=>'checkbox', 'label'=>'Lento Desplazamiento', 'title'=>'Marca esta opción para productos de lento desplazamiento')); ?>
 <?php echo $this->TBS->input('Articulo.arstcompterm', array('type'=>'checkbox', 'label'=>'Se Compra Terminado', 'title'=>'Marcalo en caso de que este producto se compre terminado')); ?>
-<?php echo $this->TBS->input('Articulo.arobser', array('label' => 'Observaciones', 'type'=>'textarea', 'placeholder'=>'Observaciones y Comentarios', 'ly_w'=>'4')); ?>
+<?php echo $this->TBS->input('Articulo.arobser', array('label' => 'Observaciones', 'type'=>'textarea', 'placeholder'=>'Observaciones y Comentarios', 'title'=>'Proporciona cualquier tipo de observación o comentario respecto a este producto ', 'ly_w'=>'4')); ?>
+<?echo "perro::".$itemCodeReadOnly;?>
 </div>
 
 <div id="tabs-1" class="tab-pane">
@@ -37,7 +41,7 @@
 <?php echo $this->TBS->input('marca_id', array('label' => 'Marca')); ?>
 <?php echo $this->TBS->input('temporada_id', array('label' => 'Temporada')); ?>
 <?php echo $this->TBS->input('talla_id', array('label' => 'Grupo de Tallas')); ?>
-<?php echo $this->TBS->input('proporcion_id', array('label' => 'Proporciones para Produccion')); ?>
+<?php echo $this->TBS->input('proporcion_id', array('label' => 'Proporciones para Producción')); ?>
 </div>
 
 <div id="tabs-2" class="tab-pane">

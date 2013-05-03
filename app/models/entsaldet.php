@@ -44,7 +44,7 @@ class Entsaldet extends AppModel
 			'isrequired' => array(
 				'rule' => 'notEmpty',
 				'required' => true,
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'message' => 'Especifica la Cantidad'
 			),
 			'inbetween' => array(

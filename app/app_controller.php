@@ -82,12 +82,15 @@ class AppController extends Controller {
 			'isAjax' => $this->RequestHandler->isAjax(),
 			'isMobile' => $this->RequestHandler->isMobile(),
 			'request_method' => ($this->RequestHandler->isGet()?'GET':($this->RequestHandler->isPost()?'POST':($this->RequestHandler->isDelete()?'DELETE':($this->RequestHandler->isPut()?'PUT':'')))),
+			'_timestamp_request'=>date('Y-m-d H:i:s'),
+			'_timestamp'=>date('Y-m-d H:i:s'),
 		));
 
 		// Initialize the apiResponse structure
 		$this->apiResponse=array(
 			'_id'=>99999,
 			'_parentid'=>88888,
+			'_timestamp_request'=>date('Y-m-d H:i:s'),
 			'_timestamp'=>date('Y-m-d H:i:s'),
 			'result'=>'ok',
 			'messages'=>array(),

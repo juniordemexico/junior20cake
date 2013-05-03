@@ -73,7 +73,7 @@ class DATABASE_CONFIG {
 		'encoding' => 'utf8'
 	);
 
-/*
+
 	public $mongo = array(
         'driver' => 'mongodb.mongodbSource',
         'database' => 'JUNIORDOC',
@@ -84,7 +84,7 @@ class DATABASE_CONFIG {
         'password' => 'awesomeness',    
         */
     );  
-*/
+
 /*
 	public $default = array(
 		'driver' => 'mongodb.mongodbSource',
