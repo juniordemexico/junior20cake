@@ -103,9 +103,19 @@ class Entsal extends AppModel
 	);
 
 	public function getDetails($id=null) {
-		if (!$id && $this->id>0) 
+		if (!$id || !($this->id>0) ) return array();
 		$this->Entsaldet->recursive=0;
 		return( $this->Entsaldet->findAllByEntsal_id($id) );
 	}
+
+	public function loadDependencies() {
+		// Determine the product's type
+
+		$tipoartmovbodegas = $this->Tipoartmovbodega->find('list', array('fields' => array('tipoartmovbodega.id', 'Tipoarticulo.cve'), 'conditions'=>array('visible'=>1) ));
+
+		return compact('tipoartmovbodegas');
+		
+	}
+
 	
 }

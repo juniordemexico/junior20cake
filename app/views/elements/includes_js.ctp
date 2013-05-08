@@ -16,6 +16,7 @@ echo
 	$this->Html->script(array(
 		// Javascript frameworks, libraries and utilities
 		'/js_files/core.js',
+//		'/js/jquery/jquery-ui-1.9.1.custom.js',
 		'/js/webui/angular.min.js',
 //		'/js/webui/angular-resource.min.js',
 		'/js/webui/angular-ui.min.js',

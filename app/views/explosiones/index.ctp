@@ -57,7 +57,8 @@ echo $form->create('Articulo',array('inputDefaults' => array(
 
 </div> <!-- index-form -->
 
-<?php echo 
+<?php
+ echo 
 $this->Js->get('.t-row')->event(
 'click',
 "location.replace('".

@@ -25,12 +25,11 @@
 
 <body>
 
+<section id="sectionToolBar">
 <div id="toolBarContainer" class="container-fluid ax-page-container" >	
-
-	<section id="sectionToolBar">
 	<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
-	</section>  <!-- section#sectionToolbar -->
 </div>
+</section>  <!-- section#sectionToolbar -->
 
 <div id="pageContainer" class="container ax-page-container" >	
 	

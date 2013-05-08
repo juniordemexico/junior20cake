@@ -46,7 +46,7 @@
 		<h3>SQLite v3 Database</h3>
 		<p>Lightweight, reliable and portable SQL database engine</p>
 		</li>
-		<li class="span3">
+		<li class="span3">too
 		<div class="thumbnail">		
 		<?php echo $this->Html->link(
 					$this->Html->image('logos/mongodb-logo.png', array('alt' => 'MongoDB NoSQL Database', 'border' => '0', 'class'=>'img-rounded')),

@@ -43,7 +43,7 @@
 			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
-				onclick=":javascript:$('#edtMsg').focus();">
+				onclick="javascript:$('#edtMsg').focus();">
 <img src="/img/icons/devine/white/Massage.png" width="20px" height="20px" />
 				<b class="caret"></b></a>
 				<ul class="dropdown-menu notifications-list" style="opacity: 0.80; width: 200px; height:150px;">

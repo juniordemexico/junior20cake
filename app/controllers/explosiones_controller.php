@@ -39,7 +39,6 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 	public function edit( $id = null ) {
-		$this->layout='default';
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));

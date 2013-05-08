@@ -7,7 +7,10 @@ class Tipoartmovbodega extends AppModel
 	public $name = 'Tipoartmovbodega';
 	public $table = 'Tipoartmovbodegas';
 	public $alias = 'Tipoartmovbodega';
+
+	public $recursive=-1;
 	public $cache = true;
+	
 
 	public $validate = array(
 		'cve' => array(
@@ -25,6 +28,7 @@ class Tipoartmovbodega extends AppModel
 
 	public $hasMany = array(
 		'Artmovbodegadetail',
+		'Entsal'
 	);
 
 

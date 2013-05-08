@@ -210,7 +210,7 @@ class Articulo extends AppModel
 				'rule' => array('boolean'),
 				'required' => false,
 				'allowEmpty' => true,
-		'message' => 'TIPO debe ser un valor Verdadero(1) o Falso(0)'
+		'message' => 'T debe ser un valor Verdadero(1) o Falso(0)'
 		)
 		)
 	);

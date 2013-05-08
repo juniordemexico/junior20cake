@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/articulos_controller.php</string>
+	<string>app/views/materialmovimientos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,133 +21,107 @@
 	<integer>244</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>84</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>71</integer>
-		</dict>
-		<key>app/config/database.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>22</integer>
-				<key>line</key>
-				<integer>67</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>50</integer>
-		</dict>
 		<key>app/controllers/articulos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>31</integer>
-				<key>line</key>
-				<integer>69</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>50</integer>
-		</dict>
-		<key>app/controllers/materialmovimientos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>23</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/controllers/proveedores_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/articulo.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>51</integer>
-				<key>line</key>
-				<integer>221</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>200</integer>
-		</dict>
-		<key>app/models/artmov.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>12</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>17</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
-		</dict>
-		<key>app/models/entsal.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>35</integer>
+				<integer>45</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>9</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>30</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>45</integer>
+			</dict>
+		</dict>
+		<key>app/controllers/explosiones_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>51</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>21</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>40</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>51</integer>
+			</dict>
+		</dict>
+		<key>app/controllers/materialmovimientos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>14</integer>
+				<key>line</key>
+				<integer>54</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
+			<integer>27</integer>
+		</dict>
+		<key>app/models/articulo.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>269</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
 			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>246</integer>
+		</dict>
+		<key>app/models/entsal.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>105</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>81</integer>
 		</dict>
 		<key>app/models/entsaldet.php</key>
 		<dict>
@@ -161,114 +135,81 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>25</integer>
 		</dict>
-		<key>app/views/elements/articulos/form.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/requestdata.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/explosiones/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>28</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/layouts/default.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>58</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/materialmovimientos/index.ctp</key>
+		<key>app/models/tipoartmovbodega.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>20</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>21</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>cake/libs/model/model.php</key>
+		<key>app/views/elements/includes_webui.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>35</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>1388</integer>
+				<integer>19</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1359</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/materialmovimientos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>25</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>9</integer>
+		</dict>
+		<key>app/views/materialmovimientos/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>76</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/controllers/proveedores_controller.php</string>
 		<string>app/controllers/materialmovimientos_controller.php</string>
 		<string>app/models/articulo.php</string>
 		<string>app/views/materialmovimientos/index.ctp</string>
-		<string>app/controllers/articulos_controller.php</string>
-		<string>app/app_controller.php</string>
-		<string>app/views/layouts/default.ctp</string>
-		<string>app/views/elements/requestdata.ctp</string>
-		<string>app/views/elements/articulos/form.ctp</string>
-		<string>app/models/artmov.php</string>
+		<string>app/views/elements/includes_webui.ctp</string>
 		<string>app/models/entsal.php</string>
+		<string>app/views/materialmovimientos/edit.ctp</string>
+		<string>app/models/tipoartmovbodega.php</string>
 		<string>app/models/entsaldet.php</string>
-		<string>cake/libs/model/model.php</string>
-		<string>app/config/database.php</string>
-		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/controllers/explosiones_controller.php</string>
+		<string>app/controllers/articulos_controller.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1860, 15}, {952, 848}}</string>
+	<string>{{-1841, -13}, {952, 848}}</string>
 </dict>
 </plist>
