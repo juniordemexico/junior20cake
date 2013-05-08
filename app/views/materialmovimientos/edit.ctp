@@ -4,7 +4,8 @@
 </div>
 </header>
 
-<?php //echo $this->Form->create('Entsal', array('action'=>'/add', 'class'=>'form')); ?>
+<?php //echo $this->Form->create('Entsal', array('action'=>'/add', 'class'=>'form well', 'data-ng-form'=>"frmMaster")); ?>
+<ng-form class="form" name="frmMaster">
 
 <!-- Form's Tool / Button Bar -->
 <div class="toolbar well well-small round-corners">
@@ -18,7 +19,7 @@
 <tabs id="tabs">
 
 <pane id="tabs-0" heading="General" class="well">
-<div data-ng-form="frmMaster">
+<div>
 	<div class="control-group">
 		<label for="edtfecha" class="control-label">Fecha:</label>
 		<div class="controls input">
@@ -97,13 +98,15 @@ nada pues aqui
 
 </tabs> <!-- div tabbable -->
 
+</ng-form>
+
 <?php //echo $this->Form->end();?>
 
 
 <script>
 
 
-var emptyItem={Articulo: {id: null, text: '', title:''}, cant: '', insumopropio: 0, Color:{}, ArticuloColor:[] };
+var emptyItem={Articulo: {id: null, text: '', title:''}, cant: 0, Color:{}, ArticuloColor:[] };
 	
 myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 
@@ -232,26 +235,24 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
        	});
 	}
 */
-/*
+
 	$scope.getItemByCve = function() {
 		if($scope.currentItem.Articulo.text==$scope.oldValues.tela) {
 			return;
 		}
 
-		$scope.oldValues.tela=$scope.currentTela.Articulo.text;
+		$scope.oldValues.tela=$scope.currentItem.Articulo.text;
 
-		$http.get('/Explosiones/getItemByCve.json'+
-				'?articulo_id='+$scope.master.Articulo.id+
-				'&cve='+$scope.currentTela.Articulo.text
+		$http.get('/Materialmovimientos/getItemByCve.json'+
+				'?cve='+$scope.currentItem.Articulo.text
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				$scope.currentTela.Articulo=response.data.item.Articulo;
-				$scope.currentTela.Articulo.text=$scope.currentTela.Articulo.arcveart;
-				$scope.currentTela.ArticuloColor=response.data.item.ArticuloColor;
-				$scope.currentTela.Color=response.data.item.ArticuloColor[0];
-				$scope.currentTela.cant=0;
-				$scope.currentTela.insumopropio=0;
+				$scope.currentItem.Articulo=response.data.item.Articulo;
+				$scope.currentItem.Articulo.text=$scope.currentItem.Articulo.arcveart;
+				$scope.currentItem.ArticuloColor=response.data.item.ArticuloColor;
+				$scope.currentItem.Color=response.data.item.ArticuloColor[0];
+				$scope.currentItem.cant=0;
 				axAlert(response.data.message, 'success', false);
 			}
 			else {
@@ -261,12 +262,11 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
 				else {
 					axAlert('Error Desconocido', 'error', false);
 				}
-				$scope.currentTela=JSON.parse(JSON.stringify(emptyItem));
-				$scope.currentTela.Articulo.text=$scope.oldValues.tela;
+				$scope.currentItem=JSON.parse(JSON.stringify(emptyItem));
+				$scope.currentItem.Articulo.text=$scope.oldValues.tela;
 			}
        	});
 	}
-*/
 
 	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
 	$scope.fieldItem = {

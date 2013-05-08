@@ -55,7 +55,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 								array('esrefer'=>'ES000001', 'esfecha'=> date('Y-m-d'), 'est'=>'0')
 							);
 		$this->data['details']=array('Entsaldet'=>array());
-		$this->set($this->Entsal->loadDependencies());
+		$this->data['related']=$this->Entsal->loadDependencies();
 
 		$this->render('edit');
 	}
@@ -158,10 +158,10 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	}
 
 	public function getItemByCve($cve=null) {
-		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
+//		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||
-			!$item=$this->Entsal->Articulo->findByArcveart($cve)
+			!$item=$this->Articulo->findByArcveart($cve)
 			) {
 			$this->set('result', 'error');
 			$this->set('message', 'Ese Material NO Existe');
@@ -169,6 +169,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		}
 
 		// Check if Item already exists
+/*
 		if(
 			$this->Entsaldet->find('first', array('conditions'=>array('articulo_id'=>$articulo_id,
 			 														'material_id'=>$item['Articulo']['id'])) )
@@ -177,11 +178,12 @@ class MaterialmovimientosController extends MasterDetailAppController {
 			$this->set('message', "$cve ya existe para este producto");
 			return;			
 		}
-
+*/
 		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
-		$item['ArticuloColor']=$this->Entsal->getArticuloColor($item['Articulo']['id']);
+		$item['ArticuloColor']=$this->Articulo->getArticuloColor($item['Articulo']['id']);
 
 		$this->set('result', 'ok');
+		$this->set('message', 'Material '.$item['Articulo']['arcveart']);
 		$this->set('item', $item);
 	}
 
