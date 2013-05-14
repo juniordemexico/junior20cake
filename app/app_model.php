@@ -46,33 +46,33 @@ class AppModel extends Model
 	}
 
 	function find($type=null, $params=null) 
-      {
+	{
 		if ($this->cache) { 
-			$tag = isset($this->name) ? '_' . $this->name : 'appmodel'; 
-            $paramsHash = md5(serialize($params)); 
-            $version = (int)Cache::read($tag); 
-            $fullTag = $tag . '_' . $type . '_' . $paramsHash; 
-            if ($result = Cache::read($fullTag)) { 
-                if ($result['version'] == $version) 
-                    return $result['data']; 
-            } 
-            $result = array('version' => $version, 'data' => parent::find($type, $params), ); 
-            Cache::write($fullTag, $result); 
-            Cache::write($tag, $version); 
-            return $result['data']; 
-          }
+			$tag = isset($this->name) ? '_' . $this->name : 'appmodel';
+			$paramsHash = md5(serialize($params));
+			$version = (int)Cache::read($tag);
+			$fullTag = $tag . '_' . $type . '_' . $paramsHash;
+			if ($result = Cache::read($fullTag)) {
+				if ($result['version'] == $version)
+					return $result['data'];
+			}
+			$result = array('version' => $version, 'data' => parent::find($type, $params), );
+			Cache::write($fullTag, $result);
+			Cache::write($tag, $version);
+			return $result['data'];
+		}
 		else { 
 			return parent::find($type, $params); 
 		} 
-      } 
+	} 
 
-      function updateCounter() 
-      { 
-          if ($this->cache) { 
-              $tag = isset($this->name) ? '_' . $this->name : 'appmodel'; 
-              Cache::write($tag, 1 + (int)Cache::read($tag)); 
-          } 
-      } 
+	function updateCounter() 
+	{ 
+		if ($this->cache) { 
+			$tag = isset($this->name) ? '_' . $this->name : 'appmodel'; 
+			Cache::write($tag, 1 + (int)Cache::read($tag));
+		}
+	}
 
 	// Record/Field store methods
 /*
@@ -92,25 +92,25 @@ class AppModel extends Model
 
     function afterSave($created) 
     { 
-/* 
+ 
        $this->updateCounter(); 
         $tag = isset($this->name) ? '_' . $this->name : 'appmodel'; 
    		$fullTag = $tag . '_' . 'count' ; 
 		$version=Cache::read($tag);
         Cache::write($tag, $version+1); 
-*/         
+         
         return(parent::afterSave($created)); 
     }
 
 	function afterDelete() 
 	{ 
-/*
+
 		$this->updateCounter(); 
 		$tag = isset($this->name) ? '_' . $this->name : 'appmodel'; 
 		$fullTag = $tag . '_' . 'count' ; 
 		$version=Cache::read($tag);
         Cache::write($tag, $version+1); 
-*/
+
 		return(parent::afterDelete()); 
 	} 
 
@@ -141,7 +141,7 @@ class AppModel extends Model
 			}
 		}
 		return false;
-		
+
 	}
 
 /*
@@ -162,7 +162,7 @@ class AppModel extends Model
 			$type=$this->defaultRecordType;
 		}
 
-		$this->recursive=0;
+		$this->recursive=-1;
 
   		$result = $this->Articulo->find('all', array(
 			'fields'=>$this->autoCompleteOptions['fields'],
@@ -306,5 +306,17 @@ class AppModel extends Model
 		// Return the recordset's array. Or 'false' if there are no ocurrencies
 		if( sizeof($out)>0 ) return $out; else return false;
 	}
+
+    public function toJsonListArray($arr = null)
+    {
+        $ret = null;
+        if (!empty($arr)) {
+            $tmp = array();
+            foreach ($arr as $k => $v) {
+                $tmp[] = array('id' => $k, 'cve' => $v);
+            }
+        }
+		return $tmp;
+    }
 
 }

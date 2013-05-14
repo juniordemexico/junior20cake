@@ -36,6 +36,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		$this->data=array();
 		$this->data['master']=$this->Entsal->findById($id);
 		$this->data['details']=$this->Entsal->getDetails($id);
+		$this->data['related']=$this->Entsal->loadDependencies();
 		$this->set('title_for_layout', 'Movimiento de Materiales :: Nuevo' );
 	}
 

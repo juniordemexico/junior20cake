@@ -6,7 +6,7 @@ class Almacen extends AppModel
 	var $table = 'almacenes';
 	var $alias = 'Almacen';
 	var $primaryKey = 'id';
-	var $cache=false;
+	public $cache=true;
 
 	var $hasMany = array(
 		'Ubicacion',

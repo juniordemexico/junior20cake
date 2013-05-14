@@ -1,3 +1,4 @@
+<div id="toolBarContainer" class="container-fluid ax-page-container">
 <div id="divNavbar" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
@@ -29,8 +30,8 @@
 
 
 				</li>
-<?php endif;?>
-<?php endif;?>
+				<?php endif;?>
+				<?php endif;?>
 			</ul>
 			<ul class="nav navvar pull-right">
 			<li class="divider-vertical">&nbsp;</li>
@@ -40,25 +41,6 @@
 				)); 
 ?>
 				</li>
-			<li class="divider-vertical">&nbsp;</li>
-			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
-				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
-				onclick="javascript:$('#edtMsg').focus();">
-<img src="/img/icons/devine/white/Massage.png" width="20px" height="20px" />
-				<b class="caret"></b></a>
-				<ul class="dropdown-menu notifications-list" style="opacity: 0.80; width: 200px; height:150px;">
-					<li>
-					<div>
-					<form class="form-search form-well">
-					<div class="control-group">
-					<input id="edtMsg" type="text" placeholder="Escribe tu mensaje..." class="input-control span2">
-					<button class="btn btn-small"><i class="icon icon-arrow-right"></i></btn>
-					</div>
-					</form>
-					</div>
-					</li>
-				</ul>
-			</li>
 			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications"  style="" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications">
@@ -118,4 +100,31 @@
 	</div>  <!-- navbar-inner -->
 
 </div>  <!-- divNavbar -->
+</div>
 
+
+<?php
+/*
+			<li class="dropdown navbar-icon-signal" id="btnInstantMessanger" style="" >
+				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications" 
+				onclick="javascript:$('#edtMsg').focus();">
+<img src="/img/icons/devine/white/Massage.png" width="20px" height="20px" />
+				<b class="caret"></b></a>
+				<ul class="dropdown-menu notifications-list" style="opacity: 0.80; width: 200px; height:150px;">
+					<li>
+					<div>
+					<form class="form-search form-well">
+					<div class="control-group">
+					<input id="edtMsg" type="text" placeholder="Escribe tu mensaje..." class="input-control span2">
+					<button class="btn btn-small"><i class="icon icon-arrow-right"></i></btn>
+					</div>
+					</form>
+					</div>
+					</li>
+				</ul>
+			</li>
+			<li class="divider-vertical">&nbsp;</li>
+
+**/
+
+?>

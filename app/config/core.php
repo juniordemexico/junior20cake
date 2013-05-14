@@ -73,22 +73,12 @@
 									'duration'=> 43200, 	// 12 hours
     							));
 
-	Cache::config('queries', array(
+	Cache::config('tiny', array(
 									'engine' => 'apc',
-									'duration'=> 1800,		// 30 minutes
+									'duration'=> 120,		// 2 minutes  (autocomplete, pagination, dependencies)
     							));
 
-	Cache::config('reports', array(
-									'engine' => 'apc',
-									'duration'=> 1800,		// 12 hours
-    							));
-
-	Cache::config('publicfiles', array(
-									'engine' => 'apc',
-									'duration'=> 86400,		// 24 hours
-    							));
-
-	Cache::config('onetask', array(
+	Cache::config('short', array(
 									'engine' => 'apc',
 									'duration'=> 300,		// 5 minutes  (shell, batch, and big transactions)
     							));
@@ -103,14 +93,19 @@
 									'duration'=> 86400,		// 1 day  (stadistics, master catalogs)
     							));
 
-	Cache::config('weekly', array(
-									'engine' => 'apc',
-									'duration'=> 604800,	// 7 days (company memos and documents)
-    							));
-
 	Cache::config('forever', array(
 									'engine' => 'apc',
 									'duration'=> 2592000, 	// 30 days (global parameters, user parameters, views, site design elements, company own data )
+    							));
+
+	Cache::config('queries', array(
+									'engine' => 'apc',
+									'duration'=> 3600,		// 60 minutes
+    							));
+
+	Cache::config('publicfiles', array(
+									'engine' => 'apc',
+									'duration'=> 86400,		// 24 hours
     							));
 
 	// Media Plugin Settings

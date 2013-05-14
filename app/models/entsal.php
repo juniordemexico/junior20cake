@@ -37,6 +37,7 @@ class Entsal extends AppModel
 
 	//The Associations below have been 	, those that are not needed can be removed
 	var $belongsTo = array(
+		'Almacen',
 		'Tipoartmovbodega',
 	);
 
@@ -102,20 +103,34 @@ class Entsal extends AppModel
 
 	);
 
+/*
+	public function getDocument($id) {
+		$this->recursive=1;
+		private $data=$this->findById($id);
+		if(!$data || count($data)<1) {
+			return array();
+		}
+		$data['details']=$data[$this->name.'det'];
+		unset($data[$this->name.'det']);
+		
+	}
+*/
+	
 	public function getDetails($id=null) {
-		if (!$id || !($this->id>0) ) return array();
+//		if (!$id || !($this->id>0) ) return array();
 		$this->Entsaldet->recursive=0;
 		return( $this->Entsaldet->findAllByEntsal_id($id) );
 	}
 
 	public function loadDependencies() {
-		// Determine the product's type
+		$Tipoartmovbodega = $this->toJsonListArray( $this->Tipoartmovbodega->find('list', 
+							array(	'fields' => array('Tipoartmovbodega.id', 'Tipoartmovbodega.cve'),
+									'conditions'=>array('visible'=>1) )));
+		$Almacen = $this->toJsonListArray( $this->Almacen->find('list', 
+							array(	'fields' => array('Almacen.id', 'Almacen.aldescrip')
+									 )));
 
-		$tipoartmovbodegas = $this->Tipoartmovbodega->find('list', array('fields' => array('tipoartmovbodega.id', 'Tipoarticulo.cve'), 'conditions'=>array('visible'=>1) ));
-
-		return compact('tipoartmovbodegas');
-		
+		return compact('Almacen','Tipoartmovbodega');		
 	}
 
-	
 }
