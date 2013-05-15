@@ -62,20 +62,20 @@
 		</div>
 
 		<div id="detailContentTelaTable">
-		<table class="table table-condensed table-bordered table-hover">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
 			<thead>
 			<tr>
-				<th class="span2">Tela</th>
+				<th class="cveart">Tela</th>
 				<th class="">Descripción</th>
 				<th class="span2">Color</th>
 				<th class="span1">Trazo</th>
-				<th class="span2">Inventario Propio</th>
+				<th class="span2">Insumo Propio</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr data-ng-repeat="item in details.tela" id="row_{{item.Explosion.id}}" class="item-row">
-				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="cveart">{{item.Articulo.arcveart}}</td>
 				<td class="">{{item.Articulo.ardescrip}}</td>
 				<td class="span2">{{item.Color.cve}}</td>
 				<td class="span1">
@@ -136,20 +136,20 @@
 		</div>
 
 		<div id="detailContentHabilTable">
-		<table class="table table-condensed table-bordered table-hover">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
 			<thead>
 			<tr>
-				<th class="span2">Material</th>
+				<th class="cveart">Material</th>
 				<th class="">Descripcion</th>
 				<th class="span2">Color</th>
 				<th class="span1">Cantidad</th>
-				<th class="span2">Inventario Propio</th>
+				<th class="span2">Insumo Propio</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr data-ng-repeat="item in details.habilitacion" id="row_{{item.Explosion.id}}" class="item-row">
-				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="cveart">{{item.Articulo.arcveart}}</td>
 				<td class="">{{item.Articulo.ardescrip}}</td>
 				<td class="span2">{{item.Color.cve}}</td>
 				<td class="span1">
@@ -199,10 +199,10 @@
 		</div>
 
 		<div id="detailContentServicioTable">
-		<table class="table table-condensed table-bordered table-hover">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
 			<thead>
 			<tr>
-				<th class="span2">Servicio</th>
+				<th class="cveart">Servicio</th>
 				<th class="">Descripcion</th>
 				<th class="span1">Cantidad</th>
 				<th class="span1">&nbsp;</th>
@@ -210,7 +210,7 @@
 			</thead>
 			<tbody>
 			<tr data-ng-repeat="item in details.servicio" id="row_{{item.Explosion.id}}" class="item-row">
-				<td class="span2">{{item.Articulo.arcveart}}</td>
+				<td class="cveart">{{item.Articulo.arcveart}}</td>
 				<td class="">{{item.Articulo.ardescrip}}</td>
 				<td class="span1">
 					<input type="text" class="cant" ui-event="{ blur : 'updateCantidad(item.Explosion.id,item.Explosion.cant)' }" 

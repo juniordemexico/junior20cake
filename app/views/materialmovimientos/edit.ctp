@@ -1,5 +1,5 @@
 <header>
-<div class="row page-header">
+<div class="page-header">
 <h1><small>Movimiento de Almacén <strong class="text-info">{{master.Entsal.esrefer}}</strong></small></h1>
 </div>
 </header>
@@ -116,7 +116,7 @@
 		</div>
 
 		<div id="detailContentTable">
-		<table class="table table-condensed table-bordered table-hover">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
 			<thead>
 			<tr>
 				<th class="span2">Material</th>
