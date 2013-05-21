@@ -1,25 +1,25 @@
 <header>
 <div class="page-header">
-<h1><small>Movimiento de Almacén <strong class="text-info">{{master.Entsal.esrefer}}</strong></small></h1>
+<h1><small>Compras <strong class="text-info">{{master.Compra.folio}}</strong></small></h1>
 </div>
 </header>
 
-<?php //echo $this->Form->create('Entsal', array('action'=>'/add', 'class'=>'form well', 'data-ng-form'=>"frmMaster")); ?>
+<?php //echo $this->Form->create('Compra', array('action'=>'/add', 'class'=>'form well', 'data-ng-form'=>"frmMaster")); ?>
 <ng-form class="form form-horizontal" name="frmMaster">
 
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
 	<div class="btn-group">	
-		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(frmMaster.$pristine || !frmMaster.$valid) || master.Entsal.id>0" alt="Guardar">
+		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(frmMaster.$pristine || !frmMaster.$valid) || master.Compra.id>0" alt="Guardar">
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
-		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(master.Entsal.id>0) || master.Entsal.esst=='1'" alt="Cancelar">
+		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(master.Compra.id>0) || master.Compra.esst=='1'" alt="Cancelar">
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(master.Entsal.id>0)" title="Imprimir la transacción" alt="Imprimir">
+		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(master.Compra.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
 	</div>
@@ -32,60 +32,124 @@
 <pane id="tabs-0" heading="General" class="well">
 
 <div class="row">
-	<div class="span5">
+	<div class="span6">
 	<div class="control-group">
-		<label for="EntsalRefer" class="control-label">Folio:</label>
+		<label for="CompraRefer" class="control-label">Folio:</label>
 		<div class="controls input">
-			<input type="text" id="EntsalRefer" name="data[Entsal][esrefer]" field="Entsal.esrefer"
-				data-ng-model="master.Entsal.esrefer"
+			<input type="text" id="CompraRefer" name="data[Compra][folio]" field="Compra.folio"
+				data-ng-model="master.Compra.folio" 
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
 	</div>
+
 	<div class="control-group">
-		<label for="EntsalEsfecha" class="control-label">Fecha:</label>
+		<label for="CompraFecha" class="control-label">Fecha:</label>
 		<div class="controls input">
-			<input type="text" id="EntsalEsfecha" name="data[Entsal][esfecha]" field="Entsal.esfecha"
+			<input type="text" id="CompraFecha" name="data[Compra][fecha]" field="Compra.fecha"
 				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="master.Entsal.esfecha" data-ng-required="true"
+				data-ng-model="master.Compra.fecha" data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
 		</div>
 	</div>
+
 	<div class="control-group">
-		<label for="edtfecha" class="control-label">Almacén:</label>
+		<label for="CompraProveedor_id" class="control-label">Proveedor:</label>
 		<div class="controls input">
-			<select id="EntsalAlmacen_id" name="data[Entsal][almacen_id]"
-				class="span2"
-				data-ng-model="master.Entsal.almacen_id"
-				data-ng-options="i.id as i.cve for i in related.Almacen"
+			<select id="CompraProveedor_id" name="data[Compra][proveedor_id]"
+				class="span3"
+				data-ng-model="master.Compra.proveedor_id"
+				data-ng-options="i.id as i.cve for i in related.Proveedor"
 				data-ng-required="true">
 			</select>
 		</div>
 	</div>
-	
+
+	<div class="control-group">
+		<label for="CompraDivisa_id" class="control-label">Divisa:</label>
+		<div class="controls input">
+			<select id="CompraDivisa_id" name="data[Compra][divisa_id]"
+				class="span1"
+				data-ng-model="master.Compra.divisa_id"
+				data-ng-options="i.id as i.cve for i in related.Divisa"
+				data-ng-required="true">
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label for="CompraObser" class="control-label">Tipo de Cambio:</label>
+		<div class="controls input">
+			<input type="text" id="CompraTipodecambio" name="data[Compra][tipodecambio]" field="Compra.tipodecambio"
+				data-ng-model="master.Compra.tipodecambio"
+				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
+				class="span1" placeholder="T Cambio..." title="Tipo de cambio al que se realiza la transacción" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label for="CompraRefer" class="control-label">Referencia Proveedor:</label>
+		<div class="controls input">
+			<input type="text" id="CompraRefer" name="data[Compra][proveedor_refer]" field="Compra.proveedor_refer"
+				class="span2"
+				data-ng-model="master.Compra.folio"
+				data-ng-minlength="0" data-ng-maxlength="16"
+				class="date" placeholder="Folio..." title="Referencia de la Ordén de Compra asignada por el Proveedor" />
+		</div>
+	</div>
+
 	</div> <!-- div.span6 -->
 	<div class="span1">&nbsp;</div>
 
-	<div class="span6">
+
+	<div class="span5">
+
+	<div class="control-group"><label for="CompraSt" class="control-label">Estatus</label><div class="controls input"><input type="radio" name="data[Compra][st]" id="CompraStA" value="A" checked="checked"  />Activa <input type="radio" name="data[Compra][st]" id="CompraStC" value="C"  />Cancelada</div></div>
 
 	<div class="control-group">
-		<label for="EntsalTipoartmovbodega_id" class="control-label">Tipo de Mov:</label>
+		<label for="CompraObser" class="control-label">Suma:</label>
 		<div class="controls input">
-			<select id="EntsalTipoartmovbodega_id" name="data[Entsal][tipoartmovbodega_id]"
-				class="span3"
-				data-ng-model="master.Entsal.tipoartmovbodega_id"
-				data-ng-options="i.id as i.cve for i in related.Tipoartmovbodega"
-				data-ng-required="true">
-			</select>
+			<input type="text" id="CompraSuma" name="data[Compra][suma]" field="Compra.suma"
+				data-ng-model="master.Compra.obser"
+				class="span2" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="EntsalEsconcep" class="control-label">Concepto:</label>
+		<label for="CompraObser" class="control-label">Descuentos:</label>
 		<div class="controls input">
-			<input type="text" id="EntsalEsconcep" name="data[Entsal][esconcep]" field="Entsal.esconcep"
-				data-ng-model="master.Entsal.esconcep" ng-required="true"
-				data-ng-minlength="1" data-ng-maxlength="32" data-ng-required="true"
-				class="span4" placeholder="Concepto..." title="Concepto de la transacción" />
+			<input type="text" id="CompraDesc1" name="data[Compra][desc1]" field="Compra.desc1"
+				data-ng-model="master.Compra.desc1"
+				class="span1" placeholder="Desc 1..." title="Primer Descuento" />
+			<input type="text" id="CompraDesc2" name="data[Compra][desc2]" field="Compra.desc2"
+				data-ng-model="master.Compra.desc2"
+				class="span1" placeholder="Desc 2..." title="Segundo Descuento" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="CompraImporte" class="control-label">Importe:</label>
+		<div class="controls input">
+			<input type="text" id="CompraImporte" name="data[Compra][importe]" field="Compra.importe"
+				data-ng-model="master.Compra.obser" ng-required="true"
+				class="span2" placeholder="Importe..." title="Importe (Suma menos Descuentos Generales)" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="CompraImpu1" class="control-label">Impuestos:</label>
+		<div class="controls input">
+			<input type="text" id="CompraImpu1" name="data[Compra][impu1]" field="Compra.impu1"
+				data-ng-model="master.Compra.impu1"
+				class="span1" placeholder="Impu 1..." title="Primer Impuesto" />
+			<input type="text" id="CompraImpu2" name="data[Compra][impu2]" field="Compra.impu2"
+				data-ng-model="master.Compra.impu2"
+				class="span1" placeholder="Impu 2..." title="Segundo Impuesto" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="CompraTotal" class="control-label">Total:</label>
+		<div class="controls input">
+			<input type="text" id="CompraTotal" name="data[Compra][total]" field="Compra.total"
+				data-ng-model="master.Compra.total"
+				class="span2" placeholder="Total..." title="Total con Descuentos e Impuestos incluidos" />
 		</div>
 	</div>
 
@@ -97,7 +161,7 @@
 
 <pane id="tabs-1" heading="Detalle">
 
-		<div class="toolbar well well-small" data-ng-hide="master.Entsal.id>0">
+		<div class="toolbar well well-small" data-ng-hide="master.Compra.id>0">
 			<input class="span3" data-ng-model="currentItem.Articulo"
 				data-ui-select2="fieldItem" data-ui-event="{ change : 'getItemByCve()' }" 
 				data-item-placeholder="Código del Material..."
@@ -108,9 +172,13 @@
 				title="Elige el Color del Material" />
 			</select>
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="text" maxlength="8" data-ng-model="currentItem.cant"
+			<input type="text" maxlength="10" data-ng-model="currentItem.cant"
 				data-ng-minlength="1" data-ng-maxlength="10"
-				class="cant" placeholder="Cant..." title="Especifica la cantidad" />
+				class="cant" placeholder="Cant..." title="Especifica la Cantidad" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="text" maxlength="10" data-ng-model="currentItem.costo"
+				data-ng-minlength="1" data-ng-maxlength="10"
+				class="precio" placeholder="Costo..." title="Especifica el Costo" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn" type="button" data-ng-click="addCurrentItem()" 
 				data-ng-disabled="(!(currentItem.Articulo.id>0)||!(currentItem.cant>0))">
@@ -126,19 +194,21 @@
 				<th class="span2">Color</th>
 				<th class="">Descripción</th>
 				<th class="cant">Cant</th>
+				<th class="precio">Costo</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
-			<tr data-ng-repeat="item in details" data-detail-id="{{item.Entsaldet.id}}" class="item-row">
+			<tr data-ng-repeat="item in details" data-detail-id="{{item.Compradet.id}}" class="item-row">
 				<td class="span2">{{item.Articulo.arcveart}}</td>
 				<td class="span2">{{item.Color.cve}}</td>
 				<td class="">{{item.Articulo.ardescrip}}</td>
-				<td class="cant">{{item.Entsaldet.esdcant}}</td>
+				<td class="cant">{{item.Compradet.cant}}</td>
+				<td class="precio">{{item.Compradet.costo | currency}}</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
 							data-ng-click="detailDelete($index, item, true)"
-							data-ng-hide="master.Entsal.id>0">
+							data-ng-hide="master.Compra.id>0">
 							<i class="icon icon-trash"></i>
 					</button>
 				</td>
@@ -149,6 +219,28 @@
 
 </pane> <!-- div tabs0 -->
 
+<pane id="tabs-2" heading="Varios">
+<div class="control-group">
+	<label for="CompraObser" class="control-label">Observaciones</label>
+	<div class="controls input">
+		<textarea name="data[Compra][obser]" field="Compra.Obser" maxlength="255"
+				class="span4" cols="30" rows="6" id="CompraObser"
+				data-ng-minlength="0" data-ng-maxlength="255"
+		>
+		</textarea>
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="" title="Adjunta el documento original del proveedor">Documento Original:</label>
+	<div class="controls input">
+		<?php echo $this->Upload->edit('img/Compra', $this->data['master']['Compra']['folio']);?>
+	</div>
+</div>
+
+</pane> <!-- div tabs2 -->
+
+
 </tabs> <!-- div tabbable -->
 
 </ng-form>
@@ -157,7 +249,7 @@
 <script>
 /* AxApp application's AxAppCtrl controller code */
 
-var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[] };
+var emptyItem={Articulo: {'id': null, text: '', title:''}, cant: 0, costo: 0, Color:{}, ArticuloColor:[] };
 	
 myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
 
@@ -203,14 +295,15 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
 	$scope.addCurrentItem = function() {
 		var currentLength=$scope.details.length;
 		var item={
-			Entsaldet: {
+			Compradet: {
 				id: null,
-				entsal_id: null,
+				compra_id: null,
 				articulo_id: $scope.currentItem.Articulo.id,
 				color_id: $scope.currentItem.Color.id,
 				talla_id: 0,
-				esdt0: $scope.currentItem.cant,
-				esdcant: $scope.currentItem.cant
+				t0: $scope.currentItem.cant,
+				cant: $scope.currentItem.cant,
+				costo: $scope.currentItem.costo
 			},
 			Articulo: $scope.currentItem.Articulo,
 			Color: $scope.currentItem.Color
@@ -227,10 +320,10 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
 	}
 
 	$scope.detailDelete = function(index, itemObj, askConfirmation) {
-		var title = 'Confirmación';
-		var msg = '¿ Seguro de eliminar del detalle '+itemObj.Articulo.arcveart+' ?';
-		var btns = [{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}];
-		$dialog.messageBox(title, msg, btns)
+		$dialog.messageBox('Confirmación',
+							'¿ Seguro de eliminar del detalle ' + itemObj.Articulo.arcveart + ' ?',
+		 					[{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}]
+							)
 		.open()
 		.then( function(result) {
 			if(result) {
@@ -241,7 +334,7 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
 
 	$scope.getItemByCve = function() {
 		if($scope.currentItem.Articulo.text==$scope.oldValues.arcveart) {
-			return 0;
+			return;
 		}
 
 		$scope.oldValues.arcveart=$scope.currentItem.Articulo.text;
@@ -285,51 +378,6 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
   	};
 
 });
-
-/*	
-	$scope.addItem = function( tipoexplosion_id, current ) {
-	
-		$http.get($scope.base.controller+'/add.json'+
-				'?articulo_id='+$scope.master.Articulo.id+
-				'&material_id='+currentItem.Articulo.id+
-				'&color_id='+currentItem.Color.id+
-				'&cant='+currentItem.cant+
-				'&insumopropio='+(typeof current.insumopropio != 'undefined' && current.insumopropio==true?1:0)+
-				'&tipoexplosion_id='+tipoexplosion_id
-		).then(function(response) {
-
-		if(typeof response.data != 'undefined' && 
-			typeof response.data.result != 'undefined' && response.data.result=='ok') {
-			$scope.details=response.data.details;
-			axAlert(response.data.message, 'success', false);
-			return;
-		}
-		axAlert( (typeof response.data.result != 'undefined')?
-				response.data.message:
-				'Error Desconocido',
-		 		response.data.result, false);
-       	});	
-	}
-*/
-
-
-/*
-	$scope.updateCantidad = function(id, value) {
-		$http.get('/Explosiones/updateCantidad/'+id+'/'+value
-		).then(function(response) {
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				$scope.details=response.data.details;
-				axAlert(response.data.message, 'success', false);
-				return;
-			}
-			axAlert( (typeof response.data.result != 'undefined')?
-					response.data.message:
-					'Error Desconocido',
-			 		response.data.result, false);
-       	});
-	}
-*/
 
 
 </script>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/materialmovimientos/edit.ctp</string>
+	<string>app/views/compras/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,211 +21,133 @@
 	<integer>228</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/articulos_controller.php</key>
+		<key>app/app_model.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>36</integer>
+				<integer>313</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>283</integer>
 		</dict>
 		<key>app/controllers/materialmovimientos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>67</integer>
 				<key>line</key>
-				<integer>58</integer>
+				<integer>165</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>49</integer>
+			<integer>145</integer>
 		</dict>
-		<key>app/models/almacen.php</key>
+		<key>app/models/artmov.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>14</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>app/models/articulo.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>281</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>246</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>19</integer>
-				<key>line</key>
-				<integer>281</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>281</integer>
-			</dict>
 		</dict>
 		<key>app/models/entsal.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>35</integer>
+				<integer>26</integer>
 				<key>line</key>
-				<integer>125</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>96</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>31</integer>
-				<key>line</key>
-				<integer>125</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>125</integer>
-			</dict>
-		</dict>
-		<key>app/views/bodegamateriales/salidas.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>28</integer>
-				<key>line</key>
-				<integer>15</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/helpers/angular_js.php</key>
+		<key>app/models/entsaldet.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>117</integer>
+				<integer>57</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>87</integer>
+			<integer>25</integer>
 		</dict>
-		<key>app/views/layouts/default.ctp</key>
+		<key>app/views/compras/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>321</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>15</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>73</integer>
-			</dict>
+			<integer>299</integer>
 		</dict>
 		<key>app/views/materialmovimientos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>180</integer>
+				<integer>228</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>152</integer>
+			<integer>223</integer>
 		</dict>
 		<key>app/views/materialmovimientos/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>229</integer>
+				<integer>5</integer>
 				<key>line</key>
-				<integer>48</integer>
+				<integer>49</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>15</integer>
+			<integer>29</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
+		<string>app/app_model.php</string>
 		<string>app/controllers/materialmovimientos_controller.php</string>
-		<string>app/controllers/articulos_controller.php</string>
-		<string>app/models/articulo.php</string>
-		<string>app/views/materialmovimientos/index.ctp</string>
 		<string>app/models/entsal.php</string>
-		<string>app/views/helpers/angular_js.php</string>
+		<string>app/models/entsaldet.php</string>
+		<string>app/models/artmov.php</string>
 		<string>app/views/materialmovimientos/edit.ctp</string>
-		<string>app/models/almacen.php</string>
-		<string>app/views/bodegamateriales/salidas.ctp</string>
-		<string>app/views/layouts/default.ctp</string>
+		<string>app/views/compras/edit.ctp</string>
+		<string>app/views/materialmovimientos/index.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{0, 0}, {952, 848}}</string>
+	<string>{{-1870, -5}, {923, 848}}</string>
 </dict>
 </plist>

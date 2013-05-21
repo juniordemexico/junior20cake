@@ -1,10 +1,10 @@
 <?php
 
-class MaterialmovimientosController extends MasterDetailAppController {
-	var $name='Materialmovimientos';
+class ComprasController extends MasterDetailAppController {
+	var $name='Compras';
 
 	var $uses = array(
-		'Entsal', 'Articulo', 'Color', 'Tipoartmovbodega', 'Almacen', 'Artmovbodegadetail'
+		'Compra', 'Compradet', 'Articulo', 'Color', 'Proveedor', 'Divisa'
 	);
 
 	var $layout = 'default';
@@ -16,17 +16,18 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
-								'order' => array('Entsal.esfecha' => 'desc'),
-								'fields' => array('Entsal.id', 'Entsal.esrefer', 'Entsal.esfecha',
-												'Entsal.estmov','Entsal.esconcep',
-												'Entsal.esst', 'Entsal.est',
-												'Entsal.created', 'Entsal.modified',
-												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
-												'Entsal.almacen_id', 'Almacen.aldescrip'),
-//								'conditions' => array('Entsal.est'=>0),
+								'order' => array('Compra.fecha' => 'desc'),
+								'fields' => array('Compra.id', 'Compra.folio', 'Compra.fecha',
+												'Compra.importe', 'Compra.impoimpu', 'Compra.total',
+												'Compra.st', 'Compra.t',
+												'Compra.created', 'Compra.modified',
+												'Compra.proveedor_id','Compra.divisa_id',
+												'Proveedor.prcvepro','Proveedor.prnom',
+												'Proveedor.pratn'),
+//								'conditions' => array('Compra.est'=>0),
 								);
 		$filter = $this->Filter->process($this);
-		$this->set('items', $this->paginate('Entsal', $filter));
+		$this->set('items', $this->paginate('Compra', $filter));
 	}
 
 	public function edit( $id = null ) {
@@ -36,31 +37,30 @@ class MaterialmovimientosController extends MasterDetailAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->data=array();
-		$this->data['master']=$this->Entsal->findById($id);
-		$this->data['details']=$this->Entsal->getDetails($id);
-		$this->data['related']=$this->Entsal->loadDependencies();
-		$this->set('title_for_layout', 'Mov Materiales :: '.$this->data['master']['Entsal']['esrefer'] );
+		$this->data['master']=$this->Compra->findById($id);
+		$this->data['details']=$this->Compra->getDetails($id);
+		$this->data['related']=$this->Compra->loadDependencies();
+		$this->set('title_for_layout', 'Compras :: Nueva' );
 	}
 
 	public function add() {
 		if (!empty($this->data)) {
-			$this->Entsal->create();
+			$this->Compra->create();
 			if (
-				$this->Entsal->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Entsal->id.')', 'success');
+				$this->Compra->save($this->data)) {
+				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Compra->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
 			}
 		}
 
-		$this->data['master']=array('Entsal'=>
-								array('id'=>null, 'esrefer'=>'ES000001', 'esfecha'=> date('Y-m-d'), 
-								'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
-								'esst'=>'0','est'=>'0')
+		$this->data['master']=array('Compra'=>
+								array('id'=>null, 'folio'=>'C0000001', 'fecha'=> date('Y-m-d'), 
+								'divisa_id'=>1,'tipodecambio'=>1,'proveedor_id'=>null,'','st'=>'A')
 							);
 		$this->data['details']=array();
-		$this->data['related']=$this->Entsal->loadDependencies();
+		$this->data['related']=$this->Compra->loadDependencies();
 
 		$this->render('edit');
 	}
@@ -75,12 +75,12 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		}
 
 		$articulo_id=$this->params['url']['articulo_id'];
-		$item=$this->Explosiondato->findByArticulo_id($articulo_id);
+		$item=$this->Compradetdato->findByArticulo_id($articulo_id);
 
-		if( isset($this->params['url']['molde']) ) $item['Explosiondato']['molde']=$this->params['url']['molde'];
-		if( isset($this->params['url']['datos']) ) $item['Explosiondato']['datos']=$this->params['url']['datos'];
+		if( isset($this->params['url']['molde']) ) $item['Compradetdato']['molde']=$this->params['url']['molde'];
+		if( isset($this->params['url']['datos']) ) $item['Compradetdato']['datos']=$this->params['url']['datos'];
 
-		if( $this->Explosiondato->save($item)) {
+		if( $this->Compradetdato->save($item)) {
 			$this->set('result', 'ok');
 			$this->set('message', "Las Caracteristicas se guardaron correctamente");
 			return;
@@ -93,24 +93,24 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		// Check if the ID was submited and if the specified item exists
 		$id=$this->params['url']['id'];
 		if (
-			!$item=$this->Explosion->findById($id)
+			!$item=$this->Compradet->findById($id)
 			) {
 			$this->set('result', 'error');
 			$this->set('message', __('invalid_item', true)." (id: $id)" );
 			return;
 		}
-		$articulo_id=$item['Explosion']['articulo_id'];
+		$articulo_id=$item['Compradet']['articulo_id'];
 
 		// Execute DB Operations
-		if ($this->Explosion->delete($id)) {
+		if ($this->Compradet->delete($id)) {
 			$this->set('result', 'ok');
-			$this->set('message', $this->tipoarticulomovimientos[$item['Explosion']['tipoexplosion_id']].' '.
+			$this->set('message', $this->tipoarticulomovimientos[$item['Compradet']['tipoexplosion_id']].' '.
 								' se Eliminó de la Explosión');
-			$this->set('details', $this->Explosion->getAllItems($item['Explosion']['articulo_id']) );
+			$this->set('details', $this->Compradet->getAllItems($item['Compradet']['articulo_id']) );
 			return;
 		}
 		$this->data['result']='error';
-		$this->data['message']=__('item_could_not_be_deleted', true)." (id: ".$item['Explosion']['id'].")";
+		$this->data['message']=__('item_could_not_be_deleted', true)." (id: ".$item['Compradet']['id'].")";
 	}
 
 
@@ -120,14 +120,14 @@ class MaterialmovimientosController extends MasterDetailAppController {
 
 		// Check if the ID was submited and if the specified item exists
 		if (!$id || 
-			!$item=$this->Explosion->read(null, $id)) {
+			!$item=$this->Compradet->read(null, $id)) {
 			$this->data['result']='error';
 			$this->data['message']='Item Inválido ('.$id.', '.$value.')';
 			echo json_encode($this->data);
 			die();
 		}
 
-		$this->data=$this->Explosion->read(null, $id);
+		$this->data=$this->Compradet->read(null, $id);
 
 /*
 		if( isset($this->params['url']['value']) && $this->params['url']['value']>0) {
@@ -148,11 +148,11 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		}
 
 		// Execute DB Operations
-		if ($this->Explosion->saveField('cant', $value) ) {
+		if ($this->Compradet->saveField('cant', $value) ) {
 			$this->data['result']='ok';
 			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
 									' se actualizo correctamente.';
-			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
+			$this->data['details']=$this->Compradet->getAllItems($item['Compradet']['articulo_id']);
 		}
 		else {
 			$this->data['result']='error';
@@ -174,6 +174,16 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		}
 
 		// Check if Item already exists
+/*
+		if(
+			$this->Compradet->find('first', array('conditions'=>array('articulo_id'=>$articulo_id,
+			 														'material_id'=>$item['Articulo']['id'])) )
+			) {
+			$this->set('result', 'error');
+			$this->set('message', "$cve ya existe para este producto");
+			return;			
+		}
+*/
 		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
 		$item['ArticuloColor']=$this->Articulo->getArticuloColor($item['Articulo']['id']);
 

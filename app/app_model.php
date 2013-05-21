@@ -310,13 +310,14 @@ class AppModel extends Model
     public function toJsonListArray($arr = null)
     {
         $ret = null;
+		
         if (!empty($arr)) {
-            $tmp = array();
+            $ret = array();
             foreach ($arr as $k => $v) {
-                $tmp[] = array('id' => $k, 'cve' => $v);
+                $ret[] = array('id' => $k, 'cve' => $v);
             }
         }
-		return $tmp;
+		return $ret;
     }
 
 }

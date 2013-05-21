@@ -73,8 +73,14 @@ class AppController extends Controller {
 		App::import('Model', 'User');
 		User::store($this->Auth->user());
 
+		$querystring=''; 
+		foreach($this->params['url'] as $key=>$value) {
+			$querystring.='::'.$key.'='.$value;
+		};
+		
 		// Fill a request's data array. Mainly to pass it to models and views
 		$this->set('request', array(
+			'querystring' => $querystring,
 			'client_ip' => $this->RequestHandler->getClientIP(),
 			'client_referer' => $this->RequestHandler->getReferer(),
 			'client_accepts' => $this->RequestHandler->accepts(),
