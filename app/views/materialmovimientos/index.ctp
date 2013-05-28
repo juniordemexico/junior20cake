@@ -1,4 +1,4 @@
-<div class="span12 index-form">
+<div class="index-form">
 <?php
 $this->Paginator->options(array('update' => '#content',
 								'evalScripts' => true,

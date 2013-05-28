@@ -1,6 +1,6 @@
 <script>
 var myAxApp=angular.module('AxApp', ['ui','ui.bootstrap']);
-
+//$dialogProvider.options({backdropFade: true});
 myAxApp.value('ui.config', {
 	date: {
 		dateFormat: "yy-mm-dd",

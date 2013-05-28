@@ -10,7 +10,7 @@
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
 	<div class="btn-group">	
-		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(frmMaster.$pristine || !frmMaster.$valid) || master.Compra.id>0" alt="Guardar">
+		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(frmMaster.$pristine || !frmMaster.$valid) || master.Compra.id>0 || details.lenght>0" alt="Guardar">
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
@@ -217,9 +217,9 @@
 		</table>
 		</div>
 
-</pane> <!-- div tabs0 -->
+</pane> <!-- div tabs1 -->
 
-<pane id="tabs-2" heading="Varios">
+<pane id="tabs-4" heading="Datos adicionales">
 <div class="control-group">
 	<label for="CompraObser" class="control-label">Observaciones</label>
 	<div class="controls input">
@@ -238,8 +238,69 @@
 	</div>
 </div>
 
-</pane> <!-- div tabs2 -->
+</pane> <!-- pane#tabs4 -->
 
+<pane id="tabs-2" heading="Entradas/Salidas">
+		<div id="detailEntsalContentTable">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
+			<thead>
+			<tr>
+				<th class="date">Fecha</th>
+				<th class="refer">Folio</th>
+				<th class="">Concepto</th>
+				<th class="st">ST</th>
+				<th class="id">&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr data-ng-repeat="item in relatedtransactions" data-detail-id="{{item.Entsal.id}}" class="item-row">
+				<td class="date">{{item.Entsal.fecha}}</td>
+				<td class="refers">{{item.Entsal.folio}}</td>
+				<td class="">{{item.Entsal.concep}}</td>
+				<td class="st">{{item.Entsal.st}}</td>
+				<td class="id">
+					<button type="button" class="btn btn-mini ax-btn-detail-delete"
+							data-ng-click="showItem($index, item, true)">
+							<i class="icon icon-search"></i>
+					</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+</pane> <!-- pane#tabs2 -->
+
+<pane id="tabs-3" heading="C x P">
+		<div id="detailEntsalContentTable">
+		<table class="table table-condensed table-bordered table-hover ax-detail-table">
+			<thead>
+			<tr>
+				<th class="date">Fecha</th>
+				<th class="refer">Folio</th>
+				<th class="">Concepto</th>
+				<th class="total">Cargo</th>
+				<th class="total">Abono</th>
+				<th class="id">&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr data-ng-repeat="item in relatedcxp" data-detail-id="{{item.Cxp.id}}" class="item-row">
+				<td class="date">{{item.Cxp.fecha}}</td>
+				<td class="refers">{{item.Cxp.folio}}</td>
+				<td class="">{{item.Cxp.concep}}</td>
+				<td class="span2">{{item.Cxp.abono | currency}}</td>
+				<td class="span2">{{item.Cxp.cargo | currency}}</td>
+				<td class="id">
+					<button type="button" class="btn btn-mini ax-btn-detail-delete"
+							data-ng-click="showItem($index, item, true)">
+							<i class="icon icon-search"></i>
+					</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+</pane> <!-- pane#tabs3 -->
 
 </tabs> <!-- div tabbable -->
 
@@ -281,7 +342,17 @@ myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
 	$scope._data=<?php e(json_encode($this->data))?>;
 	// ------------End Controller's Data------------------------------------------
 
-
+	$scope.relatedtransactions=[
+	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
+	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la compra"} },
+	{ Entsal: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
+	];
+	
+	$scope.relatedcxp=[
+	{ Cxp: {id:1, folio:"C0000001", fecha:"2013-05-10", cargo: 245600, concep:"COMPRA C0000001"} },
+	{ Cxp: {id:2, folio:"PA003451", fecha:"2013-05-11", abono: 100000, concep:"PAGO POR ANTICIPO COMPRA C0000001"} }
+	];
+	
 	/* Begins the angular controller's code specific to this View */
 	$scope.related={};
 	if ($scope._data != null && $scope._data.master != null) $scope.master=$scope._data.master; else $scope.master={};

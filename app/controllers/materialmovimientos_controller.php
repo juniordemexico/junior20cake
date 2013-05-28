@@ -4,7 +4,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	var $name='Materialmovimientos';
 
 	var $uses = array(
-		'Entsal', 'Articulo', 'Color', 'Tipoartmovbodega', 'Almacen', 'Artmovbodegadetail'
+		'Entsal', 'Entsaldet', 'Articulo', 'Color', 'Tipoartmovbodega', 'Almacen', 'Artmovbodegadetail'
 	);
 
 	var $layout = 'default';
@@ -43,7 +43,13 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	}
 
 	public function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->data) ) {
+	//	if ( $this->RequestHandler->isAjax() ) { //in_array($this->RequestHandler->ext, array('json', 'xml'))) {
+			$this->set('result', 'ok');
+			$this->set('message', "REGISTRADO CORRECTAMENTE!" );
+			$this->set('losdatos', $this->data);
+			return;
+/*
 			$this->Entsal->create();
 			if (
 				$this->Entsal->save($this->data)) {
@@ -52,8 +58,9 @@ class MaterialmovimientosController extends MasterDetailAppController {
 			} else {
 				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
 			}
-		}
 
+*/
+		}
 		$this->data['master']=array('Entsal'=>
 								array('id'=>null, 'esrefer'=>'ES000001', 'esfecha'=> date('Y-m-d'), 
 								'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
@@ -63,8 +70,9 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		$this->data['related']=$this->Entsal->loadDependencies();
 
 		$this->render('edit');
-	}
 
+	}
+	
 	public function setCaracteristicas($articulo_id=null) {
 		
 		if(	!isset($this->params['url']['articulo_id'])

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/compras/edit.ctp</string>
+	<string>app/views/materialmovimientos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>228</integer>
+	<integer>264</integer>
 	<key>metaData</key>
 	<dict>
 		<key>app/app_model.php</key>
@@ -40,14 +40,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>67</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>165</integer>
+				<integer>58</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>145</integer>
+			<integer>41</integer>
 		</dict>
 		<key>app/models/artmov.php</key>
 		<dict>
@@ -91,63 +91,141 @@
 			<key>firstVisibleLine</key>
 			<integer>25</integer>
 		</dict>
-		<key>app/views/compras/edit.ctp</key>
+		<key>app/plugins/webservice/views/webservice.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>401</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>381</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>401</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>401</integer>
+			</dict>
+		</dict>
+		<key>app/views/elements/debug.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>80</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>53</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>80</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+		</dict>
+		<key>app/views/elements/includes_webui.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>321</integer>
+				<integer>22</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>299</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/default.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>53</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/materialmovimientos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>20</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>228</integer>
+				<integer>0</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>223</integer>
-		</dict>
-		<key>app/views/materialmovimientos/index.ctp</key>
-		<dict>
-			<key>caret</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>49</integer>
+				<integer>5</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>29</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/app_model.php</string>
 		<string>app/controllers/materialmovimientos_controller.php</string>
+		<string>app/plugins/webservice/views/webservice.php</string>
 		<string>app/models/entsal.php</string>
 		<string>app/models/entsaldet.php</string>
 		<string>app/models/artmov.php</string>
 		<string>app/views/materialmovimientos/edit.ctp</string>
-		<string>app/views/compras/edit.ctp</string>
-		<string>app/views/materialmovimientos/index.ctp</string>
+		<string>app/views/elements/debug.ctp</string>
+		<string>app/views/layouts/default.ctp</string>
+		<string>app/views/elements/includes_webui.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1870, -5}, {923, 848}}</string>
+	<string>{{338, 21}, {923, 848}}</string>
 </dict>
 </plist>
