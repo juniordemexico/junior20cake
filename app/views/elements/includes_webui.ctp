@@ -1,5 +1,5 @@
 <script>
-var myAxApp=angular.module('AxApp', ['ui','ui.bootstrap']);
+var myAxApp=angular.module('AxApp', ['ui','ui.bootstrap','LocalStorageModule']);
 //$dialogProvider.options({backdropFade: true});
 myAxApp.value('ui.config', {
 	date: {

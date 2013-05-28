@@ -76,7 +76,7 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
 
 myAxApp.value('ui.config', { jq: { tooltip: { placement: 'left' } } });
 
-myAxApp.controller('AxAppCtrl', function( $scope, $http ) {
+myAxApp.controller('AxAppCtrl', function( $scope, $element, $http, $dialog, localStorageService ) {
 
 	/* Main View Configuration, Routes and other symbols */
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

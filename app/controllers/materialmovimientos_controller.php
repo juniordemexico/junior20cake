@@ -19,7 +19,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 								'order' => array('Entsal.esfecha' => 'desc'),
 								'fields' => array('Entsal.id', 'Entsal.esrefer', 'Entsal.esfecha',
 												'Entsal.estmov','Entsal.esconcep',
-												'Entsal.esst', 'Entsal.est',
+												'Entsal.st', 'Entsal.est',
 												'Entsal.created', 'Entsal.modified',
 												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
 												'Entsal.almacen_id', 'Almacen.aldescrip'),
@@ -64,7 +64,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		$this->data['master']=array('Entsal'=>
 								array('id'=>null, 'esrefer'=>'ES000001', 'esfecha'=> date('Y-m-d'), 
 								'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
-								'esst'=>'0','est'=>'0')
+								'st'=>'A','est'=>'0')
 							);
 		$this->data['details']=array();
 		$this->data['related']=$this->Entsal->loadDependencies();

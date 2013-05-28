@@ -14,7 +14,7 @@
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
-		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(master.Compra.id>0) || master.Compra.esst=='1'" alt="Cancelar">
+		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(master.Compra.id>0) || master.Compra.st=='C'" alt="Cancelar">
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
@@ -312,7 +312,7 @@
 
 var emptyItem={Articulo: {'id': null, text: '', title:''}, cant: 0, costo: 0, Color:{}, ArticuloColor:[] };
 	
-myAxApp.controller('AxAppCtrl', function( $scope, $http, $dialog ) {
+myAxApp.controller('AxAppCtrl', function( $scope, $element, $http, $dialog, localStorageService ) {
 
 	/* Main View Configuration, Routes and other symbols */
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

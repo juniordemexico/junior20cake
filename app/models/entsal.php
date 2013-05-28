@@ -10,7 +10,7 @@ class Entsal extends AppModel
 	public $primaryKey = 'id';
 	public $title = 'esrefer';
 	public $longTitle = null;
-	public $stField = 'esst';
+	public $stField = 'st';
 
 	var $cache=false;
 
