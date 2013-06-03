@@ -18,7 +18,6 @@ class ArticulosController extends MasterDetailAppController {
 
 	function beforeFilter() {
 		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
-		parent::beforeFilter();
 
 		if(isset($this->data['Articulo'])) {
 			$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
@@ -26,6 +25,9 @@ class ArticulosController extends MasterDetailAppController {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
 		}
+
+		parent::beforeFilter();
+
 	}
 
 	function index() {

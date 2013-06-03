@@ -247,22 +247,30 @@ class Articulo extends AppModel
 			$tipoarticulo=(int)$tipoarticulo;
 		}
 		elseif(isset($this->tipoarticulo) && is_numeric(trim($this->tipoarticulo)) ) {
-			$tipoarticulo=$this->tipoarticulo;
+			$tipoarticulo=(int)$this->tipoarticulo;
 		}
 		else {
 			$tipoarticulo=0;
 		}
 
 		if($tipoarticulo==2) {
-			$colores = $this->Color->find('list', array('fields' => array('Color.id', 'Color.cve'), 'order'=>array('Color.cve'),
-				'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>'1')
-			 ));// 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)			
+			$colores = $this->Color->find('list', array(
+											'fields' => array('Color.id', 'Color.cve'),
+											'conditions'=>array('tipoarticulo_id_'.$tipoarticulo=>'1',
+																'Color.st'=>array('A', 'S'), 
+																),
+											'order'=>array('Color.cve'),
+			 							));   // 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)			
 		}
 		else {
 			$colores = $this->Color->find('list', array(
 											'fields' => array('Color.id', 'Color.cve'), 
-											'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')),
-											'tipoarticulo_id_'.$tipoarticulo=>1),'order'=>array('Color.cve') )); // 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)
+											'conditions'=>array( 
+														'tipoarticulo_id_'.$tipoarticulo=>1,
+														'Color.st'=>array('A', 'S'), 
+														),
+											'order'=>array('Color.cve'),
+										)); // 'conditions'=>array( array('OR'=>array('Color.st'=>'A','Color.st'=>'S')), 'tipoarticulo_id_'.$tipoarticulo=>1)
 		}
 
 		$divisas = $this->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
@@ -272,7 +280,7 @@ class Articulo extends AppModel
 		$temporadas = $this->Temporada->find('list', array('fields' => array('Temporada.id', 'Temporada.tecve')));
 		$tallas = $this->Talla->find('list', array('fields' => array('Talla.id', 'Talla.tadescrip'), 'conditions'=>array('st'=>'A')));
 		$proporciones = $this->Proporcion->find('list', array('fields' => array('Proporcion.id',  'Proporcion.cve')));
-		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve'), 'conditions'=>array('Tipoarticulo') ));
+		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve') ));
 
 		return compact('colores', 'unidades', 'tallas', 'proporciones', 'lineas', 'marcas', 
 							'temporadas', 'divisas', 'tipoarticulos');
