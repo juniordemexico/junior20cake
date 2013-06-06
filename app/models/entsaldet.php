@@ -40,10 +40,34 @@ class Entsaldet extends AppModel
 				'message' => 'Especifica el Color del articulo'
 			),
 		),
-		'esdcant' => array(
+		'esdt0' => array(
 			'isrequired' => array(
 				'rule' => 'notEmpty',
-				'required' => true,
+				'required' => false,
+				'allowEmpty' => true,
+				'message' => 'Especifica la Cantidad'
+			),
+			'inbetween' => array(
+				'rule' => array('between', 0.01, 9999999.99),
+				'message' => 'El valor máximo de cantidad es 9,999,999.99'
+				),
+		),
+		'esdt0' => array(
+			'isrequired' => array(
+				'rule' => 'notEmpty',
+				'required' => false,
+				'allowEmpty' => true,
+				'message' => 'Especifica la Cantidad'
+			),
+			'inbetween' => array(
+				'rule' => array('between', 0.01, 9999999.99),
+				'message' => 'El valor máximo de cantidad es 9,999,999.99'
+				),
+		),
+		'esdt1' => array(
+			'isrequired' => array(
+				'rule' => 'notEmpty',
+				'required' => false,
 				'allowEmpty' => true,
 				'message' => 'Especifica la Cantidad'
 			),

@@ -15,7 +15,7 @@
 				</li>
 				<li class="divider-vertical">&nbsp;</li>
 				<?php if( $this->action=='edit' ): ?>
-				<?php if( isset($this->data[array_shift(array_keys($this->data))]['id']) ): ?>
+				<?php if( isset($this->data) && isset($this->data[array_shift(array_keys($this->data))]['id']) ): ?>
 				<li>
 					<?php if(is_array($this->data)) {echo $this->Html->link('<i class="icon icon-trash"></i>  Eliminar', 
 										array('action' => 'delete', $this->data[array_shift(array_keys($this->data))]['id']), 
@@ -42,33 +42,9 @@
 ?>
 				</li>
 			<li class="divider-vertical">&nbsp;</li>
-			<li class="dropdown navbar-icon-signal" id="btnMsgNotifications"  style="" >
-				<a class="dropdown-toggle " data-toggle="dropdown" href="#msgnotifications">
-<img src="/img/icons/devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
-				<span class="badge badge-info">10</span>
-				<b class="caret"></b></a>
-				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">
-					<li class="notifications-list" style="opacity: 0.75;border: 1px solid #000; background-color: white; padding: 4px;">
-					<label class="label label-info">ATENCION!</label>
-					<div>Mensaje de la persona esta que es bien buena</div>
-					<a href="#">Ver</a>
-					</li>
-					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
-					<label class="label label-important">ERROR!</label>
-					<div>Mensaje de la persona esta que es bien buena</div>
-					<a href="#">Ver</a>
-					</li>
-					<li class="notifications-list" style="border: 1px solid #000; background-color: white; padding: 4px;">
-					<label class="label label-success">OK!</label>
-					<div>Mensaje de la persona esta que es bien buena</div>
-					<a href="#">Ver</a>
-					</li>
-				</ul>
-			</li>
-			<li class="divider-vertical">&nbsp;</li>
 			<li class="dropdown navbar-icon-signal" id="btnNotifications"  style="background-color:transparent;" >
 				<a class="dropdown-toggle " data-toggle="dropdown" href="#notifications">
-<img src="/img/icons/devine/white/Info 2.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
+<img src="/img/icons/devine/white/Mail.png" width="20px" height="20px" style="margin: 0px; padding: 0px; vertical-align:middle;" />
 				<span class="badge badge-warning">10</span>
 				<b class="caret"></b></a>
 				<ul class="dropdown-menu notifications-list" style="opacity: 0.80;">

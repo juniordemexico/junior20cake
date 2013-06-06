@@ -116,6 +116,9 @@ class AppModel extends Model
 
 
 	public function getNextFolio( $serie='', $advance=0, $model=null ) {
+		$oldCache=$this->cache;
+		$oldCacheQueries=$this->cacheQueries;
+
 		$model=strtolower($model && is_string($model)?$model:$this->name);
 		$serie=strtoupper($serie);
 		$rs=$this->query("SELECT Folio.serie, Folio.generador, Folio.seriesize 
@@ -137,9 +140,17 @@ class AppModel extends Model
 				$newValue=$rs[0][0]['generatorvalue'];
 				// Fill with zeroes
 				$newFolio=$serie.str_repeat('0',$seriesize-strlen($serie.$newValue)).$newValue;
+
+				$this->cache=$oldCache;
+				$this->cacheQueries=$oldCacheQueries;
+				
 				return ($newFolio);
 			}
 		}
+
+		$this->cache=$oldCache;
+		$this->cacheQueries=$oldCacheQueries;
+
 		return false;
 
 	}

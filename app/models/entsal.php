@@ -67,7 +67,7 @@ class Entsal extends AppModel
 		'esfecha' => array(
 			'isrequired' => array(
 				'rule' => 'notEmpty',
-				'required' => false,
+				'required' => true,
 				'allowEmpty' => false,
 				'message' => 'Especifica la Fecha de la transacción'
 			),
@@ -79,7 +79,7 @@ class Entsal extends AppModel
 		'esconcep' => array( 
 			'inbetween' => array(
 				'rule' => array('between', 1, 64),
-				'required' => false,
+				'required' => true,
 				'allowEmpty' => false,
 				'message' => 'El Concepto debe contener de 1 a 64 caracteres'
 				),
@@ -88,11 +88,11 @@ class Entsal extends AppModel
 			'inbetween' => array(
 				'rule' => array('between', 0, 255),
 				'required' => false,
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'message' => 'Las Observaciones deben contener hasta 255 caracteres'
 				),
 		),
-		'artmovbodega_id' => array(
+		'tipoartmovbodega_id' => array(
 			'isrequired' => array(
 				'rule' => 'notEmpty',
 				'required' => true,
@@ -100,22 +100,17 @@ class Entsal extends AppModel
 				'message' => 'Especifica el Tipo de Movimiento'
 			),
 		),
+		'almacen_id' => array(
+			'isrequired' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'message' => 'Especifica el Almacén'
+			),
+		),
 
 	);
 
-/*
-	public function getDocument($id) {
-		$this->recursive=1;
-		private $data=$this->findById($id);
-		if(!$data || count($data)<1) {
-			return array();
-		}
-		$data['details']=$data[$this->name.'det'];
-		unset($data[$this->name.'det']);
-		
-	}
-*/
-	
 	public function getDetails($id=null) {
 //		if (!$id || !($this->id>0) ) return array();
 		$this->Entsaldet->recursive=0;

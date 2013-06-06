@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/materialmovimientos/edit.ctp</string>
+	<string>app/controllers/materialmovimientos_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,103 +21,133 @@
 	<integer>239</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/compras_controller.php</key>
+		<key>app/app_model.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>42</integer>
+				<integer>327</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>22</integer>
+			<integer>293</integer>
 		</dict>
 		<key>app/controllers/materialmovimientos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>51</integer>
 				<key>line</key>
-				<integer>179</integer>
+				<integer>60</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>153</integer>
+			<integer>40</integer>
 		</dict>
 		<key>app/models/entsal.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>39</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>125</integer>
+				<integer>113</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>96</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/models/entsaldet.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>38</integer>
+				<integer>80</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>18</integer>
+			<integer>49</integer>
+		</dict>
+		<key>app/views/elements/ToolBar.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>71</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>66</integer>
+		</dict>
+		<key>app/views/helpers/ax_u_i.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>136</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>114</integer>
 		</dict>
 		<key>app/views/materialmovimientos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>103</integer>
 				<key>line</key>
-				<integer>298</integer>
+				<integer>254</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>284</integer>
+			<integer>243</integer>
 		</dict>
 		<key>app/views/materialmovimientos/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>79</integer>
+				<integer>153</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>46</integer>
+			<integer>136</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/controllers/materialmovimientos_controller.php</string>
-		<string>app/controllers/compras_controller.php</string>
+		<string>app/views/elements/ToolBar.ctp</string>
 		<string>app/models/entsal.php</string>
 		<string>app/models/entsaldet.php</string>
 		<string>app/views/materialmovimientos/index.ctp</string>
 		<string>app/views/materialmovimientos/edit.ctp</string>
+		<string>app/app_model.php</string>
+		<string>app/views/helpers/ax_u_i.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{4, 30}, {923, 848}}</string>
+	<string>{{18, 30}, {923, 848}}</string>
 </dict>
 </plist>

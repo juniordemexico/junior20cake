@@ -35,39 +35,48 @@ class MaterialmovimientosController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->data=array();
-		$this->data['master']=$this->Entsal->findById($id);
-		$this->data['details']=$this->Entsal->getDetails($id);
-		$this->data['related']=$this->Entsal->loadDependencies();
-		$this->set('title_for_layout', 'Mov Materiales :: '.$this->data['master']['Entsal']['esrefer'] );
+		$master=$this->Entsal->findById($id);
+		$details=$this->Entsal->getDetails($id);
+		$this->set(compact('master', 'details'));
+		$this->set('related', $this->Entsal->loadDependencies());
+		$this->set('title_for_layout', 'Mov Materiales::'.$master['Entsal']['esrefer'] );
 	}
 
 	public function add() {
 		if (!empty($this->data) ) {
-	//	if ( $this->RequestHandler->isAjax() ) { //in_array($this->RequestHandler->ext, array('json', 'xml'))) {
+/*
 			$this->set('result', 'ok');
 			$this->set('message', "REGISTRADO CORRECTAMENTE!" );
 			$this->set('losdatos', $this->data);
 			return;
-/*
+*/
+			$folio=$this->Entsal->getNextFolio('ES', 1);
+			$this->data['Entsal']['esrefer']=$folio;
+
 			$this->Entsal->create();
 			if (
-				$this->Entsal->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Entsal->id.')', 'success');
-				$this->redirect(array('action' => 'index'));
+				$this->Entsal->saveAll($this->data)) {
+				$id=$this->Entsal->id;
+				$this->set('result','ok');
+				$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+				$this->set('losdatos', $this->data);
 			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
+				$this->set('result', 'error');
+				$this->set('message', 'Error al guardar el movimiento');
 			}
-
-*/
+			return;
 		}
-		$this->data['master']=array('Entsal'=>
-								array('id'=>null, 'esrefer'=>'ES000001', 'esfecha'=> date('Y-m-d'), 
-								'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
-								'st'=>'A','est'=>'0')
-							);
-		$this->data['details']=array();
-		$this->data['related']=$this->Entsal->loadDependencies();
+
+		$this->set('master', array('Entsal'=>
+										array('id'=>null, 'st'=>'A', 'est'=>'0',
+										'esrefer'=>'ES01', /*$this->Entsal->getNextFolio('ES', 0)*/
+										'esfecha'=> date('Y-m-d'),
+										'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
+										),
+									'Tipoartmovbodega' => null
+							));
+		$this->set('details', array());
+		$this->set('related', $this->Entsal->loadDependencies());
 
 		$this->render('edit');
 

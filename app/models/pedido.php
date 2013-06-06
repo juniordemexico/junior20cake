@@ -49,18 +49,6 @@ class Pedido extends AppModel
 				'message' => 'FOLIO se compone hasta de 8 caracteres maximo'
 				)
 			),
-		'perefer' => array(
-			'isunique' => array(
-				'rule' => array('isUnique'),
-				'required' => true,
-				'allowEmpty' => false,
-				'message' => 'La Clave YA Existe'
-				),
-			'between' => array(
-				'rule' => array('between', 1, 8),
-				'message' => 'FOLIO se compone hasta de 8 caracteres maximo'
-				)
-			),
 		'pedescu1' => array(
 			'decimal' => array(
 				'rule' => array(

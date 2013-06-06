@@ -1,6 +1,8 @@
 <script>
-var myAxApp=angular.module('AxApp', ['ui','ui.bootstrap','LocalStorageModule']);
+<?php
+//var myAxApp=angular.module('AxApp', ['ui','ui.bootstrap','LocalStorageModule']);
 //$dialogProvider.options({backdropFade: true});
+/*
 myAxApp.value('ui.config', {
 	date: {
 		dateFormat: "yy-mm-dd",
@@ -20,5 +22,7 @@ myAxApp.value('ui.config', {
 		}
 	}
 });
+*/
+?>
 
 </script>

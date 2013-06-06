@@ -39,6 +39,7 @@ class AppController extends Controller {
 		'Form',
 		'Session',
 		'Paginator',
+		'AxUI',
 		'WebAlert',
 		'TBS',
 /*		'Embed',*/
