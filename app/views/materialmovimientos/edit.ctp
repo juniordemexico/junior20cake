@@ -221,19 +221,25 @@
 
 </div>
 
-<script>
-/* AxApp application's AxAppCtrl controller code */
+<script language="javascript">
+
+/* Begins Plain JS models/variables initialization ******************/
+<?php echo $this->AxUI->getModelsAsJsObjects(); ?>
+
 var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[] };
 
-<?php echo $this->AxUI->initAppController(); //Initialize WebUI Controller ?>
+/* Begins Web UI controller's initialization ************************/
+<?php echo $this->AxUI->initAppController(); ?>
+
+/* Begins Web UI model's initialization *****************************/
+<?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "cant":0};
 
 	$scope.currentItem=angular.copy(emptyItem);
 	$scope.theResponse={};
 	$scope.theDataToPost='';
-	
-	
+
 	$scope.save = function() {
 		var emptyArray={};
 //		alert($('#EntsalTipoartmovbodega_id').val());
@@ -371,10 +377,13 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
     	}
   	}
 
+/* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->getAppGlobalMethods(); ?>
 
+/* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->closeAppController(); ?>
 
+/* Begins Web UI App's default settings *****************************/
 <?php echo $this->AxUI->getAppDefaults();?>
 
 </script>

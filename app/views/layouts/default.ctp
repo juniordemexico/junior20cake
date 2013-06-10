@@ -27,7 +27,6 @@
 
 <section id="sectionToolBar">
 	<?php echo $this->element('ToolBar', array('MyController'=>$this->name, 'listAction'=>(isset($listAction)?$listAction:'index'), 'MyModel'=>'Color'));?>
-</div>
 </section>  <!-- section#sectionToolbar -->
 
 <div id="pageContainer" class="container ax-page-container">

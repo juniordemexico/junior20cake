@@ -36,10 +36,10 @@ class ComprasController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->data=array();
-		$this->data['master']=$this->Compra->findById($id);
-		$this->data['details']=$this->Compra->getDetails($id);
-		$this->data['related']=$this->Compra->loadDependencies();
+		$master=$this->Compra->findById($id);
+		$details=$this->Compra->getDetails($id);
+		$this->set(compact('master', 'details'));
+		$this->set('related', $this->Entsal->loadDependencies());
 		$this->set('title_for_layout', 'Compras :: Nueva' );
 	}
 
@@ -55,12 +55,14 @@ class ComprasController extends MasterDetailAppController {
 			}
 		}
 
-		$this->data['master']=array('Compra'=>
-								array('id'=>null, 'folio'=>'C0000001', 'fecha'=> date('Y-m-d'), 
-								'divisa_id'=>1,'tipodecambio'=>1,'proveedor_id'=>null,'','st'=>'A')
-							);
-		$this->data['details']=array();
-		$this->data['related']=$this->Compra->loadDependencies();
+		$this->set('master', array('Compra'=>
+										array('id'=>null, 'folio'=>'C0000001', 'fecha'=> date('Y-m-d'), 
+											'divisa_id'=>1,'tipodecambio'=>1,'proveedor_id'=>null,'','st'=>'A',
+										),
+									'Proveedor' => null
+							));
+		$this->set('details', array());
+		$this->set('related', $this->Compra->loadDependencies());
 
 		$this->render('edit');
 	}

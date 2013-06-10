@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="AxApp" id="top">
+<html lang="en" data-ng-app="AxApp" id="top">
 <head>
 
 	<!-- Meta Tags, Charsets, Display/Device settings -->
@@ -28,7 +28,7 @@
 <div id="pageContainer" class="container ax-page-container">
 	
 	<section id="sectionMain">
-	<div id="wrapper" class="row ng-cloak ax-page-wrapper" ng-controller="AxAppCtrl">
+	<div id="wrapper" class="row ng-cloak ax-page-wrapper" data-ng-controller="AxAppCtrl">
 			<div class="span1"></div>
 			<div id="content" class="span10 ax-page-content">
 

@@ -202,9 +202,6 @@ class AxUIHelper extends Helper {
 		}
 		
 		return ( "\n\r".
-'/* Begins plain JS models/variables initialization ****************/'."\n\r".
-$this->getModelsAsJsObjects()."\n\r".
-'/* Begins App\'s WebUI initialization  ***************************/'.
 "
 var axApp=angular.module('AxApp', ['ui','ui.bootstrap','LocalStorageModule']).
 controller('AxAppCtrl', 
@@ -238,12 +235,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 	}
 
 ".
-"\n\r".
-'/* Begins Web UI Model\'s initialization ***************************/'."\n\r".
-$this->getModelsFromJsObjects().
-"\n\r".
-'/* Begins Web UI page\'s specific methods **************************/'.
-"\n\r\n\r"
+"\n\r"
 	);
 	}
 
@@ -332,4 +324,14 @@ axApp.value('ui.config', {
 		return $out;
 	}
 
+	public function initAndCloseAppControllerLegacy( $options=null ) {
+		return (
+			$this->getModelsAsJsObjects().LF.CR.
+			$this->initAppController().LF.CR.
+			$this->getModelsFromJsObjects().LF.CR.
+			$this->getAppGlobalMethods().LF.CR.
+			$this->closeAppController().LF.CR.
+			$this->getAppDefaults().LF.CR
+		);
+	}
 }
