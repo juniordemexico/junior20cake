@@ -104,3 +104,102 @@
 **/
 
 ?>
+
+
+<div id="nav-container">
+	<div class="container_16">
+	<div id="nav">
+	<ul class="sf-menu">
+		<li>
+			<a href="/croogo/admin/nodes">Content</a><ul>
+				<li><a href="/croogo/admin/nodes">List</a></li>
+				<li>
+					<a href="/croogo/admin/nodes/create">Create</a>					<ul>
+												<li><a href="/croogo/admin/nodes/add/blog">Blog</a></li>
+												<li><a href="/croogo/admin/nodes/add/node">Node</a></li>
+												<li><a href="/croogo/admin/nodes/add/page">Page</a></li>
+											</ul>
+				</li>
+				<li><a href="/croogo/admin/types">Content types</a></li>
+				<li>
+					<a href="/croogo/admin/vocabularies">Taxonomy</a>					<ul>
+						<li><a href="/croogo/admin/vocabularies">List</a></li>
+						<li><a href="/croogo/admin/vocabularies/add" class="separator">Add new</a></li>
+												<li><a href="/croogo/admin/terms/index/1">Categories</a></li>
+												<li><a href="/croogo/admin/terms/index/2">Tags</a></li>
+											</ul>
+				</li>
+				<li>
+					<a href="/croogo/admin/comments">Comments</a>					<ul>
+						<li><a href="/croogo/admin/comments/index/filter:status:1;">Published</a></li>
+						<li><a href="/croogo/admin/comments/index/filter:status:0;">Approval</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/menus">Menus</a>			<ul>
+				<li><a href="/croogo/admin/menus">Menus</a></li>
+				<li><a href="/croogo/admin/menus/add" class="separator">Add new</a></li>
+								<li><a href="/croogo/admin/links/index/3">Main Menu</a></li>
+								<li><a href="/croogo/admin/links/index/4">Footer</a></li>
+								<li><a href="/croogo/admin/links/index/5">Meta</a></li>
+								<li><a href="/croogo/admin/links/index/6">Blogroll</a></li>
+							</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/blocks">Blocks</a>			<ul>
+				<li><a href="/croogo/admin/blocks">Blocks</a></li>
+				<li><a href="/croogo/admin/regions">Regions</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/extensions/extensions_plugins">Extensions</a>			<ul>
+				<li><a href="/croogo/admin/extensions/extensions_themes">Themes</a></li>
+				<li><a href="/croogo/admin/extensions/extensions_locales">Locales</a></li>
+				<li><a href="/croogo/admin/extensions/extensions_plugins" class="">Plugins</a></li>
+							</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/attachments">Media</a>			<ul>
+				<li><a href="/croogo/admin/attachments">Attachments</a></li>
+				<li><a href="/croogo/admin/filemanager">File Manager</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/contacts">Contacts</a>			<ul>
+				<li><a href="/croogo/admin/contacts">Contacts</a></li>
+				<li><a href="/croogo/admin/messages">Messages</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/users">Users</a>			<ul>
+				<li><a href="/croogo/admin/users">Users</a></li>
+				<li><a href="/croogo/admin/roles">Roles</a></li>
+				<li><a href="/croogo/admin/acl/acl_permissions">Permissions</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="/croogo/admin/settings/prefix/Site">Settings</a>			<ul>
+				<li><a href="/croogo/admin/settings/prefix/Site">Site</a></li>
+				<li><a href="/croogo/admin/settings/prefix/Meta">Meta</a></li>
+				<li><a href="/croogo/admin/settings/prefix/Reading">Reading</a></li>
+				<li><a href="/croogo/admin/settings/prefix/Writing">Writing</a></li>
+				<li><a href="/croogo/admin/settings/prefix/Comment">Comment</a></li>
+				<li><a href="/croogo/admin/settings/prefix/Service">Service</a></li>
+				<li><a href="/croogo/admin/languages">Languages</a></li>
+			</ul>
+		</li>
+	</ul>
+	</div>
+	</div>
+</div>
+
+

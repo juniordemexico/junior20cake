@@ -79,7 +79,7 @@ class AppController extends Controller {
 			$querystring.='::'.$key.'='.$value;
 		};
 		
-		// Fill a request's data array. Mainly to pass it to models and views
+		// Fill a request's data array. Mainly to pass it to çs and views
 		$this->set('request', array(
 			'querystring' => $querystring,
 			'client_ip' => $this->RequestHandler->getClientIP(),

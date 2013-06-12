@@ -77,13 +77,5 @@ class Entsaldet extends AppModel
 				),
 		),
 	);
-
-	public function getDetail($entsal_id=null) {
-		return( $this->findAllByEntsal_id($entsal_id) );
-	}
-	
-	public function getDetailTemp($entsal_id=null) {
-		return( $this->findAllByEntsal_id($entsal_id) );
-	}
 	
 }

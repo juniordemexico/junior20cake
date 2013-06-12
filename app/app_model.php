@@ -115,6 +115,40 @@ class AppModel extends Model
 	} 
 
 
+	public function getItemWithDetails($id=null) {
+		if( !$id && isset($this->id) && 
+			(is_numeric($this->id) || is_string($this->id)) ) {
+			$id=$this->id;
+		}
+		$this->recursive=0;
+
+		// Get and Process the Master
+		$Item=$this->findById($id);
+		if($Item && isset($Item[$this->name])) {
+			$Item['Master']=$Item[$this->name];
+			unset($Item[$this->name]);
+		}
+		$Item['masterModel']=$this->name;
+		$Item['detailsModel']=$this->detailsModel;
+		
+		// Get and Process the Details
+		$method='findAllBy'.$this->name.'_id';
+		$Item['Details']=array();
+		$details=$this->{$this->detailsModel}->{$method}($id);
+		foreach($details as $detail) {
+			$row=array();
+			foreach($detail as $key=>$value) {
+				if( $key==$this->name )  continue;
+				if( $key==$this->detailsModel ) $key='Detail';
+				$row[$key]=$value;
+			}
+			$Item['Details'][]=$row;
+		}
+
+		return( $Item );
+	}
+
+
 	public function getNextFolio( $serie='', $advance=0, $model=null ) {
 		$oldCache=$this->cache;
 		$oldCacheQueries=$this->cacheQueries;

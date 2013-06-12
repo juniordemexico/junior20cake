@@ -1,17 +1,17 @@
 <header>
 <div class="page-header">
-<h1><small>Movimiento de Almacén <strong class="text-info">{{master.Entsal.esrefer}}</strong></small></h1>
+<h1><small>Movimiento de Almacén <strong class="text-info">{{data.Master.esrefer}}</strong></small></h1>
 </div>
 </header>
 
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
 	<div class="btn-group">	
-		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(formMaster.$pristine || !formMaster.$valid) || master.Entsal.id>0 || !details.length>0" alt="Guardar">
+		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(formMaster.$pristine || !formMaster.$valid) || data.Master.id>0 || !data.Details.length>0" alt="Guardar">
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
-		<button type="submit" class="btn btn-primary" data-ng-click="alert('mierda')" data-ng-disabled="false && !(master.Entsal.id>0) || master.Entsal.st=='C'" alt="Cancelar">
+		<button type="submit" class="btn btn-primary" data-ng-click="alert('mierda')" data-ng-disabled="false && !(data.Master.id>0) || data.Master.st=='C'" alt="Cancelar">
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
@@ -22,10 +22,10 @@
 		<button type="button" class="btn btn-info" data-ng-click="loadDetailsFromCache()" title="Cargar el detalle del Cache" alt="Cache">
 		<i class="icon-page icon-white"></i>
 		</button>
-		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(master.Entsal.id>0)" title="Imprimir la transacción" alt="Imprimir">
+		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
-		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(master.Entsal.id>0)" title="Enviar por email la transacción" alt="Compartir">
+		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(data.Master.id>0)" title="Enviar por email la transacción" alt="Compartir">
 		<i class="icon-share icon-white"></i>
 		</button>
 	</div>
@@ -48,7 +48,7 @@
 		<label for="EntsalRefer" class="control-label">Folio:</label>
 		<div class="controls input">
 			<input type="text" id="EntsalRefer" name="data[Entsal][esrefer]" field="Entsal.esrefer"
-				data-ng-model="master.Entsal.esrefer"
+				data-ng-model="data.Master.esrefer"
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
@@ -58,7 +58,7 @@
 		<div class="controls input">
 			<input type="text" id="EntsalEsfecha" name="data[Entsal][esfecha]" field="Entsal.esfecha"
 				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="master.Entsal.esfecha" data-ng-required="true"
+				data-ng-model="data.Master.esfecha" data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
 		</div>
 	</div>
@@ -68,7 +68,7 @@
 			<select id="EntsalAlmacen_id" name="data[Entsal][almacen_id]"
 				field="Entsal.almacen_id"
 				class="span2"
-				data-ng-model="master.Entsal.almacen_id"
+				data-ng-model="data.Master.almacen_id"
 				data-ng-options="i.id as i.cve for i in related.Almacen"
 				data-ng-required="true">
 			</select>
@@ -79,8 +79,8 @@
 		<label class="control-label">Estatus:</label>
 		<div class="controls group">
 		<div class="btn-group">
-			<button type="button" id="EntsalStA" class="btn" data-ng-class="{'btn-success': master.Entsal.st==app.estatus.Activo}" name="data[Entsal][st]" data-ng-model="master.Entsal.st" data-btn-radio="'A'" data-ng-disabled="master.Entsal.st==estatus.Cancelado">Activo</button>
-			<button type="button" id="EntsalStC" class="btn" data-ng-class="{'btn-danger': master.Entsal.st==app.estatus.Cancelado}" name="data[Entsal][st]" data-ng-model="master.Entsal.st" data-btn-radio="'C'" data-ng-disabled="master.Entsal.st==estatus.Activo">Cancelado</button>
+			<button type="button" id="EntsalStA" class="btn" data-ng-class="{'btn-success': data.Master.st==app.estatus.Activo}" name="data[Entsal][st]" data-ng-model="data.Master.st" data-btn-radio="'A'" data-ng-disabled="data.Master.st==estatus.Cancelado">Activo</button>
+			<button type="button" id="EntsalStC" class="btn" data-ng-class="{'btn-danger': data.Master.st==app.estatus.Cancelado}" name="data[Entsal][st]" data-ng-model="data.Master.st" data-btn-radio="'C'" data-ng-disabled="data.Master.st==estatus.Activo">Cancelado</button>
 		</div>
 		</div>
 	</div>
@@ -115,14 +115,10 @@
 	<div class="control-group">
 		<label for="EntsalTipoartmovbodega_id" class="control-label">Tipo de Mov:</label>
 		<div class="controls input">
-<?php
-//			<input type="hidden" id="EntsalTipoartmovbodega_id" 
-//			name="data[Entsal][tipoartmovbodega_id]" field="Entsal.tipoartmovbodega_id" />
-?>
 			<select id="EntsalTipoartmovbodega_id" name="data[Entsal][tipoartmovbodega_id]"
 				field="Entsal.tipoartmovbodega_id"
 				class="span3"
-				data-ng-model="master.Entsal.tipoartmovbodega_id"
+				data-ng-model="data.Master.tipoartmovbodega_id"
 				data-ng-options="i.id as i.cve for i in related.Tipoartmovbodega"
 				data-ng-required="true">
 			</select>
@@ -132,7 +128,7 @@
 		<label for="EntsalEsconcep" class="control-label">Concepto:</label>
 		<div class="controls input">
 			<input type="text" id="EntsalEsconcep" name="data[Entsal][esconcep]" field="Entsal.esconcep"
-				data-ng-model="master.Entsal.esconcep" ng-required="true"
+				data-ng-model="data.Master.esconcep" ng-required="true"
 				data-ng-minlength="1" data-ng-maxlength="32" data-ng-required="true"
 				class="span4" placeholder="Concepto..." title="Concepto de la transacción" />
 		</div>
@@ -141,8 +137,8 @@
 		<label for="CompraObser" class="control-label">Observaciones:</label>
 		<div class="controls input">
 			<textarea name="data[Entsal][obser]" field="Entsal.Obser" maxlength="255"
-				class="span4" cols="30" rows="4" id="EntsalObser"
-				data-ng-model="master.Entsal.esobser"
+				class="span4" cols="30" rows="2" id="EntsalObser"
+				data-ng-model="data.Master.esobser"
 				data-ng-minlength="0" data-ng-maxlength="255"
 				placeholder="Observaciones..."
 			></textarea>
@@ -157,7 +153,7 @@
 
 <pane id="tabs-1" heading="Detalle">
 
-		<div class="toolbar well well-small" data-ng-hide="master.Entsal.id>0">
+		<div class="toolbar well well-small" data-ng-hide="data.Master.id>0">
 			<input class="span3" data-ng-model="currentItem.Articulo"
 				data-ui-select2="fieldItem" data-ui-event="{ change : 'getItemByCve()' }" 
 				data-item-placeholder="Código del Material..."
@@ -188,17 +184,17 @@
 				<th class="cant">Cant</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
-			</thead>
+			</thead>data.Details.
 			<tbody>
-			<tr data-ng-repeat="item in details" data-detail-id="{{item.Entsaldet.id}}" class="item-row">
-				<td class="span2">{{item.Articulo.arcveart}}</td>
-				<td class="span2">{{item.Color.cve}}</td>
-				<td class="">{{item.Articulo.ardescrip}}</td>
-				<td class="cant">{{item.Entsaldet.esdt0}}</td>
+			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
+				<td class="span2">{{i.Articulo.arcveart}}</td>
+				<td class="span2">{{i.Color.cve}}</td>
+				<td class="">{{i.Articulo.ardescrip}}</td>
+				<td class="cant">{{i.Detail.esdt0}}</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
-							data-ng-click="detailDelete($index, item, true)"
-							data-ng-hide="master.Entsal.id>0">
+							data-ng-click="detailDelete($index, i, true)"
+							data-ng-hide="data.Master.id>0">
 							<i class="icon icon-trash"></i>
 					</button>
 				</td>
@@ -213,13 +209,6 @@
 
 </form>
 
-<div style="margin-top:100px;">
-
-<pre>
-{{theResponse |json}}
-</pre>
-
-</div>
 
 <script language="javascript">
 
@@ -237,68 +226,35 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "cant":0};
 
 	$scope.currentItem=angular.copy(emptyItem);
-	$scope.theResponse={};
-	$scope.theDataToPost='';
 
 	$scope.save = function() {
-		var emptyArray={};
-//		alert($('#EntsalTipoartmovbodega_id').val());
-//		$('#EntsalTipoartmovbodega_id').val(master.Entsal.tipoartmovbodega_id);
-
-		// Serialize Master
-		var serializedData='_method=PUT&';
-		angular.forEach($scope.master.Entsal, function(value, key) {
-			if( angular.isString(value) || angular.isNumber(value) ) {
-				serializedData=serializedData.concat(encodeURIComponent('data[' + 'Entsal' + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
-			}
-		} );
-
-		// Serialize Detail
-		var serializedDetailData='';
-		var i=0;
-		angular.forEach($scope.details, function(value, key) {
-			angular.forEach(value.Entsaldet, function(value, key) {
-				if( angular.isString(value) || angular.isNumber(value) ) {
-					serializedDetailData=serializedDetailData.concat(encodeURIComponent('data[' + 'Entsaldet' + ']' +'[' + i + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
-				}
-			});
-			i=i+1;			
-		});
-
-		serializedData=serializedData+serializedDetailData;
-		console.log('FULL DATA TO SEND:: '+serializedData);
-		
+		// Serialize the full form, including details items
+		var serializedData=$scope.serializeToServer( {
+							"Master" 	: $scope.data.Master,
+							"Details"	: $scope.data.Details
+							},
+							'Entsal',
+							'Entsaldet'
+						);
+						
+		// Send the PUT request to the server
 		$http.post($scope.app.actions.add, serializedData
 		).then(function(response) {
-
-		if(typeof response.data != 'undefined' && 
-			typeof response.data.result != 'undefined' && response.data.result=='ok') {
-			console.log('SERVER RESPONDED...');
-			console.log(response);
-			$scope.theResponse=response.data;
-//			$scope.details=response.data.details;
-			axAlert(response.data.message, 'success', false);
-			return;
-		}
-
-		console.log('SERVER RESPONDED...');
-		console.log(response);
-
-		$scope.theResponse=response.data;
-/*
-		axAlert( (typeof response.data.result != 'undefined')?
-				response.data.message:
-				'Error Desconocido',
-				response.data.result, false);
-*/
+			// We got a response to process
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				console.log('SERVER RESPONDED...');
+				console.log(response);
+				axAlert(response.data.message, 'success', false);
+				return;
+			}
 		});
-
 	}
 
 	$scope.addCurrentItem = function() {
-		var currentLength=$scope.details.length;
+		var currentLength=$scope.data.Details.length;
 		var item={
-			Entsaldet: {
+			Detail: {
 				id: null,
 				entsal_id: null,
 				articulo_id: $scope.currentItem.Articulo.id,
@@ -309,7 +265,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 			Articulo: $scope.currentItem.Articulo,
 			Color: $scope.currentItem.Color
 		}
-		if($scope.details.push(item)>currentLength) {
+		if($scope.data.Details.push(item)>currentLength) {
 			$scope.currentItem=angular.copy(emptyItem);
 			$scope.oldValues.arcveart='';		
 			return 1;	
@@ -328,7 +284,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		.open()
 		.then( function(result) {
 			if(result) {
-				$scope.details.splice(index,1);
+				$scope.data.Details.splice(index,1);
 			}
 		});
 	}

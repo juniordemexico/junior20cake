@@ -246,6 +246,31 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 	public function getAppGlobalMethods($options=null) {
 		return "\n\r".
 "
+
+	\$scope.serializeToServer = function ( data, masterModel, detailsModel ) {
+		
+		// Serialize Master
+		var serializedData='_method=PUT&';
+		angular.forEach(data.Master, function(value, key) {
+			if( angular.isString(value) || angular.isNumber(value) ) {
+				serializedData=serializedData.concat(encodeURIComponent('data[' + masterModel + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
+			}
+		} );
+
+		// Serialize Details
+		var serializedDetailData='';
+		var i=0;
+		angular.forEach(data.Details, function(value, key) {
+			angular.forEach(value.Detail, function(value, key) {
+				if( angular.isString(value) || angular.isNumber(value) ) {
+					serializedDetailData=serializedDetailData.concat(encodeURIComponent('data[' + detailsModel + ']' +'[' + i + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
+				}
+			});
+			i=i+1;			
+		});
+		return (serializedData+serializedDetailData);
+	}
+
 	\$scope.loadRelatedModels = function() {
 		// Load page's related models from local cache or doing an http request
 		var theRelated=false;

@@ -21,8 +21,9 @@ class MaterialmovimientosController extends MasterDetailAppController {
 												'Entsal.estmov','Entsal.esconcep',
 												'Entsal.st', 'Entsal.est',
 												'Entsal.created', 'Entsal.modified',
+												'Entsal.refer_id', 'Entsal.refer_model',
 												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
-												'Entsal.almacen_id', 'Almacen.aldescrip'),
+												'Entsal.almacen_id','Almacen.aldescrip'),
 //								'conditions' => array('Entsal.est'=>0),
 								);
 		$filter = $this->Filter->process($this);
@@ -35,51 +36,49 @@ class MaterialmovimientosController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$master=$this->Entsal->findById($id);
-		$details=$this->Entsal->getDetails($id);
-		$this->set(compact('master', 'details'));
+		$data=$this->Entsal->getItemWithDetails($id);
+		$this->set('data', $data );
 		$this->set('related', $this->Entsal->loadDependencies());
-		$this->set('title_for_layout', 'Mov Materiales::'.$master['Entsal']['esrefer'] );
+		$this->set('title_for_layout', 'Mov Materiales::'.$data['Master'][$this->{$this->uses[0]}->title] );
 	}
 
 	public function add() {
-		if (!empty($this->data) ) {
-/*
-			$this->set('result', 'ok');
-			$this->set('message', "REGISTRADO CORRECTAMENTE!" );
-			$this->set('losdatos', $this->data);
-			return;
-*/
-			$folio=$this->Entsal->getNextFolio('ES', 1);
-			$this->data['Entsal']['esrefer']=$folio;
-
-			$this->Entsal->create();
-			if (
-				$this->Entsal->saveAll($this->data)) {
-				$id=$this->Entsal->id;
-				$this->set('result','ok');
-				$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
-				$this->set('losdatos', $this->data);
-			} else {
-				$this->set('result', 'error');
-				$this->set('message', 'Error al guardar el movimiento');
-			}
-			return;
-		}
-
-		$this->set('master', array('Entsal'=>
-										array('id'=>null, 'st'=>'A', 'est'=>'0',
+		// Send a blank form to the user
+		if ( empty($this->data) ) {
+			$this->set('data', array('Master' =>
+									array('id'=>null, 'st'=>'A', 'est'=>'0',
 										'esrefer'=>'ES01', /*$this->Entsal->getNextFolio('ES', 0)*/
 										'esfecha'=> date('Y-m-d'),
-										'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
+											'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
 										),
-									'Tipoartmovbodega' => null
-							));
-		$this->set('details', array());
-		$this->set('related', $this->Entsal->loadDependencies());
+									'Tipoartmovbodega' => null,
+									'masterModel' => $this->{$this->uses[0]}->name,
+									'detailsModel' => isset($this->{$this->uses[0]}->detailsModel) ?
+														$this->{$this->uses[0]}->detailsModel :
+														null,
+									'Details' => array(),
+						));
+			$this->set('related', $this->Entsal->loadDependencies());
+			
+			$this->render('edit');
+			return;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$folio=$this->Entsal->getNextFolio('ES', 1);
+		$this->data['Entsal']['esrefer']=$folio;
 
-		$this->render('edit');
-
+		$this->Entsal->create();
+		if ( $this->Entsal->saveAll($this->data) ) {
+			$id=$this->Entsal->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('losdatos', $this->data);
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+		return;
 	}
 	
 	public function setCaracteristicas($articulo_id=null) {
