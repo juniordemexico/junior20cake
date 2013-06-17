@@ -95,3 +95,5 @@ sadasdasasd
 
 //  echo $this->Js->get('#ArticuloArcveart')->event('change', "function(){ //$('ArticuloArcveartFin').value=this.value;  } ");
 ?>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -105,4 +105,3 @@ $('#datagrid').on('click touchstart', '.btnModalTallaColor', function(event) {
 });
 
 </script>
-<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

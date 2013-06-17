@@ -582,3 +582,5 @@ ubicacion = {{ubicacion | json}}
 */
 
 </script>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -1481,8 +1481,8 @@ var axAlert = function(txt, type, sticky, title, icon) {
 				' <span class="pull-right"><small><em>('+theTimestamp+')</em></small></span></label>',
 		text: txt,
 		image: '/img/icons/devine/white/'+iconClass,
-		fade_out_speed: 2000, // how fast the notices fade out
-		time: 5000, // hang on the screen for...
+		fade_out_speed: 3000, // how fast the notices fade out
+		time: 2000, // hang on the screen for...
 		class_name: 'my-sticky-class',
 		sticky: sticky,
 	});

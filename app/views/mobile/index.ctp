@@ -27,3 +27,5 @@ echo $this->Element('menuoptions',array('UserID'=>'1','Privileges'=>'11111111111
 			<div id="dockSort"><div id="dockClear" class="clear"></div></div>
 		</div>
 	</div>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -69,6 +69,4 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
 , array('stop' => true));
 ?>
 
-<script>
-<?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?>
-</script>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -4,6 +4,4 @@
 
 </div> <!-- span12 -->
 
-<script>
-<?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?>
-</script>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

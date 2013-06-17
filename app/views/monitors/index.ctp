@@ -52,3 +52,5 @@ GENERALES <?php echo $this-Session?>
 
 </div>
 </div>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

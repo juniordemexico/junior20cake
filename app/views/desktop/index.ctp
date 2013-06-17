@@ -27,3 +27,5 @@ echo $this->Element('menuoptions'.($session->read('Auth.User.group_id')>=10?'_'.
 			<div id="dockSort"><div id="dockClear" class="clear"></div></div>
 		</div>
 	</div>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

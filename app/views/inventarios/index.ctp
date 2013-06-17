@@ -68,3 +68,5 @@ $this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'view'))).
 "/'+this.id);"
 , array('stop' => true));
 ?>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -70,3 +70,5 @@ foreach ($result as $oneTweet):
         <li><?php echo $html->link(__('Search tweets', true), array('action'=>'search')); ?></li> 
     </ul> 
 </div> 
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

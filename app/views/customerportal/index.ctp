@@ -9,3 +9,4 @@
 <br/>
 <div id="customercontent" style="border: 1px solid black;width:90%;height:380px; margin: 4px; padding: 4px;overflow: hidden;">
 </div>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

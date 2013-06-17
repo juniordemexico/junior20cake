@@ -98,6 +98,9 @@ class AxUIHelper extends Helper {
 					$options['baseurl'] :
 					'/'.ucfirst($view->name);
 
+		$localCachePrefix=$session->read('Auth.User.id').'.'.ucfirst($view->name).'.';
+		$localCacheAppPrefix=$session->read('Auth.User.id').'.';
+
 		$page=array(
 			'url'			=> 'http://thehost:theport/Controller/action/params?query=string',
 			'protocol'		=> 'http',
@@ -127,9 +130,12 @@ class AxUIHelper extends Helper {
 				'username' 		=> $session->read('Auth.User.username'),
 				'group_id'		=> $session->read('Auth.User.group_id'),
 				'email'			=> $session->read('Auth.User.email'),
-				'remoteaccess'	=> $session->read('Auth.User.remoteaccess'),
 				'active'		=> $session->read('Auth.User.active'),
-				'st'			=> 'A',
+				'st'			=> $session->read('Auth.User.st'),
+				'remoteaccess'	=> $session->read('Auth.User.remoteaccess'),
+				'lastAccess'	=> $session->read('Auth.User.last_access'),
+				'lastRequest'	=> $session->read('Auth.User.last_action'),
+				'lastIP'		=> '127.7.7.7', //$session->read('Auth.User.last_ip'),
 			);
 
 		$actions=array(
@@ -155,7 +161,8 @@ class AxUIHelper extends Helper {
 			'spinShow'				=> false,
 			'lastEvent'				=> null,
 			'selectedItems'			=> array(),
-			'lastAction'			=> null
+			'lastAction'			=> null,
+			'isDebugCollapsed'		=> false,
 		);
 		
 		$lastRequest=array(
@@ -199,6 +206,14 @@ class AxUIHelper extends Helper {
 				$lastRequest=$options['estatus'];
 			}
 
+			if(isset($options['localCachePrefix']) && is_string($options['localCachePrefix'])) {
+				$localCachePrefix=$options['localCachePrefix'];
+			}
+
+			if(isset($options['localCacheAppPrefix']) && is_string($options['localCacheAppPrefix'])) {
+				$localCachePrefix=$options['localCacheAppPrefix'];
+			}
+
 		}
 		
 		return ( "\n\r".
@@ -213,16 +228,16 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 "
 	\$scope.app=\n\r".
 		json_encode(array(
-			'name'			=> 'AxBOS::OGGI',
-			'business_name'	=> 'Junior de México',
-			'localCachePrefix'=>$view->name.'_'.$view->action.'_'.$session->read('Auth.User.id').'__',
-			'isDebugCollapsed'=>false,
-			'page'			=> $page,
-			'user'			=> $user,
-			'actions'		=> $actions,
-			'state'			=> $state,
-			'lastRequest'	=> $lastRequest,
-			'estatus'		=> $estatus
+			'name'					=> 'AxBOS::OGGI',
+			'business_name'			=> 'Junior de México',
+			'localCacheAppPrefix'	=>$localCacheAppPrefix,
+			'localCachePrefix'		=>$localCachePrefix,
+			'page'					=> $page,
+			'user'					=> $user,
+			'actions'				=> $actions,
+			'state'					=> $state,
+			'lastRequest'			=> $lastRequest,
+			'estatus'				=> $estatus
 		)).";".
 "\n\r".
 "
@@ -278,7 +293,6 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 		if( theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
 		 	theRelated!=null) {
 			\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
-			alert('encontrado en cache');
 			return true;
 		}
 		else {
@@ -297,21 +311,27 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 	}
 
 	\$scope.saveDetailsToCache = function() {
-		localStorageService.add(\$scope.app.localCachePrefix+'details', angular.toJson(\$scope.details));
-			axAlert('Detalle guardado en cache local');
+		localStorageService.add(\$scope.app.localCachePrefix+'details', angular.toJson(\$scope.data.Details));
+			axAlert('Detalle guardado en cache local', 'warning', false);
 	}
 
 	\$scope.loadDetailsFromCache = function() {
 		var details=false;
 		if( details=localStorageService.get(\$scope.app.localCachePrefix+'details') ) {
-			\$scope.details=angular.fromJson(details);
-			axAlert('Detalle cargado desde cache local');
+			
+			if( details != 'undefined' && angular.isString(details) ) {
+				\$scope.data.Details=angular.fromJson(details);
+				axAlert(\$scope.data.Details.length+' Items de Detalle cargados del cache', 'warning', false);
+			}
+			else {
+				axAlert('El Detalle en el cache local esta vacio');				
+			}
 		}
 		else {
-			if(typeof \$scope.details == 'undefined' || !\$scope.details ) {
-				\$scope.details=[];
+			if(typeof \$scope.data.Details == 'undefined' || !\$scope.data.Details ) {
+				\$scope.data.Details=[];
 			}
-			axAlert('Detalle inexistente en cache local');
+			axAlert('El cache local no contiene Detalle');
 		}
 	}				
 

@@ -47,7 +47,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		if ( empty($this->data) ) {
 			$this->set('data', array('Master' =>
 									array('id'=>null, 'st'=>'A', 'est'=>'0',
-										'esrefer'=>'ES01', /*$this->Entsal->getNextFolio('ES', 0)*/
+										'esrefer'=>$this->Entsal->getNextFolio('ES', 0),
 										'esfecha'=> date('Y-m-d'),
 											'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
 										),

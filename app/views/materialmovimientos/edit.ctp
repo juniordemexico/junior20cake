@@ -16,12 +16,6 @@
 		</button>
 	</div>
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-info" data-ng-click="saveDetailsToCache()" title="Guardar el detalle en Cache" alt="Cache">
-		<i class="icon-plus-sign icon-white"></i>
-		</button>
-		<button type="button" class="btn btn-info" data-ng-click="loadDetailsFromCache()" title="Cargar el detalle del Cache" alt="Cache">
-		<i class="icon-page icon-white"></i>
-		</button>
 		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
@@ -184,7 +178,7 @@
 				<th class="cant">Cant</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
-			</thead>data.Details.
+			</thead>
 			<tbody>
 			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
 				<td class="span2">{{i.Articulo.arcveart}}</td>
@@ -243,8 +237,6 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 			// We got a response to process
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				console.log('SERVER RESPONDED...');
-				console.log(response);
 				axAlert(response.data.message, 'success', false);
 				return;
 			}

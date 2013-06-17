@@ -45,3 +45,5 @@ $this->Js->get('.t-row')->event(
 , array('stop' => true));
 ?>
 
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

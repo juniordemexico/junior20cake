@@ -10,3 +10,5 @@
 
 <hr>
 <?php endforeach; ?>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

@@ -12,3 +12,4 @@ $this->PhpExcel->addRow(array('iii','jjj'), 4);
 // output to browser
 $this->PhpExcel->output();
 ?>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

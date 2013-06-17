@@ -19,3 +19,5 @@
 		<li><?php echo $this->Html->link(__('List Subdocuments', true), array('action'=>'index'));?></li>
 	</ul>
 </div>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

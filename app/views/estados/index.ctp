@@ -57,3 +57,4 @@ $this->Js->get('.t-row')->event(
 "location.replace('".$this->Html->url(array('action'=>'edit'))."/'+this.id);"
 , array('stop' => true));
 ?>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

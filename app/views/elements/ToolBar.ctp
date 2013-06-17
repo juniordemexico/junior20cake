@@ -105,7 +105,8 @@
 
 ?>
 
-
+<?php
+/*
 <div id="nav-container">
 	<div class="container_16">
 	<div id="nav">
@@ -201,5 +202,6 @@
 	</div>
 	</div>
 </div>
-
+*/
+?>
 

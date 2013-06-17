@@ -188,3 +188,5 @@ $( "#dialogArticuloExistencia" ).dialog({
 			}
 		});
 </script>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

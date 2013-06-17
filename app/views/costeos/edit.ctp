@@ -303,3 +303,5 @@ function AxAppCtrl( $scope, $http ) {
 }
 
 </script>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

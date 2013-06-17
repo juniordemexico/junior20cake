@@ -9,3 +9,4 @@ echo $this->Form->end();
 <?php echo $this->Form->end(); ?>
 <div id="results" style="width: 90%; height: 400px; overflow: scroll; padding: 4px; margin: 4px; border 1px solid black; border-radious: 4px;">
 </div>
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

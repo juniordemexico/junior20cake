@@ -74,3 +74,5 @@ function <?php e('AxCtrl'.ucfirst($this->name).ucfirst($this->action))?>( $scope
 }	
 <!-- ENDS WEBUI AngulaJS App Controller -->
 </script>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

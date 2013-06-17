@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/materialmovimientos_controller.php</string>
+	<string>app/views/helpers/ax_u_i.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,178 +21,28 @@
 	<integer>239</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
+		<key>app/views/helpers/ax_u_i.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>42</integer>
+				<integer>374</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>21</integer>
-		</dict>
-		<key>app/controllers/compras_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>37</integer>
-				<key>line</key>
-				<integer>64</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>37</integer>
-		</dict>
-		<key>app/controllers/materialmovimientos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>61</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>19</integer>
-		</dict>
-		<key>app/models/entsal.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>113</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/entsaldet.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>11</integer>
-				<key>line</key>
-				<integer>80</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>49</integer>
-		</dict>
-		<key>app/views/articulos/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>27</integer>
-				<key>line</key>
-				<integer>44</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>34</integer>
-		</dict>
-		<key>app/views/compras/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>478</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>306</integer>
-		</dict>
-		<key>app/views/elements/ToolBar.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>10</integer>
-				<key>line</key>
-				<integer>71</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>66</integer>
-		</dict>
-		<key>app/views/layouts/plain.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>54</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>26</integer>
-		</dict>
-		<key>app/views/materialmovimientos/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>369</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>69</integer>
-		</dict>
-		<key>app/views/materialmovimientos/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>75</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>74</integer>
+			<integer>342</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/elements/ToolBar.ctp</string>
-		<string>app/models/entsal.php</string>
-		<string>app/models/entsaldet.php</string>
-		<string>app/views/materialmovimientos/index.ctp</string>
-		<string>app/views/articulos/index.ctp</string>
-		<string>app/app_controller.php</string>
-		<string>app/views/compras/edit.ctp</string>
-		<string>app/controllers/compras_controller.php</string>
-		<string>app/controllers/materialmovimientos_controller.php</string>
-		<string>app/views/materialmovimientos/edit.ctp</string>
-		<string>app/views/layouts/plain.ctp</string>
+		<string>app/views/helpers/ax_u_i.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{46, 30}, {923, 848}}</string>
+	<string>{{48, 30}, {923, 848}}</string>
 </dict>
 </plist>

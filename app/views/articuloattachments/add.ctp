@@ -43,3 +43,5 @@ echo $html->script('jquery/bootstrap/bootstrap.min');
 		$('.fileUpload').fileUploader();
 	});
 < /script>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

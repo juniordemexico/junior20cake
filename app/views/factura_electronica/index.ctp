@@ -108,3 +108,5 @@ echo $form->create('Factura',array('inputDefaults' => array(
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Factura','MyRowClickAction' => 'edit')); ?>
 
 </div> <!-- index-form -->
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

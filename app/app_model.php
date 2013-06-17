@@ -171,7 +171,7 @@ class AppModel extends Model
 							array('cache'=>false)
 							);
 			if($rs && isset($rs[0][0]) && is_array($rs[0][0])) {
-				$newValue=$rs[0][0]['generatorvalue'];
+				$newValue=$rs[0][0]['generatorvalue']+($advance==0?1:0);
 				// Fill with zeroes
 				$newFolio=$serie.str_repeat('0',$seriesize-strlen($serie.$newValue)).$newValue;
 

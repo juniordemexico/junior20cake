@@ -63,3 +63,5 @@ $(document).ready( function () {
 
 
 ?>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>
