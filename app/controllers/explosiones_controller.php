@@ -43,6 +43,13 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
+
+		$data=$this->Articulo->findById($id);
+
+		$this->set('data', $data );
+		$this->set('related', $this->Entsal->loadDependencies());
+		$this->set('title_for_layout', 'Mov Materiales::'.$data['Master'][$this->{$this->uses[0]}->title] );
+
 		$this->data=array();
 		$this->data['master']=$this->Articulo->findById($id);
 		$this->data['master']['Explosiondato']['molde']=$this->Explosiondato->field('molde', array('articulo_id'=>$id));

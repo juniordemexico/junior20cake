@@ -1,3 +1,9 @@
+<div class="span12 index-form">
+<?php
+$this->Paginator->options(array('update' => '#content',
+								'evalScripts' => true,
+								));
+?>
 <div class="gridWrapper">
 <?php 
 echo $form->create('Proveedor', array('inputDefaults' => array(
@@ -48,8 +54,8 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-	<?php echo $this->Form->end(); ?>
-	</div> <!-- gridWrapper -->
+<?php echo $this->Form->end(); ?>
+</div> <!-- gridWrapper -->
 
 <?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Proveedor','MyRowClickAction' => 'costoarticulo')); ?>
 
@@ -58,6 +64,10 @@ echo $form->create('Proveedor', array('inputDefaults' => array(
 <?php echo 
 $this->Js->get('.t-row')->event(
 'click',
-"location.replace('".$this->Html->url(array('action'=>'costoarticulo'))."/'+this.id);"
+"location.replace('".
+$this->Html->url(array('action'=>'costoarticulo')).
+"/'+this.id);"
 , array('stop' => true));
 ?>
+
+<script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>
