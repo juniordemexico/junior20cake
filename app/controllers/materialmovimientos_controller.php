@@ -87,16 +87,16 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		$data=$this->Entsal->findById($id, array('id', 'esrefer', 'esfecha',
 												'created', 'modified', 'esst', 'est'));
 		if( $data && $data['Entsal']['id']>0 && $data['Entsal']['esst']=='A' ) {
-			$name=$data['Entsal']['esrefer'];
+			$title=$data['Entsal']['esrefer'];
 			// Execute Model Operations
 			if( $this->Entsal->cancel($id) ) {
 				$this->set('result', 'ok');
-				$this->set('message', "Transacción Cancelada {$name}. (id: {$id})");
+				$this->set('message', "Transacción Cancelada {$title}. (id: {$id})");
 				$this->set('setFields', array( 'st' => 'C' ) );
 			}
 			else {
 				$this->set('result', 'error');
-				$this->set('message', "Error al cancelar la transacción {$name}. (id: {$id})");
+				$this->set('message', "Error al cancelar la transacción {$title}. (id: {$id})");
 			}
 		}
 		else {
