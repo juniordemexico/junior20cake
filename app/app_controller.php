@@ -4,14 +4,14 @@ App::import('Sanitize');
 
 class AppController extends Controller {
 	// class variables
-	var $_Filter = array();
+	public $_Filter = array();
 
 	// UI Theming properties
-//	var $view = 'Theme';
-//	var $theme = 'corn_flower_blue';
+//	public $view = 'Theme';
+//	public $theme = 'corn_flower_blue';
 
 	// setup components
-	var $components = array('RequestHandler',
+	public $components = array('RequestHandler',
 //									'Acl',
 							'Session',
   							'Auth',	
@@ -27,7 +27,7 @@ class AppController extends Controller {
 							//			'Autocomplete',
 							);
 
-	var $helpers = array(
+	public $helpers = array(
 /*		'AssetCompress.AssetCompress',*/
 		'Js' => array('Jquery'),
 		'Ajax',
@@ -49,14 +49,14 @@ class AppController extends Controller {
 
 	);
 
-	var $layout = 'plain';
+	public $layout = 'plain';
 
 	public $ok=true;
 	
 	public $apiResponse=array();
 	
 	// default datetime filter
-	var $_Form_options_datetime = array();
+	public $_Form_options_datetime = array();
 
 	/**
 	 * Before any Controller action
@@ -323,7 +323,7 @@ class AppController extends Controller {
 
 // Controller class for Public - World-wide open content
 class MyPublicAppController extends AppController {
-	var $layout = 'public';
+	public $layout = 'public';
 
 }
 
@@ -332,33 +332,92 @@ class MyPublicAppController extends AppController {
 
 // Controller class for Authenticated Users content
 class MyAppController extends AppController {
-	var $layout = 'plain';
+	public $layout = 'plain';
 
 }
 
 // Controller class for List, Data Browsing, etc
 class ListAppController extends AppController {
-	var $layout = 'plain';
+	public $layout = 'plain';
 
 }
 
 // Controller class for Master Catalogs (products, customers, providers... catalogs)
 class MasterDetailAppController extends AppController {
-	var $layout = 'default';
+	public $layout = 'default';
+	public $paginate = array(	'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGINATE_ROWS,
+							);
+
+	public function index() {
+		// Get controller's main model's metadata
+		$modelName=$this->uses[0];
+		$model=$this->$modelName;
+		$primaryKey=$model->primaryKey;
+		$stField=$model->stField;
+		$titleField=$model->title;
+
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($modelName, $filter));
+	}
+
+	public function cancel( $id=null ) {
+		// Checking if this controller has a defined main model
+		if (!isset($this->uses) || !is_array($this->uses) || !isset($this->uses[0])) {
+			$this->set('result', 'error');
+			$this->set('message', 'Configuración del controlador incorrecta');
+			return;
+		}
+
+		// Validate the received item ID
+		if (!$id || !$id>0) {
+			$this->set('result', 'error');
+			$this->set('message', __('invalid_item', true));
+			return;
+		}
+
+		// Get controller's main model's metadata
+		$modelName=$this->uses[0];
+		$model=$this->$modelName;
+		$primaryKey=$model->primaryKey;
+		$stField=$model->stField;
+		$titleField=$model->title;
+
+		// Execute Model Operations
+		$data=$model->findById($id, array($primaryKey, $stField, $titleField, 'created', 'modified'));
+		if( $data && $data[$modelName][$primaryKey]>0 && $data[$modelName][$stField]=='A' ) {
+			$title=$data[$modelName][$titleField];
+			// Execute the cancelation
+			if( $model->cancel($id) ) {
+				$this->set('result', 'ok');
+				$this->set('message', "Transacción Cancelada {$title}. (id: {$id})");
+				$this->set('setFields', array( $stField => 'C' ) );
+			}
+			else {
+				$this->set('result', 'error');
+				$this->set('message', "Error al cancelar la transacción {$title}. (id: {$id})");
+			}
+		}
+		else {
+			$this->set('result', 'error');
+			$this->set('message', "No se encontró el item o ya esta cancelado (id: {$id})");
+		}
+	}
 
 }
 
 // Controller class for Transactions (inventory i/o, orders, invoices ...) 
 class TransactionAppController extends AppController {
-	var $layout = 'default';
+	public $layout = 'default';
 
 }
 
 // Controller class used for reporting and exporting
 class ReportAppController extends AppController {
-	var $layout = 'report';
+	public $layout = 'report';
 
-	var $components = array('RequestHandler',
+	public $components = array('RequestHandler',
 							'Session',
 							'Auth',
 //							'Gzip',
@@ -370,7 +429,7 @@ class ReportAppController extends AppController {
 							'Axreport',
 							);
 
-	var $helpers = array(
+	public $helpers = array(
 		'Js' => array('Jquery'),
 		'Ajax',
 		'Number',

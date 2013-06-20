@@ -1422,6 +1422,8 @@ function(){g.remove()});g.bind("hide",function(){if("escape"==f&&"function"==typ
 var axAlert = function(txt, type, sticky, title, icon) {
 	var labelClass='';
 	var iconClass='';
+	var title='';
+	var theTime=2500;
 	
 	if(typeof type == 'undefined') {
 		type='info';
@@ -1440,26 +1442,31 @@ var axAlert = function(txt, type, sticky, title, icon) {
 			labelClass = 'label-success'; 
 			iconClass = 'Fevorite.png';
 			title = title!='' ? title : 'OK!';
+			theTime = 2000;
 			break;
 		case 'notification': 
 			labelClass='label-info';
 			iconClass = 'Info 2.png';
 			title = title!='' ? title : 'NOTIFICACION!';
+			theTime = 3000;
 			break;
 		case 'error':
 			labelClass = 'label-important';
 			iconClass = 'Winamp.png';
 			title = title!='' ? title : 'ERROR!';
+			theTime = 5000;
 			break;
 		case 'warning': 
 			labelClass='label-warning';
 			iconClass = 'Info 2.png';
 			title = title!='' ? title : 'ADVERTENCIA!';
+			theTime = 3000;
 			break;
 		default:
 			labelClass='label-default';
 			iconClass = 'Info.png';
 			title = title!='' ? title : 'ATENCION!';
+			theTime = 2000;
 	}
 	
 	if(typeof icon != 'undefined') {
@@ -1482,7 +1489,7 @@ var axAlert = function(txt, type, sticky, title, icon) {
 		text: txt,
 		image: '/img/icons/devine/white/'+iconClass,
 		fade_out_speed: 3000, // how fast the notices fade out
-		time: 2000, // hang on the screen for...
+		time: theTime, // hang on the screen for...
 		class_name: 'my-sticky-class',
 		sticky: sticky,
 	});

@@ -1,19 +1,17 @@
 <?php
 
 class MaterialmovimientosController extends MasterDetailAppController {
-	var $name='Materialmovimientos';
+	public $name='Materialmovimientos';
 
-	var $uses = array(
+	public $uses = array(
 		'Entsal', 'Entsaldet', 'Articulo', 'Color', 'Tipoartmovbodega', 'Almacen', 'Artmovbodegadetail'
 	);
 
-	var $layout = 'default';
+	public $layout = 'default';
 	
-	var $cacheAction = array('view'
-							);
-	
-	public function index() {
-		$this->paginate = array('update' => '#content',
+	public $cacheAction = array('view');
+
+	public $paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
 								'order' => array('Entsal.esfecha' => 'desc'),
@@ -25,10 +23,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
 												'Entsal.almacen_id','Almacen.aldescrip'),
 //								'conditions' => array('Entsal.est'=>0),
-								);
-		$filter = $this->Filter->process($this);
-		$this->set('items', $this->paginate('Entsal', $filter));
-	}
+							);
 
 	public function edit( $id = null ) {
 		if (!$id || !$id>0) {
@@ -80,30 +75,6 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		return;
 	}
 	
-	public function cancel( $id=null ) {
-		if (!$id || !$id>0) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-		}
-		$data=$this->Entsal->findById($id, array('id', 'esrefer', 'esfecha',
-												'created', 'modified', 'esst', 'est'));
-		if( $data && $data['Entsal']['id']>0 && $data['Entsal']['esst']=='A' ) {
-			$title=$data['Entsal']['esrefer'];
-			// Execute Model Operations
-			if( $this->Entsal->cancel($id) ) {
-				$this->set('result', 'ok');
-				$this->set('message', "Transacción Cancelada {$title}. (id: {$id})");
-				$this->set('setFields', array( 'st' => 'C' ) );
-			}
-			else {
-				$this->set('result', 'error');
-				$this->set('message', "Error al cancelar la transacción {$title}. (id: {$id})");
-			}
-		}
-		else {
-			$this->set('result', 'error');
-			$this->set('message', "No se encontró el item o ya esta cancelado (id: {$id})");
-		}
-	}
 
 	public function getItemByCve($cve=null) {
 //		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
