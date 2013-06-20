@@ -11,7 +11,7 @@
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
-		<button type="submit" class="btn btn-primary" data-ng-click="alert('mierda')" data-ng-disabled="false && !(data.Master.id>0) || data.Master.st=='C'" alt="Cancelar">
+		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(data.Master.id>0) || data.Master.st=='C'" alt="Cancelar">
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
@@ -239,6 +239,32 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				axAlert(response.data.message, 'success', false);
 				return;
+			}
+		});
+	}
+
+	$scope.cancel = function() {
+		var title = 'Confirmación';
+		var msg = '¿ Seguro de Cancelar ?';
+		var btns = [{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}];
+		$dialog.messageBox(title, msg, btns)
+		.open()
+		.then( function(result) {
+			if(result) {
+				// Send the CANCEL request to the server
+				$http.get( '/Materialmovimientos/cancel/'+$scope.data.Master.id+'.json'
+				).then(function(response) {
+					// We got a response to process
+					if(typeof response.data != 'undefined' && 
+						typeof response.data.result != 'undefined') {
+						if( typeof response.data.setFields != 'undefined' && angular.isObject(response.data.setFields) ) {
+							$scope.data.Master.st='C';
+						}
+						axAlert(response.data.message, (response.data.result=='ok'?'success':'error'), false);						
+						return;
+					}
+					axAlert('Error en la respuesta', 'error', false);						
+				});
 			}
 		});
 	}

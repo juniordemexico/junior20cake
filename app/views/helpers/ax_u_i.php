@@ -144,7 +144,7 @@ class AxUIHelper extends Helper {
 			'edit'				=> $baseurl.'/edit',
 			'view'				=> $baseurl.'/view',
 			'preview'			=> $baseurl.'/preview',
-			'cancel'			=> $baseurl.'/cancel.json',
+			'cancel'			=> $baseurl.'/cancel/%s.json',
 			'delete' 			=> $baseurl.'/delete.json',
 			'authorize' 		=> $baseurl.'/authorize.json',
 			'print'				=> $baseurl.'/print.json',

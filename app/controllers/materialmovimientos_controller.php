@@ -31,8 +31,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	}
 
 	public function edit( $id = null ) {
-		$this->layout='default';
-		if (!$id) {
+		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
@@ -81,101 +80,29 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		return;
 	}
 	
-	public function setCaracteristicas($articulo_id=null) {
-		
-		if(	!isset($this->params['url']['articulo_id'])
-		) {
-			$this->set('result', 'error');
-			$this->set('message', __('invalid_item', true) );
-			return;
+	public function cancel( $id=null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
 		}
-
-		$articulo_id=$this->params['url']['articulo_id'];
-		$item=$this->Explosiondato->findByArticulo_id($articulo_id);
-
-		if( isset($this->params['url']['molde']) ) $item['Explosiondato']['molde']=$this->params['url']['molde'];
-		if( isset($this->params['url']['datos']) ) $item['Explosiondato']['datos']=$this->params['url']['datos'];
-
-		if( $this->Explosiondato->save($item)) {
-			$this->set('result', 'ok');
-			$this->set('message', "Las Caracteristicas se guardaron correctamente");
-			return;
-		}
-		$this->set('result', 'error');
-		$this->set('message', __('item_could_not_be_saved', true) );
-	}
-	
-	public function deleteItem($id=null) {
-		// Check if the ID was submited and if the specified item exists
-		$id=$this->params['url']['id'];
-		if (
-			!$item=$this->Explosion->findById($id)
-			) {
-			$this->set('result', 'error');
-			$this->set('message', __('invalid_item', true)." (id: $id)" );
-			return;
-		}
-		$articulo_id=$item['Explosion']['articulo_id'];
-
-		// Execute DB Operations
-		if ($this->Explosion->delete($id)) {
-			$this->set('result', 'ok');
-			$this->set('message', $this->tipoarticulomovimientos[$item['Explosion']['tipoexplosion_id']].' '.
-								' se Eliminó de la Explosión');
-			$this->set('details', $this->Explosion->getAllItems($item['Explosion']['articulo_id']) );
-			return;
-		}
-		$this->data['result']='error';
-		$this->data['message']=__('item_could_not_be_deleted', true)." (id: ".$item['Explosion']['id'].")";
-	}
-
-
-	public function updateCantidad($id=null, $value=0) {
-		$this->autoRender=false;
-		$this->data=array();
-
-		// Check if the ID was submited and if the specified item exists
-		if (!$id || 
-			!$item=$this->Explosion->read(null, $id)) {
-			$this->data['result']='error';
-			$this->data['message']='Item Inválido ('.$id.', '.$value.')';
-			echo json_encode($this->data);
-			die();
-		}
-
-		$this->data=$this->Explosion->read(null, $id);
-
-/*
-		if( isset($this->params['url']['value']) && $this->params['url']['value']>0) {
-			$value=$this->params['url']['value'];
-		}
-		else {
-			return( e(json_encode(array('result'=>'error', 'mesage'=>__('invalid_item', true)))) );
-		}
-*/		
-		if (!$value || $value<0) {
-			if( isset($this->params['url']['value']) ) {
-				$value=$this->params['url']['value'];
+		$data=$this->Entsal->findById($id, array('id', 'esrefer', 'esfecha',
+												'created', 'modified', 'esst', 'est'));
+		if( $data && $data['Entsal']['id']>0 && $data['Entsal']['esst']=='A' ) {
+			$name=$data['Entsal']['esrefer'];
+			// Execute Model Operations
+			if( $this->Entsal->cancel($id) ) {
+				$this->set('result', 'ok');
+				$this->set('message', "Transacción Cancelada {$name}. (id: {$id})");
+				$this->set('setFields', array( 'st' => 'C' ) );
 			}
 			else {
-				echo __('invalid_item', true).($id?" (id: $id)":'');			
-				exit;
+				$this->set('result', 'error');
+				$this->set('message', "Error al cancelar la transacción {$name}. (id: {$id})");
 			}
 		}
-
-		// Execute DB Operations
-		if ($this->Explosion->saveField('cant', $value) ) {
-			$this->data['result']='ok';
-			$this->data['message']='El Material '.$item['Articulo']['arcveart'].
-									' se actualizo correctamente.';
-			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
-		}
 		else {
-			$this->data['result']='error';
-			$this->data['message']='El Material '.$id.
-									' NO se pudo actualizar al costo '.$value;
+			$this->set('result', 'error');
+			$this->set('message', "No se encontró el item o ya esta cancelado (id: {$id})");
 		}
-		echo json_encode($this->data);
 	}
 
 	public function getItemByCve($cve=null) {

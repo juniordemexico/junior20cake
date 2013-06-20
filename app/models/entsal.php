@@ -146,6 +146,7 @@ class Entsal extends AppModel
 		return( $Item );
 	}
 */
+
 	public function loadDependencies() {
 		$Tipoartmovbodega = $this->toJsonListArray( $this->Tipoartmovbodega->find('list', 
 							array(	'fields' => array('Tipoartmovbodega.id', 'Tipoartmovbodega.cve'),
@@ -153,7 +154,6 @@ class Entsal extends AppModel
 		$Almacen = $this->toJsonListArray( $this->Almacen->find('list', 
 							array(	'fields' => array('Almacen.id', 'Almacen.aldescrip')
 									 )));
-
 		return compact('Almacen','Tipoartmovbodega');		
 	}
 /*
