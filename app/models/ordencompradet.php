@@ -48,20 +48,8 @@ class Ordencompradet extends AppModel
 				'message' => 'Especifica la Cantidad'
 			),
 			'inbetween' => array(
-				'rule' => array('between', 0.01, 9999999.99),
-				'message' => 'El valor máximo de cantidad es 9,999,999.99'
-				),
-		),
-		'cant' => array(
-			'isrequired' => array(
-				'rule' => 'notEmpty',
-				'required' => true,
-				'allowEmpty' => true,
-				'message' => 'Especifica el Costo'
-			),
-			'inbetween' => array(
-				'rule' => array('between', 0.01, 9999999.99),
-				'message' => 'El valor máximo del costo es 9,999,999.9999'
+				'rule' => array('between', 0.0001, 9999999.99),
+				'message' => 'El valor máximo de la cantidad es 9,999,999.9999'
 				),
 		),
 	);

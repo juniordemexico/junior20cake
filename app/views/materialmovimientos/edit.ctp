@@ -26,9 +26,7 @@
 
 </div>
 
-<?php //echo $this->Form->create('Entsal', array('action'=>'/add', 'class'=>'form well', 'data-ng-form'=>"formMaster")); ?>
 <form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
-
 <input type="hidden" name="_method" value="PUT" />
 
 <!-- Form's Tabbed Divs -->
@@ -101,10 +99,10 @@
 		</div>
 	</div>
 
-	</div> <!-- div.span6 -->
+	</div> <!-- div.span -->
 	<div class="span1">&nbsp;</div>
 
-	<div class="span6">
+	<div class="span5">
 
 	<div class="control-group">
 		<label for="EntsalTipoartmovbodega_id" class="control-label">Tipo de Mov:</label>
@@ -124,14 +122,14 @@
 			<input type="text" id="EntsalEsconcep" name="data[Entsal][esconcep]" field="Entsal.esconcep"
 				data-ng-model="data.Master.esconcep" ng-required="true"
 				data-ng-minlength="1" data-ng-maxlength="32" data-ng-required="true"
-				class="span4" placeholder="Concepto..." title="Concepto de la transacción" />
+				class="span3" placeholder="Concepto..." title="Concepto de la transacción" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="CompraObser" class="control-label">Observaciones:</label>
 		<div class="controls input">
 			<textarea name="data[Entsal][obser]" field="Entsal.Obser" maxlength="255"
-				class="span4" cols="30" rows="2" id="EntsalObser"
+				class="span3" cols="20" rows="2" id="EntsalObser"
 				data-ng-model="data.Master.esobser"
 				data-ng-minlength="0" data-ng-maxlength="255"
 				placeholder="Observaciones..."
@@ -209,7 +207,7 @@
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
 
-var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[] };
+var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[], t0: 0,cant:0 };
 
 /* Begins Web UI controller's initialization ************************/
 <?php echo $this->AxUI->initAppController(); ?>
@@ -217,7 +215,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 /* Begins Web UI model's initialization *****************************/
 <?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
-	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "cant":0};
+	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0};
 
 	$scope.currentItem=angular.copy(emptyItem);
 
@@ -227,8 +225,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 							"Master" 	: $scope.data.Master,
 							"Details"	: $scope.data.Details
 							},
-							'Entsal',
-							'Entsaldet'
+							$scope.data.masterModel,
+							$scope.data.detailModel
 						);
 						
 		// Send the PUT request to the server

@@ -47,7 +47,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 										),
 									'Tipoartmovbodega' => null,
 									'masterModel' => $this->{$this->uses[0]}->name,
-									'detailsModel' => isset($this->{$this->uses[0]}->detailsModel) ?
+									'detailModel' => isset($this->{$this->uses[0]}->detailsModel) ?
 														$this->{$this->uses[0]}->detailsModel :
 														null,
 									'Details' => array(),
@@ -77,7 +77,6 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	
 
 	public function getItemByCve($cve=null) {
-//		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||
 			!$item=$this->Articulo->findByArcveart($cve)

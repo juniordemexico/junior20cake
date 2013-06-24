@@ -4,67 +4,81 @@ class ComprasController extends MasterDetailAppController {
 	public $name='Compras';
 
 	public $uses = array(
-		'Compra', 'Compradet', 'Articulo', 'Color', 'Proveedor', 'Divisa'
+		'Compra', 'Compradet', 'Articulo', 'Color', 'Tipoartmovbodega', 'Almacen', 'Artmovbodegadetail'
 	);
 
 	public $layout = 'default';
 	
-	public $cacheAction = array('view'
-							);
+	public $cacheAction = array('view');
 
 	public $paginate = array('update' => '#content',
 							'evalScripts' => true,
 							'limit' => PAGINATE_ROWS,
 							'order' => array('Compra.fecha' => 'desc'),
 							'fields' => array('Compra.id', 'Compra.folio', 'Compra.fecha',
+											'Compra.ordencompra_id',
 											'Compra.importe', 'Compra.impoimpu', 'Compra.total',
 											'Compra.st', 'Compra.t',
 											'Compra.created', 'Compra.modified',
-											'Compra.proveedor_id','Compra.divisa_id',
+											'Compra.proveedor_id','Compra.proveedor_refer',
+											'Compra.divisa_id', 'Divisa.dicve',
 											'Proveedor.prcvepro','Proveedor.prnom',
 											'Proveedor.pratn'),
 //										'conditions' => array('Compra.est'=>0),
 							);
 
 	public function edit( $id = null ) {
-		$this->layout='default';
-		if (!$id) {
+		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$master=$this->Compra->findById($id);
-		$details=$this->Compra->getDetails($id);
-		$this->set(compact('master', 'details'));
-		$this->set('related', $this->Entsal->loadDependencies());
-		$this->set('title_for_layout', 'Compras :: Nueva' );
+		$data=$this->Compra->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('related', $this->Compra->loadDependencies());
+		$this->set('title_for_layout', 'Factura Compra::'.$data['Master'][$this->{$this->uses[0]}->title] );
 	}
 
 	public function add() {
-		if (!empty($this->data)) {
-			$this->Compra->create();
-			if (
-				$this->Compra->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Compra->id.')', 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
-			}
-		}
-
-		$this->set('master', array('Compra'=>
-										array('id'=>null, 'folio'=>'C0000001', 'fecha'=> date('Y-m-d'), 
-											'divisa_id'=>1,'tipodecambio'=>1,'proveedor_id'=>null,'','st'=>'A',
+		// Send a blank form to the user
+		if ( empty($this->data) ) {
+			$this->set('data', array('Master' =>
+									array('id'=>null, 'st'=>'A', 't'=>'0',
+										'folio'=>$this->Compra->getNextFolio('CO', 0),
+										'fecha'=> date('Y-m-d'),
+											'tipoarticulo_id'=>1,
 										),
-									'Proveedor' => null
-							));
-		$this->set('details', array());
-		$this->set('related', $this->Compra->loadDependencies());
+									'Proveedor' => null,
+									'masterModel' => $this->{$this->uses[0]}->name,
+									'detailModel' => isset($this->{$this->uses[0]}->detailsModel) ?
+														$this->{$this->uses[0]}->detailsModel :
+														null,
+									'Details' => array(),
+						));
+			$this->set('related', $this->Compra->loadDependencies());
+			
+			$this->render('edit');
+			return;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$folio=$this->Compra->getNextFolio('CO', 1);
+		$this->data['Compra']['folio']=$folio;
 
-		$this->render('edit');
+		$this->Compra->create();
+		if ( $this->Compra->saveAll($this->data) ) {
+			$id=$this->Compra->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+		return;
 	}
+	
+	
 
 	public function getItemByCve($cve=null) {
-//		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||
 			!$item=$this->Articulo->findByArcveart($cve)
@@ -75,16 +89,6 @@ class ComprasController extends MasterDetailAppController {
 		}
 
 		// Check if Item already exists
-/*
-		if(
-			$this->Compradet->find('first', array('conditions'=>array('articulo_id'=>$articulo_id,
-			 														'material_id'=>$item['Articulo']['id'])) )
-			) {
-			$this->set('result', 'error');
-			$this->set('message', "$cve ya existe para este producto");
-			return;			
-		}
-*/
 		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
 		$item['ArticuloColor']=$this->Articulo->getArticuloColor($item['Articulo']['id']);
 

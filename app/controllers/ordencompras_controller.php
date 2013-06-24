@@ -20,51 +20,65 @@ class OrdencomprasController extends MasterDetailAppController {
 											'Ordencompra.importe', 'Ordencompra.impoimpu', 'Ordencompra.total',
 											'Ordencompra.st', 'Ordencompra.t',
 											'Ordencompra.created', 'Ordencompra.modified',
-											'Ordencompra.proveedor_id','Ordencompra.divisa_id',
+											'Ordencompra.proveedor_id','Ordencompra.proveedor_refer',
+											'Ordencompra.divisa_id',
 											'Proveedor.prcvepro','Proveedor.prnom',
 											'Proveedor.pratn'),
 //										'conditions' => array('Ordencompra.est'=>0),
 							);
 
 	public function edit( $id = null ) {
-		$this->layout='default';
-		if (!$id) {
+		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$master=$this->Ordencompra->findById($id);
-		$details=$this->Ordencompra->getDetails($id);
-		$this->set(compact('master', 'details'));
-		$this->set('related', $this->Entsal->loadDependencies());
-		$this->set('title_for_layout', 'Orden de Compra :: Nueva' );
+		$data=$this->Ordencompra->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('related', $this->Ordencompra->loadDependencies());
+		$this->set('title_for_layout', 'Órden de Compra::'.$data['Master'][$this->{$this->uses[0]}->title] );
 	}
 
 	public function add() {
-		if (!empty($this->data)) {
-			$this->Ordencompra->create();
-			if (
-				$this->Ordencompra->save($this->data)) {
-				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Ordencompra->id.')', 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
-			}
-		}
-
-		$this->set('master', array('Ordencompra'=>
-										array('id'=>null, 'folio'=>'C0000001', 'fecha'=> date('Y-m-d'), 
-											'divisa_id'=>1,'tipodecambio'=>1,'proveedor_id'=>null,'','st'=>'A',
+		// Send a blank form to the user
+		if ( empty($this->data) ) {
+			$this->set('data', array('Master' =>
+									array('id'=>null, 'st'=>'A', 't'=>'0',
+										'folio'=>$this->Ordencompra->getNextFolio('OC', 0),
+										'fecha'=> date('Y-m-d'),
+											'tipoarticulo_id'=>1,
 										),
-									'Proveedor' => null
-							));
-		$this->set('details', array());
-		$this->set('related', $this->Ordencompra->loadDependencies());
+									'Proveedor' => null,
+									'masterModel' => $this->{$this->uses[0]}->name,
+									'detailModel' => isset($this->{$this->uses[0]}->detailsModel) ?
+														$this->{$this->uses[0]}->detailsModel :
+														null,
+									'Details' => array(),
+						));
+			$this->set('related', $this->Ordencompra->loadDependencies());
+			
+			$this->render('edit');
+			return;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$folio=$this->Ordencompra->getNextFolio('OC', 1);
+		$this->data['Ordencompra']['folio']=$folio;
 
-		$this->render('edit');
+		$this->Ordencompra->create();
+		if ( $this->Ordencompra->saveAll($this->data) ) {
+			$id=$this->Ordencompra->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('losdatos', $this->data);
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+		return;
 	}
+	
 
 	public function getItemByCve($cve=null) {
-//		if(!$cve && isset($this->params['url']['articulo_id']) ) $articulo_id=$this->params['url']['articulo_id'];
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||
 			!$item=$this->Articulo->findByArcveart($cve)
@@ -75,16 +89,6 @@ class OrdencomprasController extends MasterDetailAppController {
 		}
 
 		// Check if Item already exists
-/*
-		if(
-			$this->Ordencompradet->find('first', array('conditions'=>array('articulo_id'=>$articulo_id,
-			 														'material_id'=>$item['Articulo']['id'])) )
-			) {
-			$this->set('result', 'error');
-			$this->set('message', "$cve ya existe para este producto");
-			return;			
-		}
-*/
 		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
 		$item['ArticuloColor']=$this->Articulo->getArticuloColor($item['Articulo']['id']);
 

@@ -12,6 +12,8 @@ class Ordencompra extends AppModel
 	public $longTitle = null;
 	public $stField = 'st';
 
+	public $detailsModel='Ordencompradet';
+
 	var $cache=false;
 
 
@@ -24,10 +26,6 @@ class Ordencompra extends AppModel
 			'type' => 'date',
 			'length' => 10
 		),
-		'esconcep' => array(
-			'type' => 'string', 
-			'length' => 64
-		),
 		'obser' => array(
 			'type' => 'string', 
 			'length' => 255
@@ -38,7 +36,7 @@ class Ordencompra extends AppModel
 	//The Associations below have been 	, those that are not needed can be removed
 	var $belongsTo = array(
 		'Proveedor',
-		'Divisa',
+		'Divisa'
 	);
 
 
@@ -94,25 +92,6 @@ class Ordencompra extends AppModel
 		),
 
 	);
-
-/*
-	public function getDocument($id) {
-		$this->recursive=1;
-		private $data=$this->findById($id);
-		if(!$data || count($data)<1) {
-			return array();
-		}
-		$data['details']=$data[$this->name.'det'];
-		unset($data[$this->name.'det']);
-		
-	}
-*/
-	
-	public function getDetails($id=null) {
-//		if (!$id || !($this->id>0) ) return array();
-		$this->Ordencompradet->recursive=0;
-		return( $this->Ordencompradet->findAllByOrdencompra_id($id) );
-	}
 
 	public function loadDependencies() {
 		$Proveedor = $this->toJsonListArray( $this->Proveedor->find('list', 

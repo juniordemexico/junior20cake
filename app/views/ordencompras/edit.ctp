@@ -1,30 +1,30 @@
 <header>
 <div class="page-header">
-<h1><small>Ordencompras <strong class="text-info">{{master.Ordencompra.folio}}</strong></small></h1>
+<h1><small>Orden de Compra <strong class="text-info">{{data.Master.folio}}</strong></small></h1>
 </div>
 </header>
-
-<?php //echo $this->Form->create('Ordencompra', array('action'=>'/add', 'class'=>'form well', 'data-ng-form'=>"frmMaster")); ?>
-<ng-form class="form form-horizontal" name="frmMaster">
 
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
 	<div class="btn-group">	
-		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(frmMaster.$pristine || !frmMaster.$valid) || master.Ordencompra.id>0 || details.lenght>0" alt="Guardar">
+		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="(formMaster.$pristine || !formMaster.$valid) || data.Master.id>0 || !data.Details.length>0" alt="Guardar">
 		<i class="icon icon-ok-circle icon-white"></i> Guardar
 		</button>
 
-		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(master.Ordencompra.id>0) || master.Ordencompra.st=='C'" alt="Cancelar">
+		<button type="submit" class="btn btn-primary" data-ng-click="cancel()" data-ng-disabled="!(data.Master.id>0) || data.Master.st=='C'" alt="Cancelar">
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(master.Ordencompra.id>0)" title="Imprimir la transacción" alt="Imprimir">
+		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
 	</div>
 
 </div>
+
+<form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
+<input type="hidden" name="_method" value="PUT" />
 
 <!-- Form's Tabbed Divs -->
 <tabs id="tabs">
@@ -37,7 +37,7 @@
 		<label for="OrdencompraRefer" class="control-label">Folio:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraRefer" name="data[Ordencompra][folio]" field="Ordencompra.folio"
-				data-ng-model="master.Ordencompra.folio" 
+				data-ng-model="data.Master.folio" 
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
@@ -48,7 +48,7 @@
 		<div class="controls input">
 			<input type="text" id="OrdencompraFecha" name="data[Ordencompra][fecha]" field="Ordencompra.fecha"
 				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="master.Ordencompra.fecha" data-ng-required="true"
+				data-ng-model="data.Master.fecha" data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
 		</div>
 	</div>
@@ -58,9 +58,9 @@
 		<div class="controls input">
 			<select id="OrdencompraProveedor_id" name="data[Ordencompra][proveedor_id]"
 				class="span3"
-				data-ng-model="master.Ordencompra.proveedor_id"
+				data-ng-model="data.Master.proveedor_id"
 				data-ng-options="i.id as i.cve for i in related.Proveedor"
-				data-ng-required="true">
+				>
 			</select>
 		</div>
 	</div>
@@ -70,29 +70,29 @@
 		<div class="controls input">
 			<select id="OrdencompraDivisa_id" name="data[Ordencompra][divisa_id]"
 				class="span1"
-				data-ng-model="master.Ordencompra.divisa_id"
+				data-ng-model="data.Master.divisa_id"
 				data-ng-options="i.id as i.cve for i in related.Divisa"
-				data-ng-required="true">
+				>
 			</select>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="OrdencompraObser" class="control-label">Tipo de Cambio:</label>
+		<label for="Ordencompratipodecambio" class="control-label">Tipo de Cambio:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraTipodecambio" name="data[Ordencompra][tipodecambio]" field="Ordencompra.tipodecambio"
-				data-ng-model="master.Ordencompra.tipodecambio"
+				data-ng-model="data.Master.tipodecambio"
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="span1" placeholder="T Cambio..." title="Tipo de cambio al que se realiza la transacción" />
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="OrdencompraRefer" class="control-label">Referencia Proveedor:</label>
+		<label for="OrdencompraProveedor_refer" class="control-label">Referencia Proveedor:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraRefer" name="data[Ordencompra][proveedor_refer]" field="Ordencompra.proveedor_refer"
 				class="span2"
-				data-ng-model="master.Ordencompra.folio"
+				data-ng-model="data.Master.proveedor_refer"
 				data-ng-minlength="0" data-ng-maxlength="16"
 				class="date" placeholder="Folio..." title="Referencia de la Ordén de Ordencompra asignada por el Proveedor" />
 		</div>
@@ -104,24 +104,22 @@
 
 	<div class="span5">
 
-	<div class="control-group"><label for="OrdencompraSt" class="control-label">Estatus</label><div class="controls input"><input type="radio" name="data[Ordencompra][st]" id="OrdencompraStA" value="A" checked="checked"  />Activa <input type="radio" name="data[Ordencompra][st]" id="OrdencompraStC" value="C"  />Cancelada</div></div>
-
 	<div class="control-group">
-		<label for="OrdencompraObser" class="control-label">Suma:</label>
+		<label for="OrdencompraSuma" class="control-label">Suma:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraSuma" name="data[Ordencompra][suma]" field="Ordencompra.suma"
-				data-ng-model="master.Ordencompra.obser"
+				data-ng-model="data.Master.suma"
 				class="span2" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="OrdencompraObser" class="control-label">Descuentos:</label>
+		<label for="OrdencompraDesc1" class="control-label">Descuentos:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraDesc1" name="data[Ordencompra][desc1]" field="Ordencompra.desc1"
-				data-ng-model="master.Ordencompra.desc1"
+				data-ng-model="data.Master.desc1"
 				class="span1" placeholder="Desc 1..." title="Primer Descuento" />
 			<input type="text" id="OrdencompraDesc2" name="data[Ordencompra][desc2]" field="Ordencompra.desc2"
-				data-ng-model="master.Ordencompra.desc2"
+				data-ng-model="data.Master.desc2"
 				class="span1" placeholder="Desc 2..." title="Segundo Descuento" />
 		</div>
 	</div>
@@ -129,7 +127,7 @@
 		<label for="OrdencompraImporte" class="control-label">Importe:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraImporte" name="data[Ordencompra][importe]" field="Ordencompra.importe"
-				data-ng-model="master.Ordencompra.obser" ng-required="true"
+				data-ng-model="data.Master.importe"
 				class="span2" placeholder="Importe..." title="Importe (Suma menos Descuentos Generales)" />
 		</div>
 	</div>
@@ -137,18 +135,18 @@
 		<label for="OrdencompraImpu1" class="control-label">Impuestos:</label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraImpu1" name="data[Ordencompra][impu1]" field="Ordencompra.impu1"
-				data-ng-model="master.Ordencompra.impu1"
+				data-ng-model="data.Master.impu1"
 				class="span1" placeholder="Impu 1..." title="Primer Impuesto" />
 			<input type="text" id="OrdencompraImpu2" name="data[Ordencompra][impu2]" field="Ordencompra.impu2"
-				data-ng-model="master.Ordencompra.impu2"
+				data-ng-model="data.Master.impu2"
 				class="span1" placeholder="Impu 2..." title="Segundo Impuesto" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="OrdencompraTotal" class="control-label">Total:</label>
+		<label for="OrdencompraTotal" class="control-label"><strong>Total:</strong></label>
 		<div class="controls input">
 			<input type="text" id="OrdencompraTotal" name="data[Ordencompra][total]" field="Ordencompra.total"
-				data-ng-model="master.Ordencompra.total"
+				data-ng-model="data.Master.total"
 				class="span2" placeholder="Total..." title="Total con Descuentos e Impuestos incluidos" />
 		</div>
 	</div>
@@ -161,7 +159,7 @@
 
 <pane id="tabs-1" heading="Detalle">
 
-		<div class="toolbar well well-small" data-ng-hide="master.Ordencompra.id>0">
+		<div class="toolbar well well-small" data-ng-hide="data.Master.id>0">
 			<input class="span3" data-ng-model="currentItem.Articulo"
 				data-ui-select2="fieldItem" data-ui-event="{ change : 'getItemByCve()' }" 
 				data-item-placeholder="Código del Material..."
@@ -199,16 +197,16 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr data-ng-repeat="item in details" data-detail-id="{{item.Ordencompradet.id}}" class="item-row">
-				<td class="span2">{{item.Articulo.arcveart}}</td>
-				<td class="span2">{{item.Color.cve}}</td>
-				<td class="">{{item.Articulo.ardescrip}}</td>
-				<td class="cant">{{item.Ordencompradet.t0}}</td>
-				<td class="precio">{{item.Ordencompradet.costo | currency}}</td>
+			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
+				<td class="span2">{{i.Articulo.arcveart}}</td>
+				<td class="span2">{{i.Color.cve}}</td>
+				<td class="">{{i.Articulo.ardescrip}}</td>
+				<td class="cant">{{i.Detail.t0}}</td>
+				<td class="precio">{{i.Detail.costo | currency}}</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
-							data-ng-click="detailDelete($index, item, true)"
-							data-ng-hide="master.Ordencompra.id>0">
+							data-ng-click="detailDelete($index, i, true)"
+							data-ng-hide="data.Master.id>0">
 							<i class="icon icon-trash"></i>
 					</button>
 				</td>
@@ -223,8 +221,9 @@
 <div class="control-group">
 	<label for="OrdencompraObser" class="control-label">Observaciones</label>
 	<div class="controls input">
-		<textarea name="data[Ordencompra][obser]" field="Ordencompra.Obser" maxlength="255"
+		<textarea name="data[Ordencompra][obser]" field="data.Master.Obser" maxlength="255"
 				class="span4" cols="30" rows="6" id="OrdencompraObser"
+				data-ng-model="data.Master.obser"
 				data-ng-minlength="0" data-ng-maxlength="255"
 		>
 		</textarea>
@@ -254,10 +253,10 @@
 			</thead>
 			<tbody>
 			<tr data-ng-repeat="item in relatedtransactions" data-detail-id="{{item.Ordencompra.id}}" class="item-row">
-				<td class="date">{{item.Ordencompra.fecha}}</td>
-				<td class="refers">{{item.Ordencompra.folio}}</td>
-				<td class="">{{item.Ordencompra.concep}}</td>
-				<td class="st">{{item.Ordencompra.st}}</td>
+				<td class="date">{{item.Entsal.fecha}}</td>
+				<td class="refers">{{item.Entsal.folio}}</td>
+				<td class="">{{item.Entsal.concep}}</td>
+				<td class="st">{{item.Entsal.st}}</td>
 				<td class="id">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
 							data-ng-click="showItem($index, item, true)">
@@ -304,14 +303,14 @@
 
 </tabs> <!-- div tabbable -->
 
-</ng-form>
+</form>
 
 <script language="javascript">
 
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
 
-var emptyItem={Articulo: {'id': null, text: '', title:''}, t0: 0, costo: 0, Color:{}, ArticuloColor:[] };
+var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[], "t0": 0, "cant":0, "costo":0 };
 
 /* Begins Web UI controller's initialization ************************/
 <?php echo $this->AxUI->initAppController(); ?>
@@ -319,12 +318,12 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, t0: 0, costo: 0, Colo
 /* Begins Web UI model's initialization *****************************/
 <?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
-	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0};
+	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0, "costo":0};
 
 	$scope.relatedtransactions=[
-	{ Ordencompra: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
-	{ Ordencompra: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
-	{ Ordencompra: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
+	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
+	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
+	{ Entsal: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
 	];
 	
 	$scope.relatedcxp=[
@@ -333,81 +332,74 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, t0: 0, costo: 0, Colo
 	];
 	
 	/* Begins the angular controller's code specific to this View */
-//	$scope.related={};
-//	if ($scope._data != null && $scope._data.master != null) $scope.master=$scope._data.master; else $scope.master={};
-//	if ($scope._data != null && $scope._data.details != null) $scope.details=$scope._data.details; else $scope.details=[];
-//	if ($scope._data != null && $scope._data.related != null) $scope.related=$scope._data.related; else $scope.related={};
 
 	$scope.currentItem=angular.copy(emptyItem);
-	$scope.theResponse={};
-	$scope.theDataToPost='';
 
 	$scope.save = function() {
-		var emptyArray={};
-//		alert($('#OrdencompraTipoartmovbodega_id').val());
-//		$('#OrdencompraTipoartmovbodega_id').val(master.Ordencompra.tipoartmovbodega_id);
-
-		// Serialize Master
-		var serializedData='_method=PUT&';
-		angular.forEach($scope.master.Ordencompra, function(value, key) {
-			if( angular.isString(value) || angular.isNumber(value) ) {
-				serializedData=serializedData.concat(encodeURIComponent('data[' + 'Ordencompra' + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
-			}
-		} );
-
-		// Serialize Detail
-		var serializedDetailData='';
-		var i=0;
-		angular.forEach($scope.details, function(value, key) {
-			angular.forEach(value.Ordencompradet, function(value, key) {
-				if( angular.isString(value) || angular.isNumber(value) ) {
-					serializedDetailData=serializedDetailData.concat(encodeURIComponent('data[' + 'Ordencompradet' + ']' +'[' + i + ']' + '[' + key + ']') + '=' + encodeURIComponent(value) + '&');
-				}
-			});
-			i=i+1;			
-		});
-
-		serializedData=serializedData+serializedDetailData;
-		console.log('FULL DATA TO SEND:: '+serializedData);
-		
+		// Serialize the full form, including details items
+		var serializedData=$scope.serializeToServer( {
+							"Master" 	: $scope.data.Master,
+							"Details"	: $scope.data.Details
+							},
+							$scope.data.masterModel,
+							$scope.data.detailModel
+						);
+						
+		// Send the PUT request to the server
 		$http.post($scope.app.actions.add, serializedData
 		).then(function(response) {
-
-		if(typeof response.data != 'undefined' && 
-			typeof response.data.result != 'undefined' && response.data.result=='ok') {
-			console.log('SERVER RESPONDED...');
-			console.log(response);
-			$scope.theResponse=response.data;
-//			$scope.details=response.data.details;
-			axAlert(response.data.message, 'success', false);
-			return;
-		}
-
-		console.log('SERVER RESPONDED...');
-		console.log(response);
-
-		$scope.theResponse=response.data;
+			// We got a response to process
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				axAlert(response.data.message, 'success', false);
+				return;
+			}
 		});
+	}
 
+	$scope.cancel = function() {
+		var title = 'Confirmación';
+		var msg = '¿ Seguro de Cancelar ?';
+		var btns = [{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}];
+		$dialog.messageBox(title, msg, btns)
+		.open()
+		.then( function(result) {
+			if(result) {
+				// Send the CANCEL request to the server
+				$http.get( '/Ordencompras/cancel/'+$scope.data.Master.id+'.json'
+				).then(function(response) {
+					// We got a response to process
+					if(typeof response.data != 'undefined' && 
+						typeof response.data.result != 'undefined') {
+						if( typeof response.data.setFields != 'undefined' && angular.isObject(response.data.setFields) ) {
+							$scope.data.Master.st='C';
+						}
+						axAlert(response.data.message, (response.data.result=='ok'?'success':'error'), false);						
+						return;
+					}
+					axAlert('Error en la respuesta', 'error', false);						
+				});
+			}
+		});
 	}
 
 	$scope.addCurrentItem = function() {
-		var currentLength=$scope.details.length;
+		var currentLength=$scope.data.Details.length;
 		var item={
-			Ordencompradet: {
+			Detail: {
 				id: null,
-				ordencompra_id: null,
+				entsal_id: null,
 				articulo_id: $scope.currentItem.Articulo.id,
 				color_id: $scope.currentItem.Color.id,
 				talla_id: 0,
 				t0: $scope.currentItem.t0,
-//				cant: $scope.currentItem.cant,
-				costo: $scope.currentItem.costo
+				cant: $scope.currentItem.t0,
+				costo: $scope.currentItem.costo,
 			},
 			Articulo: $scope.currentItem.Articulo,
 			Color: $scope.currentItem.Color
 		}
-		if($scope.details.push(item)>currentLength) {
+		if($scope.data.Details.push(item)>currentLength) {
 			$scope.currentItem=angular.copy(emptyItem);
 			$scope.oldValues.arcveart='';		
 			return 1;	
@@ -426,7 +418,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, t0: 0, costo: 0, Colo
 		.open()
 		.then( function(result) {
 			if(result) {
-				$scope.details.splice(index,1);
+				$scope.data.Details.splice(index,1);
 			}
 		});
 	}
