@@ -34,7 +34,7 @@ class ComprasController extends MasterDetailAppController {
 		}
 		$data=$this->Compra->getItemWithDetails($id);
 		$this->set('data', $data );
-		$this->set('related', $this->Compra->loadDependencies());
+//		$this->set('related', $this->Compra->loadDependencies());
 		$this->set('title_for_layout', 'Factura Compra::'.$data['Master'][$this->{$this->uses[0]}->title] );
 	}
 
@@ -54,7 +54,7 @@ class ComprasController extends MasterDetailAppController {
 														null,
 									'Details' => array(),
 						));
-			$this->set('related', $this->Compra->loadDependencies());
+//			$this->set('related', $this->Compra->loadDependencies());
 			
 			$this->render('edit');
 			return;

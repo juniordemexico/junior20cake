@@ -32,7 +32,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		}
 		$data=$this->Entsal->getItemWithDetails($id);
 		$this->set('data', $data );
-		$this->set('related', $this->Entsal->loadDependencies());
+//		$this->set('related', $this->Entsal->loadDependencies());
 		$this->set('title_for_layout', 'Mov Materiales::'.$data['Master'][$this->{$this->uses[0]}->title] );
 	}
 
@@ -52,7 +52,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 														null,
 									'Details' => array(),
 						));
-			$this->set('related', $this->Entsal->loadDependencies());
+//			$this->set('related', $this->Entsal->loadDependencies());
 			
 			$this->render('edit');
 			return;

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/compras_controller.php</string>
+	<string>app/views/helpers/ax_u_i.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,47 +21,47 @@
 	<integer>239</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_model.php</key>
+		<key>app/app_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>37</integer>
 				<key>line</key>
-				<integer>136</integer>
+				<integer>416</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>110</integer>
+			<integer>386</integer>
 		</dict>
 		<key>app/controllers/compras_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>42</integer>
+				<integer>29</integer>
 				<key>line</key>
-				<integer>37</integer>
+				<integer>42</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>9</integer>
+			<integer>19</integer>
 		</dict>
 		<key>app/controllers/materialmovimientos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>49</integer>
+				<integer>72</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>29</integer>
+			<integer>58</integer>
 		</dict>
 		<key>app/controllers/ordencompras_controller.php</key>
 		<dict>
@@ -91,48 +91,6 @@
 			<key>firstVisibleLine</key>
 			<integer>15</integer>
 		</dict>
-		<key>app/models/compradet.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>36</integer>
-				<key>line</key>
-				<integer>62</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>30</integer>
-		</dict>
-		<key>app/models/entsal.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>17</integer>
-				<key>line</key>
-				<integer>159</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>129</integer>
-		</dict>
-		<key>app/models/entsaldet.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>42</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>17</integer>
-		</dict>
 		<key>app/models/ordencompra.php</key>
 		<dict>
 			<key>caret</key>
@@ -147,20 +105,6 @@
 			<key>firstVisibleLine</key>
 			<integer>67</integer>
 		</dict>
-		<key>app/models/ordencompradet.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>55</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>21</integer>
-		</dict>
 		<key>app/views/compras/edit.ctp</key>
 		<dict>
 			<key>caret</key>
@@ -168,40 +112,40 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>63</integer>
+				<integer>287</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>41</integer>
+			<integer>354</integer>
 		</dict>
 		<key>app/views/helpers/ax_u_i.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>130</integer>
 				<key>line</key>
-				<integer>167</integer>
+				<integer>313</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>255</integer>
+			<integer>290</integer>
 		</dict>
 		<key>app/views/materialmovimientos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>238</integer>
+				<integer>203</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>213</integer>
+			<integer>215</integer>
 		</dict>
 		<key>app/views/ordencompras/edit.ctp</key>
 		<dict>
@@ -210,50 +154,30 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>226</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
+			<integer>87</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/controllers/materialmovimientos_controller.php</string>
+		<string>app/app_controller.php</string>
 		<string>app/controllers/compras_controller.php</string>
 		<string>app/views/compras/edit.ctp</string>
 		<string>app/models/compra.php</string>
 		<string>app/models/ordencompra.php</string>
-		<string>app/app_model.php</string>
-		<string>app/models/compradet.php</string>
-		<string>app/models/entsal.php</string>
-		<string>app/models/entsaldet.php</string>
-		<string>app/models/ordencompradet.php</string>
-		<string>app/views/materialmovimientos/edit.ctp</string>
 		<string>app/controllers/ordencompras_controller.php</string>
 		<string>app/views/ordencompras/edit.ctp</string>
 		<string>app/views/helpers/ax_u_i.php</string>
+		<string>app/views/materialmovimientos/edit.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{16, 28}, {923, 848}}</string>
+	<string>{{19, 30}, {923, 848}}</string>
 </dict>
 </plist>

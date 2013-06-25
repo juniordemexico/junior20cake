@@ -281,6 +281,11 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0, "costo":0};
 
+/* Begins Web UI Global Methods *****************************/
+<?php echo $this->AxUI->getAppGlobalMethods(); ?>
+
+	$scope.related=$scope.loadRelatedModels();
+
 	$scope.relatedtransactions=[
 	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
 	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
@@ -428,8 +433,6 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
     	}
   	}
 
-/* Begins Web UI Global Methods *****************************/
-<?php echo $this->AxUI->getAppGlobalMethods(); ?>
 
 /* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->closeAppController(); ?>

@@ -215,8 +215,11 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 /* Begins Web UI model's initialization *****************************/
 <?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
-	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0};
+/* Begins Web UI Global Methods *****************************/
+<?php echo $this->AxUI->getAppGlobalMethods(); ?>
 
+	$scope.related={};
+	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0};
 	$scope.currentItem=angular.copy(emptyItem);
 
 	$scope.save = function() {
@@ -349,8 +352,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
     	}
   	}
 
-/* Begins Web UI Global Methods *****************************/
-<?php echo $this->AxUI->getAppGlobalMethods(); ?>
+	// Load Related Models
+	$scope.loadRelatedModels();
 
 /* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->closeAppController(); ?>

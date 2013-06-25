@@ -405,6 +405,19 @@ class MasterDetailAppController extends AppController {
 		}
 	}
 
+	public function getRelated($id=null) {
+		// Get controller's main model's metadata
+		$modelName=$this->uses[0];
+		$model=$this->$modelName;
+		$primaryKey=$model->primaryKey;
+		$stField=$model->stField;
+		$titleField=$model->title;
+
+		$this->set('result', 'ok');
+		$this->set('currentCacheVersion', 1);		
+		$this->set('related', $model->loadDependencies());
+	}
+
 }
 
 // Controller class for Transactions (inventory i/o, orders, invoices ...) 

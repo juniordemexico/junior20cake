@@ -293,20 +293,39 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 		if( theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
 		 	theRelated!=null) {
 			\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
+			console.log('RELATED found in LocalCache: '+localStorageService.get(\$scope.app.localCachePrefix+'related'));
 			return true;
 		}
 		else {
 			if (typeof related != 'undefined') {
-				alert('no encontrado en cache, pero viene como plain JS');
 				\$scope.related=angular.copy(related);
-				localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
+				localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(related));
+				console.log('RELATED not in Local Cache. It cames as Plain JS: '+\$scope.related);
 				return true;
 			} 
 			else {
-				alert('no encontrado en cache, no viene');
-				\$scope.related={};
+				console.log('No viene en JS, No en Cache, Hay que pedirlo...');
+				\$http.get(\$scope.app.actions.getRelated
+				).then(function(response) {
+				if(typeof response.data != 'undefined' && 
+					typeof response.data.result != 'undefined' && response.data.result=='ok') {
+					\$scope.related=angular.copy(response.data.related);
+					localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
+					console.log('Not in Local Cache, not in Plain JS, I had to request to the server. RESPONSE: '+angular.toJson(\$scope.related));
+					return true;
+				}
+				else {
+					if(typeof response.data.result != 'undefined' && typeof response.data.message != 'undefined') {
+						axAlert(response.data.message, 'error', false);
+					}
+					else {
+						axAlert('Error Desconocido', 'error', false);
+					}
+				}
+       			});
 			}
 		}
+		\$scope.related={};
 		return false;
 	}
 
@@ -335,7 +354,6 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 		}
 	}				
 
-//	\$scope.loadRelatedModels();
 ".
 		"\n\r";
 	}
