@@ -103,7 +103,14 @@ class AppController extends Controller {
 			'messages'=>array(),
 			'data'=>array(),
 			);
-		
+
+		if(isset($this->uses) && is_array($this->uses) && count($this->uses)>0 && is_string($this->uses[0]) ) {
+			$this->masterModelName=$this->uses[0];
+			$this->masterModelTitle=$this->{$this->masterModelName}->title;
+			$this->masterModelPK=$this->{$this->masterModelName}->primaryKey;
+			$this->masterModelstField=$this->{$this->masterModelName}->stField;
+			$this->masterModeldateField=$this->{$this->masterModelName}->dateField;
+		}
 
 		// Set the default page's title
 		$this->pageTitle=$this->name;
@@ -317,6 +324,10 @@ class AppController extends Controller {
 			}
 		}
 
+	public function index() {
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($this->masterModelName, $filter));
+	}
 
 }
 // Internet - Public Base Class Categories 
@@ -350,16 +361,58 @@ class MasterDetailAppController extends AppController {
 								'limit' => PAGINATE_ROWS,
 							);
 
-	public function index() {
-		// Get controller's main model's metadata
-		$modelName=$this->uses[0];
-		$model=$this->$modelName;
-		$primaryKey=$model->primaryKey;
-		$stField=$model->stField;
-		$titleField=$model->title;
+	public $actualSerie = '';
 
-		$filter = $this->Filter->process($this);
-		$this->set('items', $this->paginate($modelName, $filter));
+	public function edit( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+										$data['Master'][$this->masterModelTitle]
+				);
+	}
+
+	public function add( $data=null ) {
+		// Send a blank form to the user
+
+		if(!$data) {
+			$data=array('Master' =>
+					array('id'=>null, 'st'=>'A', 't'=>'0',
+							$this->{$this->masterModelName}->title => $this->{$this->masterModelName}->getNextFolio($this->actualSerie, 0),
+							$this->{$this->masterModelName}->dateField => date('Y-m-d'),
+						),
+						'Details' => array(),
+						'masterModel' => $this->{$this->masterModelName}->name,
+						'detailModel' => isset($this->{$this->masterModelName}->detailsModel) ?
+											$this->{$this->masterModelName}->detailsModel :
+											null,
+				);
+		}
+		if ( empty($this->data) ) {
+			$this->set('data', $data);
+
+			$this->render('edit');
+			return;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$folio=$this->{$this->masterModelName}->getNextFolio($this->actualSerie, 1);
+		$this->data[$this->masterModelName][$this->{$this->masterModelName}->title]=$folio;
+
+		$this->{$this->masterModelName}->create();
+		if ( $this->{$this->masterModelName}->saveAll($this->data) ) {
+			$id=$this->{$this->masterModelName}->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+		return;
 	}
 
 	public function cancel( $id=null ) {

@@ -315,10 +315,16 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 /* Begins Web UI controller's initialization ************************/
 <?php echo $this->AxUI->initAppController(); ?>
 
+/* Begins Web UI Global Methods *****************************/
+<?php echo $this->AxUI->getAppGlobalMethods(); ?>
+
 /* Begins Web UI model's initialization *****************************/
 <?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
+	// Load Related Models
+	$scope.loadRelatedModels();
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0, "costo":0};
+	$scope.currentItem=angular.copy(emptyItem);
 
 	$scope.relatedtransactions=[
 	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
@@ -331,9 +337,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 	{ Cxp: {id:2, folio:"PA003451", fecha:"2013-05-11", abono: 100000, concep:"PAGO POR ANTICIPO COMPRA C0000001"} }
 	];
 	
-	/* Begins the angular controller's code specific to this View */
 
-	$scope.currentItem=angular.copy(emptyItem);
+	/* Begins the angular controller's code specific to this View */
 
 	$scope.save = function() {
 		// Serialize the full form, including details items

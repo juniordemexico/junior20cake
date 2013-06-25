@@ -11,6 +11,7 @@ class Entsal extends AppModel
 	public $title = 'esrefer';
 	public $longTitle = null;
 	public $stField = 'st';
+	public $dateField = 'esfecha';
 
 	public $detailsModel='Entsaldet';
 	

@@ -16,14 +16,15 @@ echo
 	$this->Html->script(array(
 		// Javascript frameworks, libraries and utilities
 		'/js_files/core.js',
+		'/js_files/ui.js',
 //		'/js/jquery/jquery-ui-1.9.1.custom.js',
-		'/js/webui/angular.min.js',
+//		'/js/webui/angular.min.js',
 //		'/js/webui/angular-resource.min.js',
-		'/js/webui/angular-ui.min.js',
-		'/js/webui/ui-bootstrap-tpls-0.3.0.min.js',
-		'/js/webui/localStorageModule.js',
-		'/js/jquery/select2.js',
-		'/js_files/ui-util.js',
+//		'/js/webui/angular-ui.min.js',
+//		'/js/webui/ui-bootstrap-tpls-0.3.0.min.js',
+//		'/js/webui/localStorageModule.js',
+//		'/js/jquery/select2.js',
+//		'/js_files/ui-util.js',
 		)).CR.
 	CR;
 

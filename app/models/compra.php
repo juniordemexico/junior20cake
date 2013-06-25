@@ -10,7 +10,6 @@ class Compra extends AppModel
 	public $primaryKey = 'id';
 	public $title = 'folio';
 	public $longTitle = null;
-	public $stField = 'st';
 
 	public $detailsModel='Compradet';
 

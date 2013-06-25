@@ -17,6 +17,7 @@ class AppModel extends Model
 	public $longTitle='descrip';
 
 	public $stField='st';
+	public $dateField='fecha';
 	public $autorizeField='fautoriza';
 	public $autorizeUserField='uautoriza';
 	

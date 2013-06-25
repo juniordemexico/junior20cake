@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/helpers/ax_u_i.php</string>
+	<string>app/webroot/css_files/core.css</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,163 +21,28 @@
 	<integer>239</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
+		<key>app/webroot/css_files/core.css</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>37</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>416</integer>
+				<integer>1942</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>386</integer>
-		</dict>
-		<key>app/controllers/compras_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>29</integer>
-				<key>line</key>
-				<integer>42</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>19</integer>
-		</dict>
-		<key>app/controllers/materialmovimientos_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>25</integer>
-				<key>line</key>
-				<integer>72</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>58</integer>
-		</dict>
-		<key>app/controllers/ordencompras_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>43</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>22</integer>
-		</dict>
-		<key>app/models/compra.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>3</integer>
-				<key>line</key>
-				<integer>32</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>15</integer>
-		</dict>
-		<key>app/models/ordencompra.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>87</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>67</integer>
-		</dict>
-		<key>app/views/compras/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>287</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>354</integer>
-		</dict>
-		<key>app/views/helpers/ax_u_i.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>130</integer>
-				<key>line</key>
-				<integer>313</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>290</integer>
-		</dict>
-		<key>app/views/materialmovimientos/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>203</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>215</integer>
-		</dict>
-		<key>app/views/ordencompras/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>226</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>87</integer>
+			<integer>1923</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/controllers/materialmovimientos_controller.php</string>
-		<string>app/app_controller.php</string>
-		<string>app/controllers/compras_controller.php</string>
-		<string>app/views/compras/edit.ctp</string>
-		<string>app/models/compra.php</string>
-		<string>app/models/ordencompra.php</string>
-		<string>app/controllers/ordencompras_controller.php</string>
-		<string>app/views/ordencompras/edit.ctp</string>
-		<string>app/views/helpers/ax_u_i.php</string>
-		<string>app/views/materialmovimientos/edit.ctp</string>
+		<string>app/webroot/css_files/core.css</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{19, 30}, {923, 848}}</string>
+	<string>{{-1797, 7}, {923, 848}}</string>
 </dict>
 </plist>
