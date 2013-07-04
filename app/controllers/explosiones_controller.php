@@ -4,7 +4,7 @@ class ExplosionesController extends MasterDetailAppController {
 	var $name='Explosiones';
 
 	var $uses = array(
-		'Articulo', 'Explosion', 'Explosiondato', 'Color', 'Linea', 'Marca', 'Temporada'
+		'Articulo', 'Explosion', 'Explosiondato', 'Color', 'Talla', 'Linea', 'Marca', 'Temporada'
 	);
 
 	var $layout = 'default';
@@ -39,21 +39,17 @@ class ExplosionesController extends MasterDetailAppController {
 	}
 
 	public function edit( $id = null ) {
+		$this->layout='default';
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-
-		$data=$this->Articulo->findById($id);
-
-		$this->set('data', $data );
-		$this->set('related', $this->Entsal->loadDependencies());
-		$this->set('title_for_layout', 'Mov Materiales::'.$data['Master'][$this->{$this->uses[0]}->title] );
-
 		$this->data=array();
 		$this->data['master']=$this->Articulo->findById($id);
 		$this->data['master']['Explosiondato']['molde']=$this->Explosiondato->field('molde', array('articulo_id'=>$id));
 		$this->data['details']=$this->Explosion->getAllItems($id);
+//		$this->data['related']=array();
+//		$this->data['related']['Talla']=$this->Talla->findById($this->data['master']['Articulo']['talla_id']);
 		$this->set('title_for_layout', 'Explosion::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
@@ -191,6 +187,58 @@ class ExplosionesController extends MasterDetailAppController {
 		else {
 			$this->data['result']='error';
 			$this->data['message']='El Material '.$this->Explosion->id.
+									' NO se puedo actualizar ';
+		}
+		echo json_encode($this->data);		
+	}
+
+	public function toggleTalla($id=null, $talla_index=0, $newValue=-1) {
+		$this->autoRender=false;
+		$this->data=array();
+
+		$talla_field='t'.($talla_index && $talla_index>=0 ? $talla_index:0);
+		
+		// Check if the ID was submited and if the specified item exists
+		if (!$id) {
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$id.')';
+			echo json_encode($this->data);
+			die();
+		}
+
+		// Check if the ID was submited and if the specified item exists
+		if (!$id || 
+			!$item=$this->Explosion->read(null, $id)) {
+			$this->data['result']='error';
+			$this->data['message']='Item Inválido ('.$id.')';
+			echo json_encode($this->data);
+			die();
+		}
+
+		// Determine field's new value
+		if( (!$newValue || $newValue==-1) && isset($item['Explosion'][$talla_field]) ) {
+			$newValue=(int)$item['Explosion'][$talla_field]==1?0:1;
+		}
+		elseif($newValue>0 || $newValue=='on' || $newValue=='checked' || $newValue=='true' || $newValue==true) {
+			$newValue=1;
+		}
+		else {
+			$newValue=0;
+		}
+		$this->data=array();
+
+		// Execute DB Operations
+		if ($this->Explosion->saveField($talla_field, $newValue) ) {
+			$this->data['result']='ok';
+			$this->data['message']='La talla (idx: '.$talla_field.') '.
+									'para el material '.$item['Articulo']['arcveart'].
+									' se actualizo correctamente.';
+			$this->data['details']=$this->Explosion->getAllItems($item['Explosion']['articulo_id']);
+		}
+		else {
+			$this->data['result']='error';
+			$this->data['message']='La talla (idx: '.$talla_field.') '.
+									'para el material '.$item['Articulo']['arcveart'].
 									' NO se puedo actualizar ';
 		}
 		echo json_encode($this->data);		

@@ -35,7 +35,7 @@ class ExplosionesController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('articulos', $this->paginate($filter));
 	}
-
+/*
 	function edit( $id = null ) {
 		$this->layout='default';
 		if (!$id) {
@@ -48,7 +48,20 @@ class ExplosionesController extends MasterDetailAppController {
 		$this->data['master']=$this->Articulo->findById($id);
 		$this->data['details']=$this->Explosion->getAllItems($id);
 		$this->set('title_for_layout', 'Explosion::'.$this->data['master']['Articulo']['arcveart'] );
+	}
+*/
 
+	public function edit( $id = null ) {
+		$this->layout='default';
+		if (!$id) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->data=array();
+		$this->data['master']=$this->Articulo->findById($id);
+		$this->data['master']['Explosiondato']['molde']=$this->Explosiondato->field('molde', array('articulo_id'=>$id));
+		$this->data['details']=$this->Explosion->getAllItems($id);
+		$this->set('title_for_layout', 'Explosion::'.$this->data['master']['Articulo']['arcveart'] );
 	}
 
 	function add($id=null) {

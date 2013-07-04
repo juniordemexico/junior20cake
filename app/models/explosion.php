@@ -13,6 +13,46 @@ class Explosion extends AppModel
 			'type' => 'string', 
 			'length' => 1
 		),
+		't0' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't1' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't2' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't3' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't4' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't5' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't6' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't7' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't8' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		),
+		't9' => array(
+			'type' => 'boolean', 
+			'length' => 1
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
