@@ -69,7 +69,7 @@
 				<th class="">Descripción</th>
 				<th class="span2">Color</th>
 				<th class="span1">Trazo</th>
-				<th class="span2">Insumo Propio</th>
+				<th class="span1">Insumo Propio</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -81,7 +81,7 @@
 				<td class="span1">
 					<input type="text" class="cant" data-ng-model="item.Explosion.cant" ui-event="{ blur : 'updateCantidad(item.Explosion.id,item.Explosion.cant)' }" title="Especifica la cantidad de la Tela" />
 				</td>
-				<td class="span2">
+				<td class="span1">
 					<input type="checkbox" 
 						ng-checked="item.Explosion.insumopropio==1"
 						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
@@ -144,17 +144,23 @@
 				<th class="span2">Color</th>
 				<th class="span1">Cantidad</th>
 				<th class="span1">Insumo Propio</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat0">{{master.Talla.tat0}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat1">{{master.Talla.tat1}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat2">{{master.Talla.tat2}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat3">{{master.Talla.tat3}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat4">{{master.Talla.tat4}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat5">{{master.Talla.tat5}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat6">{{master.Talla.tat6}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat7">{{master.Talla.tat7}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat8">{{master.Talla.tat8}}</th>
-				<th class="checkbox-tiny" ng-show="master.Talla.tat9">{{master.Talla.tat9}}</th>
-				<th class="span1">&nbsp;</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat0 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat0}}">{{master.Talla.tat0}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat1 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat1}}">{{master.Talla.tat1}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat2 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat2}}">{{master.Talla.tat2}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat3 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat3}}">{{master.Talla.tat3}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat4 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat4}}">{{master.Talla.tat4}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat5 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat5}}">{{master.Talla.tat5}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat6 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat6}}">{{master.Talla.tat6}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat7 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat7}}">{{master.Talla.tat7}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat8 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat8}}">{{master.Talla.tat8}}</th>
+				<th class="checkbox-tiny" ng-show="master.Talla.tat9 && app.state.showTallas" title="Marcar si este insumo se usa para la talla {{master.Talla.tat9}}">{{master.Talla.tat9}}</th>
+				<th class="span1">
+					<button class="btn btn-small" type="button" 
+						data-ng-click="app.state.showTallas=!app.state.showTallas"
+						title="Mostrar/Ocultar las Tallas en las que aplica cada material"
+					>
+					<i class="icon icon-search"></i>Tallas</button>
+				</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -169,77 +175,66 @@
 					<input type="checkbox" 
 						ng-checked="item.Explosion.insumopropio==1"
 						data-ng-click="toggleInsumoPropio(item.Explosion.id, item)" 
-						title="Marcar en caso de ser un insumo propio"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat0">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat0 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t0==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 0, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat1">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat1 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t1==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 1, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat2">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat2 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t2==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 2, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat3">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat3 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t3==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 3, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat4">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat4 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t4==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 4, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat5">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat5 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t5==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 5, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat6">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat6 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t6==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 6, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat7">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat7 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t7==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 7, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat8">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat8 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t8==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 8, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
-				<td class="checkbox-tiny" ng-show="master.Talla.tat9">
+				<td class="checkbox-tiny" ng-show="master.Talla.tat9 && app.state.showTallas">
 					<input type="checkbox"
 						ng-checked="item.Explosion.t9==1"
 						data-ng-click="toggleTalla(item.Explosion.id, 9, item)" 
-						title="Marcar si este insumo se usa para la talla"
 					/>
 				</td>
 				<td class="span1">
@@ -344,6 +339,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 	$scope.currentTela=angular.copy(emptyItem);
 	$scope.currentHabilitacion=angular.copy(emptyItem);
 	$scope.currentServicio=angular.copy(emptyItem);
+
+	$scope.app.state.showTallas=false;
 
 	if(!$scope.master.Explosiondato.molde) {
 		$scope.master.Explosiondato.molde='';

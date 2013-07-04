@@ -230,8 +230,8 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 		json_encode(array(
 			'name'					=> 'AxBOS::OGGI',
 			'business_name'			=> 'Junior de México',
-			'localCacheAppPrefix'	=>$localCacheAppPrefix,
-			'localCachePrefix'		=>$localCachePrefix,
+			'localCacheAppPrefix'	=> $localCacheAppPrefix,
+			'localCachePrefix'		=> $localCachePrefix,
 			'page'					=> $page,
 			'user'					=> $user,
 			'actions'				=> $actions,
