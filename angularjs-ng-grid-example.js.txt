@@ -1,0 +1,106 @@
+CAKEPHP NG-GRID ANGULAR GRID
+
+
+    <body ng-controller="MyCtrl">
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+    </body>
+
+
+// main.js
+var app = angular.module('myApp', ['ngGrid']);
+app.controller('MyCtrl', function($scope) {
+    $scope.myData = [{name: "POWEBLACK", estilo: 'BLACK', cant: 50, t0: 10, t1:30 ,t2:10, t3:0 },
+                     {name: "POWEBLUE", estilo: 'BLUE', cant: 30, t0: 15, t1:15 ,t2:0, t3:0 },
+                     {name: "ATRABLUE", estilo: 'BLUE', cant: 0, t0: 0, t1:0 ,t2:0, t3:0 },
+                     {name: "ATRABLACK", estilo: 'BLACK', cant: 80, t0: 40, t1:10 ,t2:15, t3:15 },
+                     {name: "ALISMAX309", estilo: 'MAX309', cant: 30, t0: 15, t1:15 ,t2:0, t3:0 },
+                     {name: "ATRAMAX309", estilo: 'MAX309', cant: 80, t0: 40, t1:10 ,t2:15, t3:15 }
+                     ];
+    $scope.gridOptions = { 
+      columnDefs: [{ field: "name", displayName: "Producto", width: 250, pinned: true },
+                    { field: "estilo", width: 100, pinnable: true },
+                    { field: "cant", width: 40, pinnable: true },
+                    { field: "t0", width: 40, pinnable: false },
+                    { field: "t1", width: 40, pinnable: false },
+                    { field: "t2", width: 40, pinnable: false },
+                    { field: "t3", width: 40 , pinnable: false }],
+        data: 'myData',
+        showGroupPanel: true,
+        enableCellEditOnFocus: true,
+        enableCellSelection: true,
+        enableRowSelection: false,
+        enablePinning: true,
+        showFilter: true,
+        showColumnMenu: true,
+        rowHeight: 24,
+        selectWithCheckboxOnly: true,
+        cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"  jq-tooltip="nada"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>'    };
+});
+
+
+
+
+
+paging server-side
+
+var app = angular.module('myApp', ['ngGrid']);
+app.controller('MyCtrl', function($scope, $http) {
+    $scope.filterOptions = {
+        filterText: "",
+        useExternalFilter: true
+    }; 
+    $scope.totalServerItems = 0;
+    $scope.pagingOptions = {
+        pageSizes: [250, 500, 1000],
+        pageSize: 250,
+        currentPage: 1
+    };	
+    $scope.setPagingData = function(data, page, pageSize){	
+        var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+        $scope.myData = pagedData;
+        $scope.totalServerItems = data.length;
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    };
+    $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+        setTimeout(function () {
+            var data;
+            if (searchText) {
+                var ft = searchText.toLowerCase();
+                $http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {		
+                    data = largeLoad.filter(function(item) {
+                        return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
+                    });
+                    $scope.setPagingData(data,page,pageSize);
+                });            
+            } else {
+                $http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {
+                    $scope.setPagingData(largeLoad,page,pageSize);
+                });
+            }
+        }, 100);
+    };
+	
+    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+	
+    $scope.$watch('pagingOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+        }
+    }, true);
+    $scope.$watch('filterOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+        }
+    }, true);
+	
+    $scope.gridOptions = {
+        data: 'myData',
+        enablePaging: true,
+		showFooter: true,
+        totalServerItems: 'totalServerItems',
+        pagingOptions: $scope.pagingOptions,
+        filterOptions: $scope.filterOptions
+    };
+});

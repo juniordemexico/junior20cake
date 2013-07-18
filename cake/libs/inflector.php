@@ -109,7 +109,7 @@ class Inflector {
 			'divisa' => 'divisas',
 			'explosion' => 'explosiones',
 			'almacen' => 'almacenes',
-			'ubicacion' => 'ubicaciones'
+			'ubicacion' => 'ubicaciones',
 		)
 	);
 
@@ -198,8 +198,8 @@ class Inflector {
 		'sea[- ]bass', 'series', 'Shavese', 'shears', 'siemens', 'species', 'swine', 'testes',
 		'trousers', 'trout','tuna', 'Vermontese', 'Wenchowese', 'whiting', 'wildebeest',
 		'Yengeese',
-		'cxc','cxp','produccion','pedido','factura','pedidodet','facturadet','compradet',
-		'artmov','ctemov','promov','banmov','artexist', 'entsal', 'entsaldet'
+		'cxc','cxp','produccion','pedido','factura','pedidodet','facturadet',
+		'artmov','ctemov','promov','banmov','artexist', 'entsal', 'entsaldet','venta'
 	);
 
 /**

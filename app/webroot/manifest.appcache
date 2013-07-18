@@ -11,9 +11,8 @@ NETWORK:
 /Users
 /Users/*
 
-/Desktop
-/Datahouse
-/api
+/Sync
+
 /tmp
 /files
 
@@ -60,6 +59,7 @@ CACHE:
 
 /css_files/core.css
 /css_files/ui.css
+/css_files/ui-responsive.css
 
 /js_files/core.js
 /js_files/ui.js
@@ -68,6 +68,15 @@ CACHE:
 /css/ax.report.css
 
 /js/mocha/scripts/ax-desktop.js
+
+# Images, Icons and Themes
+
+/img/*
+/images/*
+/css/images/*
+/css_files/images/*
+/css/bootstrap/img/*
+/img/icons/Devine/*
 
 /img/glyphicons-halflings.png
 /img/glyphicons-halflings-white.png
@@ -78,19 +87,12 @@ CACHE:
 /img/pixel.gif
 /img/ie-spacer.gif
 /img/ui/twitter_web_sprite_bgs.png
-/img/icons/Devine/*
 
-/js/mocha/scripts/excanvas_r43.js
-/js/mocha/scripts/mocha-init.js
-/js/mocha/scripts/mocha.js
-/js/mocha/scripts/mootools-1.2.4-core-yc.js
-/js/mocha/scripts/mootools-1.2.4-more-yc.js
-/js/mocha/themes/charcoal/css/Content.css
-/js/mocha/themes/charcoal/css/Core.css
-/js/mocha/themes/charcoal/css/Layout.css
-/js/mocha/themes/charcoal/css/Dock.css
-/js/mocha/themes/charcoal/css/Tabs.css
-/js/mocha/themes/charcoal/css/Window.css
+
+
+# Mocha Desktop (MooTools based)
+
+/js/mocha/scripts/*
+/js/mocha/themes/charcoal/css/*
 
 /css/mocha/ui.css
-/css/content.css

@@ -62,6 +62,8 @@ class Articulo extends AppModel
 		'Linea',
 		'Temporada',
 		'Marca',
+		'Base',
+		'Estilo',
 	);
 
 	var $hasMany = array(
@@ -281,9 +283,11 @@ class Articulo extends AppModel
 		$tallas = $this->Talla->find('list', array('fields' => array('Talla.id', 'Talla.tadescrip'), 'conditions'=>array('st'=>'A')));
 		$proporciones = $this->Proporcion->find('list', array('fields' => array('Proporcion.id',  'Proporcion.cve')));
 		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve') ));
+		$bases = $this->Base->find('list', array('fields' => array('Base.id', 'Base.cve') ));
+		$estilos = $this->Estilo->find('list', array('fields' => array('Estilo.id', 'Estilo.cve') ));
 
 		return compact('colores', 'unidades', 'tallas', 'proporciones', 'lineas', 'marcas', 
-							'temporadas', 'divisas', 'tipoarticulos');
+							'temporadas', 'divisas', 'tipoarticulos', 'bases', 'estilos');
 		
 	}
 

@@ -1,6 +1,6 @@
 <header>
 <div class="page-header">
-<h1><small>Factura de Compra <strong class="text-info">{{data.Master.folio}}</strong></small></h1>
+<h1><small>Pedido Expo <strong class="text-info">{{data.Master.folio}}</strong></small></h1>
 </div>
 </header>
 
@@ -19,37 +19,34 @@
 		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
-		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(data.Master.id>0)" title="Enviar por email la transacción" alt="Compartir">
-		<i class="icon-share icon-white"></i>
-		</button>
 	</div>
 
 </div>
 
 <form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
 <input type="hidden" name="_method" value="PUT" />
-	
+
 <!-- Form's Tabbed Divs -->
 <tabs id="tabs">
 
 <pane id="tabs-0" heading="General" class="well">
 
 <div class="row">
-	<div class="span5">
+	<div class="span6">
 	<div class="control-group">
-		<label for="CompraRefer" class="control-label"><strong>Folio:</strong></label>
+		<label for="VentaexpoRefer" class="control-label">Folio:</label>
 		<div class="controls input">
-			<input type="text" id="CompraRefer" name="data[Compra][folio]" field="Compra.folio"
-				data-ng-model="data.Master.folio"
+			<input type="text" id="VentaexpoRefer" name="data[Ventaexpo][folio]" field="Ventaexpo.folio"
+				data-ng-model="data.Master.folio" 
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="CompraFecha" class="control-label"><strong>Fecha:</strong></label>
+		<label for="VentaexpoFecha" class="control-label">Fecha:</label>
 		<div class="controls input">
-			<input type="text" id="CompraFecha" name="data[Compra][fecha]" field="Compra.fecha"
+			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fecha]" field="Ventaexpo.fecha"
 				data-ui-date data-ui-date-format="yy-mm-dd"
 				data-ng-model="data.Master.fecha" data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
@@ -57,120 +54,84 @@
 	</div>
 
 	<div class="control-group">
-		<label for="CompraRefer" class="control-label">Órden de Compra:</label>
+		<label for="VentaexpoFvence" class="control-label">Vencimiento:</label>
 		<div class="controls input">
-			<input type="text" id="OrdencompraFolio" name="data[Ordencompra][folio]" field="Ordencompra.folio"
-				class="span2"
-				data-ng-minlength="0" data-ng-maxlength="16"
-				class="date" placeholder="Folio..." title="Referencia de la Ordén de Compra" />
+			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fvence]" field="Ventaexpo.fvence"
+				data-ui-date data-ui-date-format="yy-mm-dd"
+				data-ng-model="data.Master.fvence" data-ng-required="true"
+				class="date" placeholder="Vencimiento..." title="Proporciona la Fecha de Vencimiento del Pedido" />
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="CompraProveedor_id" class="control-label">Proveedor:</label>
+		<label for="VentaexpoVendedor_id" class="control-label">Vendedor:</label>
 		<div class="controls input">
-			<select id="CompraProveedor_id" name="data[Compra][proveedor_id]"
+			<select id="VentaexpoVendedor_id" name="data[Ventaexpo][vendedor_id]"
 				class="span3"
-				data-ng-model="data.Master.proveedor_id"
-				data-ng-options="i.id as i.cve for i in related.Proveedor"
+				data-ng-model="data.Master.vendedor_id"
+				data-ng-options="i.id as i.cve for i in related.Vendedor"
 				>
 			</select>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="CompraDivisa_id" class="control-label">Divisa:</label>
+		<label for="VentaexpoCliente_id" class="control-label">Cliente:</label>
 		<div class="controls input">
-			<select id="CompraDivisa_id" name="data[Compra][divisa_id]"
-				class="span1"
-				data-ng-model="data.Master.divisa_id"
-				data-ng-options="i.id as i.cve for i in related.Divisa"
+			<select id="VentaexpoCliente_id" name="data[Ventaexpo][cliente_id]"
+				class="span3"
+				data-ng-model="data.Master.cliente_id"
+				data-ng-options="i.id as i.cve for i in related.Cliente"
 				>
 			</select>
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label for="CompraTipodecambio" class="control-label">Tipo de Cambio:</label>
-		<div class="controls input">
-			<input type="text" id="CompraTipodecambio" name="data[Compra][tipodecambio]" field="Compra.tipodecambio"
-				data-ng-model="data.Master.tipodecambio"
-				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
-				class="span1" placeholder="T Cambio..." title="Tipo de cambio al que se realiza la transacción" />
-		</div>
-	</div>
 
-	<div class="control-group">
-		<label for="CompraRefer" class="control-label">Referencia Proveedor:</label>
-		<div class="controls input">
-			<input type="text" id="CompraProveedor_refer" name="data[Compra][proveedor_refer]" field="Compra.proveedor_refer"
-				class="span2"
-				data-ng-model="data.Master.proveedor_refer"
-				data-ng-minlength="0" data-ng-maxlength="16"
-				class="date" placeholder="Folio..." title="Referencia de la Ordén de Compra asignada por el Proveedor" />
-		</div>
-	</div>
-
-	<div class="control-group">
-		<label class="control-label">Estatus:</label>
-		<div class="controls group">
-		<div class="btn-group">
-			<button type="button" id="CompraStA" class="btn" data-ng-class="{'btn-success': data.Master.st==app.estatus.Activo}" data-ng-model="data.Master.st" data-btn-radio="'A'" data-ng-disabled="data.Master.st==estatus.Cancelado" name="data[Compra][st]">Activo</button>
-			<button type="button" id="CompraStC" class="btn" data-ng-class="{'btn-danger': data.Master.st==app.estatus.Cancelado}" data-ng-model="data.Master.st" data-btn-radio="'C'" data-ng-disabled="data.Master.st==estatus.Activo" name="data[Compra][st]">Cancelado</button>
-		</div>
-		</div>
-	</div>
-
-	</div> <!-- div.span5 -->
+	</div> <!-- div.span6 -->
 	<div class="span1">&nbsp;</div>
 
 
 	<div class="span5">
 
 	<div class="control-group">
-		<label for="CompraSuma" class="control-label">Suma:</label>
+		<label for="VentaexpoSuma" class="control-label">Suma:</label>
 		<div class="controls input">
-			<input type="text" id="CompraSuma" name="data[Compra][suma]" field="Compra.suma"
+			<input type="text" id="VentaexpoSuma" name="data[Ventaexpo][suma]" field="Ventaexpo.suma"
+				readonly="true"
+				data-ng-readonly="true"
 				data-ng-model="data.Master.suma"
-				class="span2" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
+				class="span2 readonly" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="CompraDesc1" class="control-label">Descuentos:</label>
+		<label for="VentaexpoImporte" class="control-label">Importe:</label>
 		<div class="controls input">
-			<input type="text" id="CompraDesc1" name="data[Compra][desc1]" field="Compra.desc1"
-				data-ng-model="data.Master.desc1"
-				class="span1" placeholder="Desc 1..." title="Primer Descuento" />
-			<input type="text" id="CompraDesc2" name="data[Compra][desc2]" field="Compra.desc2"
-				data-ng-model="data.Master.desc2"
-				class="span1" placeholder="Desc 2..." title="Segundo Descuento" />
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="CompraImporte" class="control-label">Importe:</label>
-		<div class="controls input">
-			<input type="text" id="CompraImporte" name="data[Compra][importe]" field="Compra.importe"
+			<input type="text" id="VentaexpoImporte" name="data[Ventaexpo][importe]" field="Ventaexpo.importe"
+				readonly="true"
+				data-ng-readonly="true"
 				data-ng-model="data.Master.importe"
-				class="span2" placeholder="Importe..." title="Importe (Suma menos Descuentos Generales)" />
+				class="span2 readonly" placeholder="Importe..." title="Importe (Suma menos Descuentos Generales)" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="CompraImpu1" class="control-label">Impuestos:</label>
+		<label for="VentaexpoImpu1" class="control-label">Impuesto:</label>
 		<div class="controls input">
-			<input type="text" id="CompraImpu1" name="data[Compra][impu1]" field="Compra.impu1"
+			<input type="text" id="VentaexpoImpu1" name="data[Ventaexpo][impu1]" field="Ventaexpo.impu1"
+				readonly="true"
+				data-ng-readonly="true"
 				data-ng-model="data.Master.impu1"
-				class="span1" placeholder="Impu 1..." title="Primer Impuesto" />
-			<input type="text" id="CompraImpu2" name="data[Compra][impu2]" field="Compra.impu2"
-				data-ng-model="data.Master.impu2"
-				class="span1" placeholder="Impu 2..." title="Segundo Impuesto" />
+				class="span1 readonly" placeholder="Impu 1..." title="Primer Impuesto" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="CompraTotal" class="control-label"><strong>Total:</strong></label>
+		<label for="VentaexpoTotal" class="control-label"><strong>Total:</strong></label>
 		<div class="controls input">
-			<input type="text" id="CompraTotal" name="data[Compra][total]" field="Compra.total"
+			<input type="text" id="VentaexpoTotal" name="data[Ventaexpo][total]" field="Ventaexpo.total"
+				readonly="true"
+				data-ng-readonly="true"
 				data-ng-model="data.Master.total"
-				class="span2" placeholder="Total..." title="Total con Descuentos e Impuestos incluidos" />
+				class="span2 readonly" placeholder="Total..." title="Total con Descuentos e Impuestos incluidos" />
 		</div>
 	</div>
 
@@ -195,27 +156,42 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="text" maxlength="10" data-ng-model="currentItem.t0"
 				data-ng-minlength="1" data-ng-maxlength="10"
-				class="cant" placeholder="Cant..." title="Especifica la Cantidad" />
+				class="cant" placeholder="{{currentItem.Tallas.tat0}}..." title="Talla {{currentItem.Tallas.tat0}}" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="text" maxlength="10" data-ng-model="currentItem.costo"
+			<input type="text" maxlength="10" value="{{currentItem.cant}}"
 				data-ng-minlength="1" data-ng-maxlength="10"
-				class="precio" placeholder="Costo..." title="Especifica el Costo" />
+				class="cant" placeholder="Cant..." title="Cantidad Total" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="text" maxlength="10" data-ng-model="currentItem.precio"
+				data-ng-minlength="1" data-ng-maxlength="10"
+				class="precio readonly" placeholder="Precio..." title="Especifica el Precio"
+				readonly="true" data-ng-readonly="true" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="text" maxlength="10" data-ng-bind="currentItem.importe"
+				data-ng-minlength="1" data-ng-maxlength="10"
+				class="total readonly" placeholder="Importe..." title="Importe de la partida (cantidad * unidades)"
+				readonly="true" data-ng-readonly="true" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn" type="button" data-ng-click="addCurrentItem()" 
-				data-ng-disabled="(!(currentItem.Articulo.id>0)||!(currentItem.t0>0))">
+				data-ng-disabled="(!(currentItem.Articulo.id>0)||!(currentItem.t0>0)||!(currentItem.precio>0))">
 				<i class="icon icon-plus-sign"></i> Agregar
 			</button>
 		</div>
 
-		<div id="detailContentTable">
+
+		<div style="border: 1px solid rgb(212,212,212); width: 100%; height: 500px;" class="gridStyle" ng-grid="gridOptions"></div>
+<?php
+/*
 		<table class="table table-condensed table-bordered table-hover ax-detail-table">
 			<thead>
 			<tr>
 				<th class="span2">Material</th>
 				<th class="span2">Color</th>
 				<th class="">Descripción</th>
+				<th class="cant">T0</th>
 				<th class="cant">Cant</th>
-				<th class="precio">Costo</th>
+				<th class="precio">Precio</th>
+				<th class="precio">Importe</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -224,11 +200,13 @@
 				<td class="span2">{{i.Articulo.arcveart}}</td>
 				<td class="span2">{{i.Color.cve}}</td>
 				<td class="">{{i.Articulo.ardescrip}}</td>
-				<td class="cant">{{i.Detail.t0}}</td>
-				<td class="precio">{{i.Detail.costo | currency}}</td>
+				<td class="cant" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t0}}</td>
+				<td class="cant">{{i.Detail.cant}}</td>
+				<td class="precio">{{i.Detail.precio | currency}}</td>
+				<td class="precio">{{(i.Detail.cant)*i.Detail.precio | currency}}</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
-							data-ng-click="detailDelete($index, item, true)"
+							data-ng-click="detailDelete($index, i, true)"
 							data-ng-hide="data.Master.id>0">
 							<i class="icon icon-trash"></i>
 					</button>
@@ -237,15 +215,17 @@
 			</tbody>
 		</table>
 		</div>
+*/
+?>
 
 </pane> <!-- div tabs1 -->
 
 <pane id="tabs-4" heading="Datos adicionales">
 <div class="control-group">
-	<label for="CompraObser" class="control-label">Observaciones</label>
+	<label for="VentaexpoObser" class="control-label">Observaciones</label>
 	<div class="controls input">
-		<textarea name="data[Compra][obser]" field="Compra.Obser" maxlength="255"
-				class="span4" cols="30" rows="6" id="CompraObser"
+		<textarea name="data[Ventaexpo][obser]" field="data.Master.Obser" maxlength="255"
+				class="span4" cols="30" rows="6" id="VentaexpoObser"
 				data-ng-model="data.Master.obser"
 				data-ng-minlength="0" data-ng-maxlength="255"
 		>
@@ -254,9 +234,9 @@
 </div>
 
 <div class="control-group">
-	<label class="control-label" for="" title="Adjunta el documento original del proveedor">Documento Original:</label>
+	<label class="control-label" for="" title="Adjunta el documento original del cliente">Documento Original:</label>
 	<div class="controls input">
-		<?php echo $this->Upload->edit('img/Compra', $this->data['master']['Compra']['folio']);?>
+		<?php echo $this->Upload->edit('img/Ventaexpo', $this->data['master']['Ventaexpo']['folio']);?>
 	</div>
 </div>
 
@@ -266,12 +246,36 @@
 
 </form>
 
+<div>
+	<pre>
+		{{currentItem | json}}
+	</pre>
+	<pre>
+		{{data.Details | json}}
+	</pre>
+</div>
+
+<pre>
+{{ theResponse | json}}
+</pre>
+
 <script language="javascript">
 
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
 
-var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloColor:[], "t0": 0, "cant":0, "costo":0 };
+var emptyItem={	
+				"t0": 0,"t1": 0,"t2": 0,"t3": 0,"t4": 0,"t5": 0,"t6": 0,"t7": 0,"t8": 0,"t9": 0,
+				"precio":0,
+				Articulo: {'id': null, text: '', title:''},
+				Talla: [{id:0, tadescrip: 'UNICA', tat0:'UNICA',}], "talla_id": 0,
+				Color:{}, 
+				ArticuloColor:[],
+				Bases: {},
+				Estilos: {}
+//				"cant": function() {return this.t0+this.t1+this.t2;},
+//				"importe": function() {return 0;}
+				};
 
 /* Begins Web UI controller's initialization ************************/
 <?php echo $this->AxUI->initAppController(); ?>
@@ -284,24 +288,11 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 
 	// Load Related Models
 	$scope.loadRelatedModels();
-	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "t0":0, "cant":0, "costo":0};
+	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "talla_id": 1, "t0":0, "cant":0, "precio":0};
 	$scope.currentItem=angular.copy(emptyItem);
 
-
-	$scope.relatedtransactions=[
-	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
-	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
-	{ Entsal: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
-	];
-	
-	$scope.relatedcxp=[
-	{ Cxp: {id:1, folio:"C0000001", fecha:"2013-05-10", cargo: 245600, concep:"COMPRA C0000001"} },
-	{ Cxp: {id:2, folio:"PA003451", fecha:"2013-05-11", abono: 100000, concep:"PAGO POR ANTICIPO COMPRA C0000001"} }
-	];
-	
-
 	/* Begins the angular controller's code specific to this View */
-
+	$scope.theRespose={};
 	$scope.save = function() {
 		// Serialize the full form, including details items
 		var serializedData=$scope.serializeToServer( {
@@ -316,6 +307,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		$http.post($scope.app.actions.add, serializedData
 		).then(function(response) {
 			// We got a response to process
+			$scope.theResponse=response.data;
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				axAlert(response.data.message, 'success', false);
@@ -333,7 +325,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		.then( function(result) {
 			if(result) {
 				// Send the CANCEL request to the server
-				$http.get( '/Compras/cancel/'+$scope.data.Master.id+'.json'
+				$http.get( '/Ventaexpos/cancel/'+$scope.data.Master.id+'.json'
 				).then(function(response) {
 					// We got a response to process
 					if(typeof response.data != 'undefined' && 
@@ -344,7 +336,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 						axAlert(response.data.message, (response.data.result=='ok'?'success':'error'), false);						
 						return;
 					}
-					axAlert('Error en la respuesta', 'error', false);
+					axAlert('Error en la respuesta', 'error', false);						
 				});
 			}
 		});
@@ -355,16 +347,28 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		var item={
 			Detail: {
 				id: null,
-				compra_id: null,
 				articulo_id: $scope.currentItem.Articulo.id,
 				color_id: $scope.currentItem.Color.id,
 				talla_id: $scope.currentItem.talla_id,
-				t0: $scope.currentItem.t0,
-				cant: $scope.currentItem.t0,
-				costo: $scope.currentItem.costo,
+				t0: parseInt($scope.currentItem.t0),
+				t1: parseInt($scope.currentItem.t1),
+				t2: parseInt($scope.currentItem.t2),
+				t3: parseInt($scope.currentItem.t3),
+				t4: parseInt($scope.currentItem.t4),
+				t5: parseInt($scope.currentItem.t5),
+				t6: parseInt($scope.currentItem.t6),
+				t7: parseInt($scope.currentItem.t7),
+				t8: parseInt($scope.currentItem.t8),
+				t9: parseInt($scope.currentItem.t9),
+				cant: parseInt($scope.currentItem.t0)+parseInt($scope.currentItem.t1),
+				precio: Math.round($scope.currentItem.precio, 2),
+				importe: (parseInt($scope.currentItem.t0)+parseInt($scope.currentItem.t1))*$scope.currentItem.precio.valueOf(),
 			},
 			Articulo: $scope.currentItem.Articulo,
-			Color: $scope.currentItem.Color
+			Color: $scope.currentItem.Color,
+			Tallas: $scope.currentItem.Tallas,
+			Bases: $scope.currentItem.Bases,
+			Estilos: $scope.currentItem.Estilos
 		}
 		if($scope.data.Details.push(item)>currentLength) {
 			$scope.currentItem=angular.copy(emptyItem);
@@ -401,12 +405,26 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				$scope.currentItem.talla_id=response.data.item.Articulo.talla_id;
+				$scope.currentItem.precio=Math.round(response.data.item.Articulo.arpva, 2);
+				$scope.currentItem.t0=0;
+				$scope.currentItem.t1=0;
+				$scope.currentItem.t2=0;
+				$scope.currentItem.t3=0;
+				$scope.currentItem.t4=0;
+				$scope.currentItem.t5=0;
+				$scope.currentItem.t6=0;
+				$scope.currentItem.t7=0;
+				$scope.currentItem.t8=0;
+				$scope.currentItem.t9=0;
 				$scope.currentItem.Articulo=response.data.item.Articulo;
-				$scope.currentItem.Articulo.text=$scope.currentItem.Articulo.arcveart;
+				$scope.currentItem.Articulo.text=response.data.item.Articulo.arcveart;
 				$scope.currentItem.ArticuloColor=response.data.item.ArticuloColor;
 				$scope.currentItem.Color=response.data.item.ArticuloColor[0];
-				$scope.currentItem.talla_id=response.data.item.Articulo.talla_id;
-				$scope.currentItem.t0=0;
+				$scope.currentItem.Tallas=response.data.item.Tallas;
+				$scope.currentItem.Bases=response.data.item.Bases;
+				$scope.currentItem.Estilos=response.data.item.Estilos;
+				console.log('getItemByCve RESPONSE: '+ JSON.stringify(response.data));
 				axAlert(response.data.message, 'success', false);
 			}
 			else {
@@ -422,10 +440,39 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
        	});
 	}
 
+//    $scope.myData = $scope.data.Details;
+
+    $scope.gridOptions = { 
+        data: 'data.Details',
+        enableCellSelection: true,
+        enableRowSelection: false,
+        enableCellEditOnFocus: true,
+        columnDefs: [
+					{field: 'Detail.articulo_id', displayName: 'Clave', enableCellEdit: false, pinned: true}, 
+					{field: 'Detail.color_id', displayName: 'Color', enableCellEdit: false, pinned: true}, 
+					{field: 'Detail.Estilos.cve', displayName: 'Estilo', enableCellEdit: false, pinned: true}, 
+					{field: 'Detail.Bases.cve', displayName: 'Base', enableCellEdit: false, pinned: true}, 
+					{field:'Detail.t0', displayName:'T0', enableCellEdit: true, pinnable: false},
+					{field:'Detail.t1', displayName:'T1', enableCellEdit: true, pinnable: false},
+					{field:'t2', displayName:'T2', enableCellEdit: true, pinnable: false},
+					{field:'t3', displayName:'T3', enableCellEdit: true, pinnable: false},
+					{field:'t4', displayName:'T4', enableCellEdit: true, pinnable: false},
+					{field:'t5', displayName:'T5', enableCellEdit: true, pinnable: false},
+					{field:'t6', displayName:'T6', enableCellEdit: true, pinnable: false},
+					{field:'t7', displayName:'T7', enableCellEdit: true, pinnable: false},
+					{field:'t8', displayName:'T8', enableCellEdit: true, pinnable: false},
+					{field:'t9', displayName:'T9', enableCellEdit: true, pinnable: false},
+//					{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false},
+//					{field:'precio', displayName:'Precio', enableCellEdit: false, pinnable: false},
+					],
+		groups: ['Detail.Estilos.cve'],
+		showGroupPanel: true
+    };
+
 	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
 	$scope.fieldItem = {
 		ajax: {
-			url: "/Articulos/autocomplete/tipo:1",
+			url: "/Articulos/autocomplete/tipo:0",
       		data: function (term, page) {
         		return {keyword: term}; // query params go here
 			},
@@ -435,6 +482,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
     	}
   	}
 
+/* Begins Web UI Global Methods *****************************/
+<?php echo $this->AxUI->getAppGlobalMethods(); ?>
 
 /* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->closeAppController(); ?>

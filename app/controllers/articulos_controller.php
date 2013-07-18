@@ -6,7 +6,7 @@ class ArticulosController extends MasterDetailAppController {
 	var $name='Articulos';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada', 'ArticulosColor', 'Artmov', 'Pedidodet'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'Temporada', 'ArticulosColor', 'Artmov', 'Pedidodet', 'Base', 'Estilo'
 	);
 
 	var $cacheAction = array('view',

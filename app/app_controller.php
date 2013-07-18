@@ -347,6 +347,38 @@ class MyAppController extends AppController {
 
 }
 
+// Controller class for Authenticated Users content
+class MasterAppController extends AppController {
+	public $layout = 'default';
+
+	public $paginate = array(	'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGINATE_ROWS,
+							);
+
+	public function index() {
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($this->masterModelName, $filter));
+	}
+
+	public function edit( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+//		THIS HAS TO BE WORKING NEARLY
+//		$data=$this->{$this->masterModelName}->getItem($id);
+//		$this->set('data', $data );
+		$data=$this->{$this->masterModelName}->findById($id);
+		$this->data=$this->{$this->masterModelName}->read(null, $id);
+//		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data[$this->masterModelName][$this->masterModelTitle]
+				);
+	}
+
+}
+
 // Controller class for List, Data Browsing, etc
 class ListAppController extends AppController {
 	public $layout = 'plain';

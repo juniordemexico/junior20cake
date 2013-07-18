@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/explosiones/edit.ctp</string>
+	<string>app/views/ventaexpos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,114 +26,159 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>350</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>165</integer>
-		</dict>
-		<key>app/controllers/explosiones_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>51</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>34</integer>
-		</dict>
-		<key>app/models/explosion.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>22</integer>
-				<key>line</key>
-				<integer>142</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>4</integer>
-		</dict>
-		<key>app/views/explosiones/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>47</integer>
-				<key>line</key>
-				<integer>146</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>138</integer>
-		</dict>
-		<key>app/views/helpers/ax_u_i.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>26</integer>
-				<key>line</key>
-				<integer>233</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>203</integer>
-		</dict>
-		<key>app/webroot/css_files/core.css</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>1815</integer>
+				<integer>446</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1779</integer>
+			<integer>408</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>1815</integer>
+				<integer>433</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>446</integer>
+			</dict>
+		</dict>
+		<key>app/controllers/ventaexpos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>27</integer>
+				<key>line</key>
+				<integer>58</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>10</integer>
+		</dict>
+		<key>app/controllers/ventas_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>54</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>33</integer>
+		</dict>
+		<key>app/models/articulo.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
 				<integer>1</integer>
 				<key>line</key>
-				<integer>1815</integer>
+				<integer>61</integer>
 			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>91</integer>
+		</dict>
+		<key>app/models/ventaexpo.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>37</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>17</integer>
+		</dict>
+		<key>app/models/ventaexpodet.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>12</integer>
+				<key>line</key>
+				<integer>104</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>66</integer>
+		</dict>
+		<key>app/views/helpers/ax_u_i.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>293</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>274</integer>
+		</dict>
+		<key>app/views/ventaexpos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>300</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>279</integer>
+		</dict>
+		<key>app/views/ventaexpos/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>58</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/webroot/css_files/core.css</string>
+		<string>app/models/articulo.php</string>
+		<string>app/controllers/ventas_controller.php</string>
 		<string>app/app_controller.php</string>
-		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/models/explosion.php</string>
-		<string>app/views/explosiones/edit.ctp</string>
+		<string>app/controllers/ventaexpos_controller.php</string>
+		<string>app/views/ventaexpos/edit.ctp</string>
 		<string>app/views/helpers/ax_u_i.php</string>
+		<string>app/views/ventaexpos/index.ctp</string>
+		<string>app/models/ventaexpo.php</string>
+		<string>app/models/ventaexpodet.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1900, -16}, {923, 848}}</string>
+	<string>{{0, 0}, {923, 848}}</string>
 </dict>
 </plist>

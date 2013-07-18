@@ -218,7 +218,7 @@ class AxUIHelper extends Helper {
 		
 		return ( "\n\r".
 "
-var axApp=angular.module('AxApp', ['ui','ui.bootstrap','LocalStorageModule']).
+var axApp=angular.module('AxApp', ['ui','ui.bootstrap','ngGrid','LocalStorageModule']).
 controller('AxAppCtrl', 
 ['\$scope', '\$rootScope', '\$http', '\$window', '\$location', '\$dialog', 'localStorageService',
 function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStorageService) {
@@ -244,11 +244,11 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 	\$http.defaults.headers.post[\"Content-Type\"] = 'application/x-www-form-urlencoded';
 
 	\$scope.\$window=\$window;
-
+/*
 	if (typeof \$scope.items != 'undefined' && typeof \$scope.items[0].id != 'undefined') {
 		\$scope.page.state.selectedItems=new Array(\$scope.items.length+1);
 	}
-
+*/
 ".
 "\n\r"
 	);
@@ -330,13 +330,13 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 	}
 
 	\$scope.saveDetailsToCache = function() {
-		localStorageService.add(\$scope.app.localCachePrefix+'details', angular.toJson(\$scope.data.Details));
+		localStorageService.add(\$scope.app.localCachePrefix+'detailsClipboard', angular.toJson(\$scope.data.Details));
 			axAlert('Detalle guardado en cache local', 'warning', false);
 	}
 
 	\$scope.loadDetailsFromCache = function() {
 		var details=false;
-		if( details=localStorageService.get(\$scope.app.localCachePrefix+'details') ) {
+		if( details=localStorageService.get(\$scope.app.localCachePrefix+'detailsClipboard') ) {
 			
 			if( details != 'undefined' && angular.isString(details) ) {
 				\$scope.data.Details=angular.fromJson(details);

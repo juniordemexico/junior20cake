@@ -17,7 +17,8 @@ class ClientesController extends MasterDetailAppController {
 							'pais_id','Pais.papais','estado_id','Estado.esedo',
 							'created','modified');
 	var $layout='default';
-	
+
+
 	function index() {
 		$this->Cliente->recursive = 0;
 		$this->paginate = array(
@@ -43,6 +44,8 @@ class ClientesController extends MasterDetailAppController {
 
 	function add() { 
 		if (!empty($this->data)) {
+			$this->Cliente->recursive=-1;
+			$this->Cliente->create();
 			if ($this->Cliente->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Cliente->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
@@ -79,6 +82,7 @@ class ClientesController extends MasterDetailAppController {
 				$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			$this->Cliente->recursive=-1;
 			if ($this->Cliente->save($this->data)) {
 				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Cliente->id.')', 'success');
 				$this->redirect(array('action' => 'index'));
