@@ -18,7 +18,7 @@ class VentaexposController extends MasterDetailAppController {
 	public $paginate = array('update' => '#content',
 							'evalScripts' => true,
 							'limit' => PAGINATE_ROWS,
-							'order' => array('Ventaexpo.fecha' => 'desc'),
+							'order' => array('Ventaexpo.fecha' => 'desc', 'Ventaexpo.folio' => 'desc'),
 							'fields' => array('Ventaexpo.id', 'Ventaexpo.folio', 'Ventaexpo.fecha',
 											'Ventaexpo.fvence', 'Ventaexpo.importe', 'Ventaexpo.total',
 											'Ventaexpo.st', 'Ventaexpo.t',
@@ -26,7 +26,7 @@ class VentaexposController extends MasterDetailAppController {
 											'Ventaexpo.cliente_id',
 											'Ventaexpo.vendedor_id',
 											'Vendedor.vecveven','Vendedor.venom',
-											'Cliente.clcvecli','Cliente.clnom',
+											'Cliente.clcvecli','Cliente.cltda','Cliente.clsuc','Cliente.clnom',
 											'Cliente.clatn'),
 							);
 
