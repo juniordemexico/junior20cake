@@ -74,6 +74,7 @@ class VentaexposController extends MasterDetailAppController {
 			$id=$this->{$this->masterModelName}->id;
 			$this->set('result','ok');
 			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('nextFolio', $this->Ventaexpo->getNextFolio($this->actualSerie, 0));
 		} else {
 			$this->set('result', 'error');
 			$this->set('message', 'Error al guardar el movimiento');

@@ -20,7 +20,6 @@
 		<i class="icon-print icon-white"></i>
 		</button>
 	</div>
-
 </div>
 
 <form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
@@ -36,54 +35,35 @@
 	<div class="control-group">
 		<label for="VentaexpoRefer" class="control-label">Folio:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoRefer" name="data[Ventaexpo][folio]" field="Ventaexpo.folio"
-				data-ng-model="data.Master.folio" 
-				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
-				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
+			<em><strong>{{data.Master.folio}}</strong></em>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label for="VentaexpoFecha" class="control-label">Fecha:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fecha]" field="Ventaexpo.fecha"
-				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="data.Master.fecha" data-ng-required="true"
-				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
+			<em><strong>{{data.Master.fecha}}</strong></em>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label for="VentaexpoFvence" class="control-label">Vencimiento:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fvence]" field="Ventaexpo.fvence"
-				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="data.Master.fvence" data-ng-required="true"
-				class="date" placeholder="Vencimiento..." title="Proporciona la Fecha de Vencimiento del Pedido" />
+			<em><strong>{{data.Master.fvence}}</strong></em>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label for="VentaexpoVendedor_id" class="control-label">Vendedor:</label>
 		<div class="controls input">
-			<select id="VentaexpoVendedor_id" name="data[Ventaexpo][vendedor_id]"
-				class="span3"
-				data-ng-model="data.Master.vendedor_id"
-				data-ng-options="i.id as i.cve for i in related.Vendedor"
-				>
-			</select>
+			<em><strong>({{data.Vendedor.vecveven}})</strong> <span class="text-info">{{data.Vendedor.venom}}</span></em>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label for="VentaexpoCliente_id" class="control-label">Cliente:</label>
 		<div class="controls input">
-			<select id="VentaexpoCliente_id" name="data[Ventaexpo][cliente_id]"
-				class="span3"
-				data-ng-model="data.Master.cliente_id"
-				data-ng-options="i.id as i.cve for i in related.Cliente"
-				>
-			</select>
+			<em><strong>(cve: {{data.Cliente.clcvecli}}<span data-ng-hide="data.Cliente.cltda=='    ' || data.Cliente.cltda==''"> tda: {{data.Cliente.cltda}}</span>)</strong>  <span class="text-info">{{data.Cliente.clnom}}</span></em>
 		</div>
 	</div>
 
@@ -97,41 +77,25 @@
 	<div class="control-group">
 		<label for="VentaexpoSuma" class="control-label">Suma:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoSuma" name="data[Ventaexpo][suma]" field="Ventaexpo.suma"
-				readonly="true"
-				data-ng-readonly="true"
-				data-ng-model="data.Master.suma"
-				class="span2 readonly" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
+			<strong class="span2 text-right">{{data.Master.suma | currency}}</strong>
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="VentaexpoImporte" class="control-label">Importe:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoImporte" name="data[Ventaexpo][importe]" field="Ventaexpo.importe"
-				readonly="true"
-				data-ng-readonly="true"
-				data-ng-model="data.Master.importe"
-				class="span2 readonly" placeholder="Importe..." title="Importe (Suma menos Descuentos Generales)" />
+			<strong class="span2 text-right">{{data.Master.importe | currency}}</strong>
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="VentaexpoImpoimpu" class="control-label">Impuesto:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoImpoimpu" name="data[Ventaexpo][impoimpu]" field="Ventaexpo.impoimpu"
-				readonly="true"
-				data-ng-readonly="true"
-				data-ng-model="data.Master.impoimpu"
-				class="span1 readonly" placeholder="Impuesto..." title="Impuesto" />
+			<strong class="span2 text-right">{{data.Master.impoimpu | currency}}</strong>
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="VentaexpoTotal" class="control-label"><strong>Total:</strong></label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoTotal" name="data[Ventaexpo][total]" field="Ventaexpo.total"
-				readonly="true"
-				data-ng-readonly="true"
-				data-ng-model="data.Master.total"
-				class="span2 readonly" placeholder="Total..." title="Total con Descuentos e Impuestos incluidos" />
+			<strong class="span2 text-right">{{data.Master.total | currency}}</strong>
 		</div>
 	</div>
 
@@ -165,20 +129,20 @@
 			<tbody>
 			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
 				<td class="" title="{{i.Articulo.ardescrip}}">{{i.Articulo.arcveart}}</td>
-				<td class="" title="{{i.Color.descrip}}">{{i.Color.cve}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t0}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t1}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t2}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t3}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t4}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t5}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t6}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t7}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t8}}</td>
-				<td class="st" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t9}}</td>
-				<td class="span1">{{i.Detail.cant}}</td>
-				<td class="precio">{{i.Detail.precio | currency}}</td>
-				<td class="total">{{i.Detail.importe | currency}}</td>
+				<td class="">{{i.Color.cve}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t0)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t1)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t2)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t3)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t4)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t5)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t6)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t7)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t8)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t9)}}</td>
+				<td class="span1 text-right">{{i.Detail.cant}}</td>
+				<td class="precio text-right">{{i.Detail.precio | currency}}</td>
+				<td class="total text-right">{{i.Detail.importe | currency}}</td>
 			</tr>
 			</tbody>
 		</table>
@@ -211,19 +175,6 @@
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
 
-var emptyItem={	
-				"t0": 0,"t1": 0,"t2": 0,"t3": 0,"t4": 0,"t5": 0,"t6": 0,"t7": 0,"t8": 0,"t9": 0,
-				"precio":0,
-				Articulo: {'id': null, text: '', title:''},
-				Talla: [{id:0, tadescrip: 'UNICA', tat0:'UNICA',}], "talla_id": 0,
-				Color:{}, 
-				ArticuloColor:[],
-				Bases: {},
-				Estilos: {}
-//				"cant": function() {return this.t0+this.t1+this.t2;},
-//				"importe": function() {return 0;}
-				};
-
 /* Begins Web UI controller's initialization ************************/
 <?php echo $this->AxUI->initAppController(); ?>
 
@@ -236,7 +187,6 @@ var emptyItem={
 	// Load Related Models
 	$scope.loadRelatedModels();
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "talla_id": 1, "t0":0, "cant":0, "precio":0};
-	$scope.currentItem=angular.copy(emptyItem);
 	$scope.selectedItems=[];
 	$scope.selectedCell={};
 	$scope.selectedRow={};
@@ -301,6 +251,13 @@ var emptyItem={
     	}
   	}
 
+	$scope.toInteger = function (value) {
+		if(angular.isDefined(value) && value!='') {
+			return parseInt(value,10);
+		}
+		return value;
+	}
+	
 /* Begins Web UI Global Methods *****************************/
 <?php echo $this->AxUI->getAppGlobalMethods(); ?>
 

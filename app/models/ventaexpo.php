@@ -122,8 +122,28 @@ class Ventaexpo extends AppModel
 									'conditions'=>array('vest'=>0),
 									'order'=>array('Vendedor.vecveven') 
 									 )));
-		return compact('Cliente', 'Vendedor');		
+		$ClienteLista = $this->toClienteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
+									'conditions'=>array('clst'=>'A'),
+									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
+									)));
+
+
+		return compact('Cliente', 'Vendedor', 'ClienteLista');		
 	}
+
+    public function toClienteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'clcvecli' => $v['Cliente']['clcvecli'], 'cltda'=>trim($v['Cliente']['cltda']), 'clnom'=>trim($v['Cliente']['clnom']));
+            }
+        }
+		return $ret;
+    }
 
 }
 
