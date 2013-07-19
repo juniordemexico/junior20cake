@@ -102,7 +102,7 @@ class Ventaexpodet extends AppModel
 								LEFT JOIN Estilos Estilo ON Estilo.id=Articulo.estilo_id
 								WHERE Articulo.arst='A' AND Articulo.tipoarticulo_id=0
 								ORDER BY Articulo.estilo_id DESC, Articulo.base_id,  Articulo.id, Color.id
-		ROWS 10000");
+		ROWS 12000");
 		$out=array();
 		foreach($items as $item) {
 			$out[]=array(
