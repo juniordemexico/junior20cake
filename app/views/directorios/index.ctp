@@ -24,7 +24,8 @@ echo $form->create('Directorio',array('inputDefaults' => array(
 				<th class="span1"><?php echo $form->text('vendedor.vecveven',array('type' => 'search', 'placeholder' => 'Vend', 'class' => 'search-query'));?></th>
 				<th class="span2"><?php echo $form->text('Estado.esedo',array('type' => 'search', 'placeholder' => 'Estado', 'class' => 'search-query'));?></th>
 				<th class="tel"><?php echo $form->text('tel',array('type' => 'search', 'placeholder' => 'Telefono', 'class' => 'search-query'));?></th>
-				<th class="span1"><?php echo $form->text('tipopersona_cve',array('type' => 'search', 'placeholder' => 'Tipo', 'class' => 'search-query'));?></th>
+				<th class="span1"><?php //echo $form->text('tipopersona_cve',array('type' => 'search', 'placeholder' => 'Tipo', 'class' => 'search-query'));?></th>
+				<th class="st"><?php echo $form->text('st',array('type' => 'search', 'placeholder' => 'ST', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php
 				echo $this->Js->submit('Filtrar', array('update' => '#content'));
@@ -40,6 +41,7 @@ echo $form->create('Directorio',array('inputDefaults' => array(
 				<th class="span2"><?php echo $this->Paginator->sort('Estado', 'Estado.esedo'); ?></th>
 				<th class="tel"><?php echo $this->Paginator->sort('Telefonos','tel'); ?></th>
 				<th class="span1"><?php echo $this->Paginator->sort('Tipo','tipopersona_cve'); ?></th>
+				<th class="span1"><?php echo $this->Paginator->sort('ST','Directorio.st'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -61,6 +63,7 @@ echo $form->create('Directorio',array('inputDefaults' => array(
 				<td class="tel"><?php echo $directorio['Directorio']['tel']; ?></td>
 				<td class="span1"><?php echo $directorio['Directorio']['tipopersona_cve']; ?></td>
 				<td class="st"><?php echo $directorio['Directorio']['st']; ?></td>
+				<td class="st"><?php echo $directorio['Directorio']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

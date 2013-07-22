@@ -112,8 +112,15 @@ class Ventaexpo extends AppModel
 	);
 
 	public function loadDependencies() {
+/*
 		$Cliente = $this->toJsonListArray( $this->Cliente->find('list', 
-							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli'),
+							array(	'fields' => array('Cliente.id', 'CAST((Cliente.clcvecli ||\' \'||Cliente.cltda) AS VARCHAR(96)) cve'),
+									'conditions'=>array('clst'=>'A'),
+									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
+									)));
+*/
+		$Cliente = $this->toClientoteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
 									'conditions'=>array('clst'=>'A'),
 									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
 									)));
@@ -144,6 +151,20 @@ class Ventaexpo extends AppModel
         }
 		return $ret;
     }
+
+    public function toClientoteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+            }
+        }
+		return $ret;
+    }
+
 
 }
 

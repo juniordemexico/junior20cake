@@ -33,5 +33,15 @@ echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'type'=>'b
 echo $this->Form->end();
 ?>
 
+<script>
+
+<?php echo $this->AxUI->initAppController( array('baseurl'=>'/'.ucfirst($this->name).'/'.$this->action) ); //Initialize WebUI Controller ?>
+<?php echo $this->AxUI->getAppGlobalMethods(); ?>
+<?php echo $this->AxUI->closeAppController(); ?>
+
+<?php echo $this->AxUI->getAppDefaults();?>
+
+</script>
+
 
 </div> <!-- span12 -->

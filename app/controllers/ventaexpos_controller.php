@@ -28,8 +28,14 @@ class VentaexposController extends MasterDetailAppController {
 											'Vendedor.vecveven','Vendedor.venom',
 											'Cliente.clcvecli','Cliente.cltda','Cliente.clsuc','Cliente.clnom',
 											'Cliente.clatn'),
+							'doJoinUservendedor'=>true,
 							);
 
+	public function beforeFilter() {
+		$this->paginate['session']=$this->Auth->User();
+		parent::beforeFilter();
+	}
+	
 	public function add() {		
 		$model=$this->Ventaexpo;
 		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo());

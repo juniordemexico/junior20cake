@@ -321,6 +321,7 @@ var emptyItem={
 				if(response.data.result=='ok') {
 					axAlert(response.data.message, 'success', false);
 					$scope.items=angular.copy(items);
+					$scope.totalize();
 					if(angular.isDefined(response.data.nextFolio)) {
 						$scope.data.Master.folio=response.data.nextFolio;
 					}

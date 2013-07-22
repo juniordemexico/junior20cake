@@ -14,11 +14,11 @@ class DirectoriosController extends MasterDetailAppController {
 	var $layout='plain';
 	
 	function index() {
-		$conditions=array();
+		$conditions=array('Directorio.tipopersona_id'=>'40', 'Directorio.st'=>'A');
 		$this->paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
-								'order' => array('Directorio.tipopersona_cve' => 'asc' ,'Directorio.nom' => 'asc'),
+								'order' => array('Directorio.tipopersona_cve' => 'asc' ,'Directorio.cve', 'Directorio.tda' => 'asc'),
 								'conditions' => $conditions,
 								'session' => $this->Auth->User()
 								);
@@ -50,7 +50,7 @@ class DirectoriosController extends MasterDetailAppController {
 												'Directorio.vendedor_id', 
 												'Directorio.cldesc1', 'Directorio.cldesc2', 'Directorio.clplazo', 
 												'Directorio.divisa_id',
-												'Directorio.tipopersona_id','Directorio.tipopersona_cve','Directorio.vendedor_id')
+												'Directorio.tipopersona_id','Directorio.tipopersona_cve','Directorio.vendedor_id'),
 								));
 		$response = array();
 		foreach($data as $field=>$value) {

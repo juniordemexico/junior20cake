@@ -115,6 +115,9 @@
 </div> <!-- div tab-content-->
 </div> <!-- div tabs tabbable-->
 <?php
-echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
+if( $session->read('Auth.User.group_id') == 1 || $session->read('Auth.User.group_id') == 2 ||
+	$session->read('Auth.User.group_id') == 10 || $session->read('Auth.User.group_id') == 21 ) {
+	echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
+}
 echo $this->Form->end(); 
 ?>
