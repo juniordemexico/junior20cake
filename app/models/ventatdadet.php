@@ -1,11 +1,11 @@
 <?php
 
-class Ventadet extends AppModel 
+class Ventatdadet extends AppModel 
 {
-	var $name = 'Ventadet';
-//	var $table = 'Ventadets';
-//	var $useTable='Ventadets';
-	var $alias = 'Ventadet';
+	var $name = 'Ventatdadet';
+//	var $table = 'Ventatdadets';
+//	var $useTable='Ventatdadets';
+	var $alias = 'Ventatdadet';
 	var $cache = false;
 
 	var $primaryKey = 'id';
@@ -17,7 +17,7 @@ class Ventadet extends AppModel
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
-		'Venta',
+		'Ventatda',
 		'Articulo',
 		'Color',
 		'Talla',

@@ -1,10 +1,10 @@
 <?php
 
-class VentasController extends MasterDetailAppController {
-	public $name='Ventas';
+class VentatiendasController extends MasterDetailAppController {
+	public $name='Ventatiendas';
 
 	public $uses = array(
-		'Venta', 'Ventadet', 'Vendedor', 'Cliente', 'Divisa', 'Articulo', 'Color'
+		'Ventatda', 'Ventatdadet', 'Vendedor', 'Cliente', 'Divisa', 'Articulo', 'Color'
 	);
 
 	public $layout = 'default';
@@ -13,22 +13,39 @@ class VentasController extends MasterDetailAppController {
 							);
 
 	public $tipoarticulo_id = 0;
-	public $actualSerie = 'VE';
+	public $actualSerie = 'VT';
 
 	public $paginate = array('update' => '#content',
 							'evalScripts' => true,
 							'limit' => PAGINATE_ROWS,
-							'order' => array('Venta.fecha' => 'desc'),
-							'fields' => array('Venta.id', 'Venta.folio', 'Venta.fecha',
-											'Venta.suma', 'Venta.impu1', 'Venta.importe', 'Venta.impoimpu', 'Venta.total',
-											'Venta.st', 'Venta.t',
-											'Venta.created', 'Venta.modified',
-											'Venta.cliente_id',
-											'Venta.vendedor_id','Vendedor.vecveven','Vendedor.venom',
-											'Venta.divisa_id',
+							'order' => array('Ventatda.fecha' => 'desc'),
+							'fields' => array('Ventatda.id', 'Ventatda.folio', 'Ventatda.fecha',
+											'Ventatda.suma', 'Ventatda.impu1', 'Ventatda.importe', 'Ventatda.impoimpu', 'Ventatda.total',
+											'Ventatda.st', 'Ventatda.t',
+											'Ventatda.created', 'Ventatda.modified',
+											'Ventatda.cliente_id',
+											'Ventatda.vendedor_id','Vendedor.vecveven','Vendedor.venom',
+											'Ventatda.divisa_id',
 											'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom',
 											'Cliente.clatn'),
 							);
+
+	public function save() {
+		// Receive the user's PUT request's data in order to add the Item
+		$folio=$this->{$this->masterModelName}->getNextFolio($this->actualSerie, 1);
+		$this->data[$this->masterModelName][$this->{$this->masterModelName}->title]=$folio;
+
+		$this->{$this->masterModelName}->create();
+		if ( $this->{$this->masterModelName}->saveAll($this->data) ) {
+			$id=$this->{$this->masterModelName}->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('nextFolio', $this->Ventatda->getNextFolio($this->actualSerie, 0));
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+	}
 
 	public function edit( $id=null ) {
 		if (!$id || !$id>0) {
@@ -43,7 +60,7 @@ class VentasController extends MasterDetailAppController {
 	}
 
 	public function add() {		
-		$model=$this->Venta;
+		$model=$this->Ventatda;
 		parent::add( array(
 					'Master' =>
 						array('id'=>null, 'st'=>'A', 't'=>'0',

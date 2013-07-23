@@ -57,7 +57,7 @@
 	<div class="control-group">
 		<label for="VentaexpoFvence" class="control-label">Vencimiento:</label>
 		<div class="controls input">
-			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fvence]" field="Ventaexpo.fvence"
+			<input type="text" id="VentaexpoFvence" name="data[Ventaexpo][fvence]" field="Ventaexpo.fvence"
 				data-ui-date data-ui-date-format="yy-mm-dd"
 				data-ng-model="data.Master.fvence" data-ng-required="false"
 				class="date" placeholder="Vencimiento..." title="Proporciona la Fecha de Vencimiento del Pedido" />
@@ -289,12 +289,14 @@ var emptyItem={
 				$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(value.importe) ).toFixed(2);
 			}
 		});
-
+		
+		$scope.totalize($scope.data.Details);
+/*
 		$scope.data.Master.importe=$scope.data.Master.suma;
 		$scope.data.Master.impo1=16;
 		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * 0.16).toFixed(2);
 		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
-
+*/
 		if(!$scope.data.Master.suma>0) {
 			axAlert('El Pedido esta Vacio', 'warning');
 			$scope.saveText='Guardar';
@@ -321,7 +323,7 @@ var emptyItem={
 				if(response.data.result=='ok') {
 					axAlert(response.data.message, 'success', false);
 					$scope.items=angular.copy(items);
-					$scope.totalize();
+					$scope.totalize( {} );
 					if(angular.isDefined(response.data.nextFolio)) {
 						$scope.data.Master.folio=response.data.nextFolio;
 					}
@@ -377,17 +379,27 @@ var emptyItem={
 		});
 	}
 
-	$scope.totalize = function() {
+	$scope.totalize = function( items ) {
 		$scope.data.Master.suma=0;
-		angular.forEach($scope.items, function(value, key) {
-			if( angular.isDefined(value.cant) && angular.isNumber(value.cant) && value.cant>0 ) {
-				$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(value.importe) ).toFixed(2);
-			}
-		});
-		$scope.data.Master.importe=$scope.data.Master.suma;
+		var item={};
+		if( items.length>0 ) {
+			angular.forEach( items, function(value, key) {
+				if( angular.isDefined(value.id) ) {
+					item=value;
+				}
+				if( angular.isDefined(value.Detail) && angular.isDefined(value.Detail.id) ) {
+					item=value.Detail;
+				}
+				if( angular.isDefined(item.cant) && angular.isNumber(item.cant) && item.cant>0 ) {
+					$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(item.importe) ).toFixed(2);
+				}
+			});
+		}
 		$scope.data.Master.impo1=16;
-		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * 0.16).toFixed(2);
+		$scope.data.Master.importe=$scope.data.Master.suma;
+		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impo1/100).toFixed(4) ).toFixed(2);
 		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
+		return true;
 	}
 
 	$scope.getItemByCve = function() {
@@ -454,7 +466,7 @@ var emptyItem={
 				((angular.isDefined(row['t8']) && row['t8']!='')?parseInt(row['t8'],10):0)+
 				((angular.isDefined(row['t9']) && row['t9']!='')?parseInt(row['t9'],10):0);
 		row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
-		$scope.totalize();
+		$scope.totalize( $scope.items );
 	};
 	
     $scope.detailCopy = function (row, cell, column) {
@@ -501,7 +513,7 @@ var emptyItem={
 					(angular.isDefined(row['t8'])?parseInt(row['t8'],10):0)+
 					(angular.isDefined(row['t9'])?parseInt(row['t9'],10):0);
 				row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
-				$scope.totalize();
+				$scope.totalize( $scope.items );
 			}
 			else {
 				axAlert('El Detalle en el cache local esta vacio');				
@@ -525,7 +537,7 @@ var emptyItem={
 		delete row['t9'];
 		delete row['cant'];
 		delete row['importe'];
-		$scope.totalize();
+		$scope.totalize( $scope.items );
 	}
 
 	$scope.clienteChange = function () {

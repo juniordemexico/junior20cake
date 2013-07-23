@@ -102,11 +102,12 @@ class Venta extends AppModel
 	);
 
 	public function loadDependencies() {
-		$Cliente = $this->toJsonListArray( $this->Cliente->find('list', 
-							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli'),
+		$Cliente = $this->toClientoteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
 									'conditions'=>array('clst'=>'A'),
 									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
 									)));
+
 		$Vendedor = $this->toJsonListArray( $this->Vendedor->find('list', 
 							array(	'fields' => array('Vendedor.id', 'Vendedor.vecveven'),
 									'conditions'=>array('vest'=>0),
@@ -120,7 +121,39 @@ class Venta extends AppModel
 									'conditions'=>array('st'=>'A'),
 									 )));
 
-		return compact('Cliente', 'Vendedor', 'Divisa', 'Formadepago');		
+		$ClienteLista = $this->toClienteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
+									'conditions'=>array('clst'=>'A'),
+									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
+									)));
+
+		return compact('Cliente', 'ClienteLista', 'Vendedor', 'Divisa', 'Formadepago');		
 	}
+
+    public function toClienteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'clcvecli' => $v['Cliente']['clcvecli'], 'cltda'=>trim($v['Cliente']['cltda']), 'clnom'=>trim($v['Cliente']['clnom']));
+            }
+        }
+		return $ret;
+    }
+
+    public function toClientoteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+            }
+        }
+		return $ret;
+    }
 
 }

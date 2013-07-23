@@ -1,6 +1,6 @@
 <header>
 <div class="page-header">
-<h1><small>Venta <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small></h1>
+<h1><small>Venta Tienda <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small></h1>
 </div>
 </header>
 
@@ -34,9 +34,9 @@
 <div class="row">
 	<div class="span6">
 	<div class="control-group">
-		<label for="VentaRefer" class="control-label">Folio:</label>
+		<label for="VentatdaRefer" class="control-label">Folio:</label>
 		<div class="controls input">
-			<input type="text" id="VentaRefer" name="data[Venta][folio]" field="Venta.folio"
+			<input type="text" id="VentatdaRefer" name="data[Ventatda][folio]" field="Ventatda.folio"
 				data-ng-model="data.Master.folio" 
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
@@ -44,9 +44,9 @@
 	</div>
 
 	<div class="control-group">
-		<label for="VentaFecha" class="control-label">Fecha:</label>
+		<label for="VentatdaFecha" class="control-label">Fecha:</label>
 		<div class="controls input">
-			<input type="text" id="VentaFecha" name="data[Venta][fecha]" field="Venta.fecha"
+			<input type="text" id="VentatdaFecha" name="data[Ventatda][fecha]" field="Ventatda.fecha"
 				data-ui-date data-ui-date-format="yy-mm-dd"
 				data-ng-model="data.Master.fecha" data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
@@ -54,9 +54,9 @@
 	</div>
 
 	<div class="control-group">
-		<label for="VentaVendedor_id" class="control-label">Vendedor:</label>
+		<label for="VentatdaVendedor_id" class="control-label">Vendedor:</label>
 		<div class="controls input">
-			<select id="VentaVendedor_id" name="data[Venta][vendedor_id]"
+			<select id="VentatdaVendedor_id" name="data[Ventatda][vendedor_id]"
 				class="span3"
 				data-ng-model="data.Master.vendedor_id"
 				data-ng-options="i.id as i.cve for i in related.Vendedor"
@@ -66,9 +66,9 @@
 	</div>
 
 	<div class="control-group">
-		<label for="VentaCliente_id" class="control-label">Cliente:</label>
+		<label for="VentatdaCliente_id" class="control-label">Cliente:</label>
 		<div class="controls input">
-			<select id="VentaCliente_id" name="data[Venta][cliente_id]"
+			<select id="VentatdaCliente_id" name="data[Ventatda][cliente_id]"
 				class="span3"
 				data-ng-change="clienteChange()"
 				data-ng-model="data.Master.cliente_id"
@@ -79,15 +79,15 @@
 	</div>
 
 	<div class="control-group">
-		<label for="VentaDivisa_id" class="control-label">Divisa:</label>
+		<label for="VentatdaDivisa_id" class="control-label">Divisa:</label>
 		<div class="controls input">
-			<select id="VentaDivisa_id" name="data[Venta][divisa_id]"
+			<select id="VentatdaDivisa_id" name="data[Ventatda][divisa_id]"
 				class="span1"
 				data-ng-model="data.Master.divisa_id"
 				data-ng-options="i.id as i.cve for i in related.Divisa"
 				>
 			</select>
-			<input type="text" id="VentaTipodecambio" name="data[Venta][tipodecambio]" field="Venta.tipodecambio"
+			<input type="text" id="VentatdaTipodecambio" name="data[Ventatda][tipodecambio]" field="Ventatda.tipodecambio"
 				data-ng-model="data.Master.tipodecambio"
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
 				class="span1" placeholder="T Cambio..." title="Tipo de Cambio de la Divisa seleccionada" />
@@ -95,9 +95,9 @@
 	</div>
 
 	<div class="control-group">
-		<label for="VentaFormadepago_id" class="control-label">Forma de Pago:</label>
+		<label for="VentatdaFormadepago_id" class="control-label">Forma de Pago:</label>
 		<div class="controls input">
-			<select id="VentaFormadepago_id" name="data[Venta][formadepago_id]"
+			<select id="VentatdaFormadepago_id" name="data[Ventatda][formadepago_id]"
 				class="span2"
 				data-ng-model="data.Master.formadepago_id"
 				data-ng-options="i.id as i.cve for i in related.Formadepago"
@@ -114,9 +114,9 @@
 	<div class="span5">
 
 	<div class="control-group">
-		<label for="VentaSuma" class="control-label">Suma:</label>
+		<label for="VentatdaSuma" class="control-label">Suma:</label>
 		<div class="controls input">
-			<input type="text" id="VentaSuma" name="data[Venta][suma]" field="Venta.suma"
+			<input type="text" id="VentatdaSuma" name="data[Ventatda][suma]" field="Ventatda.suma"
 				readonly="true"
 				data-ng-readonly="true"
 				data-ng-model="data.Master.suma"
@@ -124,9 +124,9 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="VentaImporte" class="control-label">Importe:</label>
+		<label for="VentatdaImporte" class="control-label">Importe:</label>
 		<div class="controls input">
-			<input type="text" id="VentaImporte" name="data[Venta][importe]" field="Venta.importe"
+			<input type="text" id="VentatdaImporte" name="data[Ventatda][importe]" field="Ventatda.importe"
 				readonly="true"
 				data-ng-readonly="true"
 				data-ng-model="data.Master.importe"
@@ -134,9 +134,9 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="VentaImpoimpu" class="control-label">Impuesto:</label>
+		<label for="VentatdaImpoimpu" class="control-label">Impuesto:</label>
 		<div class="controls input">
-			<input type="text" id="VentaImpoimpu" name="data[Venta][impoimpu]" field="Venta.impoimpu"
+			<input type="text" id="VentatdaImpoimpu" name="data[Ventatda][impoimpu]" field="Ventatda.impoimpu"
 				readonly="true"
 				data-ng-readonly="true"
 				data-ng-model="data.Master.impoimpu"
@@ -144,9 +144,9 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="VentaTotal" class="control-label"><strong>Total:</strong></label>
+		<label for="VentatdaTotal" class="control-label"><strong>Total:</strong></label>
 		<div class="controls input">
-			<input type="text" id="VentaTotal" name="data[Venta][total]" field="Venta.total"
+			<input type="text" id="VentatdaTotal" name="data[Ventatda][total]" field="Ventatda.total"
 				readonly="true"
 				data-ng-readonly="true"
 				data-ng-model="data.Master.total"
@@ -224,10 +224,10 @@
 
 <pane id="tabs-4" heading="Datos adicionales">
 <div class="control-group">
-	<label for="VentaObser" class="control-label">Observaciones</label>
+	<label for="VentatdaObser" class="control-label">Observaciones</label>
 	<div class="controls input">
-		<textarea name="data[Venta][obser]" field="data.Master.Obser" maxlength="255"
-				class="span4" cols="30" rows="6" id="VentaObser"
+		<textarea name="data[Ventatda][obser]" field="data.Master.Obser" maxlength="255"
+				class="span4" cols="30" rows="6" id="VentatdaObser"
 				data-ng-model="data.Master.obser"
 				data-ng-minlength="0" data-ng-maxlength="255"
 		>
@@ -238,7 +238,7 @@
 <div class="control-group">
 	<label class="control-label" for="" title="Adjunta el documento original del cliente">Documento Original:</label>
 	<div class="controls input">
-		<?php echo $this->Upload->edit('img/Venta', $this->data['master']['Venta']['folio']);?>
+		<?php echo $this->Upload->edit('img/Ventatda', $this->data['master']['Ventatda']['folio']);?>
 	</div>
 </div>
 
@@ -277,16 +277,16 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 	$scope.selectedRow={};
     $scope.selectedColumn={};	
 	$scope.Cliente={};
-
-//	if(!angular.isDefined($scope.data.Master.id) || !$scope.data.Master.id>0) {
+/*
+	if(!angular.isDefined($scope.data.Master.id) || !$scope.data.Master.id>0) {
 		$scope.data.Master.impo1=16;
 		$scope.data.Master.suma=0;
 		$scope.data.Master.importe=0;
 		$scope.data.Master.impoimpu=0;
 		$scope.data.Master.total=0;
-//		$scope.data.Details=[];
-//	}
-
+		$scope.data.Details=[];
+	}
+*/
 	/* Begins the angular controller's code specific to this View */
 	$scope.theRespose={};
 	$scope.save = function() {
@@ -301,6 +301,48 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 							$scope.data.detailModel
 						);
 
+		console.log(serializedData);
+		
+		// Send the PUT request to the server
+		$http.post('/Ventatiendas/save.json', serializedData
+		).then(function(response) {
+			// We got a response to process
+			$scope.theResponse=response.data;
+			if( angular.isDefined(response.data) && angular.isDefined(response.data.result) ) {
+				console.log("RESPUESTA data: "+angular.toJson(response.data));
+				if(response.data.result=='ok') {
+					axAlert(response.data.message, 'success', false);
+					$scope.items=angular.copy(items);
+					$scope.totalize( {} );
+					if(angular.isDefined(response.data.nextFolio)) {
+						$scope.data.Master.folio=response.data.nextFolio;
+					}
+				}
+				else {
+					var errorText='<strong>Error al Guardar</strong><br/>';
+					if( angular.isDefined(response.data.validationErrors) ) {
+						console.log("ERROR AL GUARDAR:" + angular.toJson(response.data));
+						errorText='<ul class="unstyled">';
+						angular.forEach(response.data.validationErrors, function(value, model) {
+							errorText=errorText+'<li><strong>' + model + '</strong><ul>' ;
+							angular.forEach(value, function(msg, field) {
+								errorText=errorText + '<li>' + field + ': <em>' + msg + '</em>';
+							});
+							errorText=errorText+'</li></ul>';
+						});
+						errorText=errorText+'</ul>';
+					}
+					axAlert(errorText, 'error', false);
+				}
+			}
+			else {
+				console.log("ERROR AL GUARDAR:" + (angular.isDefined(response)?angular.toJson(response):'') );
+				axAlert('Error DESCONOCIDO Guardar el Pedido', 'error', false);				
+			}
+			$scope.saveText='Guardar';
+		});
+
+/*
 		// Send the PUT request to the server
 		$http.post($scope.app.actions.add, serializedData
 		).then(function(response) {
@@ -312,8 +354,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				return;
 			}
 		});
+*/
 	}
-
 	$scope.cancel = function() {
 		var title = 'Confirmación';
 		var msg = '¿ Seguro de Cancelar ?';
@@ -323,7 +365,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		.then( function(result) {
 			if(result) {
 				// Send the CANCEL request to the server
-				$http.get( '/Ventas/cancel/'+$scope.data.Master.id+'.json'
+				$http.get( '/Ventatiendas/cancel/'+$scope.data.Master.id+'.json'
 				).then(function(response) {
 					// We got a response to process
 					if(typeof response.data != 'undefined' && 
@@ -351,7 +393,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				t0: parseInt($scope.currentItem.t0, 10),
 				cant: parseInt($scope.currentItem.t0, 10),
 				precio: $scope.currentItem.precio,
-				importe: (parseInt($scope.currentItem.cant, 10) * $scope.currentItem.precio).toFixed(2)
+				importe: (parseInt($scope.currentItem.t0, 10) * $scope.currentItem.precio).toFixed(2)
 			},
 			Articulo: $scope.currentItem.Articulo,
 			Color: $scope.currentItem.Color
@@ -388,13 +430,14 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				$scope.Cliente.clcvecli=value.clcvecli;
 				$scope.Cliente.cltda=value.cltda;
 				$scope.Cliente.clnom=value.clnom;
-			//	$scope.totalize($scope.data.Details);
+				if( !angular.isDefined($scope.data.Master.id) && !$scope.data.Master.id>0 ) {
+					$scope.totalize($scope.data.Details);
+				}
 			}
 		});
 	}
 
 	$scope.totalize = function( items ) {
-		return true;
 		$scope.data.Master.suma=0;
 		var item={};
 		if( items.length>0 ) {
@@ -412,7 +455,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				}
 			});
 		}
-		$scope.data.Master.impo1=16;
+		$scope.data.Master.impu1=16;
 		$scope.data.Master.importe=$scope.data.Master.suma;
 		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impo1/100).toFixed(4) ).toFixed(2);
 		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
@@ -437,7 +480,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				$scope.currentItem.talla_id=response.data.item.Articulo.talla_id;
 				$scope.currentItem.t0=1;
 				$scope.currentItem.cant=1;
-				$scope.currentItem.precio=parseFloat(response.data.item.Articulo.arpvd);
+				$scope.currentItem.precio=response.data.item.Articulo.arpvd;
 				$scope.currentItem.importe=0;
 				axAlert(response.data.message, 'success', false);
 			}

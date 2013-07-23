@@ -131,15 +131,15 @@
 				<td class="" title="{{i.Articulo.ardescrip}}">{{i.Articulo.arcveart}}</td>
 				<td class="">{{i.Color.cve}}</td>
 				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t0)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t1)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t2)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t3)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t4)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t5)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t6)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t7)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t8)}}</td>
-				<td class="st text-right" title="Talla {{i.Tallas.tat0}}">{{toInteger(i.Detail.t9)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat1}}">{{toInteger(i.Detail.t1)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat2}}">{{toInteger(i.Detail.t2)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat3}}">{{toInteger(i.Detail.t3)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat4}}">{{toInteger(i.Detail.t4)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat5}}">{{toInteger(i.Detail.t5)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat6}}">{{toInteger(i.Detail.t6)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat7}}">{{toInteger(i.Detail.t7)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat8}}">{{toInteger(i.Detail.t8)}}</td>
+				<td class="st text-right" title="Talla {{i.Tallas.tat9}}">{{toInteger(i.Detail.t9)}}</td>
 				<td class="span1 text-right">{{i.Detail.cant}}</td>
 				<td class="precio text-right">{{i.Detail.precio | currency}}</td>
 				<td class="total text-right">{{i.Detail.importe | currency}}</td>
