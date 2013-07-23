@@ -248,9 +248,6 @@
 
 </form>
 
-<pre>
-{{ data.Master | json}}
-</pre>
 
 <script language="javascript">
 
@@ -312,7 +309,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				console.log("RESPUESTA data: "+angular.toJson(response.data));
 				if(response.data.result=='ok') {
 					axAlert(response.data.message, 'success', false);
-					$scope.items=angular.copy(items);
+					$scope.data.Details=[];
 					$scope.totalize( {} );
 					if(angular.isDefined(response.data.nextFolio)) {
 						$scope.data.Master.folio=response.data.nextFolio;
@@ -342,19 +339,6 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 			$scope.saveText='Guardar';
 		});
 
-/*
-		// Send the PUT request to the server
-		$http.post($scope.app.actions.add, serializedData
-		).then(function(response) {
-			// We got a response to process
-			$scope.theResponse=response.data;
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				axAlert(response.data.message, 'success', false);
-				return;
-			}
-		});
-*/
 	}
 	$scope.cancel = function() {
 		var title = 'Confirmación';
@@ -457,7 +441,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		}
 		$scope.data.Master.impu1=16;
 		$scope.data.Master.importe=$scope.data.Master.suma;
-		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impo1/100).toFixed(4) ).toFixed(2);
+		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impu1/100).toFixed(4) ).toFixed(2);
 		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
 		return true;
 	}

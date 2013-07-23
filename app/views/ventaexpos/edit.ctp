@@ -395,9 +395,9 @@ var emptyItem={
 				}
 			});
 		}
-		$scope.data.Master.impo1=16;
+		$scope.data.Master.impu1=16;
 		$scope.data.Master.importe=$scope.data.Master.suma;
-		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impo1/100).toFixed(4) ).toFixed(2);
+		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impu1/100).toFixed(4) ).toFixed(2);
 		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
 		return true;
 	}
