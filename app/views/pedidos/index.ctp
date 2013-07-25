@@ -5,7 +5,7 @@ $this->Paginator->options(array('update' => '#content',
 								));
 ?>
 
-<div id="gridWrapper">
+<div class="gridWrapper">
 <?php 
 echo $form->create('Pedido',array('inputDefaults' => array(
 															'label' => false,
@@ -15,7 +15,7 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 ?>
 	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
-			<tr id="trFilter">
+			<tr class="row-filter">
 				<th class="refer"><?php echo $form->text('perefer', array('label' => '', 'type' => 'search', 'placeholder' => 'Folio', 'class' => 'search-query'));?></th>
 				<th class="date"><?php echo $form->text('pefecha',array('label' => '', 'type' => 'search', 'placeholder' => 'Fecha', 'class' => 'search-query'));?></th>
 				<th class="date"><?php echo $form->text('pefvence',array('label' => '', 'type' => 'search', 'placeholder' => 'Entrega', 'class' => 'search-query'));?></th>
@@ -32,7 +32,7 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 				?>
 				</th>	
 			</tr>
-			<tr>
+			<tr class="row-labels">
 				<th class="refer"><?php echo $this->Paginator->sort('Folio','perefer'); ?></th>
 				<th class="date"><?php echo $this->Paginator->sort('Fecha','pefecha'); ?></th>
 				<th class="date"><?php echo $this->Paginator->sort('Vence','pefvence'); ?></th>
@@ -47,41 +47,38 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 			</tr>
 		</thead>
 		<tbody>
-		<?php
-		$thisID='';
-		$i = 0;
-		foreach ($pedidos as $pedido):
-			$class = null;
-			$thisID=trim($pedido['Pedido']['id']);
-		?>
-			<tr id="<?php echo $thisID?>" class="t-row">
-				<td class="refer"><?php echo $pedido['Pedido']['perefer']; ?></td>
-				<td class="date"><?php echo substr($pedido['Pedido']['pefecha'],0,10); ?></td>
-				<td class="date"><?php echo substr($pedido['Pedido']['pefvence'],0,10); ?></td>
-				<td class="date"><?php echo substr($pedido['Pedido']['pefauto'],0,10); ?></td>
-				<td class="cvecli"><?php echo $pedido['Cliente']['clcvecli']; ?></td>
-				<td class="tda" title="<?php echo trim($pedido['Cliente']['clsuc']); ?>"><?php echo $pedido['Cliente']['cltda']; ?></td>
-				<td class=""><?php echo $pedido['Cliente']['clnom']; ?></td>
-				<td class="cveven" title="<?php echo $pedido['Vendedor']['venom']; ?>"><?php echo $pedido['Vendedor']['vecveven']; ?></td>
-				<td class="total"><?php echo $this->Number->currency($pedido['Pedido']['pedido__petotal']); ?></td>
-				<td class="st"><?php echo $pedido['Pedido']['pest']; ?></td>
-				<td class="id" title="<?php echo 'Creado: '.$pedido['Pedido']['crefec'].'. Modificado: '.$pedido['Pedido']['modfec'].'.'; ?>"><?php echo $pedido['Pedido']['id']; ?></td>
+		<?php foreach ($items as $item): ?>
+			<tr id="<?php echo $item['Pedido']['id'];?>" class="t-row">
+				<td class="refer"><?php echo $item['Pedido']['perefer']; ?></td>
+				<td class="date"><?php echo substr($item['Pedido']['pefecha'],0,10); ?></td>
+				<td class="date"><?php echo substr($item['Pedido']['pefvence'],0,10); ?></td>
+				<td class="date"><?php echo substr($item['Pedido']['pefauto'],0,10); ?></td>
+				<td class="cvecli"><?php echo $item['Cliente']['clcvecli']; ?></td>
+				<td class="tda" title="<?php echo trim($item['Cliente']['clsuc']); ?>"><?php echo $item['Cliente']['cltda']; ?></td>
+				<td class=""><?php echo $item['Cliente']['clnom']; ?></td>
+				<td class="cveven" title="<?php echo $item['Vendedor']['venom']; ?>"><?php echo $item['Vendedor']['vecveven']; ?></td>
+				<td class="total"><?php echo $this->Number->currency($item['Pedido']['pedido__petotal']); ?></td>
+				<td class="st"><?php echo $item['Pedido']['pest']; ?></td>
+				<td class="id" title="<?php echo 'Creado: '.$item['Pedido']['crefec'].'. Modificado: '.$item['Pedido']['modfec'].'. VentaexpoID: '.$item['Pedido']['ventaexpo_id'].'.'; ?>"><?php echo $item['Pedido']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
 <?php echo $this->Form->end(); ?>
-</div>
-</div>
+</div> <!-- gridWrapper -->
 
-<?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Cliente','MyRowClickAction' => 'edit')); ?>
+<?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name, 'MyModel'=>'Pedido', 'MyRowClickAction' => 'edit')); ?>
 
 </div> <!-- index-form -->
 
-<?php echo 
+<?php
+echo 
 $this->Js->get('.t-row')->event(
 'click',
-"location.replace('".$this->Html->url(array('action'=>'edit'))."/'+this.id);"
+"location.replace('".
+$this->Html->url(array('action'=>(isset($clickAction)?$clickAction:'edit'))).
+"/'+this.id);"
 , array('stop' => true));
 ?>
+
 <script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

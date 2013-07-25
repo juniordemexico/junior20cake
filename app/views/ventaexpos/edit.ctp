@@ -144,47 +144,33 @@
 </pane>
 
 <pane id="tabs-1" heading="Detalle">
-
-
-
-		<div class="gridStyle" ng-grid="gridOptions"></div>
-<?php
-/*
-		<table class="table table-condensed table-bordered table-hover ax-detail-table">
-			<thead>
-			<tr>
-				<th class="span2">Material</th>
-				<th class="span2">Color</th>
-				<th class="">Descripción</th>
-				<th class="cant">T0</th>
-				<th class="cant">Cant</th>
-				<th class="precio">Precio</th>
-				<th class="precio">Importe</th>
-				<th class="span1">&nbsp;</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
-				<td class="span2">{{i.Articulo.arcveart}}</td>
-				<td class="span2">{{i.Color.cve}}</td>
-				<td class="">{{i.Articulo.ardescrip}}</td>
-				<td class="cant" title="{{i.Detail.Tallas.tat0}}">{{i.Detail.t0}}</td>
-				<td class="cant">{{i.Detail.cant}}</td>
-				<td class="precio">{{i.Detail.precio | currency}}</td>
-				<td class="precio">{{(i.Detail.cant)*i.Detail.precio | currency}}</td>
-				<td class="span1">
-					<button type="button" class="btn btn-mini ax-btn-detail-delete"
-							data-ng-click="detailDelete($index, i, true)"
-							data-ng-hide="data.Master.id>0">
-							<i class="icon icon-trash"></i>
-					</button>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+	<div class="row">
+	<div class="control-group">
+		<label for="Ventaexpo" class="control-label">Paquetes:</label>
+		<div class="controls input">
+			<select id="Proporcionpedidos" name="data[Proporcionpedidos][id]"
+				class="span3"
+				data-ng-model="currentItem.Proporcionpedido"
+				data-ng-options="i.cve for i in related.Proporcionpedido"
+				>
+			</select>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<span><strong>0: <em class="text-info">{{currentItem.Proporcionpedido.t0}}</em></strong></span>
+			<span><strong>1: <em class="text-info">{{currentItem.Proporcionpedido.t1}}</em></strong></span>
+			<span><strong>2: <em class="text-info">{{currentItem.Proporcionpedido.t2}}</em></strong></span>
+			<span><strong>3: <em class="text-info">{{currentItem.Proporcionpedido.t3}}</em></strong></span>
+			<span><strong>4: <em class="text-info">{{currentItem.Proporcionpedido.t4}}</em></strong></span>
+			<span><strong>5: <em class="text-info">{{currentItem.Proporcionpedido.t5}}</em></strong></span>
+			<span><strong>6: <em class="text-info">{{currentItem.Proporcionpedido.t6}}</em></strong></span>
+			<span><strong>7: <em class="text-info">{{currentItem.Proporcionpedido.t7}}</em></strong></span>
+			<span><strong>8: <em class="text-info">{{currentItem.Proporcionpedido.t8}}</em></strong></span>
+			<span><strong>9: <em class="text-info">{{currentItem.Proporcionpedido.t9}}</em></strong></span>
+			<span><strong>Total: <em class="text-info">{{currentItem.Proporcionpedido.cant}}</em></strong></span>
 		</div>
-*/
-?>
+	</div>
+	</div>
+
+	<div class="gridStyle" ng-grid="gridOptions"></div>
 
 </pane> <!-- div tabs1 -->
 
@@ -220,7 +206,8 @@ var emptyItem={
 				Color:{}, 
 				ArticuloColor:[],
 				Bases: {},
-				Estilos: {}
+				Estilos: {},
+				Proporcionpedido: {}
 //				"cant": function() {return this.t0+this.t1+this.t2;},
 //				"importe": function() {return 0;}
 				};

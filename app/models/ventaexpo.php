@@ -128,8 +128,12 @@ class Ventaexpo extends AppModel
 									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
 									)));
 
+		$Proporcionpedido = $this->toProporcionJsonListArray( ClassRegistry::init('Proporcionpedido')->find('all', 
+							array(	'conditions'=>array(),
+									'order'=>array('Proporcionpedido.cve') 
+									)));
 
-		return compact('Cliente', 'Vendedor', 'ClienteLista');		
+		return compact('Cliente', 'Vendedor', 'ClienteLista', 'Proporcionpedido');		
 	}
 
     public function toClienteJsonListArray($arr = null)
@@ -153,6 +157,31 @@ class Ventaexpo extends AppModel
             $ret = array();
             foreach ($arr as $k => $v) {
                 $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+            }
+        }
+		return $ret;
+    }
+
+    public function toProporcionJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Proporcionpedido']['id'], 'cve' => $v['Proporcionpedido']['cve'],
+						't0'=>$v['Proporcionpedido']['t0'],
+						't1'=>$v['Proporcionpedido']['t1'],
+						't2'=>$v['Proporcionpeºdido']['t2'],
+						't3'=>$v['Proporcionpedido']['t3'],
+						't4'=>$v['Proporcionpedido']['t4'],
+						't5'=>$v['Proporcionpedido']['t5'],
+						't6'=>$v['Proporcionpedido']['t6'],
+						't7'=>$v['Proporcionpedido']['t7'],
+						't8'=>$v['Proporcionpedido']['t8'],
+						't9'=>$v['Proporcionpedido']['t9'],
+						'cant'=>$v['Proporcionpedido']['cant']
+						);
             }
         }
 		return $ret;

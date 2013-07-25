@@ -15,34 +15,48 @@ class PedidosController extends MasterDetailAppController {
 
 	public $layout = 'default';
 	
-	public $tableFields = 	array(
+	public $paginate = array(
+								'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGINATE_ROWS,
+								'order' => array('Pedido.pefecha'=>'DESC','Pedido.perefer' => 'DESC'),
+								'fields' => array(
 							'id','perefer','pefecha','pefvence','pet','pest','petotal','peauto','pefauto',
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'Pedido.vendedor_id','Vendedor.vecveven','Vendedor.venom','divisa_id','Divisa.dicve',
-							'crefec','modfec');
+							'Pedido.ventaexpo_id',
+							'crefec','modfec'),
+								'conditions' => array(),
+								'doJoinUservendedor'=>true,
+								);
 
-	function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter() {
+		$this->paginate['session']=$this->Auth->User();
 		$this->Auth->allow('importa');    
+		parent::beforeFilter();
 	}
 
-
+/*
 	function index() {
 		$this->Pedido->recursive = 0;
-		$conditions=array();
 		$this->paginate = array(
 								'update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
 								'order' => array('Pedido.perefer' => 'DESC'),
-								'fields' => $this->tableFields,
-								'conditions' => $conditions,
+								'fields' => array(
+							'id','perefer','pefecha','pefvence','pet','pest','petotal','peauto','pefauto',
+							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
+							'Pedido.vendedor_id','Vendedor.vecveven','Vendedor.venom','divisa_id','Divisa.dicve',
+							'crefec','modfec'),
+								'conditions' => array(),
 								'doJoinUservendedor'=>true,
-								'session' => $this->Auth->User(),
 								);
+		'session' => $this->Auth->User(),
 		$filter = $this->Filter->process($this);
 		$this->set('pedidos', $this->paginate($filter));
 	}
+*/
 
 	function view($id = null) {
 		if (!$id) {
@@ -103,6 +117,20 @@ class PedidosController extends MasterDetailAppController {
 		$this->set('lastInsertedTmpID', $tmpData['id']);
 	}
 
+	public function edit( $id=null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+										$data['Master'][$this->masterModelTitle]
+				);
+		$this->render('view');
+	}
+
+/*
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('invalid_transaction', true), 'error');
@@ -137,7 +165,7 @@ class PedidosController extends MasterDetailAppController {
 		$this->set(compact('divisas', 'vendedores', 'details'));
 		$this->set('master_id', $id);
 	}
-
+*/
 	function delete($id=null) {
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_transaction', true), 'error');
@@ -201,7 +229,7 @@ class PedidosController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('pedidos', $this->paginate($filter));
 	}
-
+/*
 	function Monitor() {
 		$this->layout='monitor';
 		$this->Pedido->recursive = 0;
@@ -215,7 +243,7 @@ class PedidosController extends MasterDetailAppController {
 								))
 				);
 	}
-
+*/
 	function Exporta($id=null) {
 		$this->layout='plain';
 		$this->autoRender=false;
@@ -302,8 +330,8 @@ class PedidosController extends MasterDetailAppController {
 	}
 
 	function Importa() {
-		private $ok=true;
-		private $message="";
+		$ok=true;
+		$message="";
 
 		if(isset($_SERVER['HTTP_USER_AGENT']) && stristr($_SERVER['HTTP_USER_AGENT'], 'admii')) {
 			$isWeb=false;

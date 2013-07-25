@@ -4,10 +4,15 @@
 class Pedido extends AppModel 
 {
 	public $name = 'Pedido';
-	public $table = 'pedido';
-	public $useTable = 'pedido';
+//	public $table = 'pedido';
+//	public $useTable = 'Pedido';
 	public $alias = 'Pedido';
 	public $cache = false;
+
+	public $title = 'perefer';
+	public $longTitle = null;
+
+	public $detailsModel='Pedidodet';
 
 	public $virtualFields = array(
 		'peimporte' => 'peimporte',
@@ -23,18 +28,8 @@ class Pedido extends AppModel
 	);
 
 	public $hasMany = array(
-		'Pedidodet' =>
-			array(
-			'className' => 'Pedidodet',
-//			'foreignKey' => 'pedido_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'dependent' => true,
-//			'exclusive' => true,
-			)
-		,
-		);
+		'Pedidodet'
+	);
 		
 	public $validate = array(
 		'perefer' => array(
@@ -112,20 +107,6 @@ class Pedido extends AppModel
 				'message' => 'This Refer has already been taken, please enter an unique Refer'
 			)
 		),
-		'pet' => array(
-			'inlist' => array(
-				'rule' => array(
-					'inList',
-					array(
-						'0',
-						'1'
-					)
-				),
-				'required' => false,
-				'allowEmpty' => false,
-				'message' => 'Not in list, please enter an item within T list'
-			)
-		),
 		'pest' => array(
 			'inlist' => array(
 				'rule' => array(
@@ -191,6 +172,61 @@ class Pedido extends AppModel
 		$this->transactionResult="Error";
 		return false;
 	}
+
+	public function loadDependencies() {
+		$Cliente = $this->toClientoteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
+									'conditions'=>array('clst'=>'A'),
+									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
+									)));
+
+		$Vendedor = $this->toJsonListArray( $this->Vendedor->find('list', 
+							array(	'fields' => array('Vendedor.id', 'Vendedor.vecveven'),
+									'conditions'=>array('vest'=>0),
+									'order'=>array('Vendedor.vecveven') 
+									 )));
+		$Divisa = $this->toJsonListArray( $this->Divisa->find('list', 
+							array(	'fields' => array('Divisa.id', 'Divisa.dicve')
+									 )));
+		$Formadepago = $this->toJsonListArray( $this->Formadepago->find('list', 
+							array(	'fields' => array('Formadepago.id', 'Formadepago.cve'),
+									'conditions'=>array('st'=>'A'),
+									 )));
+
+		$ClienteLista = $this->toClienteJsonListArray( $this->Cliente->find('all', 
+							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
+									'conditions'=>array('clst'=>'A'),
+									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
+									)));
+
+		return compact('Cliente', 'ClienteLista', 'Vendedor', 'Divisa', 'Formadepago');		
+	}
+
+    public function toClienteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'clcvecli' => $v['Cliente']['clcvecli'], 'cltda'=>trim($v['Cliente']['cltda']), 'clnom'=>trim($v['Cliente']['clnom']));
+            }
+        }
+		return $ret;
+    }
+
+    public function toClientoteJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+            }
+        }
+		return $ret;
+    }
 
 }
 
