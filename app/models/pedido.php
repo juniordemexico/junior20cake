@@ -11,8 +11,26 @@ class Pedido extends AppModel
 
 	public $title = 'perefer';
 	public $longTitle = null;
-
+	public $dateField='pefecha';
+	public $dateLimitField='pefvence';
+	public $stField='pest';
+	
 	public $detailsModel='Pedidodet';
+
+	public $_schema = array(
+		'perefer' => array(
+			'type' => 'string', 
+			'length' => 8
+		),
+		'pefecha' => array(
+			'type' => 'date',
+			'length' => 10
+		),
+		'peobser' => array(
+			'type' => 'string', 
+			'length' => 255
+		),
+	);
 
 	public $virtualFields = array(
 		'peimporte' => 'peimporte',
@@ -188,10 +206,6 @@ class Pedido extends AppModel
 		$Divisa = $this->toJsonListArray( $this->Divisa->find('list', 
 							array(	'fields' => array('Divisa.id', 'Divisa.dicve')
 									 )));
-		$Formadepago = $this->toJsonListArray( $this->Formadepago->find('list', 
-							array(	'fields' => array('Formadepago.id', 'Formadepago.cve'),
-									'conditions'=>array('st'=>'A'),
-									 )));
 
 		$ClienteLista = $this->toClienteJsonListArray( $this->Cliente->find('all', 
 							array(	'fields' => array('Cliente.id', 'Cliente.clcvecli', 'Cliente.cltda', 'Cliente.clnom'),
@@ -199,7 +213,12 @@ class Pedido extends AppModel
 									'order'=>array('Cliente.clcvecli', 'Cliente.cltda') 
 									)));
 
-		return compact('Cliente', 'ClienteLista', 'Vendedor', 'Divisa', 'Formadepago');		
+		$Proporcionpedido = $this->toProporcionJsonListArray( ClassRegistry::init('Proporcionpedido')->find('all', 
+							array(	'conditions'=>array(),
+									'order'=>array('Proporcionpedido.cve') 
+									)));
+
+		return compact('Cliente', 'Vendedor', 'Divisa', 'ClienteLista', 'Proporcionpedido');		
 	}
 
     public function toClienteJsonListArray($arr = null)
@@ -223,6 +242,31 @@ class Pedido extends AppModel
             $ret = array();
             foreach ($arr as $k => $v) {
                 $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+            }
+        }
+		return $ret;
+    }
+
+    public function toProporcionJsonListArray($arr = null)
+    {
+        $ret = null;
+		
+        if (!empty($arr)) {
+            $ret = array();
+            foreach ($arr as $k => $v) {
+                $ret[] = array('id' => $v['Proporcionpedido']['id'], 'cve' => $v['Proporcionpedido']['cve'],
+						't0'=>$v['Proporcionpedido']['t0'],
+						't1'=>$v['Proporcionpedido']['t1'],
+						't2'=>$v['Proporcionpedido']['t2'],
+						't3'=>$v['Proporcionpedido']['t3'],
+						't4'=>$v['Proporcionpedido']['t4'],
+						't5'=>$v['Proporcionpedido']['t5'],
+						't6'=>$v['Proporcionpedido']['t6'],
+						't7'=>$v['Proporcionpedido']['t7'],
+						't8'=>$v['Proporcionpedido']['t8'],
+						't9'=>$v['Proporcionpedido']['t9'],
+						'cant'=>$v['Proporcionpedido']['cant']
+						);
             }
         }
 		return $ret;

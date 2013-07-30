@@ -34,58 +34,58 @@
 <li><a class="returnFalse" href="">Producción</a>	
 	<ul>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Catálogos</a></li>
-		<li><a id="coloresLinkCheck" href="/Colores">Colores</a></li>
-		<li><a id="marcasLinkCheck" href="/Tallas">Tallas</a></li>
-		<li><a id="temporadasLinkCheck" href="/Temporadas">Temporadas</a></li>
-		<li><a id="proporcionesLinkCheck" href="/Proporciones">Proporciones</a></li>
+		<li><a id="coloresLinkCheck" href="/Colores" target="_new">Colores</a></li>
+		<li><a id="marcasLinkCheck" href="/Tallas" target="_new">Tallas</a></li>
+		<li><a id="temporadasLinkCheck" href="/Temporadas" target="_new">Temporadas</a></li>
+		<li><a id="proporcionesLinkCheck" href="/Proporciones" target="_new">Proporciones</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Productos</a></li>
-		<li><a id="articulosLinkCheck" href="/Articulos">Productos</a></li>
-		<li><a id="articulosArchivosLinkCheck" href="/Articulos/archivos">Imagenes/Archivos Productos</a></li>
-		<li class="divider dividerhead"><a class="returnFalse" href="">Materiales y Servicios</a></li>
+		<li><a id="articulosLinkCheck" href="/Articulos" target="_new">Productos</a></li>
+		<li><a id="articulosArchivosLinkCheck" href="/Articulos/archivos" target="_new">Imagenes/Archivos Productos</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="" target="_new">Materiales y Servicios</a></li>
 		<li><a id="materialesLinkCheck" href="/Materiales">Materiales</a></li>
-		<li><a id="materialesArchivosLinkCheck" href="/Materiales/archivos">Imagenes/Documentos Materiales</a></li>
+		<li><a id="materialesArchivosLinkCheck" href="/Materiales/archivos" target="_new">Imagenes/Documentos Materiales</a></li>
 		<li><a id="serviciosLinkCheck" href="/Servicios">Servicios</a></li>
-		<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios">Imagenes/Documentos Servicios</a></li>
+		<li><a id="serviciosArchivosLinkCheck" href="/Servicios/servicios" target="_new">Imagenes/Documentos Servicios</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Costeos</a></li>
-		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedores/costos">Costos por Material/Proveedor</a></li>
-		<li><a id="articuloCosteosLinkCheck" href="/Costeos">Costeos x Explosion</a></li>
-		<li class="divider dividerhead"><a class="returnFalse" href="">Procesos de Manufactura</a></li>
-		<li><a id="articuloExplosionLinkCheck" href="/Explosiones">Explosion</a></li>
+		<li><a id="materialproveedorCostosLinkCheck" href="/Proveedores/costos" target="_new">Costos por Material/Proveedor</a></li>
+		<li><a id="articuloCosteosLinkCheck" href="/Costeos" target="_new">Costeos x Explosion</a></li>
+		<li class="divider dividerhead"><a class="returnFalse" href="" target="_new">Procesos de Manufactura</a></li>
+		<li><a id="articuloExplosionLinkCheck" href="/Explosiones" target="_new">Explosion</a></li>
 	</ul>
 </li>
 <li><a class="returnFalse" href="">Almacén Producción</a>	
 	<ul>
-		<li><a id="serviciosArchivosLinkCheck" href="/Bodegamateriales">Bodega de Materiales</a></li>
+		<li><a id="serviciosArchivosLinkCheck" href="/Bodegamateriales" target="_new">Bodega de Materiales</a></li>
 	</ul>
 </li>
 				<li><a class="returnFalse" href="">Almacén</a>	
 					<ul>
 						<li class="divider dividerhead"><a class="returnFalse" href="">Movimientos</a>
-						<li><a id="almacenLinkCheck" href="/Almacen">Entradas/Salidas</a></li>
-						<li><a id="articulosexistenciasLinkCheck" href="/Articulos/existencias">Existencias</a></li>
+						<li><a id="almacenLinkCheck" href="/Almacen" target="_new">Entradas/Salidas</a></li>
+						<li><a id="articulosexistenciasLinkCheck" href="/Articulos/existencias" target="_new">Existencias</a></li>
 					</ul>
 				</li>
 				<li><a class="returnFalse" href="">Ventas</a>	
 					<ul>
 						<li class="divider dividerhead"><a class="returnFalse" href="">Movimientos</a>
-						<li><a id="articulospreciosLinkCheck" href="/Articulos/precios">Lista de Precio y Exist</a></li>
-						<li><a id="pedidosLinkCheck" href="/Pedidos">Pedidos</a></li>
-						<li><a id="facturasLinkCheck" href="/Facturas">Facturas</a></li>
-						<li><a id="ncreditoLinkCheck" href="/Ncredito">Notas de Crédito</a></li>
-						<li><a id="ncargoLinkCheck" href="/Ncargo">Notas de Cargo</a></li>
+						<li><a id="articulospreciosLinkCheck" href="/Articulos/precios" target="_new">Lista de Precio y Exist</a></li>
+						<li><a id="pedidosLinkCheck" href="/Pedidos" target="_new">Pedidos</a></li>
+						<li><a id="ventaexposLinkCheck" href="/ventaexpos" target="_new">Pedidos Expos</a></li>
+						<li><a id="facturasLinkCheck" href="/Facturas" target="_new">Facturas</a></li>
+						<li><a id="ncreditoLinkCheck" href="/Ncredito" target="_new">Notas de Crédito</a></li>
 						<li class="divider dividerhead"><a class="returnFalse href="">Logistica Ventas</a></li>
 						<li><a id="facturaembarqueLinkCheck" href="/Facturas/embarque">Embarque de Facturas</a></li>
 						<li><a id="facturaentregaLinkCheck" href="/Facturas/entrega">Entrega de Facturas</a></li>
 						<li><a id="facturaselectronicasLinkCheck" href="/FacturaElectronica">Facturas Electrónicas</a></li>
 						<li class="divider dividerhead"><a class="returnFalse href="">Informes</a></li>
-						<li><a id="pedidosInformesLinkCheck" href="/Pedidos">Pedidos</a></li>
-						<li><a id="facturasLinkCheck" href="/Facturas">Facturas</a></li>
+						<li><a id="pedidosInformesLinkCheck" href="/Pedidos" target="_new">Pedidos</a></li>
+						<li><a id="facturasLinkCheck" href="/Facturas" target="_new">Facturas</a></li>
 					</ul>
 				</li>
 				<li><a class="returnFalse" href="">C x C</a>	
 					<ul>
 						<li class="divider dividerhead"><a class="returnFalse" href="">Movimientos</a>
-						<li><a id="pedidosautorizaLinkCheck" href="/Pedidos/autorizacion">Autorizacion de Pedidos</a></li>
+						<li><a id="pedidosautorizaLinkCheck" href="/Pedidos/autorizacion" target="_new">Autorizacion de Pedidos</a></li>
 						<li class="divider dividerhead"><a class="returnFalse href="">Informes</a></li>
 						<li><a id="cxcInformesLinkCheck" href="/cxc/">Estado de Cuenta</a></li>
 					</ul>

@@ -20,10 +20,10 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 				<th class="date"><?php echo $form->text('pefecha',array('label' => '', 'type' => 'search', 'placeholder' => 'Fecha', 'class' => 'search-query'));?></th>
 				<th class="date"><?php echo $form->text('pefvence',array('label' => '', 'type' => 'search', 'placeholder' => 'Entrega', 'class' => 'search-query'));?></th>
 				<th class="date"><?php echo $form->text('pefauto',array('label' => '', 'type' => 'search', 'placeholder' => 'F Autoriza', 'class' => 'search-query'));?></th>
-				<th class="cveven"><?php echo $form->text('Vendedor.vecveven', array('label' => '', 'type' => 'search', 'placeholder' => 'Vendedor', 'class' => 'search-query'));?></th>
 				<th class="cvecli"><?php echo $form->text('Cliente.clcvecli',array('label' => '', 'type' => 'search', 'placeholder' => 'Cliente', 'class' => 'search-query'));?></th>
-				<th class="st"><?php echo $form->text('Cliente.cltda',array('label' => '', 'type' => 'search', 'placeholder' => 'Tda', 'class' => 'search-query'));?></th>
+				<th class="tda"><?php echo $form->text('Cliente.cltda',array('label' => '', 'type' => 'search', 'placeholder' => 'Tda', 'class' => 'search-query'));?></th>
 				<th class=""><?php echo $form->text('Cliente.clnom',array('label' => '', 'type' => 'search', 'placeholder' => 'Nombre o Razón Social', 'class' => 'search-query'));?></th>
+				<th class="cveven"><?php echo $form->text('Vendedor.vecveven', array('label' => '', 'type' => 'search', 'placeholder' => 'Vendedor', 'class' => 'search-query'));?></th>
 				<th class="total"><?php echo $form->text('petotal',array('label' => '', 'type' => 'search', 'placeholder' => 'Total', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('pest',array('label' => '', 'type' => 'search', 'placeholder' => 'ST', 'class' => 'search-query'));?></th>
 				<th class="id">
@@ -36,11 +36,11 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 				<th class="refer"><?php echo $this->Paginator->sort('Folio','perefer'); ?></th>
 				<th class="date"><?php echo $this->Paginator->sort('Fecha','pefecha'); ?></th>
 				<th class="date"><?php echo $this->Paginator->sort('Vence','pefvence'); ?></th>
-				<th class="date"><?php echo $this->Paginator->sort('Autorizado','pefauto'); ?></th>
-				<th class="cveven"><?php echo $this->Paginator->sort('Vend','Vendedor.vecveven'); ?></th>
+				<th class="date"><?php echo $this->Paginator->sort('F Autoriza','pefauto'); ?></th>
 				<th class="cvecli"><?php echo $this->Paginator->sort('Cte','Cliente.clcvecli'); ?></th>
-				<th class="st"><?php echo $this->Paginator->sort('Tda','Cliente.cltda'); ?></th>
+				<th class="tda"><?php echo $this->Paginator->sort('Tda','Cliente.cltda'); ?></th>
 				<th class=""><?php echo $this->Paginator->sort('Razon Social','Cliente.clnom'); ?></th>
+				<th class="cveven"><?php echo $this->Paginator->sort('Vend','Vendedor.vecveven'); ?></th>
 				<th class="total"><?php echo $this->Paginator->sort('Total','petotal'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','pest'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
@@ -53,10 +53,10 @@ echo $form->create('Pedido',array('inputDefaults' => array(
 				<td class="date"><?php echo substr($item['Pedido']['pefecha'],0,10); ?></td>
 				<td class="date"><?php echo substr($item['Pedido']['pefvence'],0,10); ?></td>
 				<td class="date"><?php echo substr($item['Pedido']['pefauto'],0,10); ?></td>
-				<td class="cveven" title="<?php echo $item['Vendedor']['venom']; ?>"><?php echo $item['Vendedor']['vecveven']; ?></td>
 				<td class="cvecli"><?php echo $item['Cliente']['clcvecli']; ?></td>
-				<td class="st" title="<?php echo trim($item['Cliente']['clsuc']); ?>"><?php echo $item['Cliente']['cltda']; ?></td>
+				<td class="tda" title="<?php echo trim($item['Cliente']['clsuc']); ?>"><?php echo $item['Cliente']['cltda']; ?></td>
 				<td class=""><?php echo $item['Cliente']['clnom']; ?></td>
+				<td class="cveven" title="<?php echo $item['Vendedor']['venom']; ?>"><?php echo $item['Vendedor']['vecveven']; ?></td>
 				<td class="total"><?php echo $this->Number->currency($item['Pedido']['pedido__petotal']); ?></td>
 				<td class="st"><?php echo $item['Pedido']['pest']; ?></td>
 				<td class="id" title="<?php echo 'Creado: '.$item['Pedido']['crefec'].'. Modificado: '.$item['Pedido']['modfec'].'. VentaexpoID: '.$item['Pedido']['ventaexpo_id'].'.'; ?>"><?php echo $item['Pedido']['id']; ?></td>

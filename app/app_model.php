@@ -18,6 +18,7 @@ class AppModel extends Model
 
 	public $stField='st';
 	public $dateField='fecha';
+	public $dateLimitField='fvence';
 	public $autorizeField='fautoriza';
 	public $autorizeUserField='uautoriza';
 	

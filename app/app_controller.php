@@ -404,33 +404,54 @@ class MasterDetailAppController extends AppController {
 		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
 		$this->set('data', $data );
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
-										$data['Master'][$this->masterModelTitle]
+										$data['Master'][$this->{$this->masterModelName}->title]
+				);
+	}
+
+	public function view( $id=null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+										$data['Master'][$this->{$this->masterModelName}->title]
 				);
 	}
 
 	public function add( $data=null ) {
 		// Send a blank form to the user
-
+		$model=$this->{$this->masterModelName};
 		if(!$data) {
-			$data=array('Master' =>
-					array('id'=>null, 'st'=>'A', 't'=>'0',
-							$this->{$this->masterModelName}->title => $this->{$this->masterModelName}->getNextFolio($this->actualSerie, 0),
-							$this->{$this->masterModelName}->dateField => date('Y-m-d'),
-						),
-						'Details' => array(),
-						'masterModel' => $this->{$this->masterModelName}->name,
-						'detailModel' => isset($this->{$this->masterModelName}->detailsModel) ?
-											$this->{$this->masterModelName}->detailsModel :
-											null,
-				);
+			$this->set('data', array(
+						'Master'	=> array(
+									'id'=>null, 
+									$model->title => $model->getNextFolio($this->actualSerie, 0),
+									$model->dateField => date('Y-m-d'),
+									$model->stField=>'A',
+									't'=>'0'
+									),
+						'Details'	=> array(),
+						'masterModel' => $model->name,
+						'detailModel' => isset($model->detailsModel) ?
+											$model->detailsModel :
+											null)
+					);
 		}
+
+		$this->set('data', $data);
+		$this->render('edit');
+		return;
+/*		
 		if ( empty($this->data) ) {
 			$this->set('data', $data);
-
 			$this->render('edit');
 			return;
 		}
-		
+*/		
+/*
 		// Receive the user's PUT request's data in order to add the Item
 		$folio=$this->{$this->masterModelName}->getNextFolio($this->actualSerie, 1);
 		$this->data[$this->masterModelName][$this->{$this->masterModelName}->title]=$folio;
@@ -445,6 +466,29 @@ class MasterDetailAppController extends AppController {
 			$this->set('message', 'Error al guardar el movimiento');
 		}
 		return;
+*/
+	}
+
+	public function save( $data=null ) {
+		if (!$data && (!isset($this->data) || empty($this->data)) ) {
+			$this->data=$data;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$model=$this->{$this->masterModelName};
+		$folio=$model->getNextFolio($this->actualSerie, 1);
+		$this->data[$this->masterModelName][$model->title]=$folio;
+
+		$model->create();
+		if ( $model->saveAll($this->data) ) {
+			$id=$model->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('nextFolio', $model->getNextFolio($this->actualSerie, 0));
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
 	}
 
 	public function cancel( $id=null ) {

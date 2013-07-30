@@ -4,10 +4,10 @@
 			<li class="divider dividerhead"><a class="returnFalse" href="">Catálogos</a>
 			<li><a id="directoriosLinkCheck" href="/Directorios" target="_new">Clientes</a></li>
 			<li><a id="articulosLinkCheck" href="/Articulos" target="_new">Artículos</a></li>
-			<li><a id="articulosexistenciasLinkCheck" href="/Articulos/existencias" target="_new">Existencias</a></li>
 			<li><a id="articulospreciosLinkCheck" href="/Articulos/precios" target="_new">Lista de Precio y Exist</a></li>
 			<li class="divider dividerhead"><a id="operacionesLink" href="">Operaciones</a></li>
-			<li><a id="ventaexposLinkCheck" href="/Ventaexpos" target="_new">Pedidos</a></li>
+			<li><a id="pedidosLinkCheck" href="/Pedidos" target="_new">Pedidos</a></li>
+			<li><a id="ventaexposLinkCheck" href="/Ventaexpos" target="_new">Pedidos Expos</a></li>
 			<li class="divider dividerhead"><a id="consultasLink" href="">Consultas</a></li>
 			<li><a id="facturaselectronicasLinkCheck" href="/FacturaElectronica" target="_new">Facturas Electrónicas</a></li>
 		</ul>

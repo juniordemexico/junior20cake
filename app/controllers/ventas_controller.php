@@ -30,6 +30,7 @@ class VentasController extends MasterDetailAppController {
 											'Cliente.clatn'),
 							);
 
+/*
 	public function edit( $id=null ) {
 		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
@@ -41,6 +42,7 @@ class VentasController extends MasterDetailAppController {
 										$data['Master'][$this->masterModelTitle]
 				);
 	}
+*/
 
 	public function add() {		
 		$model=$this->Venta;

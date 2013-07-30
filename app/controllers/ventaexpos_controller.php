@@ -58,33 +58,8 @@ class VentaexposController extends MasterDetailAppController {
 	}
 
 	public function edit( $id=null ) {
-		if (!$id || !$id>0) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			$this->redirect(array('action' => 'index'));
-		}
-		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
-		$this->set('data', $data );
-		$this->set('title_for_layout', ucfirst($this->name).'::'.
-										$data['Master'][$this->masterModelTitle]
-				);
+		parent::edit($id);
 		$this->render('view');
-	}
-
-	public function save() {
-		// Receive the user's PUT request's data in order to add the Item
-		$folio=$this->{$this->masterModelName}->getNextFolio($this->actualSerie, 1);
-		$this->data[$this->masterModelName][$this->{$this->masterModelName}->title]=$folio;
-
-		$this->{$this->masterModelName}->create();
-		if ( $this->{$this->masterModelName}->saveAll($this->data) ) {
-			$id=$this->{$this->masterModelName}->id;
-			$this->set('result','ok');
-			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
-			$this->set('nextFolio', $this->Ventaexpo->getNextFolio($this->actualSerie, 0));
-		} else {
-			$this->set('result', 'error');
-			$this->set('message', 'Error al guardar el movimiento');
-		}
 	}
 
 	public function getItemByCve($cve=null) {
