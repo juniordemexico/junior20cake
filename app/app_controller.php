@@ -569,6 +569,8 @@ class ReportAppController extends AppController {
 							'ImageTool',
 							'Axfile',
 							'Axreport',
+							'Axnotification',
+							'Webservice.Webservice',
 							);
 
 	public $helpers = array(

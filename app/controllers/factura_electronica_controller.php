@@ -96,14 +96,15 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->autoRender=false;
 		$this->layout='ajaxclean';
 		$theFacturas=$this->Factura->find('all', array(
-										'conditions'=>array('Factura.fafecha >='=>'2010/01/01', 
-															'Factura.fafecha <='=>'2012/12/31',
-															'Factura.faT'=>0,
-															'SUBSTRING(Factura.farefer FROM 1 FOR 1) '=>array('A','B')
+										'conditions'=>array('Factura.fafecha >='=>'2012/01/01', 
+															'Factura.fafecha <='=>'2013/08/01',
+															'Factura.farefer LIKE'=>'B%',
+															'Factura.fat'=>0,
+															'Factura.fast'=>'A',
 															),
 										'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha',
 														'Factura.crefec','Factura.modfec','Factura.fast'),
-										'order'=>'Factura.id DESC'
+										'order'=>'Factura.fafecha ASC, Factura.id ASC'
 										)
 									);
 		$xmlPath='/home/www/junior20cake/app/files/facturaselectronicas/xml';
@@ -111,35 +112,40 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$logPath='/home/www/junior20cake/app/files/facturaselectronicas';
 		$folios_no_encontrados=array();
 		$folios_renombrados=array();
+//		echo json_encode($theFacturas);
+		echo "\n\n<table style='width: 75%; border: 1px solid #000; padding: 2px; margin:0px;font-family: courier;font-size:10px;' >\n\n";
+		ECHO "<thead><tr><th>RESULTADO</th><th>FOLIO</th><th>FECHA</th><th>ARCHIVO</th><th>NUEVO NOMBRE</th></tr></thead>";
 		foreach($theFacturas as $item) {
 			$id=$item['Factura']['id'];
 			$folio=$item['Factura']['farefer'];
-			$folio_serie=substr($item['Factura']['farefer'],0,1);
-			$folio_numero=substr($item['Factura']['farefer'],1,10);
+			$folio_serie=substr($folio,0,1);
+			$folio_numero=substr($folio,1,7);
 			$fecha=$item['Factura']['fafecha'];
 			if($folio_numero && is_numeric($folio_numero)) $folio_numero=(int)$folio_numero;
 			
 			$filename='JME910405B83-'.$folio.'.xml';
 			$filename2='JME910405B83 '.$folio_serie.'-'.$folio_numero.'.xml';
-			echo "Factura: $folio  Serie::$folio_serie  Numero::$folio_numero Filename::$filename Full-Path::$xmlPath / $filename<br/>\n\n";
+	//		echo "Factura: $folio  Serie::$folio_serie  Numero::$folio_numero Filename::$filename Full-Path::$xmlPath / $filename<br/>\n\n";
 			if(file_exists($xmlPath.DS.$filename)) {
-				echo "El Archivo $xmlPath".DS."$filename Existe! <br/>\n\n"; 
+//				echo "El Archivo $xmlPath".DS."$filename Existe! <br/>\n\n"; 
 			}
 			elseif(file_exists($xmlPath.DS.$filename2)) {
-				echo "El Archivo $xmlPath".DS."$filename2 Existe y se RENOMBRO! <br/> \n\n";
-				rename($xmlPath.DS.$filename2, $xmlPath.DS.$filename);
+		//		echo "<li>RENOMBRE: #FOLIO:$folio #FECHA:$fecha #FILENAME: $filename</li>";
+				echo "<tr><td>RENOMBRADO</td><td style='font-weigth: bold;'>$folio</td><td>$fecha</td><td>$filename2</td><td>$filename</td></tr>";
+	//			echo "El Archivo $xmlPath".DS."$filename2 Existe y se RENOMBRO! <br/> \n\n";
+	//			rename($xmlPath.DS.$filename2, $xmlPath.DS.$filename);
 				$folios_renombrados[]=array('id'=>$id,'farefer'=>$folio,'fafecha'=>$fecha,'oldName'=>$filename2,'newName'=>$filename);
 			}
 			else {
-				echo "NO SE ENCONTRO NINGUN ARCHIVO PARA LA FACTURA FOLIO:$folio FECHA:$fecha";
+				echo "<tr><td>FALTA</td><td style='font-weigth: bold;'>$folio</td><td>$fecha</td><td>$filename</td><td></td></tr>";
 				$folios_no_encontrados[]=array('id'=>$id,'farefer'=>$folio,'fafecha'=>$fecha);
 			}
-			echo "\n\n<br/>\n\n";
 		}
+		echo "\n\n<table/>\n\n";
+		echo "TOTAL DE FOLIOS RENOMBRADOS: ".count($folios_renombrados)." <br/>\n\n";
 		echo "TOTAL DE FOLIOS NO ENCONTRADOS: ".count($folios_no_encontrados)." <br/>\n\n";
-		pr($folios_no_encontrados);
-		$this->AxFile->StringToFile(json_encode($folios_no_encontrados), $logPath.'/folios_no_encontrados.json');
-		$this->AxFile->StringToFile(json_encode($folios_renombrados), $logPath.'/folios_renombrados.json');
+		$this->Axfile->StringToFile($logPath.'/folios_no_encontrados.20130801.json', json_encode($folios_no_encontrados) );
+		$this->Axfile->StringToFile($logPath.'/folios_renombrados.20130801.json', json_encode($folios_renombrados) );
 		die();
 	}
 
