@@ -24,8 +24,40 @@ class MaterialmovimientosController extends MasterDetailAppController {
 												'Entsal.almacen_id','Almacen.aldescrip'),
 							);
 	public $actualSerie = "ES";
-	
+
 /*
+	public function add( $data=null ) {
+
+		// Send a blank form to the user
+		$model=$this->{$this->masterModelName};
+		if( !$data || empty($data) ) {
+			$this->set('data', array(
+						'Master'	=> array(
+									'id'=>null, 
+									$model->title => $model->getNextFolio($this->actualSerie, 0),
+									$model->dateField => date('Y-m-d'),
+									$model->stField=>'A',
+									't'=>'0'
+									),
+						'Details'	=> array(),
+						'masterModel' => $model->name,
+						'detailModel' => isset($model->detailsModel) ?
+											$model->detailsModel :
+											null)
+					);
+		$this->render('edit');
+		return;
+		
+		}
+		else {
+			$this->set('data', $data);
+		}
+
+		$this->render('edit');
+		return;
+	}
+*/
+
 	public function add() {
 		$data=array('Master' =>
 									array('id'=>null, 'st'=>'A', 'est'=>'0',
@@ -42,7 +74,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 						);
 		parent::add($data);
 	}
-*/
+
 
 	public function getItemByCve($cve=null) {
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];

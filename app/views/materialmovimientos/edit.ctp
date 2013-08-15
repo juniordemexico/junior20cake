@@ -232,16 +232,26 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 							$scope.data.masterModel,
 							$scope.data.detailModel
 						);
-						
+					
 		// Send the PUT request to the server
 		$http.post($scope.app.actions.add, serializedData
 		).then(function(response) {
+			console.log('hhayyy');
+			console.log(angular.toJson(response.data));
+			if(typeof response.data != 'undefined' && 
+				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+				axAlert(response.data.message, 'success', false);
+				return;
+			}
+
+/*
 			// We got a response to process
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				axAlert(response.data.message, 'success', false);
 				return;
 			}
+*/
 		});
 	}
 
@@ -276,7 +286,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		var item={
 			Detail: {
 				id: null,
-				entsal_id: null,
+//				entsal_id: null,
 				articulo_id: $scope.currentItem.Articulo.id,
 				color_id: $scope.currentItem.Color.id,
 				talla_id: 0,

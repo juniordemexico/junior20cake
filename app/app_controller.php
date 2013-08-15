@@ -422,10 +422,11 @@ class MasterDetailAppController extends AppController {
 	}
 
 	public function add( $data=null ) {
+
 		// Send a blank form to the user
 		$model=$this->{$this->masterModelName};
-		if(!$data) {
-			$this->set('data', array(
+		if( !$data || empty($data) ) {
+			$data=array(
 						'Master'	=> array(
 									'id'=>null, 
 									$model->title => $model->getNextFolio($this->actualSerie, 0),
@@ -437,11 +438,13 @@ class MasterDetailAppController extends AppController {
 						'masterModel' => $model->name,
 						'detailModel' => isset($model->detailsModel) ?
 											$model->detailsModel :
-											null)
+											null
 					);
 		}
+		else {
+			$this->set('data', $data);
+		}
 
-		$this->set('data', $data);
 		$this->render('edit');
 		return;
 /*		
