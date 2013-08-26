@@ -109,13 +109,16 @@ class Explosion extends AppModel
 		// Telas
 		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
 															'Explosion.tipoexplosion_id=1'
-														) ) );
+														),
+									'order'=>'Explosion.id'
+														 ) );
 		$out['tela']=$rs;
 		
 		// Habilitacion
 		$rs=$this->find('all', array( 'conditions'=>array(	'Explosion.articulo_id'=>$id,
 															'Explosion.tipoexplosion_id=2'
-														) ) );
+														),
+									'order'=>'Explosion.id' ) );
 		$out['habilitacion']=$rs;
 		
 		// Servicios

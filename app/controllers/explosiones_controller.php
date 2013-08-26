@@ -304,6 +304,7 @@ class ExplosionesController extends MasterDetailAppController {
 		}
 
 		// Check if Item already exists
+/*
 		if(
 			$this->Explosion->find('first', array('conditions'=>array('articulo_id'=>$articulo_id,
 			 														'material_id'=>$item['Articulo']['id'])) )
@@ -312,7 +313,7 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->set('message', "$cve ya existe para este producto");
 			return;			
 		}
-
+*/
 		$item['Articulo']['arcveart']=trim($item['Articulo']['arcveart']);
 		$item['ArticuloColor']=$this->Articulo->getArticuloColor($item['Articulo']['id']);
 

@@ -8,7 +8,8 @@ class Color extends AppModel
 //	public $table = 'colores';
 //    var $useTable = 'colores';
 	public $alias = 'Color';
-
+	public $cache = false 
+	
 	public $validate = array(
 		'cve' => array(
 			'isunique' => array(

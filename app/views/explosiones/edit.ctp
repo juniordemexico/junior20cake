@@ -389,7 +389,8 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 			typeof response.data.result != 'undefined' && response.data.result=='ok') {
 			$scope.details=response.data.details;
 			axAlert(response.data.message, 'success', false);
-			return;
+			current.cant=0;
+			return true;
 		}
 		axAlert( (typeof response.data.result != 'undefined')?
 				response.data.message:

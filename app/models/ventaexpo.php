@@ -104,7 +104,7 @@ class Ventaexpo extends AppModel
 			'inbetween' => array(
 				'rule' => array('between', 0, 255),
 				'required' => false,
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'message' => 'Las Observaciones deben contener hasta 255 caracteres'
 				),
 		),
