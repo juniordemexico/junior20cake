@@ -26,14 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>440</integer>
+				<integer>441</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>457</integer>
+			<integer>420</integer>
 		</dict>
 		<key>app/app_model.php</key>
 		<dict>
@@ -47,35 +47,35 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
-		<key>app/controllers/compras_controller.php</key>
+		<key>app/controllers/materiales_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>24</integer>
+				<integer>117</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>97</integer>
+		</dict>
+		<key>app/controllers/materialexistencias_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>23</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>1</integer>
-		</dict>
-		<key>app/controllers/explosiones_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>30</integer>
-				<key>line</key>
-				<integer>312</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>283</integer>
 		</dict>
 		<key>app/controllers/materialmovimientos_controller.php</key>
 		<dict>
@@ -89,186 +89,30 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>28</integer>
+			<integer>23</integer>
 		</dict>
-		<key>app/controllers/transportes_controller.php</key>
+		<key>app/controllers/proveedores_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>68</integer>
+				<integer>23</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>65</integer>
-		</dict>
-		<key>app/models/explosion.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>122</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>100</integer>
-		</dict>
-		<key>app/models/transporte.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>58</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>24</integer>
-		</dict>
-		<key>app/models/ventaexpo.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>106</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>82</integer>
-		</dict>
-		<key>app/tmp/queries/pedidos_cerrados_manualmente.sql</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>37</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/tmp/temp-data.txt</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>59</integer>
-				<key>line</key>
-				<integer>7</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/compras/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>31</integer>
-				<key>line</key>
-				<integer>315</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>295</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>315</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>31</integer>
-				<key>line</key>
-				<integer>315</integer>
-			</dict>
-		</dict>
-		<key>app/views/elements/transportes/form.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>41</integer>
-				<key>line</key>
-				<integer>39</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>1</integer>
-		</dict>
-		<key>app/views/explosiones/edit.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>187</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>188</integer>
+			<integer>3</integer>
 		</dict>
 		<key>app/views/materialmovimientos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>44</integer>
 				<key>line</key>
-				<integer>232</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>217</integer>
-		</dict>
-		<key>app/views/transportes/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>60</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/transportes/view.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>5</integer>
-				<key>line</key>
-				<integer>18</integer>
+				<integer>7</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -278,23 +122,13 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/app_model.php</string>
-		<string>app/controllers/explosiones_controller.php</string>
-		<string>app/views/explosiones/edit.ctp</string>
-		<string>app/models/explosion.php</string>
-		<string>app/controllers/materialmovimientos_controller.php</string>
-		<string>app/controllers/compras_controller.php</string>
-		<string>app/views/materialmovimientos/edit.ctp</string>
-		<string>app/views/compras/edit.ctp</string>
 		<string>app/app_controller.php</string>
-		<string>app/controllers/transportes_controller.php</string>
-		<string>app/models/transporte.php</string>
-		<string>app/views/transportes/index.ctp</string>
-		<string>app/views/transportes/view.ctp</string>
-		<string>app/views/elements/transportes/form.ctp</string>
-		<string>app/models/ventaexpo.php</string>
-		<string>app/tmp/queries/pedidos_cerrados_manualmente.sql</string>
-		<string>app/tmp/temp-data.txt</string>
+		<string>app/views/materialmovimientos/edit.ctp</string>
+		<string>app/app_model.php</string>
+		<string>app/controllers/materialmovimientos_controller.php</string>
+		<string>app/controllers/materialexistencias_controller.php</string>
+		<string>app/controllers/materiales_controller.php</string>
+		<string>app/controllers/proveedores_controller.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

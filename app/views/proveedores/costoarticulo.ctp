@@ -123,7 +123,7 @@
 
 <script>
 
-var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '0' };
+var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '0', composicion:'', ancho: 0, origen:'' };
 
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
@@ -177,7 +177,10 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '0' };
 		$http.get('/Proveedores/addCostoArticulo.json'+
 				'?proveedor_id='+$scope.master.Proveedor.id+
 				'&material_id='+$scope.currentMaterial.Articulo.id+
-				'&costo='+$scope.currentMaterial.costo
+				'&costo='+$scope.currentMaterial.costo+
+				'&composicion='+$scope.currentMaterial.composicion+
+				'&origen='+$scope.currentMaterial.origen+
+				'&ancho='+$scope.currentMaterial.ancho
 		).then(function(response) {
 		if(typeof response.data != 'undefined' && 
 			typeof response.data.result != 'undefined' && response.data.result=='ok') {
@@ -189,6 +192,7 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '0' };
 				axAlert(response.data.message, 'error', false);
 			}
 			else {
+				console.log(angular.toJson(response));
 				axAlert('Error Desconocido', 'error', false);
 			}
 		}

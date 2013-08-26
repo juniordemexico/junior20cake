@@ -137,6 +137,7 @@ class Articulo extends AppModel
 				'message' => 'Precio de Venta D requiere un valor monetario'
 			)
 		),
+/*
 		'arpcosto' => array(
 			'money' => array(
 				'rule' => array('money'),
@@ -158,6 +159,7 @@ class Articulo extends AppModel
 			'message' => 'Ultmo Costo requiere un valor monetario'
 			)
 		),
+*/
 		'arimpu1' => array(
 			'money' => array(
 			'rule' => array('money'),
@@ -200,6 +202,7 @@ class Articulo extends AppModel
 			'message' => 'Inventario Maximo requere un valor numerico entero'
 			)
 		),
+/*
 		'arancho' => array(
 			'numeric' => array(
 			'rule' => 'numeric',
@@ -207,6 +210,7 @@ class Articulo extends AppModel
 			'message' => 'ANCHO requiere un valor numerico'
 			)
 		),
+*/
 		'art' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),

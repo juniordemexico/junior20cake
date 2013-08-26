@@ -71,7 +71,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('proveedores', $this->paginate($filter));
 	}
 
-	public function costoarticulo($proveedor_id = null) {
+	public function costoarticulo($id = null) {
 		$this->set('listAction', 'costos');
 
 		if (!$id && empty($this->data)) {
@@ -81,14 +81,18 @@ class ProveedoresController extends MasterDetailAppController {
 
 		$this->data = array();
 		$this->data['master']=$this->Proveedor->read(null, $id);
-		$this->data['details']=$this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
+		$this->data['details']=$this->ArticuloProveedor->getAllArticuloProveedor($id);
 		$this->set('title_for_layout', 'Costos :: '.$this->data['master']['Proveedor']['prcvepro'] );
 	}
 
 	public function addCostoArticulo($proveedor_id=null) {
 		if(!$proveedor_id && isset($this->params['url']['proveedor_id']) ) $proveedor_id=$this->params['url']['proveedor_id'];
-		if(!$material_id && isset($this->params['url']['material_id']) ) $material_id=$this->params['url']['material_id'];
-		if(!$costo && isset($this->params['url']['costo']) ) $costo=$this->params['url']['costo'];
+		if(isset($this->params['url']['material_id']) ) $material_id=$this->params['url']['material_id'];
+		if(isset($this->params['url']['costo']) ) $costo=$this->params['url']['costo'];
+		if(isset($this->params['url']['composicion']) ) $composicion=$this->params['url']['composicion'];
+		if(isset($this->params['url']['origen']) ) $origen=$this->params['url']['origen'];
+		if(isset($this->params['url']['ancho']) ) $ancho=$this->params['url']['ancho'];
+		if(isset($this->params['url']['unidad_id']) ) $unidad_id=$this->params['url']['unidad_id'];
 
 		//  If Material or Proveedor doesn't exists
 		if( !$proveedor_id || !$material_id || !($costo>0) ) {
@@ -102,6 +106,10 @@ class ProveedoresController extends MasterDetailAppController {
 							'articulo_id'=>$material_id,
 							'costo'=>$costo,
 		));
+		if(isset($composicion)) $record['ArticuloProveedor']['composicion']=$composicion;
+		if(isset($ancho)) $record['ArticuloProveedor']['ancho']=$ancho;
+		if(isset($origen)) $record['ArticuloProveedor']['origen']=$origen;
+		if(isset($divisa_id)) $record['ArticuloProveedor']['divisa_id']=$divisa_id;
 
 		// Create the new record
 		$this->ArticuloProveedor->create();
@@ -111,7 +119,7 @@ class ProveedoresController extends MasterDetailAppController {
 			return;
 		}
 		$this->set('result', 'error');
-		$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
+		$this->set('message', 'El Costo NO se pudo agregar ('.$id.')');
 	}
 
 	public function getDetails($proveedor_id=null) {

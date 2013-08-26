@@ -8,7 +8,7 @@ class ArticuloProveedor extends AppModel
 	var $alias = 'ArticuloProveedor';
 
 	var $belongsTo = array(
-		'Articulo', 'Proveedor'
+		'Articulo', 'Proveedor', 'Unidad'
 	);
 
 
