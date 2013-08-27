@@ -4,12 +4,26 @@ class MaterialesController extends MasterDetailAppController {
 	var $name='Materiales';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca', 'ArticulosColor'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'ArticulosColor', 'Familia', 'Unidad'
 	);
 
 	var $cacheAction = array('view');
 							
 	var $tipoarticulo_id = 1;
+
+	var $paginate = array(
+								'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGE_ROWS,
+								'order' => array('Linea.licve', 'Articulo.arcveart'),
+								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
+												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
+												'Articulo.familia_id', 'Articulo.linea_id', 'Articulo.marca_id',
+												'Tipoarticulo.cve',
+												'Familia.cve', 'Marca.macve','Linea.licve', 'Unidad.cve',
+												'Articulo.modified'),
+								'conditions' => array('Articulo.tipoarticulo_id'=>1),
+								);
 
 	function beforeFilter() {
 		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
@@ -20,9 +34,14 @@ class MaterialesController extends MasterDetailAppController {
 			if(isset($this->data['Articulo']['arcveart'])) {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
+			if(isset($this->data['Articulo']['familia_id']) && empty($this->data['Articulo']['familia_id']) ) {
+				$this->data['Articulo']['familia_id']=null;
+			}
 		}
+		parent::beforeFilter();
 	}
 
+/*
 	public function index() {
 		$this->paginate = array(
 								'update' => '#content',
@@ -39,6 +58,7 @@ class MaterialesController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('articulos', $this->paginate($filter));
 	}
+*/
 
 	public function view($id = null) {
 		if (!$id) {

@@ -9,8 +9,8 @@
 class Articulo extends AppModel 
 {
 	public $name = 'Articulo';
-//	public $table = 'Articulos';
-//	public $useTable = 'Articulos';
+	public $table = 'articulo';
+	public $useTable = 'articulo';
 	public $alias = 'Articulo';
 
 	public $primaryKey = 'id';
@@ -64,6 +64,7 @@ class Articulo extends AppModel
 		'Marca',
 		'Base',
 		'Estilo',
+		'Familia',
 	);
 
 	var $hasMany = array(
@@ -289,9 +290,10 @@ class Articulo extends AppModel
 		$tipoarticulos = $this->Tipoarticulo->find('list', array('fields' => array('Tipoarticulo.id', 'Tipoarticulo.cve') ));
 		$bases = $this->Base->find('list', array('fields' => array('Base.id', 'Base.cve') ));
 		$estilos = $this->Estilo->find('list', array('fields' => array('Estilo.id', 'Estilo.cve') ));
+		$familias = $this->Familia->find('list', array('fields' => array('Familia.id', 'Familia.cve') ));
 
 		return compact('colores', 'unidades', 'tallas', 'proporciones', 'lineas', 'marcas', 
-							'temporadas', 'divisas', 'tipoarticulos', 'bases', 'estilos');
+							'temporadas', 'divisas', 'tipoarticulos', 'bases', 'estilos', 'familias');
 		
 	}
 

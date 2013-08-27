@@ -31,6 +31,7 @@
 <?php echo $this->TBS->input('linea_id', array('label' => 'Linea')); ?>
 <?php echo $this->TBS->input('marca_id', array('label' => 'Marca')); ?>
 <?php echo $this->TBS->input('talla_id', array('label' => 'Grupo de Tallas')); ?>
+<?php echo $this->TBS->input('familia_id', array('label' => 'Familia', 'title' => 'Los miembros de una familia son reemplazables entre si', 'empty'=>'Selecciona una...')); ?>
 </div>
 
 <div id="tabs-2" class="tab-pane">
