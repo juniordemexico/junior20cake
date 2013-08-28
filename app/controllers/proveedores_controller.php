@@ -86,35 +86,34 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('title_for_layout', 'Costos :: '.$this->data['master']['Proveedor']['prcvepro'] );
 	}
 
-	public function addCostoArticulo($proveedor_id=null) {
-		if(!$proveedor_id && isset($this->params['url']['proveedor_id']) ) $proveedor_id=$this->params['url']['proveedor_id'];
-		if(isset($this->params['url']['material_id']) ) $material_id=$this->params['url']['material_id'];
-		if(isset($this->params['url']['costo']) ) $costo=$this->params['url']['costo'];
-		if(isset($this->params['url']['composicion']) ) $composicion=$this->params['url']['composicion'];
-		if(isset($this->params['url']['origen']) ) $origen=$this->params['url']['origen'];
-		if(isset($this->params['url']['ancho']) ) $ancho=$this->params['url']['ancho'];
-		if(isset($this->params['url']['unidad_id']) ) $unidad_id=$this->params['url']['unidad_id'];
-
+	public function addCostoArticulo() {
 		//  If Material or Proveedor doesn't exists
-		if( !$proveedor_id || !$material_id || !($costo>0) ) {
+		if( !isset($this->params['url']['proveedor_id']) || 
+			!isset($this->params['url']['material_id']) || 
+			!isset($this->params['url']['costo']) ||
+			!($this->params['url']['costo']>0) ) {
 			$this->set('result', 'error');
-			$this->set('message', __('item_could_not_be_saved', true)." (id: $id)" );
+			$this->set('message', __('item_could_not_be_saved', true) );
 			return;
 		}
 
+		$proveedor_id=$this->params['url']['proveedor_id'];
+		$material_id=$this->params['url']['material_id'];
+		
 		$record=array('ArticuloProveedor'=>array(
 							'proveedor_id'=>$proveedor_id,
 							'articulo_id'=>$material_id,
-							'costo'=>$costo,
-							'unidad_id'=>$unidad_id,
-							'ancho'=>$ancho,	
-							'composicion'=>$composicion,
-							'origen'=>$origen,
-		));
-		if(isset($composicion)) $record['ArticuloProveedor']['composicion']=$composicion;
-		if(isset($ancho)) $record['ArticuloProveedor']['ancho']=$ancho;
-		if(isset($origen)) $record['ArticuloProveedor']['origen']=$origen;
-		if(isset($divisa_id)) $record['ArticuloProveedor']['divisa_id']=$divisa_id;
+							'costo'=>$this->params['url']['costo'],
+					));
+
+		if(!isset($this->params['url']['unidad_id']) || !($this->params['url']['unidad_id']>0) )
+			$record['ArticuloProveedor']['unidad_id']=1; 
+		else 
+			$record['ArticuloProveedor']['unidad_id']=$this->params['url']['unidad_id'];
+
+		if(isset($this->params['url']['composicion'])) $record['ArticuloProveedor']['composicion']=$this->params['url']['composicion'];
+		if(isset($this->params['url']['ancho'])) $record['ArticuloProveedor']['ancho']=$this->params['url']['ancho'];
+		if(isset($this->params['url']['origen'])) $record['ArticuloProveedor']['origen']=$this->params['url']['origen'];
 
 		// Create the new record
 		$this->ArticuloProveedor->create();
@@ -125,13 +124,37 @@ class ProveedoresController extends MasterDetailAppController {
 			return;
 		}
 		$this->set('result', 'error');
-		$this->set('message', 'El Costo NO se pudo agregar ('.$id.')');
+		$this->set('message', 'El Costo NO se pudo agregar');
 	}
 
 	public function getDetails($proveedor_id=null) {
 		$this->set('details', $this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
 	}
-	
+
+	public function authorizeCostoArticulo($id=null) {
+		if(!$id && isset($this->params['url']['id']) ) $id=$this->params['url']['id'];
+
+		// Check if the ID was submited and if the specified item exists
+		if (!$id || 
+			!$master=$this->ArticuloProveedor->findById($id)
+			) {
+			$this->set('result', 'error');
+			$this->set ('message', 'Ese Item NO Existe ('.$id.')');
+			return;
+		}
+		$proveedor_id=$master['ArticuloProveedor']['proveedor_id'];
+
+		// Execute DB Operations
+		if ( $this->ArticuloProveedor->delete($id) ) {
+			$this->set('result', 'ok');
+			$this->set('message', 'El Costo se Eliminó');
+			$this->set('details', $this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
+			return;
+		}			
+		$this->set('result', 'error');
+		$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
+	}
+
 	public function deleteCostoArticulo($id=null) {
 		if(!$id && isset($this->params['url']['id']) ) $id=$this->params['url']['id'];
 
@@ -148,9 +171,10 @@ class ProveedoresController extends MasterDetailAppController {
 		// Execute DB Operations
 		if ( $this->ArticuloProveedor->delete($id) ) {
 			$this->set('result', 'ok');
+			$this->set('message', 'El Costo se Eliminó');
 			$this->set('details', $this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
 			return;
-		}			
+		}
 		$this->set('result', 'error');
 		$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
 	}

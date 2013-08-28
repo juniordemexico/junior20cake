@@ -16,7 +16,7 @@
 		<h4>Materiales relacionados:</h4><br />
 
 		<div class="controls controls-row well well-small">
-			<input class="span2"
+			<input class="col5"
 				data-ui-select2="fieldMaterial" 
 				data-ng-model="currentMaterial.Articulo" 
 				data-ui-event="{ change : 'getMaterialByCve()' }"
@@ -64,7 +64,7 @@
 				<th class="precio">Costo</th>
 				<th class="col4">Composicion</th>
 				<th class="col4">Origen</th>
-				<th class="fecha">Autorizado</th>
+				<th class="fecha">Autorización</th>
 				<th class="st">&nbsp;</th>
 			</tr>
 			</thead>
@@ -85,7 +85,14 @@
 				</td>
 				<td class="col4">{{item.ArticuloProveedor.composicion}}</td>
 				<td class="col4">{{item.ArticuloProveedor.origen}}</td>
-				<td class="fecha"><span data-ng-hide="item.ArticuloProveedor.fautoriza">No</span>{{item.ArticuloProveedor.fautoriza}}</td>
+				<td class="fecha">
+					<span data-ng-hide="item.ArticuloProveedor.fautoriza">
+						<button type="button" class="btn btn-small" data-ng-click="detailAuthorize(item.ArticuloProveedor.id, item, true)">
+							<i class="icon icon-ok"></i>
+						</button>
+					</span>
+					{{item.ArticuloProveedor.fautoriza}}
+				</td>
 				<td class="st">
 					<button type="button" class="btn btn-mini"
 						data-ng-click="detailDelete(item.ArticuloProveedor.id, item, true)">
@@ -101,15 +108,17 @@
 <pane id="tabs-1" heading="Servicios" class="well">
 		<h4>Servicios relacionados:</h4><br />
 		<div class="controls controls-row well well-small">
-			<input class="span4"
+			<input class="col5"
 				data-ui-select2="fieldServicio"
 				data-ng-model="currentServicio.Articulo" 
 				data-ui-event="{ change : 'getServicioByCve()' }" 
 				data-item-placeholder="Clave de Servicio..."
 				title="{{currentServicio.Articulo.ardescrip}}" />
+			&nbsp;&nbsp;
 			<input type="text" maxlength="12" class="precio"
 				data-ng-model="currentServicio.costo"
 				placeholder="Costo..." title="Costo según el proveedor especificado" />
+			&nbsp;&nbsp;
 			<button id="submitServicio" class="btn" type="button"
 			data-ng-click="addServicio()"
 			data-ng-disabled="(!(currentServicio.Articulo.id>0)||!(currentServicio.costo>0))">
@@ -139,7 +148,14 @@
 						data-ui-event="{ blur : 'changeCosto(item)' }" 						
 					/>
 				</td>
-				<td class="fecha">{{item.ArticuloProveedor.fautoriza}}</td>
+				<td class="fecha">
+					<span data-ng-hide="item.ArticuloProveedor.fautoriza">
+						<button type="button" class="btn btn-small" data-ng-click="detailAuthorize(item.ArticuloProveedor.id, item, true)">
+							<i class="icon icon-ok"></i>
+						</button>
+					</span>
+					{{item.ArticuloProveedor.fautoriza}}
+				</td>
 				<td class="st">
 					<button type="button" class="btn btn-mini"
 						data-ng-click="detailDelete(item.ArticuloProveedor.id, item, true)">
@@ -192,9 +208,9 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '', composicion:
 			},
 			results: function (data, page) { // parse the results into the format expected by Select2.
         		return {results: data};
-      		}
-    	}
-  	};
+			}
+		}
+	};
 
 	$scope.fieldServicio = {
 		ajax: {
@@ -245,6 +261,7 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '', composicion:
 		if(typeof response.data != 'undefined' && 
 			typeof response.data.result != 'undefined' && response.data.result=='ok') {
 			$scope.details=response.data.details;
+			$scope.currentServicio=angular.copy(emptyItem);
 			axAlert(response.data.message, 'success', false);
 		}
 		else {
@@ -259,8 +276,6 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '', composicion:
 	}
 
 	$scope.changeCosto = function(itemObj) {
-		alert('CAMBIA COSTO:' + itemObj.Articulo.id + ' - ' + itemObj.Articulo.arcveart +
-			' - ' + itemObj.ArticuloProveedor.costo);
 		$http.get('/Proveedores/changeCosto.json'+
 		'?id='+itemObj.ArticuloProveedor.id+
 		'&costo='+itemObj.ArticuloProveedor.costo
@@ -279,6 +294,35 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '', composicion:
 			}
 		}
     	});	
+	}
+
+	$scope.detailAuthorize = function(index, itemObj, askConfirmation) {
+		var title = 'Confirmación';
+		var msg = '¿ Seguro de ELIMINAR del detalle de '+itemObj.Articulo.arcveart +
+				' con el proveedor ' + $scope.master.Proveedor.prcvepro + ' ?';
+		var btns = [{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}];
+		$dialog.messageBox(title, msg, btns)
+		.open()
+		.then( function(result) {
+			if(result) {
+				$http.get('/Proveedores/authorizeCostoArticulo.json?id='+itemObj.ArticuloProveedor.id
+				).then(function(response) {
+				if(typeof response.data != 'undefined' && 
+					typeof response.data.result != 'undefined' && response.data.result=='ok') {					
+					$scope.details=response.data.details;
+					axAlert(response.data.message, 'success', false);
+				}
+				else {
+					if(typeof response.data.result != 'undefined') {
+						axAlert(response.data.message, 'error', false);
+					}
+					else {
+						axAlert('Error Desconocido', 'error', false);
+					}
+				}
+       			});
+			}
+		});
 	}
 
 	$scope.detailDelete = function(index, itemObj, askConfirmation) {
