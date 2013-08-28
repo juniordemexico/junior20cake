@@ -24,6 +24,14 @@ class ArticulosController extends MasterDetailAppController {
 			if(isset($this->data['Articulo']['arcveart'])) {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
+
+			if(isset($this->data['Articulo']['base_id']) && empty($this->data['Articulo']['base_id']) ) {
+				$this->data['Articulo']['base_id']=null;
+			}
+			if(isset($this->data['Articulo']['estilo_id']) && empty($this->data['Articulo']['estilo_id']) ) {
+				$this->data['Articulo']['estilo_id']=null;
+			}
+
 		}
 
 		parent::beforeFilter();

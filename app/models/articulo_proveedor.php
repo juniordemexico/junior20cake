@@ -23,5 +23,13 @@ class ArticuloProveedor extends AppModel
 									"Articuloproveedor.proveedor_id=$proveedor_id AND Articulo.tipoarticulo_id=2"))
 					);
 	}
+	
+	public function loadDependencies() {
+		$Unidad = $this->toJsonListArray( $this->Unidad->find('list', 
+							array(	'fields' => array('Unidad.id', 'Unidad.cve'),
+									'order'=>array('Unidad.id') 
+									 )));
+		return compact('Unidad');
+	}
 
 }

@@ -42,8 +42,8 @@
 <?php echo $this->TBS->input('temporada_id', array('label' => 'Temporada')); ?>
 <?php echo $this->TBS->input('talla_id', array('label' => 'Grupo de Tallas')); ?>
 <?php echo $this->TBS->input('proporcion_id', array('label' => 'Proporciones para Prod')); ?>
-<?php echo $this->TBS->input('base_id', array('label' => 'Base o molde del producto')); ?>
-<?php echo $this->TBS->input('estilo_id', array('label' => 'Estilo del producto')); ?>
+<?php echo $this->TBS->input('base_id', array('label' => 'Base o molde del producto', 'empty'=>'Selecciona una...')); ?>
+<?php echo $this->TBS->input('estilo_id', array('label' => 'Estilo del producto', 'empty'=>'Selecciona uno...')); ?>
 </div>
 
 <div id="tabs-2" class="tab-pane">

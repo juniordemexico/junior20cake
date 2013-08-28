@@ -82,6 +82,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->data = array();
 		$this->data['master']=$this->Proveedor->read(null, $id);
 		$this->data['details']=$this->ArticuloProveedor->getAllArticuloProveedor($id);
+		$this->set('related', $this->ArticuloProveedor->loadDependencies());
 		$this->set('title_for_layout', 'Costos :: '.$this->data['master']['Proveedor']['prcvepro'] );
 	}
 
@@ -105,6 +106,10 @@ class ProveedoresController extends MasterDetailAppController {
 							'proveedor_id'=>$proveedor_id,
 							'articulo_id'=>$material_id,
 							'costo'=>$costo,
+							'unidad_id'=>$unidad_id,
+							'ancho'=>$ancho,	
+							'composicion'=>$composicion,
+							'origen'=>$origen,
 		));
 		if(isset($composicion)) $record['ArticuloProveedor']['composicion']=$composicion;
 		if(isset($ancho)) $record['ArticuloProveedor']['ancho']=$ancho;
@@ -115,6 +120,7 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->ArticuloProveedor->create();
 		if( $this->ArticuloProveedor->save($record) ) {
 			$this->set('result', 'ok');
+			$this->set('message', 'El Costo se agregó correctamente');
 			$this->set('details', $this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
 			return;
 		}

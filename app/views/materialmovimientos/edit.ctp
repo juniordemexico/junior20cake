@@ -244,14 +244,6 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				return;
 			}
 
-/*
-			// We got a response to process
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				axAlert(response.data.message, 'success', false);
-				return;
-			}
-*/
 		});
 	}
 

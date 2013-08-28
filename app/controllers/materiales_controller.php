@@ -41,25 +41,6 @@ class MaterialesController extends MasterDetailAppController {
 		parent::beforeFilter();
 	}
 
-/*
-	public function index() {
-		$this->paginate = array(
-								'update' => '#content',
-								'evalScripts' => true,
-								'limit' => PAGE_ROWS,
-								'order' => array('Linea.licve', 'Articulo.arcveart'),
-								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
-												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
-												'Tipoarticulo.cve',
-												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve',
-												'Articulo.modified'),
-								'conditions' => array('Articulo.tipoarticulo_id'=>$this->tipoarticulo_id),
-								);
-		$filter = $this->Filter->process($this);
-		$this->set('articulos', $this->paginate($filter));
-	}
-*/
-
 	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('invalid_item', true));
