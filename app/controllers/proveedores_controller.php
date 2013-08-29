@@ -135,24 +135,24 @@ class ProveedoresController extends MasterDetailAppController {
 		if(!$id && isset($this->params['url']['id']) ) $id=$this->params['url']['id'];
 
 		// Check if the ID was submited and if the specified item exists
-		if (!$id || 
-			!$master=$this->ArticuloProveedor->findById($id)
-			) {
+		if(!$id ||
+			!($item=$this->ArticuloProveedor->read(null, $id)) ) {
 			$this->set('result', 'error');
-			$this->set ('message', 'Ese Item NO Existe ('.$id.')');
+			$this->set('message', 'Ese Item NO Existe ('.$id.')');
 			return;
 		}
-		$proveedor_id=$master['ArticuloProveedor']['proveedor_id'];
+		$proveedor_id=$item['ArticuloProveedor']['proveedor_id'];
+		$material_cve=$item['Articulo']['arcveart'];
 
 		// Execute DB Operations
-		if ( $this->ArticuloProveedor->delete($id) ) {
+		if ( $this->ArticuloProveedor->saveField('fautoriza', date('Y-m-d H:m:i')) ) {
 			$this->set('result', 'ok');
-			$this->set('message', 'El Costo se Eliminó');
+			$this->set('message', 'Se Autorizó '.$material_cve.' '.round($item['ArticuloProveedor']['costo'],2));
 			$this->set('details', $this->ArticuloProveedor->getAllArticuloProveedor($proveedor_id) );
 			return;
 		}			
 		$this->set('result', 'error');
-		$this->set('message', 'El Costo NO se pudo eliminar ('.$id.')');
+		$this->set('message', 'El Costo NO se pudo AUTORIZAR ('.$id.')');
 	}
 
 	public function deleteCostoArticulo($id=null) {

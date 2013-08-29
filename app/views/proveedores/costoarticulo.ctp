@@ -298,8 +298,8 @@ var emptyItem={Articulo: {id: null, text: '', title:''}, costo: '', composicion:
 
 	$scope.detailAuthorize = function(index, itemObj, askConfirmation) {
 		var title = 'Confirmación';
-		var msg = '¿ Seguro de ELIMINAR del detalle de '+itemObj.Articulo.arcveart +
-				' con el proveedor ' + $scope.master.Proveedor.prcvepro + ' ?';
+		var msg = '¿ Autorizar el material ' + itemObj.Articulo.arcveart +
+				' con un costo de ' + itemObj.ArticuloProveedor.costo + ' ?';
 		var btns = [{result:0, label: 'Cancelar'}, {result:1, label: 'OK', cssClass: 'btn-primary'}];
 		$dialog.messageBox(title, msg, btns)
 		.open()
