@@ -80,8 +80,8 @@
 						title="Especifica el Costo del Material" 
 						placeholder="Costo..."
 						data-ng-model="item.ArticuloProveedor.costo"
-						data-ui-event="{ blur : 'changeCosto(item)' }" 
 					/>
+<!--						data-ui-event="{ blur : 'changeCosto(item)' }" 	-->					
 				</td>
 				<td class="col4">{{item.ArticuloProveedor.composicion}}</td>
 				<td class="col4">{{item.ArticuloProveedor.origen}}</td>
@@ -145,8 +145,8 @@
 						title="Especifica el Costo del Servicio" 
 						placeholder="Costo..."
 						data-ng-model="item.ArticuloProveedor.costo"
-						data-ui-event="{ blur : 'changeCosto(item)' }" 						
 					/>
+<!--						data-ui-event="{ blur : 'changeCosto(item)' }" 	-->					
 				</td>
 				<td class="fecha">
 					<span data-ng-hide="item.ArticuloProveedor.fautoriza">
