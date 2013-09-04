@@ -14,7 +14,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	public $paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
-								'order' => array('Entsal.esfecha' => 'desc'),
+								'order' => array('Entsal.esfolio' => 'desc'),
 								'fields' => array('Entsal.id', 'Entsal.esrefer', 'Entsal.esfecha',
 												'Entsal.estmov','Entsal.esconcep',
 												'Entsal.st', 'Entsal.est',
@@ -22,6 +22,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 												'Entsal.refer_id', 'Entsal.refer_model',
 												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
 												'Entsal.almacen_id','Almacen.aldescrip'),
+								'conditions' => array('Entsal.tipoarticulo_id<>0')
 							);
 	public $actualSerie = "ES";
 
@@ -63,7 +64,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 									array('id'=>null, 'st'=>'A', 'est'=>'0',
 										'esrefer'=>$this->Entsal->getNextFolio('ES', 0),
 										'esfecha'=> date('Y-m-d'),
-											'almacen_id'=>1, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
+											'almacen_id'=>100, 'tipoartmovbodega_id'=>10, 'tipoarticulo_id'=>1,
 										),
 									'Tipoartmovbodega' => null,
 									'masterModel' => $this->{$this->uses[0]}->name,

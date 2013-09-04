@@ -68,6 +68,7 @@ class UsersController extends MyAppController {
 		$this->set(compact('groups'));
 	}
 
+
 	function edit($id=null) {
 			$this->layout='default';
 			if (!$id && empty($this->data)) {
@@ -81,8 +82,9 @@ class UsersController extends MyAppController {
 
 			if (!empty($this->data)) {
 	        	if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm'])) {
-	            	$this->User->create();
-	            	if ($this->User->save($this->data)) {
+	            	$this->User->read(null, $id);
+					$thePassword=$this->Auth->password($this->data['User']['password_confirm']);
+	            	if ($this->User->saveField('password', $thePassword)) {
 						$dataSource->commit($this->User);
 						$this->Auth->login($this->data);
 						$this->redirect('/Desktop');
@@ -102,7 +104,6 @@ class UsersController extends MyAppController {
 
 			$groups = $this->User->Group->find('list', array('fields' => array('Group.id', 'Group.nom')));
 			$this->set(compact('groups'));
-
 	}
 
 	function registeradmin() {

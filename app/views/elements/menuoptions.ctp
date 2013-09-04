@@ -38,6 +38,9 @@
 		<li><a id="marcasLinkCheck" href="/Tallas" target="_new">Tallas</a></li>
 		<li><a id="temporadasLinkCheck" href="/Temporadas" target="_new">Temporadas</a></li>
 		<li><a id="proporcionesLinkCheck" href="/Proporciones" target="_new">Proporciones</a></li>
+		<li><a id="familiasLinkCheck" href="/Familias" target="_new">Familias</a></li>
+		<li><a id="basesLinkCheck" href="/Bases" target="_new">Bases</a></li>
+		<li><a id="estilosLinkCheck" href="/Estilos" target="_new">Estilos</a></li>
 		<li class="divider dividerhead"><a class="returnFalse" href="">Productos</a></li>
 		<li><a id="articulosLinkCheck" href="/Articulos" target="_new">Productos</a></li>
 		<li><a id="articulosArchivosLinkCheck" href="/Articulos/archivos" target="_new">Imagenes/Archivos Productos</a></li>
@@ -55,7 +58,10 @@
 </li>
 <li><a class="returnFalse" href="">Almacén Producción</a>	
 	<ul>
-		<li><a id="serviciosArchivosLinkCheck" href="/Bodegamateriales" target="_new">Bodega de Materiales</a></li>
+		<li><a id="bodegamaterialesLinkCheck" href="/Bodegamateriales" target="_new">Bodega de Materiales</a></li>
+		<li><a id="ProdEntsalLinkCheck" href="/Materialmovimientos" target="_new">Entradas / Salidas Habilitación</a></li>
+		<li><a id="ProdExistenciasLinkCheck" href="/Materiales/existencias" target="_new">Existencias</a></li>
+		<li><a id="ProdKardexLinkCheck" href="/Materiales/kardex" target="_new">Kardex</a></li>
 	</ul>
 </li>
 				<li><a class="returnFalse" href="">Almacén</a>	

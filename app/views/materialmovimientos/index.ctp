@@ -18,8 +18,10 @@ echo $form->create('Entsal',array('inputDefaults' => array(
 			<tr class="row-filter">
 				<th class="refer"><?php echo $form->text('Entsal.esrefer', array( 'label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'Folio...', 'class' => 'search-query'));?></th>
 				<th class="date"><?php echo $form->text('Entsal.esfecha',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Fecha...', 'class' => 'search-query'));?></th>
-				<th class="span3"><?php echo $form->text('Tipoartmovbodega.cve',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Tipo de Mov...', 'class' => 'search-query'));?></th>
+				<th class="col4"><?php echo $form->text('Tipoartmovbodega.cve',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Tipo de Mov...', 'class' => 'search-query'));?></th>
 				<th class=""><?php echo $form->text('Entsal.esconcep',array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Concepto...', 'class' => 'search-query'));?></th>
+				<th class="refer"><?php echo $form->text('Entsal.ocompra_refer', array( 'label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'O Compra...', 'class' => 'search-query'));?></th>
+				<th class="refer"><?php echo $form->text('Entsal.oproduce_refer', array( 'label' => false, 'type' => 'search', 'maxLength' => '8', 'placeholder'=>'O Produccion...', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('Entsal.st',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST...', 'class' => 'search-query'));?></th>
 				<th class="datetime"><?php echo $form->text('Entsal.created',array('label' => false, 'type' => 'search', 'placeholder'=>'Creado', 'class' => 'search-query'));?></th>
 				<th class="id">
@@ -29,8 +31,10 @@ echo $form->create('Entsal',array('inputDefaults' => array(
 			<tr class="row-labels">
 				<th class="refer"><?php echo $this->Paginator->sort('Folio','Entsal.esrefer'); ?></th>
 				<th class="date"><?php echo $this->Paginator->sort('Fecha','Entsal.esfecha'); ?></th>
-				<th class="span3"><?php echo $this->Paginator->sort('Tipo de Movimiento','Tipoartmovbodega.cve'); ?></th>
+				<th class="col4"><?php echo $this->Paginator->sort('Tipo','Tipoartmovbodega.cve'); ?></th>
 				<th class=""><?php echo $this->Paginator->sort('Concepto','Entsal.esconcep'); ?></th>
+				<th class="refer"><?php echo $this->Paginator->sort('Orden Compra','Entsal.ocompra_refer'); ?></th>
+				<th class="refer"><?php echo $this->Paginator->sort('Orden Prod','Entsal.oproduce_refer'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','Entsal.st'); ?></th>
 				<th class="datetime"><?php echo $this->Paginator->sort('Creado','Entsal.created'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
@@ -41,8 +45,10 @@ echo $form->create('Entsal',array('inputDefaults' => array(
 			<tr id="<?php echo $item['Entsal']['id'];?>" class="t-row">
 				<td class="refer"><?php echo $item['Entsal']['esrefer']; ?></td>
 				<td class="date"><?php echo substr($item['Entsal']['esfecha'],0,10);?></td>
-				<td class="span3"><?php echo $item['Tipoartmovbodega']['cve']; ?></td>
+				<td class="col4"><?php echo $item['Tipoartmovbodega']['cve']; ?></td>
 				<td class=""><?php echo $item['Entsal']['esconcep']; ?></td>
+				<td class="refer"><?php echo $item['Entsal']['ocompra_refer']; ?></td>
+				<td class="refer"><?php echo $item['Entsal']['oproduce_refer']; ?></td>
 				<td class="st"><?php echo $item['Entsal']['st']; ?></td>
 				<td class="datetime"><?php echo $item['Entsal']['created']; ?></td>
 				<td class="id">

@@ -35,7 +35,7 @@
 </div>
 
 <div id="tabs-1" class="tab-pane">
-<?php //echo $this->TBS->input('tipoarticulo_id', array('label' => 'Tipo de Inventario')); ?>
+<?php //echo $this->TBS->input('tipoarticulo_id', array('label' => 'ºTipo de Inventario')); ?>
 <?php echo $this->TBS->input('unidad_id', array('label' => 'Unidad')); ?>
 <?php echo $this->TBS->input('linea_id', array('label' => 'Linea')); ?>
 <?php echo $this->TBS->input('marca_id', array('label' => 'Marca')); ?>

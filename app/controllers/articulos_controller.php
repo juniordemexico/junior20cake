@@ -149,6 +149,7 @@ class ArticulosController extends MasterDetailAppController {
 								 						'Articulo.arst'=>'A', 
 														'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) > 0',
 														),								
+/*
 								'joins' => array(
 										array(	'table'=>'Catalogoventas',
 												'alias'=>'Catalogoventa',
@@ -166,6 +167,7 @@ class ArticulosController extends MasterDetailAppController {
 												)
 											),
 									),
+*/
 								);
 		$filter = $this->Filter->process($this);
 		$this->set('articulos', $this->paginate($filter));

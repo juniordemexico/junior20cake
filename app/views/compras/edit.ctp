@@ -313,7 +313,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 						);
 						
 		// Send the PUT request to the server
-		$http.post($scope.app.actions.add, serializedData
+		$http.post($scope.app.actions.save, serializedData
 		).then(function(response) {
 			// We got a response to process
 			if(typeof response.data != 'undefined' && 

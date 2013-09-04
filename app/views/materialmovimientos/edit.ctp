@@ -40,9 +40,10 @@
 		<label for="EntsalRefer" class="control-label">Folio:</label>
 		<div class="controls input">
 			<input type="text" id="EntsalRefer" name="data[Entsal][esrefer]" field="Entsal.esrefer"
+				data-ng-readonly="true" readonly="true"
 				data-ng-model="data.Master.esrefer"
 				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
-				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
+				class="date readonly" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
 	</div>
 	<div class="control-group">
@@ -78,23 +79,23 @@
 	</div>
 
 	<div class="control-group">
-		<label for="CompraRefer" class="control-label">Referencia Compra:</label>
+		<label for="EntsalOcompra_refer" class="control-label">Referencia Compra:</label>
 		<div class="controls input">
-			<input type="text" id="CompraRefer" name="data[Compra][folio]" field="Compra.folio"
+			<input type="text" id="EntsalOcompra_refer" name="data[Entsal][ocompra_refer]" field="Entsal.ocompra_refer"
 				class="span2"
-				data-ng-model="master.Compra.folio"
-				data-ng-minlength="0" data-ng-maxlength="16"
-				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Compra, proporciona su Folio." />
+				data-ng-model="data.Master.Ocompra_refer"
+				data-ng-minlength="0" data-ng-maxlength="8"
+				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Orden de Compra, proporciona su Folio." />
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="ProduceRefer" class="control-label">Referencia Órden de Prod:</label>
+		<label for="EntsalOproduce_refer" class="control-label">Referencia Órden de Prod:</label>
 		<div class="controls input">
-			<input type="text" id="ProduceRefer" name="data[Produce][folio]" field="Produce.folio"
+			<input type="text" id="EntsalOproduce_refer" name="data[Entsal][oproduce_refer]" field="Entsal.oproduce_refer"
 				class="span2"
-				data-ng-model="master.Produce.folio"
-				data-ng-minlength="0" data-ng-maxlength="16"
+				data-ng-model="data.Master.oproduce_refer"
+				data-ng-minlength="0" data-ng-maxlength="8"
 				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Órden de Producción, proporciona su Folio." />
 		</div>
 	</div>
@@ -234,13 +235,15 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 						);
 					
 		// Send the PUT request to the server
-		$http.post($scope.app.actions.add, serializedData
+		$http.post($scope.app.actions.save, serializedData
 		).then(function(response) {
-			console.log('hhayyy');
+			console.log('hhayyy'+$scope.app.actions.save);
 			console.log(angular.toJson(response.data));
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				axAlert(response.data.message, 'success', false);
+				$scope.data=angular.copy(data);
+				$scope.data.Master.esrefer=response.data.nextFolio;
 				return;
 			}
 

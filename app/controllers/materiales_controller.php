@@ -117,7 +117,7 @@ class MaterialesController extends MasterDetailAppController {
 		$this->set('listAction', 'archivos');
 		$this->set('clickAction', 'archivos');
 		if (!$id) {
-			$this->autoRender=false;
+			$this->autoRender = false;
 			$this->paginate = array(
 									'update' => '#content',
 									'evalScripts' => true,
@@ -136,6 +136,30 @@ class MaterialesController extends MasterDetailAppController {
 		$this->data = $this->Articulo->read(null, $id);
 	}
 
+	function existencias() {
+//		if(!$this->RequestHandler->isAjax()) $this->layout='plain';
+//		$this->Articulo->recursive = 0;
+
+		$this->paginate = array(
+								'update' => '#content',
+								'evalScripts' => true,
+								'limit' => PAGE_ROWS,
+								'order' => array('Linea.licve', 'Articulo.arcveart'),
+								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
+												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
+												'Articulo.familia_id', 'Articulo.linea_id', 'Articulo.marca_id',
+												'Tipoarticulo.cve',
+												'Familia.cve', 'Marca.macve','Linea.licve', 'Unidad.cve',
+												'Articulo.modified',
+												'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE articulo_id=Articulo.id) existencia'),
+								'conditions' => array(	'Articulo.tipoarticulo_id=1'
+/*														'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) > 0',*/
+														),								
+								);
+		$filter = $this->Filter->process($this);
+		$this->set('items', $this->paginate($filter));
+//		$this->set('clickAction', 'edit');
+	}
 
 	public function details($id=null) {
 		$this->data = $this->Articulo->read(null, $id);
@@ -311,6 +335,17 @@ $response->userdata['name'] = 'Totals:';
 												GROUP BY Articulo.id, Artmov.amcolor
 											    ORDER BY Artmov.amcolor");
 		$this->set('result', $result);
+	}
+
+	function bajas() {
+		$filename='/home/www/junior20cake/app/files/materiales_para_baja_20130903.txt';
+		$myFile=$this->Axfile->FileToArray($filename);
+ 
+		foreach($myFile as $item) {
+			$this->Articulo->query("UPDATE articulo SET arst='B' WHERE id=$item AND arst<>'B' and tipoarticulo_id=1");
+			echo "$item\n";
+		}
+		die();
 	}
 
 }

@@ -141,6 +141,7 @@ class AxUIHelper extends Helper {
 		$actions=array(
 			'index'				=> $baseurl.'/index',
 			'add'				=> $baseurl.'/add.json',
+			'save'				=> $baseurl.'/save.json',
 			'edit'				=> $baseurl.'/edit',
 			'view'				=> $baseurl.'/view',
 			'preview'			=> $baseurl.'/preview',
