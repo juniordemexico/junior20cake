@@ -14,12 +14,13 @@ class MaterialmovimientosController extends MasterDetailAppController {
 	public $paginate = array('update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
-								'order' => array('Entsal.esfolio' => 'desc'),
+								'order' => array('Entsal.esrefer' => 'desc'),
 								'fields' => array('Entsal.id', 'Entsal.esrefer', 'Entsal.esfecha',
 												'Entsal.estmov','Entsal.esconcep',
 												'Entsal.st', 'Entsal.est',
 												'Entsal.created', 'Entsal.modified',
 												'Entsal.refer_id', 'Entsal.refer_model',
+												'Entsal.ocompra_refer', 'Entsal.oproduce_refer',
 												'Entsal.tipoartmovbodega_id', 'Tipoartmovbodega.cve',
 												'Entsal.almacen_id','Almacen.aldescrip'),
 								'conditions' => array('Entsal.tipoarticulo_id<>0')
@@ -73,6 +74,7 @@ class MaterialmovimientosController extends MasterDetailAppController {
 														null,
 									'Details' => array(),
 						);
+		$this->set('related', $this->Entsal->loadDependencies());
 		parent::add($data);
 	}
 
