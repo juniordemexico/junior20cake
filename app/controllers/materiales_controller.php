@@ -17,7 +17,7 @@ class MaterialesController extends MasterDetailAppController {
 								'limit' => PAGE_ROWS,
 								'order' => array('Linea.licve', 'Articulo.arcveart'),
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
-												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
+												'Articulo.tipoarticulo_id','Articulo.tipoflujo','Articulo.arst','Articulo.art',
 												'Articulo.familia_id', 'Articulo.linea_id', 'Articulo.marca_id',
 												'Tipoarticulo.cve',
 												'Familia.cve', 'Marca.macve','Linea.licve', 'Unidad.cve',

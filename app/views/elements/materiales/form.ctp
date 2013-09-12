@@ -20,7 +20,7 @@
 <?php echo $this->TBS->input('Articulo.arcveart', array('type' => 'text', 'label' => 'Código', 'ly_w'=>'2')); ?>
 <?php echo $this->TBS->input('Articulo.ardescrip', array('type' => 'text', 'label' => 'Descripción', 'ly_w'=>'4')); ?>
 <?php echo $this->TBS->input('arst', array('type'=>'radiogroup', 'label'=>'Estatus', 
-							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'))
+							'selectOptions'=>array('A'=>'Activo', 'B'=>'Baja', 'S'=>'Suspendido'))
 							);
 ?>
 <?php echo $this->TBS->input('Articulo.arobser', array('label' => 'Observaciones', 'type'=>'textarea', 'placeholder'=>'Observaciones y Comentarios', 'ly_w'=>'4')); ?>
@@ -32,6 +32,10 @@
 <?php echo $this->TBS->input('marca_id', array('label' => 'Marca')); ?>
 <?php echo $this->TBS->input('talla_id', array('label' => 'Grupo de Tallas')); ?>
 <?php echo $this->TBS->input('familia_id', array('label' => 'Familia', 'title' => 'Los miembros de una familia son reemplazables entre si', 'empty'=>'Selecciona una...')); ?>
+<?php echo $this->TBS->input('tipoflujo', array('type'=>'radiogroup', 'label'=>'Tipo de Flujo', 
+							'selectOptions'=>array('A'=>'Activo', 'L'=>'Lento', 'O'=>'Obsoleto'))
+							);
+?>
 </div>
 
 <div id="tabs-2" class="tab-pane">

@@ -112,7 +112,7 @@ class ProveedoresController extends MasterDetailAppController {
 			$record['ArticuloProveedor']['unidad_id']=$this->params['url']['unidad_id'];
 
 		if(isset($this->params['url']['composicion'])) $record['ArticuloProveedor']['composicion']=$this->params['url']['composicion'];
-		if(isset($this->params['url']['ancho'])) $record['ArticuloProveedor']['ancho']=$this->params['url']['ancho'];
+		if(isset($this->params['url']['ancho']) && trim($this->params['url']['ancho'])<>0) $record['ArticuloProveedor']['ancho']=$this->params['url']['ancho'];
 		if(isset($this->params['url']['origen'])) $record['ArticuloProveedor']['origen']=$this->params['url']['origen'];
 
 		// Create the new record

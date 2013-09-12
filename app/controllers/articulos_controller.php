@@ -144,10 +144,10 @@ class ArticulosController extends MasterDetailAppController {
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip','Articulo.art',
 												'Articulo.arpva','Articulo.arpvb','Articulo.arpvc','Articulo.arpvd',
 												'Marca.macve','Linea.licve','Temporada.tecve','Articulo.lento',
-												'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) existencia'),
+												'(SELECT SUM(ament)-SUM(amsal) FROM artmov Artmov WHERE Artmov.articulo_id=Articulo.id) existencia'),
 								'conditions' => array(	'Articulo.tipoarticulo_id'=>$this->tipoarticulo_id,
 								 						'Articulo.arst'=>'A', 
-														'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) > 0',
+//														'(SELECT SUM(ament)-SUM(amsal) FROM artmov WHERE amcveart=Articulo.arcveart) <> 0',
 														),								
 /*
 								'joins' => array(

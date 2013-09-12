@@ -21,8 +21,9 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="cveart"><?php echo $form->text('Familia.cve',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Familia', 'class' => 'search-query'));?></th>
 				<th class="licve"><?php echo $form->text('Linea.licve',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Linea', 'class' => 'search-query'));?></th>
 				<th class="macve"><?php echo $form->text('Marca.macve',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Marca', 'class' => 'search-query'));?></th>
-				<th class="datetime"><?php echo $form->text('modified',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Fecha Modificacion...', 'class' => 'search-query'));?></th>
+				<th class="st"><?php echo $form->text('tipoflujo',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Flujo', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('arst',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
+				<th class="datetime"><?php echo $form->text('modified',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Fecha Modificacion...', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php
 				echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-small'));
@@ -35,8 +36,9 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="cveart"><?php echo $this->Paginator->sort('Familia','Familia.cve'); ?></th>
 				<th class="licve"><?php echo $this->Paginator->sort('Linea','Linea.licve'); ?></th>
 				<th class="macve"><?php echo $this->Paginator->sort('Marca','Marca.macve'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','modified'); ?></th>
+				<th class="st"><?php echo $this->Paginator->sort('Flujo','tipoflujo'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','arst'); ?></th>
+				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','modified'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -48,8 +50,9 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<td class="cveart"><?php echo $item['Familia']['cve']; ?></td>
 				<td class="licve"><?php echo $item['Linea']['licve']; ?></td>
 				<td class="macve"><?php echo $item['Marca']['macve']; ?></td>
-				<td class="datetime"><?php echo $item['Articulo']['modified']; ?></td>
+				<td class="st"><?php echo $item['Articulo']['tipoflujo']; ?></td>
 				<td class="st"><?php echo $item['Articulo']['arst']; ?></td>
+				<td class="datetime"><?php echo $item['Articulo']['modified']; ?></td>
 				<td class="id"><?php echo $item['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>

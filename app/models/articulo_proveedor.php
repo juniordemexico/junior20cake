@@ -18,9 +18,11 @@ class ArticuloProveedor extends AppModel
 //		if(!$proveedor_id) return array('material'=>array(), 'servicio'=>array());
 
 		return array(	'material'=>$this->Find('all', array('conditions'=>
-									"Articuloproveedor.proveedor_id=$proveedor_id AND Articulo.tipoarticulo_id=1")),
+									"Articuloproveedor.proveedor_id=$proveedor_id AND Articulo.tipoarticulo_id=1",
+									'order'=>'Articulo.arcveart')),
 						'servicio'=>$this->Find('all', array('conditions'=>
-									"Articuloproveedor.proveedor_id=$proveedor_id AND Articulo.tipoarticulo_id=2"))
+									"Articuloproveedor.proveedor_id=$proveedor_id AND Articulo.tipoarticulo_id=2",
+									'order'=>'Articulo.arcveart'))
 					);
 	}
 	

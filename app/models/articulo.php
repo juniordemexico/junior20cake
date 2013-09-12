@@ -105,9 +105,17 @@ class Articulo extends AppModel
 		),
 		'arst' => array(
 			'inlist' => array(
-				'rule' => array('inList', array('A', 'C', 'S') ),
+				'rule' => array('inList', array('A', 'B', 'S') ),
 				'allowEmpty' => false,
-				'message' => 'ESTATUS debe ser Activo/Cancelado/Suspendido'
+				'message' => 'ESTATUS debe ser Activo/Baja/Suspendido'
+			)
+		),
+		'tipoflujo' => array(
+			'inlist' => array(
+				'rule' => array('inList', array('A', 'L', 'O') ),
+				'allowEmpty' => true,
+				'required' => false,
+				'message' => 'TIPO DE FLUJO debe ser Activo/Lento/Obsoleto'
 			)
 		),
 		'arpva' => array(

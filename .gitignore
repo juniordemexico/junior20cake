@@ -2,13 +2,30 @@ junior20cake.tmproj		# TMate's Project file
 junior20cake.sublime-project	# Sublime Text's Project file
 junior20cake.sublime-workspace	# Sublime Text's Project file
 
+junior20tda.tmproj		# TMate's Project file
+junior20tda.sublime-project	# Sublime Text's Project file
+junior20tda.sublime-workspace	# Sublime Text's Project file
+
+junior20mobile.tmproj			# TMate's Project file
+junior20mobile.sublime-project		# Sublime Text's Project file
+junior20mobile.sublime-workspace	# Sublime Text's Project file
+
 app/config/database.php		# Local database configuration file
 app/config/core.php
 
-app/files/tmp			# Temporary files
 app/files			# Temporary files
+app/files/*			# Temporary files
+app/files/tmp			# Temporary files
 app/tmp				# Temporary files
+app/tmp/*
 
+app/files/facturaselectronicas/		# Invoice's pdf file store folder
 app/files/facturaselectronicas/*	# Invoice's pdf file store folder
+app/files/facturas_electronicas/*	# Invoice's pdf file store folder
+app/files/facturaselectronicas/*	# Invoice's pdf file store folder
+
+app/webroot/files/
+
 idd	# Project and Documentation folder
+idd/*	# Project and Documentation folder
 
