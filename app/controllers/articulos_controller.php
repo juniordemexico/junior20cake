@@ -47,7 +47,8 @@ class ArticulosController extends MasterDetailAppController {
 								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
 												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
 												'Tipoarticulo.cve','Articulo.lento',
-												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve'),
+												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve',
+												'created','modified'),
 								'conditions' => array('Articulo.tipoarticulo_id'=>$this->tipoarticulo_id),
 								);
 		$filter = $this->Filter->process($this);

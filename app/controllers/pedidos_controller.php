@@ -88,4 +88,11 @@ class PedidosController extends MasterDetailAppController {
 		$this->set('items', $this->Pedidodet->getArticulosCatalogo( $id ));
 	}
 
+	function getArreglo($id=null) {
+			$this->Pedido->recursive=2;
+			$this->data = $this->Pedido->read(null, $id);
+			print_r($this->data);
+			die();
+	}
+
 }

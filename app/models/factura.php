@@ -21,9 +21,11 @@ class Factura extends AppModel
 {
 	public $name = 'Factura';
 	public $table = 'Factura';
+//	public $useTable = 'Factura';
 	public $alias = 'Factura';
-	public $cache=true;
-
+	public $cache=false;
+	public $recursive=1;
+	
 	public $virtualFields = array(
 		'faimporte' => 'faimporte',
 		'faimpoimpu' => 'faimpoimpu',
@@ -70,6 +72,8 @@ class Factura extends AppModel
 		'Cliente', 'Vendedor', 'Divisa'
 	);
 
+	public $hasMany = array('Facturadet'=>array('className'=>'Facturadet','foreignKey'=>'factura_id'));
+	
 	function beforeFind( $options ) {
 		if( isset( $options['doJoinUservendedor'] )) {
 			return(parent::beforeFind($this->generateJoinUservendedor($options)));

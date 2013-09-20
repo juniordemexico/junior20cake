@@ -348,5 +348,68 @@ $response->userdata['name'] = 'Totals:';
 		die();
 	}
 
+	function inventario() {
+//		$filename='/home/www/junior20cake/app/files/materiales_para_baja_20130903.txt';
+$this->autoRender=false;
+		$filename='/home/www/junior20cake/app/files/tmp/materiales_inventario_20130917.txt';
+		$myFile=$this->Axfile->FileToArray($filename);
+//		print "trabajaando";
+//		print_r($myFile);
+		$records=array();
+		foreach($myFile as $item) {
+			$fields=split("\t",$item,16);
+			if($fields && count($fields)>4 && isset($fields[0]) && trim($fields[0])<>'') {
+			$record=array(
+				'articulo_id'=>$fields[0],
+				'articulo_cve'=>$fields[1],			
+				'color_id'=>$fields[7],
+				'color_cve'=>$fields[8],			
+				'familia_cve'=>$fields[3],
+				'proveedor_cve'=>$fields[9],
+				'costo'=>$fields[10],
+				'existencia'=>$fields[11]
+				);
+			$records[]=$record;
+
+			echo "<pre style='border: 1px solid #000'>\n\r";
+			echo "MATERIAL:<br/>"."\n";
+			print_r($record);
+
+echo "<code style='background-color: #CCC'>INSERT INTO tmpbodegamaterial(
+											articulo_id,articulo_cve,color_id,color_cve,
+											proveedor_cve,familia_cve,costo,existencia)
+			 						VALUES (
+									{$record['articulo_id']}, '{$record['articulo_cve']}',
+									{$record['color_id']}, '{$record['color_cve']}',
+									'{$record['proveedor_cve']}', '{$record['familia_cve']}',
+									{$record['costo']}, {$record['existencia']}
+									)";
+									
+			echo "</code></pre>\n\r";
+			}
+			$this->Articulo->query("INSERT INTO tmpbodegamaterial(
+											articulo_id,articulo_cve,color_id,color_cve,
+											proveedor_cve,familia_cve,costo,existencia)
+			 						VALUES (
+									{$record['articulo_id']}, '{$record['articulo_cve']}',
+									{$record['color_id']}, '{$record['color_cve']}',
+									'{$record['proveedor_cve']}', '{$record['familia_cve']}',
+									{$record['costo']}, {$record['existencia']}
+									);");
+	//		echo "$item\n";
+		}
+		die();
+	}
+/*
+INSERT INTO ARTMOV 
+(ALMACEN_ID, ARTICULO_ID, COLOR_ID, TALLA_ID,
+AMTMOV, AMFECHA, AMREFER, AMCONCEP,
+AMT0,amcosto
+) 
+select 
+100, articulo_id,color_id,0,100, '2013-08-31', 'INVAGO13', 'INV FISICO AGOSTO 2013', existencia,costo
+from tmpbodegamaterial t
+where color_id in (select id from colores where id=t.color_id rows 1)
+*/
 }
 

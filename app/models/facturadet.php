@@ -6,8 +6,9 @@ class Facturadet extends AppModel
 	public $name = 'Facturadet';
 
 	public $table = 'Facturadet';
+//	public $useTable = 'Facturadet';
 	public $alias = 'Facturadet';
-	
+	public $recursive=0;
 	public $validate = array(
 
 	);
@@ -37,48 +38,6 @@ class Facturadet extends AppModel
 		,
 	);
 
-	function getFacturas() {
-		$facturas = $this->Factura->find
-		(
-			'list',
-			array
-			(
-				'fields' => array('id', 'farefer'),
-				'order' => 'Factura.perefer ASC',
-				'recursive' => -1,
-				'countCache' => true,
-			)
-		);
-		return compact('facturas');
-	}
-
-	function getArticulos() {
-		$articulos = $this->Articulo->find
-		(
-			'list',
-			array
-			(
-				'fields' => array('id', 'arcveart'),
-				'order' => 'Articulo.arcveart ASC',
-				'recursive' => -1
-			)
-		);
-		return compact('articulos');
-	}
-
-	function geColores() {
-		$colores = $this->Colores->find
-		(
-			'list',
-			array
-			(
-				'fields' => array('id', 'cve'),
-				'order' => 'Color.cve ASC',
-				'recursive' => -1
-			)
-		);
-		return compact('colores');
-	}
 
 }
 

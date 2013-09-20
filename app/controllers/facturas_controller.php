@@ -221,6 +221,13 @@ class FacturasController extends MasterDetailAppController {
 		echo "Error";
 	}
 
+	function getArreglo($id=null) {
+			$this->Factura->recursive=2;
+			$this->data = $this->Factura->read(null, $id);
+			print_r($this->data);
+			die();
+	}
+
 }
 
 	

@@ -23,6 +23,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="tecve"><?php echo $form->text('Temporada.tecve',array('label' => false, 'type' => 'search', 'maxLength' => '16', 'placeholder'=>'Temporada', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('lento',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Lento...', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('arst',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
+				<th class="datetime"><?php echo $form->text('Explosion.modified',array('label' => false, 'type' => 'search', 'placeholder'=>'Fecha Modificado', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php echo $this->Js->submit('Filtrar', array('update' => '#content', 'class'=>'btn btn-mini', 'escape'=>false)); ?>
 				</th>	
@@ -35,6 +36,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<th class="tecve"><?php echo $this->Paginator->sort('Temporada','Temporada.tecve'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('Lento','lento'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','arst'); ?></th>
+				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','Articulo.modified'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -48,6 +50,7 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 				<td class="tecve"><?php echo $articulo['Temporada']['tecve']; ?></td>
 				<td class="st"><?php echo ($articulo['Articulo']['lento']=='1' ? '<i class="icon icon-ok"> </i>':''); ?></td>
 				<td class="st"><?php echo $articulo['Articulo']['arst']; ?></td>
+				<td class="datetime" title="<?php echo 'Creado: '.$articulo['Articulo']['created']; ?>"><?php echo $articulo['Articulo']['modified']; ?></td>
 				<td class="id"><?php echo $articulo['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
