@@ -237,7 +237,6 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		// Send the PUT request to the server
 		$http.post($scope.app.actions.save, serializedData
 		).then(function(response) {
-			console.log('hhayyy'+$scope.app.actions.save);
 			console.log(angular.toJson(response.data));
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {

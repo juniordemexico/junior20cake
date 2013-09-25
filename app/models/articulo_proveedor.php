@@ -25,6 +25,16 @@ class ArticuloProveedor extends AppModel
 									'order'=>'Articulo.arcveart'))
 					);
 	}
+
+	public function getArticuloProveedor($articulo_id=null, $proveedor_id=null) {
+		$this->recursive=1;
+//		if(!$proveedor_id) return array('material'=>array(), 'servicio'=>array());
+
+		return array(	'material'=>$this->Find('all', array('conditions'=>
+									"Articuloproveedor.proveedor_id=$proveedor_id AND Articuloproveedor.articulo_id=$articulo_id"
+									))
+					);
+	}
 	
 	public function loadDependencies() {
 		$Unidad = $this->toJsonListArray( $this->Unidad->find('list', 

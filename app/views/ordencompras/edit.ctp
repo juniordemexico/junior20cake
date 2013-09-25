@@ -98,6 +98,16 @@
 		</div>
 	</div>
 
+	<div class="control-group">
+		<label class="control-label">Estatus:</label>
+		<div class="controls group">
+		<div class="btn-group">
+			<button type="button" id="OrdencompraStA" class="btn" data-ng-class="{'btn-success': data.Master.st==app.estatus.Activo}" data-ng-model="data.Master.st" data-btn-radio="'A'" data-ng-disabled="data.Master.st==estatus.Cancelado" name="data[Compra][st]">Activo</button>
+			<button type="button" id="OrdencompraStC" class="btn" data-ng-class="{'btn-danger': data.Master.st==app.estatus.Cancelado}" data-ng-model="data.Master.st" data-btn-radio="'C'" data-ng-disabled="data.Master.st==estatus.Activo" name="data[Compra][st]">Cancelado</button>
+		</div>
+		</div>
+	</div>
+
 	</div> <!-- div.span6 -->
 	<div class="span1">&nbsp;</div>
 
@@ -112,6 +122,8 @@
 				class="span2" placeholder="Suma..." title="Suma del detalle (precio, menos descuentos por partida, por cantidad)" />
 		</div>
 	</div>
+<?php
+/*
 	<div class="control-group">
 		<label for="OrdencompraDesc1" class="control-label">Descuentos:</label>
 		<div class="controls input">
@@ -123,6 +135,8 @@
 				class="span1" placeholder="Desc 2..." title="Segundo Descuento" />
 		</div>
 	</div>
+*/
+?>
 	<div class="control-group">
 		<label for="OrdencompraImporte" class="control-label">Importe:</label>
 		<div class="controls input">
@@ -132,14 +146,11 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="OrdencompraImpu1" class="control-label">Impuestos:</label>
+		<label for="Ordencompraimpu" class="control-label">Impuestos:</label>
 		<div class="controls input">
-			<input type="text" id="OrdencompraImpu1" name="data[Ordencompra][impu1]" field="Ordencompra.impu1"
-				data-ng-model="data.Master.impu1"
-				class="span1" placeholder="Impu 1..." title="Primer Impuesto" />
-			<input type="text" id="OrdencompraImpu2" name="data[Ordencompra][impu2]" field="Ordencompra.impu2"
-				data-ng-model="data.Master.impu2"
-				class="span1" placeholder="Impu 2..." title="Segundo Impuesto" />
+			<input type="text" id="Ordencompraimpu" name="data[Ordencompra][impu]" field="Ordencompra.impu"
+				data-ng-model="data.Master.impu"
+				class="span1" placeholder="%" title="Impuesto (%)" />
 		</div>
 	</div>
 	<div class="control-group">
@@ -191,8 +202,10 @@
 				<th class="span2">Material</th>
 				<th class="span2">Color</th>
 				<th class="">Descripción</th>
+				<th class="span2">Código Prov</th>
 				<th class="cant">Cant</th>
 				<th class="precio">Costo</th>
+				<th class="precio">Importe</th>
 				<th class="span1">&nbsp;</th>
 			</tr>
 			</thead>
@@ -201,8 +214,10 @@
 				<td class="span2">{{i.Articulo.arcveart}}</td>
 				<td class="span2">{{i.Color.cve}}</td>
 				<td class="">{{i.Articulo.ardescrip}}</td>
+				<td class="">{{i.Articulo.codigoproveedor}}</td>
 				<td class="cant">{{i.Detail.t0}}</td>
 				<td class="precio">{{i.Detail.costo | currency}}</td>
+				<td class="precio">{{i.Detail.cant*i.Detail.costo | currency}}</td>
 				<td class="span1">
 					<button type="button" class="btn btn-mini ax-btn-detail-delete"
 							data-ng-click="detailDelete($index, i, true)"
@@ -233,7 +248,7 @@
 <div class="control-group">
 	<label class="control-label" for="" title="Adjunta el documento original del proveedor">Documento Original:</label>
 	<div class="controls input">
-		<?php echo $this->Upload->edit('img/Ordencompra', $this->data['master']['Ordencompra']['folio']);?>
+		<?php //echo $this->Upload->edit('img/Ordencompra', $this->data['master']['Ordencompra']['folio']);?>
 	</div>
 </div>
 
@@ -327,14 +342,14 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 	$scope.currentItem=angular.copy(emptyItem);
 
 	$scope.relatedtransactions=[
-	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
-	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
-	{ Entsal: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
+//	{ Entsal: {id:1, folio:"E000990", fecha:"2013-05-12", st:"A", concep:"Entrada por adelanto de entrega"} },
+//	{ Entsal: {id:2, folio:"E000991", fecha:"2013-05-15", st:"A", concep:"Entrada por la totalidad de la órden de compra"} },
+//	{ Entsal: {id:3, folio:"S000999", fecha:"2013-05-16", st:"A", concep:"Salida a devolución por defecto"} }	
 	];
 	
 	$scope.relatedcxp=[
-	{ Cxp: {id:1, folio:"C0000001", fecha:"2013-05-10", cargo: 245600, concep:"COMPRA C0000001"} },
-	{ Cxp: {id:2, folio:"PA003451", fecha:"2013-05-11", abono: 100000, concep:"PAGO POR ANTICIPO COMPRA C0000001"} }
+//	{ Cxp: {id:1, folio:"C0000001", fecha:"2013-05-10", cargo: 245600, concep:"COMPRA C0000001"} },
+//	{ Cxp: {id:2, folio:"PA003451", fecha:"2013-05-11", abono: 100000, concep:"PAGO POR ANTICIPO COMPRA C0000001"} }
 	];
 	
 
@@ -349,16 +364,35 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 							$scope.data.masterModel,
 							$scope.data.detailModel
 						);
-						
 		// Send the PUT request to the server
-		$http.post($scope.app.actions.add, serializedData
+		$http.post($scope.app.actions.save, serializedData
 		).then(function(response) {
 			// We got a response to process
-			if(typeof response.data != 'undefined' && 
-				typeof response.data.result != 'undefined' && response.data.result=='ok') {
-				axAlert(response.data.message, 'success', false);
-				return;
+
+			if(typeof response.data != 'undefined' && typeof response.data.result != 'undefined') {
+
+				if(response.data.result=='ok') {
+					axAlert(response.data.message, 'success', false);
+					$scope.data=angular.copy(data);
+					$scope.data.Master.folio=response.data.nextFolio;
+					return;
+				}
+
+				else {
+					axAlert(response.data.message, 'error', false);
+
+					if(typeof response.data.validationErrors != 'undefined') {
+						axAlert(angular.toJson(response.data.validationErrors));
+					}
+
+				}
+
 			}
+/*
+			else {
+				axAlert('Error Desconocido');
+			}
+*/
 		});
 	}
 
@@ -400,6 +434,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				t0: $scope.currentItem.t0,
 				cant: $scope.currentItem.t0,
 				costo: $scope.currentItem.costo,
+				codigoproveedor: $scope.currentItem.codigoproveedor,
 			},
 			Articulo: $scope.currentItem.Articulo,
 			Color: $scope.currentItem.Color
@@ -407,6 +442,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		if($scope.data.Details.push(item)>currentLength) {
 			$scope.currentItem=angular.copy(emptyItem);
 			$scope.oldValues.arcveart='';		
+			$scope.totalize();
 			return 1;	
 		}
 		else {
@@ -424,25 +460,53 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		.then( function(result) {
 			if(result) {
 				$scope.data.Details.splice(index,1);
+				$scope.totalize();
 			}
 		});
+	}
+
+	$scope.totalize = function() {
+		$scope.data.Master.impu=16;
+		$scope.data.Master.suma=0;
+		$scope.data.Master.importe=0;
+		$scope.data.Master.impoimpu=0;
+		$scope.data.Master.total=0;
+		if( $scope.data.Details.length>0 ) {
+			angular.forEach( $scope.data.Details, function(item, key) {
+				if( angular.isDefined(item.Detail.cant)) {
+					var importe=parseFloat(item.Detail.cant)*parseFloat(item.Detail.costo);
+					$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(importe) ).toFixed(2);
+				}
+			});
+		}
+		$scope.data.Master.importe=$scope.data.Master.suma;
+		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * ($scope.data.Master.impu/100).toFixed(4) ).toFixed(2);
+		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
+		return true;
 	}
 
 	$scope.getItemByCve = function() {
 		if($scope.currentItem.Articulo.text==$scope.oldValues.arcveart) {
 			return 0;
 		}
-
 		$scope.oldValues.arcveart=$scope.currentItem.Articulo.text;
 		$http.get($scope.app.actions.getItemByCve+
-				'?cve='+$scope.currentItem.Articulo.text
+				'?cve='+$scope.currentItem.Articulo.text+'&proveedor_id='+$scope.data.Master.proveedor_id
 		).then(function(response) {
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
+
+				if(response.data.item.Articulo.costo==0) {
+					axAlert('Ese Material NO tiene un costo autorizado para el proveedor');
+					$scope.currentItem=angular.copy(emptyItem);
+					return;
+				}
+
 				$scope.currentItem.Articulo=response.data.item.Articulo;
 				$scope.currentItem.Articulo.text=$scope.currentItem.Articulo.arcveart;
 				$scope.currentItem.ArticuloColor=response.data.item.ArticuloColor;
 				$scope.currentItem.Color=response.data.item.ArticuloColor[0];
+				$scope.currentItem.costo=response.data.item.Articulo.costo;
 				$scope.currentItem.t0=0;
 				axAlert(response.data.message, 'success', false);
 			}

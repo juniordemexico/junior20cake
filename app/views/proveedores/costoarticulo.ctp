@@ -83,8 +83,9 @@
 					/>
 <!--						data-ui-event="{ blur : 'changeCosto(item)' }" 	-->					
 				</td>
-				<td class="col4">{{item.ArticuloProveedor.composicion}}</td>
-				<td class="col4">{{item.ArticuloProveedor.origen}}</td>
+				<td class="col4">{{item.ArticuloProveedor.codigoproveedor}}</td>
+				<td class="col2">{{item.ArticuloProveedor.composicion}}</td>
+				<td class="col2">{{item.ArticuloProveedor.origen}}</td>
 				<td class="fecha">
 					<span data-ng-hide="item.ArticuloProveedor.fautoriza">
 						<button type="button" class="btn btn-small" data-ng-click="detailAuthorize(item.ArticuloProveedor.id, item, true)">

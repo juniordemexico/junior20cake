@@ -21,6 +21,7 @@ echo $form->create('Ordencompra',array('inputDefaults' => array(
 				<th class="cve"><?php echo $form->text('Proveedor.prvepro',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Proveedor...', 'class' => 'search-query'));?></th>
 				<th class=""><?php echo $form->text('Proveedor.prnom',array('label' => false, 'type' => 'search', 'maxLength' => '4', 'placeholder'=>'Razón Social...', 'class' => 'search-query'));?></th>
 				<th class="cve"><?php echo $form->text('Ordencompra.proveedor_refer',array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Prov Refer...', 'class' => 'search-query'));?></th>
+				<th class="total"><?php echo $form->text('Ordencompra.total',array('label' => false, 'type' => 'search', 'maxLength' => '14', 'placeholder'=>'Total...', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('Ordencompra.st',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'ST...', 'class' => 'search-query'));?></th>
 				<th class="datetime"><?php echo $form->text('Ordencompra.created',array('label' => false, 'type' => 'search', 'placeholder'=>'Creado', 'class' => 'search-query'));?></th>
 				<th class="id">
@@ -33,6 +34,7 @@ echo $form->create('Ordencompra',array('inputDefaults' => array(
 				<th class="cve"><?php echo $this->Paginator->sort('Prov','Proveedor.prcvepro'); ?></th>
 				<th class=""><?php echo $this->Paginator->sort('Razón Social','Proveedor.prnom'); ?></th>
 				<th class="cve"><?php echo $this->Paginator->sort('Refer Prov','Ordencompra.proveedor_refer'); ?></th>
+				<th class="total"><?php echo $this->Paginator->sort('Total','Ordencompra.total'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','Ordencompra.st'); ?></th>
 				<th class="datetime"><?php echo $this->Paginator->sort('Creado','Ordencompra.created'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
@@ -46,6 +48,7 @@ echo $form->create('Ordencompra',array('inputDefaults' => array(
 				<td class="cve"><?php echo $item['Proveedor']['prcvepro']; ?></td>
 				<td class=""><?php echo $item['Proveedor']['prnom']; ?></td>
 				<td class="cve"><?php echo $item['Ordencompra']['proveedor_refer'];?></td>
+				<td class="total"><?php echo $this->Number->currency($item['Ordencompra']['total']);?></td>
 				<td class="st"><?php echo $item['Ordencompra']['st']; ?></td>
 				<td class="datetime"><?php echo $item['Ordencompra']['created']; ?></td>
 				<td class="id">

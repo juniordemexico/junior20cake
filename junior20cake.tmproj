@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/pedidos_controller.php</string>
+	<string>app/views/produccionreports/existencia_mas_produccion_menos_pedidos.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,78 +18,94 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>251</integer>
+	<integer>259</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/articulos_controller.php</key>
+		<key>app/app_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>50</integer>
+				<integer>405</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>108</integer>
+			<integer>377</integer>
 		</dict>
-		<key>app/controllers/components/axfile.php</key>
+		<key>app/controllers/compras_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>34</integer>
+				<integer>54</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>5</integer>
+			<integer>42</integer>
 		</dict>
-		<key>app/controllers/facturas_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>226</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>193</integer>
-		</dict>
-		<key>app/controllers/materiales_controller.php</key>
+		<key>app/controllers/materialmovimientos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>409</integer>
+				<integer>79</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>357</integer>
+			<integer>6</integer>
 		</dict>
-		<key>app/controllers/pedidos_controller.php</key>
+		<key>app/controllers/ordencompras_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>93</integer>
+				<integer>96</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>58</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>74</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>96</integer>
+			</dict>
+		</dict>
+		<key>app/controllers/proveedores_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>84</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>50</integer>
+			<integer>64</integer>
 		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
@@ -119,47 +135,151 @@
 			<key>firstVisibleLine</key>
 			<integer>2</integer>
 		</dict>
-		<key>app/views/articulos/testtallacolor.ctp</key>
+		<key>app/views/compras/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
+				<integer>477</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>440</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
 				<integer>0</integer>
+				<key>line</key>
+				<integer>446</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>477</integer>
+			</dict>
+		</dict>
+		<key>app/views/compras/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>107</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>94</integer>
+		</dict>
+		<key>app/views/ordencompras/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>22</integer>
+				<key>line</key>
+				<integer>482</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>474</integer>
+		</dict>
+		<key>app/views/ordencompras/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>64</integer>
+				<key>line</key>
+				<integer>32</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>26</integer>
+		</dict>
+		<key>app/views/pedidos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>540</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>520</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>540</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>540</integer>
+			</dict>
+		</dict>
+		<key>app/views/produccionreports/existencia_mas_produccion_menos_pedidos.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>18</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/elements/ajax.ctp</key>
+		<key>app/views/proveedores/costoarticulo.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>96</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/elements/articulos/form.ctp</key>
-		<dict>
-			<key>caret</key>
+			<integer>66</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>88</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>7</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>96</integer>
+			</dict>
 		</dict>
 		<key>app/views/users/edit.ctp</key>
 		<dict>
@@ -179,20 +299,24 @@
 	<key>openDocuments</key>
 	<array>
 		<string>app/views/users/edit.ctp</string>
-		<string>app/controllers/articulos_controller.php</string>
-		<string>app/views/elements/articulos/form.ctp</string>
-		<string>app/views/elements/ajax.ctp</string>
-		<string>app/controllers/materiales_controller.php</string>
-		<string>app/controllers/facturas_controller.php</string>
 		<string>app/models/factura.php</string>
 		<string>app/models/facturadet.php</string>
-		<string>app/controllers/pedidos_controller.php</string>
-		<string>app/controllers/components/axfile.php</string>
-		<string>app/views/articulos/testtallacolor.ctp</string>
+		<string>app/views/ordencompras/edit.ctp</string>
+		<string>app/views/compras/edit.ctp</string>
+		<string>app/controllers/ordencompras_controller.php</string>
+		<string>app/controllers/materialmovimientos_controller.php</string>
+		<string>app/views/pedidos/edit.ctp</string>
+		<string>app/app_controller.php</string>
+		<string>app/controllers/proveedores_controller.php</string>
+		<string>app/views/proveedores/costoarticulo.ctp</string>
+		<string>app/controllers/compras_controller.php</string>
+		<string>app/views/compras/index.ctp</string>
+		<string>app/views/produccionreports/existencia_mas_produccion_menos_pedidos.ctp</string>
+		<string>app/views/ordencompras/index.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1884, 23}, {923, 848}}</string>
+	<string>{{-1825, -35}, {923, 848}}</string>
 </dict>
 </plist>
