@@ -62,6 +62,29 @@ class VentaexposController extends MasterDetailAppController {
 		$this->render('view');
 	}
 
+	public function save( $data=null ) {
+		if (!$data && (!isset($this->data) || empty($this->data)) ) {
+			$this->data=$data;
+		}
+		
+		// Receive the user's PUT request's data in order to add the Item
+		$model=$this->{$this->masterModelName};
+		$folio=$model->getNextFolio($this->actualSerie, 1);
+		$this->data[$this->masterModelName][$model->title]=$folio;
+
+
+		$model->create();
+		if ( $model->saveAll($this->data) ) {
+			$id=$model->id;
+			$this->set('result','ok');
+			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('nextFolio', $model->getNextFolio($this->actualSerie, 0));
+		} else {
+			$this->set('result', 'error');
+			$this->set('message', 'Error al guardar el movimiento');
+		}
+	}
+
 	public function getItemByCve($cve=null) {
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||

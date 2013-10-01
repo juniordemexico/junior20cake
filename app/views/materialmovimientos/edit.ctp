@@ -83,7 +83,7 @@
 		<div class="controls input">
 			<input type="text" id="EntsalOcompra_refer" name="data[Entsal][ocompra_refer]" field="Entsal.ocompra_refer"
 				class="span2"
-				data-ng-model="data.Master.Ocompra_refer"
+				data-ng-model="data.Master.ocompra_refer"
 				data-ng-minlength="0" data-ng-maxlength="8"
 				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Orden de Compra, proporciona su Folio." />
 		</div>

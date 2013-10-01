@@ -137,6 +137,18 @@
 		</div>
 	</div>
 
+	<div class="control-group">
+		<label for="btncopytocache" class="control-label">Copiar:</label>
+		<div class="controls input">
+			<button type="button" id="btncopytocache" name="btnCopyToCache" class="btn btn-small" data-ng-click="saveAllDetailToCache">
+				<i class="icon icon-plus"></i>Copiar
+			</button>
+			<button type="button" id="btncopyfromcache" name="btnCopyFromCache" class="btn btn-small" data-ng-click="saveAllDetailFromCache">
+				<i class="icon icon-minus"></i>Pegar
+			</button>
+		</div>
+	</div>
+
 	</div> <!-- div.span5 -->
 
 </div>

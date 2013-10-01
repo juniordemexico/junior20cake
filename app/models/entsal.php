@@ -31,6 +31,14 @@ class Entsal extends AppModel
 			'type' => 'string', 
 			'length' => 64
 		),
+		'ocompra_refer' => array(
+			'type' => 'string', 
+			'length' => 8
+		),
+		'oproduce_refer' => array(
+			'type' => 'string', 
+			'length' => 8
+		),
 		'esobser' => array(
 			'type' => 'string', 
 			'length' => 255
@@ -77,6 +85,22 @@ class Entsal extends AppModel
 			'isdate' => array(
 				'rule' => 'date',
 				'message' => 'Proporciona una Fecha válida'
+			),
+		),
+		'ocompra_refer' => array(
+			'inbetween' => array(
+				'rule' => array('between',2,8),
+				'required' => false,
+				'allowEmpty' => true,
+				'message' => 'El Folio de la Orden de Compra debe contener de 2 a 8 caracteres'
+			),
+		),
+		'oproduce_refer' => array(
+			'inbetween' => array(
+				'rule' => array('between',2,8),
+				'required' => false,
+				'allowEmpty' => true,
+				'message' => 'El Folio de la Orden de Producción debe contener de 2 a 8 caracteres'
 			),
 		),
 		'esconcep' => array( 

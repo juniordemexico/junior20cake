@@ -54,14 +54,14 @@ class Pedidodet extends AppModel
 		$out=array();
 		foreach($items as $item) {
 			$out[]=array(
-				'id'=>$item['Articulo']['id'],
-				'arcveart'=>trim($item['Articulo']['arcveart']),
+				'id'=>$item[0]['id'],
+				'arcveart'=>trim($item[0]['arcveart']),
 				'color_cve'=>trim($item['Color']['cve']),
 				'base_cve'=>$item['Bases']['cve'],			
 				'talla_cve'=>trim($item['Tallas']['tadescrip']),
 				'estilo_cve'=>$item['Estilos']['cve'],
 				'linea_cve'=>trim($item['Linea']['licve']),
-				'precio'=>$item['Articulo']['arpva'],
+				'precio'=>$item[0]['arpva'],
 				'cant'=>0,
 				'tl0'=>$item['Tallas']['tat0'],
 				'tl1'=>$item['Tallas']['tat1'],
@@ -74,9 +74,9 @@ class Pedidodet extends AppModel
 				'tl8'=>$item['Tallas']['tat8'],
 				'tl9'=>$item['Tallas']['tat9'],
 				'color_id'=>$item['ArticulosColor']['color_id'],
-				'base_id'=>$item['Articulo']['base_id'],			
-				'estilo_id'=>$item['Articulo']['estilo_id'],
-				'talla_id'=>$item['Articulo']['talla_id'],
+				'base_id'=>$item[0]['base_id'],			
+				'estilo_id'=>$item[0]['estilo_id'],
+				'talla_id'=>$item[0]['talla_id'],
 				);
 		}
 		return ( $out );
