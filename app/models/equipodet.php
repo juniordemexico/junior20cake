@@ -6,12 +6,12 @@
 //	vecveven VARCHAR(16) DEFAULT NOT NULL
 //	vt CHAR(1) DEFAULT '' NOT NULL
 
-class Equipo extends AppModel 
+class Equipodet extends AppModel 
 {
-	var $name = 'Equipo';
-	var $table = 'equipos';
-//	var $useTable = 'equipos';
-	var $alias = 'Equipo';
+	var $name = 'Equipodet';
+	var $table = 'equipodets';
+//	var $useTable = 'equipodets';
+	var $alias = 'Equipodet';
 
 
 	var $validate = array(
@@ -33,14 +33,9 @@ class Equipo extends AppModel
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $hasMany = array(
-		'Equipodet',
-		);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
+		'Equipo',
 //		'Tipoequipo',
-		'Users',
 	);
 
 }

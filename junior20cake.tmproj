@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/models/ventadet.php</string>
+	<string>app/views/ventaexpos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -30,54 +30,38 @@
 				<key>line</key>
 				<integer>496</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>466</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>474</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>496</integer>
-			</dict>
+			<integer>518</integer>
 		</dict>
-		<key>app/models/tweet.php</key>
+		<key>app/controllers/pedidos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>43</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>25</integer>
 		</dict>
-		<key>app/models/ventadet.php</key>
+		<key>app/controllers/ventaexpos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>58</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>51</integer>
+				<integer>91</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>78</integer>
 		</dict>
 		<key>app/models/ventaexpo.php</key>
 		<dict>
@@ -91,19 +75,95 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>143</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/models/ventaexpodet.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>14</integer>
+				<key>line</key>
+				<integer>115</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>102</integer>
+		</dict>
+		<key>app/views/elements/pagefooter.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>66</integer>
+				<key>line</key>
+				<integer>6</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/pedidos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>614</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>604</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>565</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>614</integer>
+			</dict>
+		</dict>
+		<key>app/views/ventaexpos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>7</integer>
+				<key>line</key>
+				<integer>17</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/models/ventadet.php</string>
-		<string>app/models/tweet.php</string>
 		<string>app/app_controller.php</string>
+		<string>app/controllers/ventaexpos_controller.php</string>
 		<string>app/models/ventaexpo.php</string>
+		<string>app/models/ventaexpodet.php</string>
+		<string>app/controllers/pedidos_controller.php</string>
+		<string>app/views/ventaexpos/edit.ctp</string>
+		<string>app/views/pedidos/edit.ctp</string>
+		<string>app/views/elements/pagefooter.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1639, 81}, {923, 768}}</string>
+	<string>{{-1822, 78}, {923, 768}}</string>
 </dict>
 </plist>

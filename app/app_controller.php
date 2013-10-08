@@ -361,6 +361,19 @@ class MasterAppController extends AppController {
 		$this->set('items', $this->paginate($this->masterModelName, $filter));
 	}
 
+	function add( $data=null ) { 
+		if (!empty($this->data)) {
+			if ($this->Tipoequipo->save($this->data)) {
+				$this->Session->setFlash(__('item_has_been_saved', true).' ('.$this->Tipoequipo->id.')', 'success');
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('item_could_not_be_saved', true), 'error');
+			}
+		}
+		$this->set('mode', 'add');
+		$this->render('edit');
+	}
+
 	public function edit( $id = null ) {
 		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
@@ -376,6 +389,7 @@ class MasterAppController extends AppController {
 					$data[$this->masterModelName][$this->masterModelTitle]
 				);
 	}
+
 
 }
 
@@ -420,6 +434,7 @@ class MasterDetailAppController extends AppController {
 										$data['Master'][$this->{$this->masterModelName}->title]
 				);
 	}
+
 
 	public function add( $data=null ) {
 
