@@ -25,7 +25,7 @@ class Factura extends AppModel
 	public $alias = 'Factura';
 	public $cache=false;
 	public $recursive=1;
-	
+
 	public $virtualFields = array(
 		'faimporte' => 'faimporte',
 		'faimpoimpu' => 'faimpoimpu',
@@ -80,6 +80,87 @@ class Factura extends AppModel
 		}
 		return (parent::beforeFind($options));
 	}
+
+	public function getDoctoCFDI( $id=null ) {
+		return json_encode(
+			array(
+				"Master"=>array(
+      				"id"=>5969846,
+      				"farefer"=>"A0083571",
+      				"fafecha"=>"2013-09-20 00:00:00",
+      				"faplazo"=>60,
+      				"formapago"=>"TRANSFERENCIA",
+      				"comprobante_tipo"=>"ingreso",
+      				"metodopago"=>"PAGO EN UNA SOLA EXHIBICION",
+					"fasuma"=>"9627.52",
+					"fadesc1"=>"0.00",
+					"faimpu_cve"=>"IVA",
+					"faimpu1"=>"16.00",
+					"faimpoimpu"=>"1492.4032",
+					"fatotal"=>"11119.9232",
+					"regegfis"=>"Regimen General de ley Personas Morales",
+ 					"pcta"=>"NO IDENTIFICADO",
+					"lugar_expedicion"=>"DISTRITO FEDERAL"
+					),
+				"Divisa"=>array(
+					"id"=>1,
+					"dicve"=>"MN",
+					"ditcambio"=>"1.0000",
+					"dinom"=>"PESOS"
+					),
+				"Cliente"=>array(
+					"clnom"=>"COMERCIAL POZA RICA, SA DE CV (TUXPAN)",
+					"clrfc"=>"CPR741118S31",
+					"clsuc"=>"      ",
+					"clbancocta"=>"NO IDENTIFICADO",
+					"clcalle"=>"CALLE 6",
+					"clnoext"=>"SN",
+					"clnoint"=>"NA",
+					"clcolonia"=>"COL. OBRERA",
+					"cllocalidad"=>"",
+					"clreferencia"=>"",	
+					"clciu"=>"POZA RICA",
+					"cledo"=>"VERACRUZ",
+					"clpais"=>"MEXICO",
+					"clcp"=>"93260"
+					),
+				"Empresa"=>array(
+					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
+					"emrfc"=>"JME910405B83",
+					"emcalle"=>"AV PASEO DE LA REFORMA",
+					"emnoext"=>"2654",
+					"emnoint"=>"1501",
+					"emcolonia"=>"LOMAS ALTAS",	
+					"emciu"=>"MIGUEL HIDALGO",
+					"emedo"=>"DISTRITO FEDERAL",
+					"empais"=>"MEXICO",
+					"emcp"=>"11950",
+					"vlocalidad"=>"",
+					"vref"=>""
+					),
+			"Details"=>array(
+				array(
+					"Detail"=>array(
+						"id"=>5969847,
+						"articulo_id"=>106634,
+						"color_id"=>942,
+						"fadprecio"=>"240.68",
+						"fadcant"=>"40.00",
+						"fadimporte"=>"9627.52"
+					),
+         			"Articulo"=>array(
+						"id"=>106634,
+						"arcveart"=>"POWERINGINK",
+						"ardescrip"=>"PANTALON POWER RING INK",
+						"armarca"=>"OGGI",
+						"arunidad"=>"PZAS"
+					)
+				),  /* primer partida */
+//				array(),  /* segunda partida*/				
+				)
+			)
+		);
+	} 
 
 }
 

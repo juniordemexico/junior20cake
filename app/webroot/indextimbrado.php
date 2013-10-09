@@ -79,7 +79,7 @@
 	$fac = new timbradoCFDi();
 	$fac->setData($data);
 
-	echo $fac->printXML()."<br>";
+	echo $fac->getXML()."<br>";
 	$cadena= $fac->obtenerCadenaOriginal();
 	$cfdi= $fac->generarSello($cadena);
 	$fac->timbrarComprobanteFiscal($cfdi);

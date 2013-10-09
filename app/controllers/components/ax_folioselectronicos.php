@@ -1,6 +1,6 @@
 <?php
 
-class timbradoCFDi {
+class AxFolioselectronicosComponent extends Component {
 	public $json_dec;
 	public $cadena_original;
 	public $cfdi;
@@ -9,23 +9,23 @@ class timbradoCFDi {
 	public $xml;
 	public $c;
 
-	public function __construct() {
-		echo "Instanciado";
+
+	function startup( &$controller ) {
+		$this->controller =& $controller;
 	}
 
 	public function setData($data)
 	{
 		echo "Entre a setData()";
 		
-		$this->data=json_decode($data);
+		$this->data=json_decode($data, TRUE);
 
 
 		// Esta parte por algun motivo (tal vez el SPL) no ejecuta
-/*
 		$jsonIterator = new RecursiveIteratorIterator(
-    	new RecursiveArrayIterator(json_decode($this->data, TRUE)),
+    	new RecursiveArrayIterator($this->data),
     	RecursiveIteratorIterator::SELF_FIRST);
-*/
+
 		echo "Pase el jsonIterator";
 
 		// La parte $jsonIterator podria adaptarse mas o menos asi:
@@ -131,8 +131,7 @@ class timbradoCFDi {
 		$this->xml=$comprobante.$emisor.$rec.$Conceptos."</cfdi:Conceptos>".$traslados.'</cfdi:Comprobante>';
 	}
 
-  	function printXML()
-	{
+  	function getXML()	{
 		return htmlspecialchars($this->xml);
 	}
 
@@ -142,16 +141,16 @@ class timbradoCFDi {
 		$myDom->loadXML($this->xml);
 		$xslt = new XSLTProcessor();
 		$XSL = new DOMDocument();
-		$XSL->load('complementos/cadenaoriginal_3_2.xslt', LIBXML_NOCDATA);
+		$XSL->load('../vendors/timbrado/cadenaoriginal_3_2.xslt', LIBXML_NOCDATA);
 		$xslt->importStylesheet($XSL);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 		$cadena_original = $xslt->transformToXML( $c );
 		return $cadena_original;
 	}
 
-
 	function generarSello($cadena)
 	{
+/*
 		$cert = <<<TEXT
 -----BEGIN CERTIFICATE-----
 MIIE2jCCA8KgAwIBAgIUMjAwMDEwMDAwMDAyMDAwMDAyOTMwDQYJKoZIhvcNAQEF
@@ -198,17 +197,29 @@ YMNmOKrR9d8vczZJS+9JwaGc1rUZuyhPJ0lM/12FL9y6DaPx2qyy4c8w56R7T5fC
 wPVJ/KcRMuzk0lUCfh7cKEc1K8StOyGKfSvUm8stMqpH
 -----END RSA PRIVATE KEY-----
 TEXT;
+*/
+		$cert=
+		$this->controller->Axfile->FileToString('../files/facturaelectronica/CERTIFICADO_JUNIOR.pem').
+		$this->controller->Axfile->FileToString('../files/facturaelectronica/LLAVE_JUNIOR.pem')
+		;
+		echo "<code>".$cert."</code>";  // DEBUG debugeando
 		$cert509 = openssl_x509_read($cert) or die("\nNo se puede leer el certificado\n");
 		$data = openssl_x509_parse($cert509);
 		$serial1 = $data['serialNumber'];
+		echo '<pre>SERIAL1: '.$serial1.'</pre>';
 		$serial2 = gmp_strval($serial1, 16);
+		echo '<pre>SERIAL2: '.$serial2.'</pre>';
 		$serial3 = explode("\n", chunk_split($serial2, 2, "\n"));
+		echo '<pre>SERIAL3: ';
+		print_r($serial3);
+		echo '</pre>';
 		$serial = "";
 		foreach ($serial3 as $serialt) {
 			if (2 == strlen($serialt))
 				$serial .= chr('0x' . $serialt);
 		}
 		$noCertificado = $serial;
+		echo '<pre>noCertificado: '.$noCertificado.'</pre>';
 		unset($serial1, $serial2, $serial3, $serialt, $data, $cert509);
 		preg_match('/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/msi', $cert, $matches) or die("No certificado\n");
 		$algo = $matches[1];
@@ -229,10 +240,9 @@ TEXT;
 	}
 
 
-	function timbrarComprobanteFiscal($miCFDI)
-	{
-	echo htmlspecialchars($miCFDI);
-	$envtext = '<?xml version="1.0" encoding="UTF-8"?>
+	function timbrarComprobanteFiscal($miCFDI) {
+		echo htmlspecialchars($miCFDI);
+		$envtext = '<?xml version="1.0" encoding="UTF-8"?>
 	<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:ns1="http://facturacion.finkok.com/stamp" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
 	<SOAP-ENV:Header/> <ns0:Body> <ns1:stamp> 
@@ -243,57 +253,54 @@ TEXT;
 	</ns0:Body>
 	</SOAP-ENV:Envelope>';
 
-
-	echo "<h1>REQUEST</h1>".htmlspecialchars($envtext);
-	$env = new DOMDocument();
-	$env->loadXML($envtext) or die("\n\n\nError interno en el sobre");
-	$env->saveXML();
-	$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl');
-	curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
-	curl_setopt($process, CURLOPT_POSTFIELDS, $env->saveXML());
-	curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($process, CURLOPT_POST, true);
-	curl_setopt($process, CURLOPT_SSL_VERIFYPEER, 0);
-	curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
-	curl_setopt($process, CURLOPT_SSLCERTPASSWD, 'AAAI8204261TA');
-	$timbre = curl_exec($process);
-	if (!$timbre) {
-		return "Error: ".curl_errno($process)." - ".curl_error($process)."<br>";
+		echo "<h1>REQUEST</h1>".htmlspecialchars($envtext);
+		$env = new DOMDocument();
+		$env->loadXML($envtext) or die("\n\n\nError interno en el sobre");
+		$env->saveXML();
+		$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl');
+		curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
+		curl_setopt($process, CURLOPT_POSTFIELDS, $env->saveXML());
+		curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($process, CURLOPT_POST, true);
+		curl_setopt($process, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($process, CURLOPT_SSLCERTPASSWD, 'AAAI8204261TA');
+		$timbre = curl_exec($process);
+		if (!$timbre) {
+			return "Error: ".curl_errno($process)." - ".curl_error($process)."<br>";
+			curl_close($process);
+			die("Error en comunicacion\n");
+		}
 		curl_close($process);
-		die("Error en comunicacion\n");
-	}
-	curl_close($process);
-	echo "<h1>RESPONSE</h1>".htmlspecialchars($timbre);
-	$myXML="";
-	$xml = new DOMDocument();
-	$xml->loadXML($timbre) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
-	$searchNode =   $xml->getElementsByTagName('xml');
-	foreach ( $searchNode as $searchNode) {
-		$myXML= $searchNode->nodeValue;
-	}
-	$myXML=str_replace('&gt;','>',$myXML);
-	$myXML=str_replace('&lt;','<',$myXML);
-	$xml2 = new DOMDocument();
-	$xml2->loadXML($myXML) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
-	$cfdi = $xml2->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', '*');
+		echo "<h1>RESPONSE</h1>".htmlspecialchars($timbre);
+		$myXML="";
+		$xml = new DOMDocument();
+		$xml->loadXML($timbre) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
+		$searchNode =   $xml->getElementsByTagName('xml');
+		foreach ( $searchNode as $searchNode) {
+			$myXML= $searchNode->nodeValue;
+		}
+		$myXML=str_replace('&gt;','>',$myXML);
+		$myXML=str_replace('&lt;','<',$myXML);
+		$xml2 = new DOMDocument();
+		$xml2->loadXML($myXML) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
+		$cfdi = $xml2->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', '*');
 
-	foreach ( $cfdi as $cfdi) {
-    		$SelloSat = $cfdi->getAttribute('selloSAT');
-    		$certificado = $cfdi->getAttribute('noCertificadoSAT');
-    		$selloCFD = $cfdi->getAttribute('selloCFD');
-    		$FecTim = $cfdi->getAttribute('FechaTimbrado');
-    		$UUID = $cfdi->getAttribute('UUID');
-	}
-	$xml2->save("fe/facturas/".$UUID.".xml");
+		foreach ( $cfdi as $cfdi) {
+			$SelloSat = $cfdi->getAttribute('selloSAT');
+			$certificado = $cfdi->getAttribute('noCertificadoSAT');
+			$selloCFD = $cfdi->getAttribute('selloCFD');
+			$FecTim = $cfdi->getAttribute('FechaTimbrado');
+			$UUID = $cfdi->getAttribute('UUID');
+		}
+		$xml2->save("/home/www/junior20dev/app/files/facturaelectronica/".$UUID.".xml");
 
-	if($SelloSat=="")
-	{
-		echo "Surgió un error y no fue posible timbrar el documento";
+		if($SelloSat=="") {
+			echo "Surgió un error y no fue posible timbrar el documento";
+		}
+		else {
+			echo "se creo el CFDi ".$UUID.".xml";
+		}
 	}
-	else
-	{
-		echo "se creo el CFDi ".$UUID.".xml";
-	}
-  }
  
 }

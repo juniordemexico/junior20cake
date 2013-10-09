@@ -23,6 +23,7 @@ class AppController extends Controller {
 							'Webservice.Webservice',
 							'Gmail',
 							'Upload',
+							'AxFolioselectronicos',
 							//'Gzip',
 							//			'Autocomplete',
 							);

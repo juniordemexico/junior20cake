@@ -20,7 +20,6 @@ class Equipodet extends AppModel
 				'required' => true,
 				'allowEmpty' => false,
 				'message' => 'CLAVE debe contener entre 1 y 32 caracteres'
-			)
 		),
 		'st' => array(
 			'inlist' => array(

@@ -31,6 +31,39 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->set('facturas', $this->paginate($filter));
 	}
 	
+	public function generaxml($id=null) {
+		if (!$id) {
+			if(isset($this->params['url']['id'])) {
+				$id=$this->params['url']['id'];
+			}
+			else {
+				die("ERROR. NO PASA EL ID");
+			}
+		}
+		
+		$docto=$this->Factura->getDoctoCFDI( $id );		// Obtenemos los datos del documento desde el Modelo Factura
+		
+		$this->AxFolioselectronicos->setData( $docto );		// Pasamos el documento en formato json
+		echo '<pre>'.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
+		echo "<br/>\n\r";
+		$cadena= $this->AxFolioselectronicos->obtenerCadenaOriginal();	// Devuelve la Cadena Original
+		echo '<pre>'.$cadena.'</pre>';
+		$cfdi= $this->AxFolioselectronicos->generarSello($cadena);		// Devuelve el Sello Digital
+		echo '<pre>'.$cfdi.'</pre>';
+
+//		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
+		
+/*
+		$fac = new timbradoCFDi();
+		$fac->setData($data);
+
+		echo $fac->getXML()."<br>";
+		$cadena= $fac->obtenerCadenaOriginal();
+		$cfdi= $fac->generarSello($cadena);
+		$fac->timbrarComprobanteFiscal($cfdi);
+*/
+	}
+	
 	function download($id=null, $format='pdf') {
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
