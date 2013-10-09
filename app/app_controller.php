@@ -390,6 +390,20 @@ class MasterAppController extends AppController {
 				);
 	}
 
+	function delete($id=null) {
+		if (!$id) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		if ($this->{$this->masterModelName}->delete($id)) {
+			$this->Session->setFlash(__('item_has_been_deleted', true).': '.$id, 'success');
+			$this->redirect(array('action' => 'index'));
+		}
+		else {
+			$this->Session->setFlash(__('item_was_not_deleted', true), 'error');			
+		}
+		$this->redirect(array('action' => 'index'));
+	}
 
 }
 

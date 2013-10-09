@@ -7,6 +7,8 @@ class Tipoequipo extends AppModel
 	public $name = 'Tipoequipo';
 	public $table = 'tipoequipos';
 	public $alias = 'Tipoequipo';
+	public $recursive=-1;
+	
 //	public $cache=true;
 
 	public $validate = array(
@@ -43,11 +45,11 @@ class Tipoequipo extends AppModel
 		)
 	);
 
-/*
+
 	public $hasMany = array(
 		'Equipo',
-		'Equipodet',
+//		'Equipodet',
 	);
-*/
+
 
 }

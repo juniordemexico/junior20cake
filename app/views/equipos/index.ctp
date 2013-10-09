@@ -5,36 +5,58 @@ $this->Paginator->options(array('update' => '#content',
 								));
 ?>
 
-<div id="gridWrapper">
+<div class="gridWrapper">
+<?php 
+echo $form->create('Equipo', array('inputDefaults' => array(
+															'label' => false,
+															'div'   => false
+															))
+															);
+?>
 	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
-			<tr>
-				<th class="vendedor cve"><?php echo $this->Paginator->sort('Clave','vecveven'); ?></th>
-				<th class="vendedor nom"><?php echo $this->Paginator->sort('Nombre','venom'); ?></th>
-				<th class="vendedor st"><?php echo $this->Paginator->sort('ST','vest'); ?></th>
-				<th class="vendedor id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
+			<tr class="row-filter">
+				<th class=""><?php echo $form->text('descrip', array('label' => false, 'type' => 'search', 'placeholder'=>'Clave', 'class' => 'search-query'));?></th>
+				<th class="st"><?php echo $form->text('Tipoequipo.cve',array('label' => false, 'type' => 'search', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
+				<th class="st"><?php echo $form->text('st',array('type' => 'search', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
+				<th class="st"><?php echo $form->text('modified',array('label' => false, 'type' => 'search', 'placeholder'=>'Modificado', 'class' => 'search-query'));?></th>
+				<th class="id">
+				<?php
+				echo $this->Js->submit('Filtrar', array('update' => '#content'));
+				?>
+				</th>	
+			</tr>
+			<tr class="row-labels">
+				<th class=""><?php echo $this->Paginator->sort('Descripción','descrip'); ?></th>
+				<th class="col2"><?php echo $this->Paginator->sort('Tipo','Tipoequipo.cve'); ?></th>
+				<th class="col3"><?php echo $this->Paginator->sort('Numéro Serie','numeroserie'); ?></th>
+				<th class="col3"><?php echo $this->Paginator->sort('Depto','Group.cveeroserie'); ?></th>
+				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','modified'); ?></th>
+				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php
 		$thisID='';
 		$i = 0;
-		foreach ($vendedores as $vendedor):
+		foreach ($items as $item):
 			$class = null;
-			$thisID=trim($vendedor['Vendedor']['id']);
+			$thisID=trim($item['Equipo']['id']);
 		?>
 			<tr id="<?php echo $thisID?>" class="t-row">
-				<td class="vendedor cve"><?php echo $vendedor['Vendedor']['vecveven']; ?></td>
-				<td class="vendedor nom"><?php echo $vendedor['Vendedor']['venom']; ?></td>
-				<td class="vendedor st"><?php echo $vendedor['Vendedor']['vest']; ?></td>
-				<td class="vendedor id"><?php echo $vendedor['Vendedor']['id']; ?></td>
+				<td class=""><?php echo $item['Equipo']['cve']; ?></td>
+				<td class="st"><?php echo $item['Equipo']['visible']; ?></td>
+				<td class="st"><?php echo $item['Equipo']['st']; ?></td>
+				<td class="datetime" title="<?php echo 'Creado:'.$item['Equipo']['created'];?>"><?php echo $item['Equipo']['modified'];?></td>
+				<td class="id"><?php echo $item['Equipo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
+<?php echo $this->Form->end(); ?>
 </div> <!-- gridWrapper -->
 
-<?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Vendedor','MyRowClickAction' => 'edit')); ?>
+<?php echo $this->Element('MasterDetailIndexPaging',array('MyController'=>$this->name,'MyModel'=>'Equipo','MyRowClickAction' => 'edit')); ?>
 
 </div> <!-- index-form -->
 
@@ -44,6 +66,4 @@ $this->Js->get('.t-row')->event(
 "location.replace('".$this->Html->url(array('action'=>'edit'))."/'+this.id);"
 , array('stop' => true));
 ?>
-
-
 <script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>
