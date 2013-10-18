@@ -22,7 +22,7 @@ class ExplosionesController extends MasterDetailAppController {
 								'fields' => array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
 												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
 												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve', 
-												'Explosion.modified'),
+												'Explosion.modified','Explosiondato.molde'),
 								'conditions' => array('Articulo.tipoarticulo_id'=>'0', 'Articulo.arst'=>'A'),
 								'joins' => array(
 										array(	'table' => '(SELECT articulo_id, COALESCE(MAX(modified), MAX(created)) Modified FROM Explosiones GROUP BY articulo_id) ',

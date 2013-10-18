@@ -87,7 +87,7 @@ class Factura extends AppModel
 				"Master"=>array(
       				"id"=>5969846,
       				"farefer"=>"A0083571",
-      				"fafecha"=>"2013-09-20 00:00:00",
+      				"fafecha"=>"2013-09-20 14:32:12",
       				"faplazo"=>60,
       				"formapago"=>"TRANSFERENCIA",
       				"comprobante_tipo"=>"ingreso",

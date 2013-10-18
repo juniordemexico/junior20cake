@@ -5,7 +5,7 @@ class Explosion extends AppModel
 	var $name = 'Explosion';
 	var $table = 'Explosiones';
 	var $alias = 'Explosion';
-	public $cache=true;
+	public $cache=false;
 	var $primaryKey = 'id';
 
 	public $_schema = array(

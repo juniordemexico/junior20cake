@@ -16,10 +16,12 @@ echo $form->create('Equipo', array('inputDefaults' => array(
 	<table id="datagrid" class="table table-bordered table-striped table-condensed table-hover">
 		<thead>
 			<tr class="row-filter">
-				<th class=""><?php echo $form->text('descrip', array('label' => false, 'type' => 'search', 'placeholder'=>'Clave', 'class' => 'search-query'));?></th>
-				<th class="st"><?php echo $form->text('Tipoequipo.cve',array('label' => false, 'type' => 'search', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
+				<th class=""><?php echo $form->text('descrip', array('label' => false, 'type' => 'search', 'placeholder'=>'Desripcion...', 'class' => 'search-query'));?></th>
+				<th class="cve"><?php echo $form->text('Tipoequipo.cve',array('label' => false, 'type' => 'search', 'placeholder'=>'Tipo de equipo...', 'class' => 'search-query'));?></th>
+				<th class="col3"><?php echo $form->text('numeroserie',array('type' => 'search', 'placeholder'=>'Num Serie', 'class' => 'search-query'));?></th>
+				<th class="cve"><?php echo $form->text('Group.cve',array('label' => false, 'type' => 'search', 'placeholder'=>'Depto...', 'class' => 'search-query'));?></th>
+				<th class="cve"><?php echo $form->text('Users.username',array('label' => false, 'type' => 'search', 'placeholder'=>'Usuario...', 'class' => 'search-query'));?></th>
 				<th class="st"><?php echo $form->text('st',array('type' => 'search', 'placeholder'=>'ST', 'class' => 'search-query'));?></th>
-				<th class="st"><?php echo $form->text('modified',array('label' => false, 'type' => 'search', 'placeholder'=>'Modificado', 'class' => 'search-query'));?></th>
 				<th class="id">
 				<?php
 				echo $this->Js->submit('Filtrar', array('update' => '#content'));
@@ -28,10 +30,11 @@ echo $form->create('Equipo', array('inputDefaults' => array(
 			</tr>
 			<tr class="row-labels">
 				<th class=""><?php echo $this->Paginator->sort('Descripción','descrip'); ?></th>
-				<th class="col2"><?php echo $this->Paginator->sort('Tipo','Tipoequipo.cve'); ?></th>
+				<th class="cve"><?php echo $this->Paginator->sort('Tipo de Equipo','Tipoequipo.cve'); ?></th>
 				<th class="col3"><?php echo $this->Paginator->sort('Numéro Serie','numeroserie'); ?></th>
-				<th class="col3"><?php echo $this->Paginator->sort('Depto','Group.cveeroserie'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('Modificado','modified'); ?></th>
+				<th class="cve"><?php echo $this->Paginator->sort('Depto','Group.cve'); ?></th>
+				<th class="cve"><?php echo $this->Paginator->sort('Usuario','User.username'); ?></th>
+				<th class="st"><?php echo $this->Paginator->sort('ST','st'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 			</tr>
 		</thead>
@@ -44,10 +47,12 @@ echo $form->create('Equipo', array('inputDefaults' => array(
 			$thisID=trim($item['Equipo']['id']);
 		?>
 			<tr id="<?php echo $thisID?>" class="t-row">
-				<td class=""><?php echo $item['Equipo']['cve']; ?></td>
-				<td class="st"><?php echo $item['Equipo']['visible']; ?></td>
+				<td class=""><?php echo $item['Equipo']['descrip']; ?></td>
+				<td class="cve"><?php echo $item['Tipoequipo']['cve']; ?></td>
+				<td class="col3"><?php echo $item['Equipo']['numeroserie']; ?></td>
+				<td class="cve"><?php echo $item['Group']['cve']; ?></td>
+				<td class="cve"><?php echo $item['User']['username']; ?></td>
 				<td class="st"><?php echo $item['Equipo']['st']; ?></td>
-				<td class="datetime" title="<?php echo 'Creado:'.$item['Equipo']['created'];?>"><?php echo $item['Equipo']['modified'];?></td>
 				<td class="id"><?php echo $item['Equipo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>

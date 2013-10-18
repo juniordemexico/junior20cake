@@ -44,12 +44,12 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$docto=$this->Factura->getDoctoCFDI( $id );		// Obtenemos los datos del documento desde el Modelo Factura
 		
 		$this->AxFolioselectronicos->setData( $docto );		// Pasamos el documento en formato json
-		echo '<pre>'.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
+		echo '<pre>getXML():: '.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
 		echo "<br/>\n\r";
-		$cadena= $this->AxFolioselectronicos->obtenerCadenaOriginal();	// Devuelve la Cadena Original
-		echo '<pre>'.$cadena.'</pre>';
-		$cfdi= $this->AxFolioselectronicos->generarSello($cadena);		// Devuelve el Sello Digital
-		echo '<pre>'.$cfdi.'</pre>';
+		$cadena= $this->AxFolioselectronicos->generaCadenaOriginal();	// Devuelve la Cadena Original
+		echo '<pre>generaCadenaOriginal():: '.$cadena.'</pre>';
+		$cfdi= $this->AxFolioselectronicos->generaSello();		// Devuelve el Sello Digital
+		echo '<pre>generaSello()::'.$cfdi.'</pre>';
 
 //		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
 		

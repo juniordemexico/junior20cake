@@ -13,10 +13,9 @@ class EquiposController extends MasterAppController {
 								'update' => '#content',
 								'evalScripts' => true,
 								'limit' => PAGINATE_ROWS,
-								'order' => array('Equipo.cve'),
+								'order' => array('Group.cve','User.username'),
 								'conditions' => array(),
-								); 
-
+								);
 
 }
 

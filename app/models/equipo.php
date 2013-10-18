@@ -15,11 +15,13 @@ class Equipo extends AppModel
 
 
 	var $validate = array(
-		'descripbetween' => array(
+		'descrip' => array(
+			'cvebetween' => array(
 				'rule' => array('between', 1, 32),
 				'required' => true,
 				'allowEmpty' => false,
 				'message' => 'CLAVE debe contener entre 1 y 32 caracteres'
+		)
 		),
 		'st' => array(
 			'inlist' => array(
@@ -39,7 +41,8 @@ class Equipo extends AppModel
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 		'Tipoequipo',
-		'Users',
+		'Group',
+		'User',
 	);
 
 }

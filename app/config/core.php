@@ -59,6 +59,7 @@
 	Configure::write('Acl.classname', 'DbAcl');
 	Configure::write('Acl.database', 'default');
 
+	Configure::write('requestStartTime', microtime(true));
 
 	// Cache's configuration
 	Configure::write('Cache.check', false);
