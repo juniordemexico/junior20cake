@@ -15,6 +15,7 @@
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
+
 	<div class="btn-group pull-right">	
 		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
@@ -23,7 +24,6 @@
 		<i class="icon-share icon-white"></i>
 		</button>
 	</div>
-
 </div>
 
 <form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
@@ -273,6 +273,11 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 				});
 			}
 		});
+	}
+
+	$scope.print = function() {
+		window.open( '/Materialmovimientos/print/'+$scope.data.Master.id,
+					'_blank');
 	}
 
 	$scope.addCurrentItem = function() {

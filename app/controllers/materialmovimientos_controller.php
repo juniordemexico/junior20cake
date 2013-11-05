@@ -78,7 +78,6 @@ class MaterialmovimientosController extends MasterDetailAppController {
 		parent::add($data);
 	}
 
-
 	public function getItemByCve($cve=null) {
 		if(!$cve && isset($this->params['url']['cve']) ) $cve=$this->params['url']['cve'];
 		if(!$cve ||

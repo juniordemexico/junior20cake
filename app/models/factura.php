@@ -82,7 +82,109 @@ class Factura extends AppModel
 	}
 
 	public function getDoctoCFDI( $id=null ) {
-		return json_encode(
+		$master=$this->findById($id);
+		if(!$master || !is_array($master)) {
+			return false;
+		}
+
+		$master['Factura']["regegfis"]="Regimen General de ley Personas Morales";
+ 		$master['Factura']["pcta"]="NO IDENTIFICADO";
+		$master['Factura']["lugar_expedicion"]="DISTRITO FEDERAL";
+      	$master['Factura']["formapago"]="TRANSFERENCIA";
+      	$master['Factura']["comprobante_tipo"]="INGRESO";
+      	$master['Factura']["metodopago"]="PAGO EN UNA SOLA EXHIBICION";
+		$master['Factura']["faimpu_cve"]="IVA";
+
+		$master['Cliente']["clcalle"]="CALLE DE PRUEBA";
+		$master['Cliente']["clnoext"]="SN";
+		$master['Cliente']["clnoint"]="NA";
+		$master['Cliente']["clcolonia"]="COL. OBRERA";
+		$master['Cliente']["cllocalidad"]="";
+		$master['Cliente']["clbancocta"]="NO IDENTIFICADO";
+
+		$out=array(	"Master"	=>$master['Factura'],
+					"Divisa"	=>$master['Divisa'],
+					"Cliente"	=>$master['Cliente'],
+					"Empresa"=>array(
+						"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
+						"emrfc"=>"JME910405B83",
+						"emcalle"=>"AV PASEO DE LA REFORMA",
+						"emnoext"=>"2654",
+						"emnoint"=>"1501",
+						"emcolonia"=>"LOMAS ALTAS",	
+						"emciu"=>"MIGUEL HIDALGO",
+						"emedo"=>"DISTRITO FEDERAL",
+						"empais"=>"MEXICO",
+						"emcp"=>"11950",
+						"vlocalidad"=>"",
+						"vref"=>""
+					),
+		 		'Details'=>array()
+				);
+
+		$items=$this->query("SELECT Facturadet.id, Facturadet.articulo_id,
+			 					Facturadet.fadprecio, 
+								CAST(SUM(Facturadet.fadcant) AS NUMERIC(14,0)) fadcant,
+								CAST(SUM(Facturadet.fadimporte) AS NUMERIC(14,2)) fadimporte,
+								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
+								FROM Factura Factura
+								JOIN Facturadet Facturadet ON (Factura.id=Facturadet.factura_id)
+								JOIN Articulo Articulo ON (Facturadet.articulo_id=Articulo.id)
+								JOIN Unidades Unidad ON (Articulo.unidad_id=Unidad.id)
+								WHERE Factura.id=$id
+								GROUP BY Facturadet.id, Facturadet.articulo_id,
+			 					Facturadet.fadprecio,Articulo.arcveart, Articulo.ardescrip, Unidad.cve");
+
+		$details=array();
+		
+		foreach($items as $item) {
+			$details[]=array('Detail'=>array(
+					'id'=>$item['Facturadet']['id'],
+					'articulo_id'=>$item['Facturadet']['articulo_id'],
+					'fadprecio'=>$item['Facturadet']['fadprecio'],
+					'fadcant'=>$item[0]['fadcant'],
+					'fadimporte'=>$item[0]['fadimporte'],
+					'unidad_cve'=>$item[0]['unidad_cve'],
+					'arcveart'=>$item['Articulo']['arcveart'],
+					'ardescrip'=>$item['Articulo']['ardescrip'],
+				));
+		}
+
+		$out['Details']=$details;
+
+		pr($out);
+		return json_encode($out);
+
+
+die();
+/*
+					"Detail"=>array(
+						"id"=>5969847,
+						"articulo_id"=>106634,
+						"color_id"=>942,
+						"fadprecio"=>"240.68",
+						"fadcant"=>"40.00",
+						"fadimporte"=>"9627.52"
+					),
+         			"Articulo"=>array(
+						"id"=>106634,
+						"arcveart"=>"POWERINGINK",
+						"ardescrip"=>"PANTALON POWER RING INK",
+						"armarca"=>"OGGI",
+						"arunidad"=>"PZAS"
+					)
+*/
+
+	} 
+
+}
+
+
+
+/*
+
+*
+*		return json_encode(
 			array(
 				"Master"=>array(
       				"id"=>5969846,
@@ -155,13 +257,12 @@ class Factura extends AppModel
 						"armarca"=>"OGGI",
 						"arunidad"=>"PZAS"
 					)
-				),  /* primer partida */
-//				array(),  /* segunda partida*/				
+				),  
+//				array(),  
 				)
 			)
 		);
-	} 
 
-}
 
-?>
+
+**/

@@ -6,26 +6,18 @@ class AppController extends Controller {
 	// class variables
 	public $_Filter = array();
 
-	// UI Theming properties
-//	public $view = 'Theme';
-//	public $theme = 'corn_flower_blue';
-
 	// setup components
 	public $components = array('RequestHandler',
-//									'Acl',
 							'Session',
   							'Auth',	
 							'Axfile',
 							'Axnotification',
-		/*					'AxApiResponse',*/
 							'Filter',
 							'PaginationRecall',
 							'Webservice.Webservice',
 							'Gmail',
 							'Upload',
 							'AxFolioselectronicos',
-							//'Gzip',
-							//			'Autocomplete',
 							);
 
 	public $helpers = array(
@@ -43,11 +35,7 @@ class AppController extends Controller {
 		'AxUI',
 		'WebAlert',
 		'TBS',
-/*		'Embed',*/
-/*		'CakeGrid.Grid',*/
 		'Upload',
-		'Youtube',
-
 	);
 
 	public $layout = 'plain';
@@ -434,6 +422,19 @@ class MasterDetailAppController extends AppController {
 		$this->set('data', $data );
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 										$data['Master'][$this->{$this->masterModelName}->title]
+				);
+	}
+
+	public function imprime( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data['Master'][$this->{$this->masterModelName}->title]
 				);
 	}
 

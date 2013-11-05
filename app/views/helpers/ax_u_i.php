@@ -353,7 +353,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStor
 			}
 			axAlert('El cache local no contiene Detalle');
 		}
-	}				
+	}
 
 ".
 		"\n\r";

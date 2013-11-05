@@ -68,7 +68,13 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
 		}
+		if ( isset($params['url']['format']) && !empty($params['url']['format']) ) {
+			$format=strtolower(trim($params['url']['format']));
+		}
 
+//		$appPath=APP;
+		$appPath='/home/www/junior20cake/app/';
+		
 		$this->Factura->Recursive=0;
 		$result=$this->Factura->read(null, $id);
 		// The Requested ID doesn't exists
@@ -81,8 +87,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			// Search the related media file
 			$folder='pdf';
 			$filename=trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists(APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$filename, 'error');
+			if(!file_exists($appPath.'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$appPath.'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 		}
@@ -90,7 +96,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			// Search the related media file
 			$folder='xml';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists(APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
+			if(!file_exists($appPath.'files'.DS.'facturaselectronicas'.DS.$folder.DS.$filename)) {
 				$this->Session->setFlash(__('file does not exist', true).': '.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
@@ -103,7 +109,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 						'name' => 'JME910405B83'.'-'.trim($result['Factura']['farefer']),
 						'download' => true,
 						'extension' => $format,
-						'path' => APP . 'files'.DS.'facturaselectronicas'.DS.$folder.DS);
+						'path' => $appPath . 'files'.DS.'facturaselectronicas'.DS.$folder.DS);
 		$this->set($params);
 	}
 

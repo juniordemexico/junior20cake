@@ -121,10 +121,6 @@ class AxFolioselectronicosComponent extends Component {
 
 		$Conceptos="<cfdi:Conceptos>";
 
-		
-		foreach($detalles as $detalle) {
-			
-		}
 
 		foreach ($jsonIterator as $key => $val) 
 		{
@@ -145,7 +141,7 @@ class AxFolioselectronicosComponent extends Component {
 									} else {
 										//echo "$ssubkey => $ssubval <br />";
 										if(trim($ssubkey)=="fadcant")		{$CANTIDAD=$ssubval;}
-										if(trim($ssubkey)=="unidad_cve")	{$UNIDAD=$ssubval;} 
+										if(trim($ssubkey)=="arunidad")		{$UNIDAD=$ssubval;} 
 										if(trim($ssubkey)=="arcveart")		{$NOIDENTIFICACION=$ssubval;} 
 										if(trim($ssubkey)=="ardescrip")		{$DESCRIPCION=$ssubval;}
 										if(trim($ssubkey)=="fadprecio")		{$VALORUNITARIO=$ssubval;}               

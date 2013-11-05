@@ -23,8 +23,8 @@ class ProduccionreportsController extends ReportAppController {
 		$p['linea_cve']="";
 		$p['marca_cve']="";
 		$p['temporada_cve']="";
-		$p['fechaini']='2011-01-01';
-		$p['fechafin']='2011-08-01';
+		$p['fechaini']='2013-01-01';
+		$p['fechafin']='2013-08-01';
 		$p['fentregaini']="";
 		$p['fentregafin']="";
 		$p['stcompterm']=0;

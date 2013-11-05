@@ -22,7 +22,7 @@ class ExplosionesController extends MasterDetailAppController {
 								'fields' => array('Articulo.id', 'Articulo.arcveart', 'Articulo.ardescrip',
 												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
 												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve', 
-												'Explosion.modified','Explosiondato.molde'),
+												'Explosion.modified'),
 								'conditions' => array('Articulo.tipoarticulo_id'=>'0', 'Articulo.arst'=>'A'),
 								'joins' => array(
 										array(	'table' => '(SELECT articulo_id, COALESCE(MAX(modified), MAX(created)) Modified FROM Explosiones GROUP BY articulo_id) ',
@@ -104,13 +104,26 @@ class ExplosionesController extends MasterDetailAppController {
 			$this->set('message', __('invalid_item', true) );
 			return;
 		}
-
+		$createRecord=false;
+		
 		$articulo_id=$this->params['url']['articulo_id'];
 		$item=$this->Explosiondato->findByArticulo_id($articulo_id);
 
+		if(!$item || !is_array($item) || !count($item)>0) {
+			$item=array(
+				'Explosiondato'=>array(
+					'articulo_id'=>$articulo_id,
+					)
+				);
+			$createRecord=true;
+			
+		}
 		if( isset($this->params['url']['molde']) ) $item['Explosiondato']['molde']=$this->params['url']['molde'];
 		if( isset($this->params['url']['datos']) ) $item['Explosiondato']['datos']=$this->params['url']['datos'];
-
+//
+//		if($createRecord) {
+//			$this->Explosiondato->create();
+//		}
 		if( $this->Explosiondato->save($item)) {
 			$this->set('result', 'ok');
 			$this->set('message', "Las Caracteristicas se guardaron correctamente");
