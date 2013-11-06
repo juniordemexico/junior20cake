@@ -41,16 +41,20 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			}
 		}
 		
-		$docto=$this->Factura->getDoctoCFDI( $id );		// Obtenemos los datos del documento desde el Modelo Factura
+		$docto=$this->Factura->getDoctoForCFDI( $id );		// Obtenemos los datos del documento desde el Modelo Factura
 		
-		$this->AxFolioselectronicos->setData( $docto );		// Pasamos el documento en formato json
-		echo '<pre>getXML():: '.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
+		if (!$this->AxFolioselectronicos->createCFDI( $docto )) echo "NO PUS NO SE CREO NADA";		// Pasamos el documento en formato json
+//		$this->AxFolioselectronicos->generaXML();
+//		echo '<pre>getXML():: '.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
 		echo "<br/>\n\r";
-		$cadena= $this->AxFolioselectronicos->generaCadenaOriginal();	// Devuelve la Cadena Original
-		echo '<pre>generaCadenaOriginal():: '.$cadena.'</pre>';
-		$cfdi= $this->AxFolioselectronicos->generaSello();		// Devuelve el Sello Digital
-		echo '<pre>generaSello()::'.$cfdi.'</pre>';
-
+//		$cadena= $this->AxFolioselectronicos->generaCadenaOriginal();	// Devuelve la Cadena Original
+//		echo '<pre>generaCadenaOriginal():: '.$cadena.'</pre>';
+//		$cfdi= $this->AxFolioselectronicos->generaSello();		// Devuelve el Sello Digital
+		echo '<pre>getSello()::'.$this->AxFolioselectronicos->getSello().'</pre>';
+		echo '<pre>getCadenaOriginal()::'.$this->AxFolioselectronicos->getCadenaOriginal().'</pre>';
+//		echo '<pre>getXML()::'.$this->AxFolioselectronicos->getXML().'</pre>';
+		$cfdi= $this->AxFolioselectronicos->getCFDI();		// Devuelve el Sello Digital
+		echo 'getCFDI()::<br/><br/>'; echo htmlspecialchars($cfdi);
 //		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
 		
 /*

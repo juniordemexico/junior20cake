@@ -11,6 +11,7 @@ class AxFolioselectronicosComponent extends Component {
 	public $_pkey;
 	public $_cadenaoriginal;
 	public $_sello;
+	public $_cfdi;
 	public $c;
 	public $folio;
 	public $filePath;
@@ -32,17 +33,17 @@ class AxFolioselectronicosComponent extends Component {
 
 	public function createCFDI( $data = null ) {
 		// Si nos pasan los datos en json, los ponemos en la propiedad _data en forma de arreglo
-		if($data && is_string($data) && count($data)>0) $this->setData($data);
+		if($data && is_string($data) && !empty($data)) $this->setData($data);
 		// Carga el certificado y llave privada
-		$this->loadCert();
+		if( !$this->loadCert() ) return false;
 		// Genera el XML basico, sin sello, ni cadena original
-		$this->generaXML();
+		if( $this->generaXML() ) ECHO "MAL generaXML";
 		// Genera la Cadena Original a partir del XML generado en primer termino
-		$this->generaCadenaOriginal();
+		if( !$this->generaCadenaOriginal() )  ECHO "MAL generaCadenaOriginal";
 		// Genera el Sello para el XML usando el Certificado y Llave Privada
-		$this->generaSello();
+		if( !$this->generaSello() )  ECHO "MAL generaSello";
 		// Genera el XML con la Cadena Original y el Sello incrustados. Listo para Timbrarse.
-		$this->generaCFDI();
+//		if( !$this->generaCFDI() ) return false;
 
 		// Guarda el XML generado en la carpeta de archivos asignada o en GridFS
 //		$this->storeCFDI();
@@ -59,7 +60,7 @@ class AxFolioselectronicosComponent extends Component {
 		$this->_cert = $this->controller->Axfile->FileToString( $this->pathCERT );
 		$this->_pkey = $this->controller->Axfile->FileToString( $this->pathPKEY );
 
-		if ($this->_cert && !empty($this->_cert) && $this->pkey && !empty($this->_pkey)) {
+		if ($this->_cert && !empty($this->_cert) && $this->_pkey && !empty($this->_pkey)) {
 			return true;
 		}
 		return false;
@@ -69,40 +70,22 @@ class AxFolioselectronicosComponent extends Component {
 	{
 		$this->_data=json_decode($data, TRUE);
 		$this->docto_folio=$this->_data['Master']['farefer'];
-
+		return true;
 	}
 
 	function getXML()	{
-		if( !$this->_xml || empty($this->_xml) ) {
-			$this->generaXML();
-		}
 		return $this->_xml;
 	}
 
 	function getCadenaOriginal()	{
-		if( !$this->_cadenaoriginal || empty($this->_cadenaoriginal) ) {
-			$this->generaCadenaOriginal();
-		}
 		return $this->_cadenaoriginal;
 	}
 
 	function getSello( $data=null )	{
-		// Si nos pasan una cadena original. La tomamos para generar el sello
-		if ($data && !empty($data)) {
-			$this->_sello=$data;
-		}
-
-		if(!$this->_sello || empty($this->_sello)) {
-			$this->generaSello();
-		}
 		return $this->_sello;
-
 	}
 
 	function getCFDI()	{
-		if( !$this->_cfdi || empty($this->_cfdi) ) {
-			$this->generaCadenaOriginal();
-		}
 		return $this->_cfdi;
 	}
 
@@ -190,22 +173,22 @@ class AxFolioselectronicosComponent extends Component {
 				if(trim($key)=="vlocalidad")		{$LOCALIDAD_E=$val;}
 	            if(trim($key)=="vref" )				{$REFERENCIA_E=$val;}
 
-				if(trim($key)=="clrfc")			{$RFC_E=$val;}
-				if(trim($key)=="clnom")			{$NOMBRE_E=$val;}
-				if(trim($key)=="clcalle")		{$CALLE_E=$val;}
-				if(trim($key)=="clnoext")		{$NOEXT_E=$val;}
-				if(trim($key)=="clnoint")		{$NOINT_E=$val;}
-				if(trim($key)=="clcolonia")		{$COLONIA_E=$val;}
-				if(trim($key)=="cllocalidad")	{$LOCALIDAD_E=$val;}
-				if(trim($key)=="clreferencia")	{$REFERENCIA_E=$val;}
-				if(trim($key)=="clciu")			{$MUNICIPIO_E=$val;}
-				if(trim($key)=="cledo")			{$ESTADO_E=$val;} 
-				if(trim($key)=="clpais")		{$PAIS_E=$val;} 
-				if(trim($key)=="clcp")			{$CP_E=$val;}
-				if(trim($key)=="regegfis")		{$REGFISL_E=$val;} 
+				if(trim($key)=="clrfc")				{$RFC_E=$val;}
+				if(trim($key)=="clnom")				{$NOMBRE_E=$val;}
+				if(trim($key)=="clcalle")			{$CALLE_E=$val;}
+				if(trim($key)=="clnoext")			{$NOEXT_E=$val;}
+				if(trim($key)=="clnoint")			{$NOINT_E=$val;}
+				if(trim($key)=="clcolonia")			{$COLONIA_E=$val;}
+				if(trim($key)=="cllocalidad")		{$LOCALIDAD_E=$val;}
+				if(trim($key)=="clreferencia")		{$REFERENCIA_E=$val;}
+				if(trim($key)=="clciu")				{$MUNICIPIO_E=$val;}
+				if(trim($key)=="cledo")				{$ESTADO_E=$val;} 
+				if(trim($key)=="clpais")			{$PAIS_E=$val;} 
+				if(trim($key)=="clcp")				{$CP_E=$val;}
+				if(trim($key)=="regegfis")			{$REGFISL_E=$val;} 
 				
-				if(trim($key)=="faimpu_cve")	{$IMPUESTO=$val;}
-				if(trim($key)=="faimpu")		{$TASA=$val;} 
+				if(trim($key)=="faimpu_cve")		{$IMPUESTO=$val;}
+				if(trim($key)=="faimpu")			{$TASA=$val;} 
 				if(trim($key)=="factura__fatotal")		{$IMPORTE=$val;} 
 				if(trim($key)=="factura__faimpoimpu")	{$totalTrasladados=$val;}
 
@@ -215,10 +198,18 @@ class AxFolioselectronicosComponent extends Component {
 			$FECHA=date("Y-m-d").'T'.date("H:i:s");
 		}
 		
-		$comprobante='<?xml version="1.0" encoding="utf-8"?><cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 		http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$VERSION.'" serie="'.$SERIE.'" folio="'.$FOLIO.'" fecha="'.$FECHA.'" sello="" NumCtaPago="'.$NUMCTA.'" TipoCambio="'.$TIPOCAMBIO.'" Moneda="'.$MONEDA.'" formaDePago="'.$FORMAPAGO.'" noCertificado="" certificado="" condicionesDePago="'.$CONDICIONESPAGO.'" subTotal="'.$SUBTOTAL.'" total="'.$TOTAL.'" tipoDeComprobante="'.$TIPOCOMPROBANTE.'" metodoDePago="'.$METODOPAGO.'" LugarExpedicion="'.$LUGEXP.'" xmlns:cfdi="http://www.sat.gob.mx/cfd/3">';
+		$comprobante='<?xml version="1.0" encoding="utf-8"?><cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 		http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$VERSION.'" '.
+		'serie="'.$SERIE.'" folio="'.$FOLIO.'" fecha="'.$FECHA.'" sello="" '.
+		'NumCtaPago="'.$NUMCTA.'" TipoCambio="'.$TIPOCAMBIO.'" Moneda="'.$MONEDA.'" formaDePago="'.$FORMAPAGO.'" '.
+		'noCertificado="" certificado="" '.
+		'condicionesDePago="'.$CONDICIONESPAGO.'" subTotal="'.$SUBTOTAL.'" total="'.$TOTAL.'" tipoDeComprobante="'.$TIPOCOMPROBANTE.'" metodoDePago="'.$METODOPAGO.'" '.
+		'LugarExpedicion="'.$LUGEXP.'" xmlns:cfdi="http://www.sat.gob.mx/cfd/3">';
 		$rec='<cfdi:Receptor rfc="'.$RFC.'" nombre="'.$NOMBRE.'"><cfdi:Domicilio calle="'.$CALLE.'" noExterior="'.$NOEXT.'" colonia="'.$COLONIA.'" municipio="'.$MUNICIPIO.'" estado="'.$ESTADO.'" pais="'.$PAIS.'" codigoPostal="'.$CP.'"/></cfdi:Receptor>'; 
-		$emisor=' <cfdi:Emisor rfc="'.$RFC_E.'" nombre="'.$NOMBRE_E.'"><cfdi:DomicilioFiscal calle="'.$CALLE_E.'" noExterior="'.$NOEXT_E.'" colonia="'.$COLONIA_E.'" municipio="'.$MUNICIPIO_E.'" estado="'.$ESTADO_E.'" pais="'.$PAIS_E.'" codigoPostal="'.$CP_E.'"/><cfdi:RegimenFiscal Regimen="'.$REGFISL_E.'" /></cfdi:Emisor> ';
-		$traslados='<cfdi:Impuestos><cfdi:Traslados><cfdi:Traslado importe="'.$IMPORTE.'" impuesto="'.$IMPUESTO.'" tasa="'.$TASA.'"/></cfdi:Traslados></cfdi:Impuestos>';
+		$emisor=' <cfdi:Emisor rfc="'.$RFC_E.'" nombre="'.$NOMBRE_E.'">'.
+				'<cfdi:DomicilioFiscal calle="'.$CALLE_E.'" noExterior="'.$NOEXT_E.'" colonia="'.$COLONIA_E.'" municipio="'.$MUNICIPIO_E.'" estado="'.$ESTADO_E.'" pais="'.$PAIS_E.'" codigoPostal="'.$CP_E.'"/><cfdi:RegimenFiscal Regimen="'.$REGFISL_E.'" /></cfdi:Emisor> ';
+		$traslados=	'<cfdi:Impuestos><cfdi:Traslados>'.
+					'<cfdi:Traslado importe="'.$IMPORTE.'" impuesto="'.$IMPUESTO.'" tasa="'.$TASA.'"/>'.
+					'</cfdi:Traslados></cfdi:Impuestos>';
 		$this->_xml=$comprobante.$emisor.$rec.$Conceptos."</cfdi:Conceptos>".$traslados.'</cfdi:Comprobante>';
 		return true;
 	}
@@ -235,18 +226,16 @@ class AxFolioselectronicosComponent extends Component {
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 		$cadena_original = $xslt->transformToXML( $c );
 		$this->_cadenaoriginal=$cadena_original;
-//		$this->controller->Axfile->StringToFile($this->filePath.$this->docto_folio.'.cad', $this->_cadenaoriginal);
-		return $this->_cadenaoriginal;
+		return true;
 	}
 
 	function generaSello()
 	{
-		$cert=$this->_cert;
+		$cert=
 		$this->controller->Axfile->FileToString($this->pathCERT).
 		$this->controller->Axfile->FileToString($this->pathPKEY);
-		;
 
-		$cert509 = openssl_x509_read($this->_cert) or die("\nNo se puede leer el certificado\n");
+		$cert509 = openssl_x509_read($cert) or die("\nNo se puede leer el certificado\n");
 		$_data = openssl_x509_parse($cert509);
 		$serial1 = $_data['serialNumber'];
 		$serial2 = gmp_strval($serial1, 16);
@@ -264,37 +253,29 @@ class AxFolioselectronicosComponent extends Component {
 		$algo = $matches[1];
 		$algo = preg_replace('/\n/', '', $algo);
 		$certificado = preg_replace('/\r/', '', $algo);
-		$key = openssl_pkey_get_private($this->_cert) or die("No llave privada\n");
+		$key = openssl_pkey_get_private($cert) or die("No llave privada\n");
 		$crypttext = "";
 		openssl_sign($this->_cadenaoriginal, $crypttext, $key);
 		$this->_sello = base64_encode($crypttext);
-
-		echo '<pre>sello: ';
-		print_r($this->_sello);
-		echo '</pre>';
 
 		$myDom = new DOMDocument();
 		echo "<code>this->_xml:\n<br>"; echo htmlspecialchars($this->_xml); echo "</code>";
 
 		$myDom->loadXML($this->_xml);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
-		echo "<code>c:"; print_r($c); echo "</code>";
+
 		$c->setAttribute('certificado', $certificado);
 		$c->setAttribute('sello', $this->_sello);
 		$c->setAttribute('noCertificado', $noCertificado);
 		echo "<code>c (after setting attributes):\n<br>"; print_r($c); echo "</code>";
 		$this->_cfdi = $myDom->saveXML();
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->docto_folio.'.fuente.xml', $this->_cfdi);
 
-		echo '<pre>cfdi: ';
-		echo htmlspecialchars($this->_cfdi);
-		echo '</pre>';
-
-		return $this->_cfdi;
+		return true; 
 	}
 
 
 	function timbrarComprobanteFiscal($miCFDI=null) {
-		echo '<pre>'.htmlspecialchars($miCFDI).'</pre>';
 		$envtext = '<?xml version="1.0" encoding="UTF-8"?>
 	<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:ns1="http://facturacion.finkok.com/stamp" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
