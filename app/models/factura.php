@@ -82,46 +82,69 @@ class Factura extends AppModel
 	}
 
 	public function getDoctoForCFDI( $id=null ) {
-		$master=$this->findById($id);
-		if(!$master || !is_array($master)) {
+
+		$docto=$this->query("SELECT Factura.id, Factura.farefer folio,
+								Factura.fafecha fecha,
+								Factura.fatcambio tcambio,	
+								Factura.divisa_id, Divisa.dicve divisa_cve,
+								Factura.faplazo plazo,
+								Factura.faimpu impuesto_tasa,
+								Factura.fasuma suma,
+								Factura.faimporte importe,
+								Factura.faimpoimpu impoimpu,
+								Factura.fatotal total,
+								Factura.crefec created,
+								Factura.modfec modified,
+								Cliente.*
+								FROM Factura Factura
+								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
+								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
+								JOIN Divisas Divisa ON (Divisa.id=Factura.divisa_id)
+								WHERE Factura.id=$id
+							");
+
+		if(!$docto || !is_array($docto) || count($docto)<1) {
 			return false;
 		}
 
-		$master['Factura']["regegfis"]="Regimen General de ley Personas Morales";
- 		$master['Factura']["pcta"]="NO IDENTIFICADO";
-		$master['Factura']["lugar_expedicion"]="DISTRITO FEDERAL";
-      	$master['Factura']["formapago"]="TRANSFERENCIA";
-      	$master['Factura']["comprobante_tipo"]="INGRESO";
-      	$master['Factura']["metodopago"]="PAGO EN UNA SOLA EXHIBICION";
-		$master['Factura']["faimpu_cve"]="IVA";
-		$master['Factura']["fatotal"]="IVA";
+		// Datos del Documento (la factura)
+		$docto=$docto[0];
+		$master=array();
+		$master=$docto['Factura'];
+		$master["pago_numcta"]="NO IDENTIFICADO";
+		$master["lugar_expedicion"]="DISTRITO FEDERAL";
+		$master["formapago"]="TRANSFERENCIA";
+		$master["comprobante_tipo"]="ingreso";
+		$master["metodo_pago"]="PAGO EN UNA SOLA EXHIBICION";
+		$master["impuesto_cve"]="IVA";
+		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
 
-		$master['Cliente']["clcalle"]="CALLE DE PRUEBA";
-		$master['Cliente']["clnoext"]="SN";
-		$master['Cliente']["clnoint"]="NA";
-		$master['Cliente']["clcolonia"]="COL. OBRERA";
-		$master['Cliente']["cllocalidad"]="";
-		$master['Cliente']["clbancocta"]="NO IDENTIFICADO";
+		// Datos del Receptor (nuestro cliente)
+		$receptor=$docto['Cliente'];
+		$receptor["clcalle"]="CALLE DE PRUEBA";
+		$receptor["clnumext"]="SN EXT";
+		$receptor["clnumint"]="NA";
+		$receptor["clcolonia"]="COL. OBRERA";
+		$receptor["clciu"]="MIGUEL HIDALGO";
+		$receptor["cledo"]="DISTRITO FEDERAL";
+		$receptor["clpais"]="MEXICO";
 
-		$out=array(	"Master"	=>$master['Factura'],
-					"Divisa"	=>$master['Divisa'],
-					"Cliente"	=>$master['Cliente'],
-					"Empresa"=>array(
-						"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
-						"emrfc"=>"JME910405B83",
-						"emcalle"=>"AV PASEO DE LA REFORMA",
-						"emnoext"=>"2654",
-						"emnoint"=>"1501",
-						"emcolonia"=>"LOMAS ALTAS",	
-						"emciu"=>"MIGUEL HIDALGO",
-						"emedo"=>"DISTRITO FEDERAL",
-						"empais"=>"MEXICO",
-						"emcp"=>"11950",
-						"vlocalidad"=>"",
-						"vref"=>""
-					),
-		 		'Details'=>array()
-				);
+		// Datos del Emisor (nuestra empresa)
+		$emisor=array(
+					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
+					"emrfc"=>"JME910405B83",
+					"emcalle"=>"AV PASEO DE LA REFORMA",
+					"emnumext"=>"2654",
+					"emnumint"=>"1501",
+					"emcol"=>"LOMAS ALTAS",	
+					"emciu"=>"MIGUEL HIDALGO",
+					"emedo"=>"DISTRITO FEDERAL",
+					"empais"=>"MEXICO",
+					"emcp"=>"11950",
+					"vlocalidad"=>"",
+					"vref"=>"",
+					"regimen_fiscal"=>"Regimen General de ley Personas Morales"
+					);
 
 		$items=$this->query("SELECT Facturadet.id, Facturadet.articulo_id,
 			 					Facturadet.fadprecio, 
@@ -136,211 +159,32 @@ class Factura extends AppModel
 								GROUP BY Facturadet.id, Facturadet.articulo_id,
 			 					Facturadet.fadprecio, Articulo.arcveart, Articulo.ardescrip, Unidad.cve");
 
-		$details=array();
-		
+		$Details=array();		
 		foreach($items as $item) {
-			$details[]=array('Detail'=>array(
+			$Details[]=array(
 					'id'=>$item['Facturadet']['id'],
 					'articulo_id'=>$item['Facturadet']['articulo_id'],
-					'fadprecio'=>$item['Facturadet']['fadprecio'],
-					'fadcant'=>$item[0]['fadcant'],
-					'fadimporte'=>$item[0]['fadimporte'],
-					'unidad_cve'=>$item[0]['unidad_cve'],
+					'precio'=>$item['Facturadet']['fadprecio'],
+					'cant'=>$item[0]['fadcant'],
+					'importe'=>$item[0]['fadimporte'],
 					'arcveart'=>$item['Articulo']['arcveart'],
-					'ardescrip'=>$item['Articulo']['ardescrip'],
-				));
+					'ardescrip'=>trim($item['Articulo']['ardescrip']),
+					'unidad_cve'=>trim($item[0]['unidad_cve']),
+					);
 		}
 
-		$out['Details']=$details;
+		$out=array(
+			"Master"	=>$master,
+		 	"Details"	=>$Details,
+		 	"Receptor"	=>$receptor,
+		 	"Emisor"	=>$emisor,
+			);
 
-		pr($out);
+		echo '<h2>Out (final)::</h2>'; pr($out);
+
 		return json_encode($out);
-/*
-		return json_encode(
-			array(
-				"Master"=>array(
-      				"id"=>5969846,
-      				"farefer"=>"A0083571",
-      				"fafecha"=>"2013-09-20 14:32:12",
-      				"faplazo"=>60,
-      				"formapago"=>"TRANSFERENCIA",
-      				"comprobante_tipo"=>"ingreso",
-      				"metodopago"=>"PAGO EN UNA SOLA EXHIBICION",
-					"fasuma"=>"9627.52",
-					"fadesc1"=>"0.00",
-					"faimpu_cve"=>"IVA",
-					"faimpu"=>"16.00",
-					"faimpoimpu"=>"1492.4032",
-					"factura__fatotal"=>"11119.9232",
-					"regegfis"=>"Regimen General de ley Personas Morales",
- 					"pcta"=>"NO IDENTIFICADO",
-					"lugar_expedicion"=>"DISTRITO FEDERAL"
-					),
-				"Divisa"=>array(
-					"id"=>1,
-					"dicve"=>"MN",
-					"ditcambio"=>"1.0000",
-					"dinom"=>"PESOS"
-					),
-				"Cliente"=>array(
-					"clnom"=>"COMERCIAL POZA RICA, SA DE CV (TUXPAN)",
-					"clrfc"=>"CPR741118S31",
-					"clsuc"=>"      ",
-					"clbancocta"=>"NO IDENTIFICADO",
-					"clcalle"=>"CALLE 6",
-					"clnoext"=>"SN",
-					"clnoint"=>"NA",
-					"clcolonia"=>"COL. OBRERA",
-					"cllocalidad"=>"",
-					"clreferencia"=>"",	
-					"clciu"=>"POZA RICA",
-					"cledo"=>"VERACRUZ",
-					"clpais"=>"MEXICO",
-					"clcp"=>"93260"
-					),
-				"Empresa"=>array(
-					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
-					"emrfc"=>"JME910405B83",
-					"emcalle"=>"AV PASEO DE LA REFORMA",
-					"emnoext"=>"2654",
-					"emnoint"=>"1501",
-					"emcolonia"=>"LOMAS ALTAS",	
-					"emciu"=>"MIGUEL HIDALGO",
-					"emedo"=>"DISTRITO FEDERAL",
-					"empais"=>"MEXICO",
-					"emcp"=>"11950",
-					"vlocalidad"=>"",
-					"vref"=>""
-					), 
-			"Details"=>array(
-				array(
-					"Detail"=>array(
-						"id"=>5969847,
-						"articulo_id"=>106634,
-						"color_id"=>942,
-						"fadprecio"=>"240.68",
-						"fadcant"=>"40.00",
-						"fadimporte"=>"9627.52"
-					),
-         			"Articulo"=>array(
-						"id"=>106634,
-						"arcveart"=>"POWERINGINK",
-						"ardescrip"=>"PANTALON POWER RING INK",
-						"armarca"=>"OGGI",
-						"unidad_cve"=>"PZAS"
-					)
-				),  
-//				array(),  
-				)
-			)
-		);
-*/
-/*
-					"Detail"=>array(
-						"id"=>5969847,
-						"articulo_id"=>106634,
-						"color_id"=>942,
-						"fadprecio"=>"240.68",
-						"fadcant"=>"40.00",
-						"fadimporte"=>"9627.52"
-					),
-         			"Articulo"=>array(
-						"id"=>106634,
-						"arcveart"=>"POWERINGINK",
-						"ardescrip"=>"PANTALON POWER RING INK",
-						"armarca"=>"OGGI",
-						"arunidad"=>"PZAS"
-					)
-*/
 
 	} 
 
 }
 
-
-
-/*
-
-*
-*		return json_encode(
-			array(
-				"Master"=>array(
-      				"id"=>5969846,
-      				"farefer"=>"A0083571",
-      				"fafecha"=>"2013-09-20 14:32:12",
-      				"faplazo"=>60,
-      				"formapago"=>"TRANSFERENCIA",
-      				"comprobante_tipo"=>"ingreso",
-      				"metodopago"=>"PAGO EN UNA SOLA EXHIBICION",
-					"fasuma"=>"9627.52",
-					"fadesc1"=>"0.00",
-					"faimpu_cve"=>"IVA",
-					"faimpu"=>"16.00",
-					"faimpoimpu"=>"1492.4032",
-					"fatotal"=>"11119.9232",
-					"regegfis"=>"Regimen General de ley Personas Morales",
- 					"pcta"=>"NO IDENTIFICADO",
-					"lugar_expedicion"=>"DISTRITO FEDERAL"
-					),
-				"Divisa"=>array(
-					"id"=>1,
-					"dicve"=>"MN",
-					"ditcambio"=>"1.0000",
-					"dinom"=>"PESOS"
-					),
-				"Cliente"=>array(
-					"clnom"=>"COMERCIAL POZA RICA, SA DE CV (TUXPAN)",
-					"clrfc"=>"CPR741118S31",
-					"clsuc"=>"      ",
-					"clbancocta"=>"NO IDENTIFICADO",
-					"clcalle"=>"CALLE 6",
-					"clnoext"=>"SN",
-					"clnoint"=>"NA",
-					"clcolonia"=>"COL. OBRERA",
-					"cllocalidad"=>"",
-					"clreferencia"=>"",	
-					"clciu"=>"POZA RICA",
-					"cledo"=>"VERACRUZ",
-					"clpais"=>"MEXICO",
-					"clcp"=>"93260"
-					),
-				"Empresa"=>array(
-					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
-					"emrfc"=>"JME910405B83",
-					"emcalle"=>"AV PASEO DE LA REFORMA",
-					"emnoext"=>"2654",
-					"emnoint"=>"1501",
-					"emcolonia"=>"LOMAS ALTAS",	
-					"emciu"=>"MIGUEL HIDALGO",
-					"emedo"=>"DISTRITO FEDERAL",
-					"empais"=>"MEXICO",
-					"emcp"=>"11950",
-					"vlocalidad"=>"",
-					"vref"=>""
-					),
-			"Details"=>array(
-				array(
-					"Detail"=>array(
-						"id"=>5969847,
-						"articulo_id"=>106634,
-						"color_id"=>942,
-						"fadprecio"=>"240.68",
-						"fadcant"=>"40.00",
-						"fadimporte"=>"9627.52"
-					),
-         			"Articulo"=>array(
-						"id"=>106634,
-						"arcveart"=>"POWERINGINK",
-						"ardescrip"=>"PANTALON POWER RING INK",
-						"armarca"=>"OGGI",
-						"arunidad"=>"PZAS"
-					)
-				),  
-//				array(),  
-				)
-			)
-		);
-
-
-
-**/

@@ -5,6 +5,7 @@ class AxFolioselectronicosComponent extends Component {
 	public $json_dec;
 	public $cfdi;
 	public $envtext;
+	public $version;
 	public $_data;
 	public $_xml;
 	public $_cert;
@@ -13,12 +14,18 @@ class AxFolioselectronicosComponent extends Component {
 	public $_sello;
 	public $_cfdi;
 	public $c;
+	public $rfc;
 	public $folio;
+	public $serie;
+	public $consecutivo;
+	public $fecha;
 	public $filePath;
+	public $totalItems;
 
 
 	function startup( &$controller ) {
 		$this->controller =& $controller;
+		$this->version='3.2';
 		$this->pathCERT=APP.'files'.DS.'SAT'.DS.'SAT_CERT_JME910405B83.pem';
 		$this->pathPKEY=APP.'files'.DS.'SAT'.DS.'SAT_PKEY_JME910405B83.pem';
 		$this->pathDOCS=APP.'files'.DS.'comprobantesdigitales';
@@ -28,7 +35,11 @@ class AxFolioselectronicosComponent extends Component {
 		$this->_sello=null;
 		$this->_cadenaoriginal=null;
 		$this->docto_id=null;
-		$this->docto_folio=null;
+		$this->folio=null;
+		$this->serie=null;
+		$this->consecutivo=null;
+		$this->fecha=null;
+		$this->totalItems=0;
 	}
 
 	public function createCFDI( $data = null ) {
@@ -69,7 +80,11 @@ class AxFolioselectronicosComponent extends Component {
 	public function setData($data)
 	{
 		$this->_data=json_decode($data, TRUE);
-		$this->docto_folio=$this->_data['Master']['farefer'];
+		$this->rfc=$this->_data['Emisor']['emrfc'];
+		$this->folio=$this->_data['Master']['folio'];
+		$this->serie=substr($this->_data['Master']['folio'],0,1);
+		$this->consecutivo=substr($this->_data['Master']['folio'],1,8);
+		$this->fecha=substr($this->_data['Master']['fecha'],0,10).'T'.substr($this->_data['Master']['fecha'],11,8);
 		return true;
 	}
 
@@ -95,20 +110,34 @@ class AxFolioselectronicosComponent extends Component {
     	new RecursiveArrayIterator($this->_data),
     	RecursiveIteratorIterator::SELF_FIRST);
 
-		// La parte $jsonIterator podria adaptarse mas o menos asi:
-		$encabezado=$this->_data['Master'];
-		$detalles=$this->_data['Details'];
-
+		$m=$this->_data['Master'];
+		$d=$this->_data['Details'];
+		$e=$this->_data['Emisor'];
+		$r=$this->_data['Receptor'];
+		
+/*
+		$comprobante=
+'<?xml version="1.0" encoding="utf-8"?>'.
+'<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3
+http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
+'serie="'.$this->serie.'" folio="'.$this->consecutivo.'" fecha="'.$this->fecha.'" sello="" '.
+		'NumCtaPago="'.$NUMCTA.'" TipoCambio="'.$TIPOCAMBIO.'" Moneda="'.$MONEDA.'" formaDePago="'.$FORMAPAGO.'" '.
+		'noCertificado="" certificado="" '.
+		'condicionesDePago="'.$CONDICIONESPAGO.'" subTotal="'.$SUBTOTAL.'" total="'.$TOTAL.'" tipoDeComprobante="'.$TIPOCOMPROBANTE.'" metodoDePago="'.$METODOPAGO.'" '.
+		'LugarExpedicion="'.$LUGEXP.'" xmlns:cfdi="http://www.sat.gob.mx/cfd/3">';
+		$rec='<cfdi:Receptor rfc="'.$RFC.'" nombre="'.$NOMBRE.'"><cfdi:Domicilio calle="'.$CALLE.'" noExterior="'.$NOEXT.'" colonia="'.$COLONIA.'" municipio="'.$MUNICIPIO.'" estado="'.$ESTADO.'" pais="'.$PAIS.'" codigoPostal="'.$CP.'"/></cfdi:Receptor>'; 
+		$emisor=' <cfdi:Emisor rfc="'.$RFC_E.'" nombre="'.$NOMBRE_E.'">'.
+				'<cfdi:DomicilioFiscal calle="'.$CALLE_E.'" noExterior="'.$NOEXT_E.'" colonia="'.$COLONIA_E.'" municipio="'.$MUNICIPIO_E.'" estado="'.$ESTADO_E.'" pais="'.$PAIS_E.'" codigoPostal="'.$CP_E.'"/><cfdi:RegimenFiscal Regimen="'.$REGFISL_E.'" /></cfdi:Emisor> ';
+		$traslados=	'<cfdi:Impuestos><cfdi:Traslados>'.
+					'<cfdi:Traslado importe="'.$IMPORTE.'" impuesto="'.$IMPUESTO.'" tasa="'.$TASA.'"/>'.
+					'</cfdi:Traslados></cfdi:Impuestos>';
+		$this->_xml=$comprobante.$emisor.$rec.$conceptos."</cfdi:Conceptos>".$traslados.'</cfdi:Comprobante>';
+*/
+/*
 		// Y luego hacer un foreach($encabezado as $key=>$value);
 		// y otro foreach($detalles as $key=>$values);
-
-		$Conceptos="<cfdi:Conceptos>";
-
+		$conceptos='';
 		
-		foreach($detalles as $detalle) {
-			
-		}
-
 		foreach ($jsonIterator as $key => $val) 
 		{
 
@@ -139,10 +168,11 @@ class AxFolioselectronicosComponent extends Component {
 							}
 
 						}
-						$Conceptos.='<cfdi:Concepto cantidad="'.$CANTIDAD.'" unidad="'.$UNIDAD.'" descripcion="'.$DESCRIPCION.'" valorUnitario="'.$VALORUNITARIO.'" importe="'.$IMPORTE.'"/>';
+						$conceptos.='<cfdi:Concepto cantidad="'.$CANTIDAD.'" unidad="'.$UNIDAD.'" descripcion="'.$DESCRIPCION.'" valorUnitario="'.$VALORUNITARIO.'" importe="'.$IMPORTE.'"/>';
 					}
 				}
-
+*/
+/*
 				$VERSION="3.2";
 				if(trim($key)=="farefer")			$SERIE=substr($val,0,1);      // ???? (sera es el prefijo del folio??? ej: 'A')
 				if(trim($key)=="farefer")			$FOLIO=substr($val,1,10);      // ???? (sera lo mismo que farefer? ej: A0010345 )
@@ -193,24 +223,107 @@ class AxFolioselectronicosComponent extends Component {
 				if(trim($key)=="factura__faimpoimpu")	{$totalTrasladados=$val;}
 
 		}
+*/
 
-		if(!isset($FECHA) || !$FECHA) {
-			$FECHA=date("Y-m-d").'T'.date("H:i:s");
+		if(!isset($this->fecha) || !$this->fecha) {
+			$this->fecha=date("Y-m-d").'T'.date("H:i:s");
 		}
 		
-		$comprobante='<?xml version="1.0" encoding="utf-8"?><cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 		http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$VERSION.'" '.
-		'serie="'.$SERIE.'" folio="'.$FOLIO.'" fecha="'.$FECHA.'" sello="" '.
-		'NumCtaPago="'.$NUMCTA.'" TipoCambio="'.$TIPOCAMBIO.'" Moneda="'.$MONEDA.'" formaDePago="'.$FORMAPAGO.'" '.
-		'noCertificado="" certificado="" '.
-		'condicionesDePago="'.$CONDICIONESPAGO.'" subTotal="'.$SUBTOTAL.'" total="'.$TOTAL.'" tipoDeComprobante="'.$TIPOCOMPROBANTE.'" metodoDePago="'.$METODOPAGO.'" '.
-		'LugarExpedicion="'.$LUGEXP.'" xmlns:cfdi="http://www.sat.gob.mx/cfd/3">';
-		$rec='<cfdi:Receptor rfc="'.$RFC.'" nombre="'.$NOMBRE.'"><cfdi:Domicilio calle="'.$CALLE.'" noExterior="'.$NOEXT.'" colonia="'.$COLONIA.'" municipio="'.$MUNICIPIO.'" estado="'.$ESTADO.'" pais="'.$PAIS.'" codigoPostal="'.$CP.'"/></cfdi:Receptor>'; 
-		$emisor=' <cfdi:Emisor rfc="'.$RFC_E.'" nombre="'.$NOMBRE_E.'">'.
-				'<cfdi:DomicilioFiscal calle="'.$CALLE_E.'" noExterior="'.$NOEXT_E.'" colonia="'.$COLONIA_E.'" municipio="'.$MUNICIPIO_E.'" estado="'.$ESTADO_E.'" pais="'.$PAIS_E.'" codigoPostal="'.$CP_E.'"/><cfdi:RegimenFiscal Regimen="'.$REGFISL_E.'" /></cfdi:Emisor> ';
-		$traslados=	'<cfdi:Impuestos><cfdi:Traslados>'.
-					'<cfdi:Traslado importe="'.$IMPORTE.'" impuesto="'.$IMPUESTO.'" tasa="'.$TASA.'"/>'.
-					'</cfdi:Traslados></cfdi:Impuestos>';
-		$this->_xml=$comprobante.$emisor.$rec.$Conceptos."</cfdi:Conceptos>".$traslados.'</cfdi:Comprobante>';
+		// Datos del Comprobante Digital
+		$comprobante=
+		'serie="'.$this->serie.'" '.
+		'folio="'.$this->consecutivo.'" '.
+		'fecha="'.$this->fecha.'" '.
+		'sello="" '.
+		'NumCtaPago="'.$m['pago_numcta'].'" '.
+		'TipoCambio="'.round($m['tcambio'],2).'" '.
+		'Moneda="'.trim($m['divisa_cve']).'" '.
+		'formaDePago="'.'TRANSFERENCIA'.'" '.
+		'noCertificado="" '.
+		'certificado="" '.
+		'condicionesDePago="'.$m['plazo'].'" '.
+		'subTotal="'.round($m['suma'],2).'" '.
+		'total="'.round($m['total'],2).'" '.
+		'tipoDeComprobante="'.$m['comprobante_tipo'].'" '.
+		'metodoDePago="'.$m['metodo_pago'].'" '.
+		'LugarExpedicion="'.$e['emedo'].'" '.
+		'xmlns:cfdi="http://www.sat.gob.mx/cfd/3"> ';
+
+		// Datos del Emisor del Comprobante 
+		// (nuestra razon social: direccion fiscal y direccion de expedicion)
+		$emisor=
+		'<cfdi:Emisor rfc="'.$e['emrfc'].'" '.
+		'nombre="'.$e['emnom'].'">'.
+		'<cfdi:DomicilioFiscal '.
+		'calle="'.$e['emcalle'].'" '.
+		'noExterior="'.$e['emnumext'].'" '.
+//		'noInterior="'.$e['emnumint'].'" '.
+		'colonia="'.$e['emcol'].'" '.
+		'municipio="'.$e['emciu'].'" '.
+		'estado="'.$e['emedo'].'" '.
+		'pais="'.$e['empais'].'" '.
+		'codigoPostal="'.$e['emcp'].'" '.
+		'/>'.
+		'<cfdi:ExpedidoEn '.
+		'calle="Av. Viaducto La Piedad" '.
+		'noExterior="11111" '.
+		'localidad="Distrito Federal" '.
+		'municipio="Gustavo A Madero" '.
+		'estado="Distrito Federal" '.
+		'pais="Mexico" '.
+		'codigoPostal="06000" '.
+		'/>'.		
+		'<cfdi:RegimenFiscal Regimen="'.$e['regimen_fiscal'].'" />'.
+		'</cfdi:Emisor>';
+
+		// Datos del receptor (cliente al que se le expide el comprobante)
+		$receptor=
+		'<cfdi:Receptor rfc="'.$r['clrfc'].'" '.'nombre="'.$r['clnom'].'">'.
+		'<cfdi:Domicilio calle="'.$r['clcalle'].'" '.
+		'noExterior="'.$r['clnumext'].'" '.
+		'colonia="'.$r['clcolonia'].'" '.
+		'municipio="'.$r['clciu'].'" '.
+		'estado="'.$r['cledo'].'" '.
+		'pais="'.$r['clpais'].'" '.
+		'codigoPostal="'.$r['clcp'].'" '.
+		'/>'.
+		'</cfdi:Receptor> ';
+		
+		// Total y translados de Impuestos que aplican al Comprobante
+		$traslados=
+		'<cfdi:Impuestos>'.
+		'<cfdi:Traslados>'.
+		'<cfdi:Traslado importe="'.round($m['impoimpu'],2).'" impuesto="'.$m['impuesto_cve'].'" tasa="'.$m['impuesto_tasa'].'"/>'.
+		'</cfdi:Traslados>'.
+		'</cfdi:Impuestos>';
+
+
+		// Seccion de Conceptos (son las partidas o items que el comprobante contiene)
+		$this->totalItems=0;
+		$conceptos="<cfdi:Conceptos>";
+		foreach($d as $detalle) {
+			$conceptos.=
+			'<cfdi:Concepto '.
+			'cantidad="'.floor($detalle['cant']).'" '.
+			'unidad="'.trim($detalle['unidad_cve']).'" '.
+			'descripcion="('.trim($detalle['arcveart']).') '.trim($detalle['ardescrip']).'" '.
+			'valorUnitario="'.round($detalle['precio'],2).'" '.
+			'importe="'.round($detalle['importe'],2).'" '.
+			'/>';
+			$this->totalItems+=1;
+		}
+		$conceptos=$conceptos."</cfdi:Conceptos>";
+
+		// Ensambla el XML (todavia sin cadena original, ni sello)
+		$this->_xml='<?xml version="1.0" encoding="utf-8"?>'.
+					'<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 '.
+					'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
+					$comprobante.$emisor.$receptor.$conceptos.$traslados.
+					'</cfdi:Comprobante>';
+
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.'.fuente.xml', $this->_xml);
+
+		echo "<H2>XML::</H2>"; pr($this->_xml);
 		return true;
 	}
 
@@ -255,7 +368,7 @@ class AxFolioselectronicosComponent extends Component {
 		$certificado = preg_replace('/\r/', '', $algo);
 		$key = openssl_pkey_get_private($cert) or die("No llave privada\n");
 		$crypttext = "";
-		openssl_sign($this->_cadenaoriginal, $crypttext, $key);
+		openssl_sign($this->_cadenaoriginal, $crypttext, $key, OPENSSL_ALGO_SHA1); // "sha1"
 		$this->_sello = base64_encode($crypttext);
 
 		$myDom = new DOMDocument();
@@ -267,9 +380,9 @@ class AxFolioselectronicosComponent extends Component {
 		$c->setAttribute('certificado', $certificado);
 		$c->setAttribute('sello', $this->_sello);
 		$c->setAttribute('noCertificado', $noCertificado);
-		echo "<code>c (after setting attributes):\n<br>"; print_r($c); echo "</code>";
+		echo "<pre>c (after setting attributes):\n<br>"; print_r($c); echo "</pre>";
 		$this->_cfdi = $myDom->saveXML();
-		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->docto_folio.'.fuente.xml', $this->_cfdi);
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.'.sellado.xml', $this->_cfdi);
 
 		return true; 
 	}
@@ -327,7 +440,7 @@ class AxFolioselectronicosComponent extends Component {
 			$FecTim = $cfdi->getAttribute('FechaTimbrado');
 			$UUID = $cfdi->getAttribute('UUID');
 		}
-		$xml2->save($this->filePath.$UUID.'.xml');
+		$xml2->save($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.$UUID.'.xml');
 
 		if($SelloSat=="") {
 			echo "Surgió un error y no fue posible timbrar el documento";
@@ -336,9 +449,78 @@ class AxFolioselectronicosComponent extends Component {
 			echo "se creo el CFDi ".$UUID.".xml";
 		}
 	}
- 
+
+/*
+GENERAR SELLO DE UN SOLO PASO
+sed -i -e 's:sello=\"\":sello=\"'$(xsltproc cadenaoriginal_2_0.xslt factura.xml | openssl dgst -sha1 -sign aaa010101aaa_csd_08.key.pem | openssl enc -base64 -A)'":' factura.xml
+
+*/
+
+/*
+	public function pem2der($param_type, $param_value) {
+		if ($param_type==AX_PARAM_FILE) {				// If the cert file's path is passed
+			$pem_data = file_get_contents($param_value);
+		}
+		else {											// If the cert is passed as a string
+			$pem_data = $param_value;
+		}
+		$begin = "CERTIFICATE-----";
+		$end   = "-----END";
+		$der = substr($pem_data, strpos($pem_data, $begin)+strlen($begin));    
+		$der = substr($pem_data, 0, strpos($pem_data, $end));
+		$der = base64_decode($param_value);
+		return $der;
+	}
+
+	function der2pem($param_type, $param_value) {
+		if ($param_type==AX_PARAM_FILE) {				// If the cert file's path is passed
+			$der_data = file_get_contents($param_value);
+		}
+		else {											// If the cert is passed as a string
+			$der_data = $param_value;
+		}
+		$pem = chunk_split(base64_encode($der_data), 64, "\n");
+		$pem = "-----BEGIN CERTIFICATE-----\n".$pem."-----END CERTIFICATE-----\n";
+		return $pem;
+	}
+*/
 }
 
+/*
+//Extract the Certificate Serial Number
+$serial = $this->x509_parsed['serialNumber'] . "";
+                    $base = bcpow("2", "32");
+                    $counter = 100;
+                    $res = "";
+                    $val = $serial;
+
+                    while($counter > 0 && $val > 0) {
+                            $counter = $counter - 1;
+                            $tmpres = dechex(bcmod($val, $base)) . "";
+                            // adjust for 0's
+                            for ($i = 8-strlen($tmpres); $i > 0; $i = $i-1) {
+                                    $tmpres = "0$tmpres";
+                            }
+                            $res = $tmpres .$res;
+                            $val = bcdiv($val, $base);
+                    }
+                    if ($counter <= 0) {
+                            return false;
+                    }
+                    return strtoupper($res);
+*/
+/*
+
+*Option #3: OpenSSL
+
+Serial Number:
+-> openssl x509 -in CERTIFICATE_FILE -serial -noout
+
+Thumbprint:
+-> openssl x509 -in CERTIFICATE_FILE -fingerprint -noout
+
+
+*/
 /*
 		$cert = <<<TEXT
 -----BEGIN CERTIFICATE-----
@@ -387,3 +569,13 @@ wPVJ/KcRMuzk0lUCfh7cKEc1K8StOyGKfSvUm8stMqpH
 -----END RSA PRIVATE KEY-----
 TEXT;
 */
+
+
+
+/*
+
+GENERAR SELLO CON OPENSSL (SHA1 hash)
+openssl dgst -sha1 -out sign.bin -sign KEY.PEM CadOri.txt
+
+
+**/

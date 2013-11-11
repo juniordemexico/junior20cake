@@ -107,6 +107,20 @@
 	define('AX_TALLAS_MAX', 10);
 	define('AX_AUTOCOMLPETE_ITEMS_LIMIT',16);
 
+	define('AX_PARAM_DATA', 1 );
+	define('AX_PARAM_STRING', 2 );
+	define('AX_PARAM_NUMBER', 3 );
+	define('AX_PARAM_INTEGER', 4 );
+	define('AX_PARAM_FOLDER', 5 );
+	define('AX_PARAM_FILE', 6 );
+	define('AX_PARAM_PATH', 7 );
+	define('AX_PARAM_ARRAY', 8 );
+	define('AX_PARAM_OBJECT', 9 );
+	define('AX_PARAM_TEXT', 10 );
+	define('AX_PARAM_XML', 11 );
+	define('AX_PARAM_JSON', 12 );
+	define('AX_PARAM_CSV', 13 );
+
 	// Load jQuery's AjaxMultiUpload plugin's bootstrap file
 	require APP . 'config' . DS . 'ajaxmultiupload.bootstrap.php';
 

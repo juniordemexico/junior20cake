@@ -28,7 +28,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 								);
 
 		$filter = $this->Filter->process($this);
-		$this->set('facturas', $this->paginate($filter));
+		$this->set('items', $this->paginate($filter));
 	}
 	
 	public function generaxml($id=null) {
@@ -55,7 +55,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 //		echo '<pre>getXML()::'.$this->AxFolioselectronicos->getXML().'</pre>';
 		$cfdi= $this->AxFolioselectronicos->getCFDI();		// Devuelve el Sello Digital
 		echo 'getCFDI()::<br/><br/>'; echo htmlspecialchars($cfdi);
-//		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
+		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
 		
 /*
 		$fac = new timbradoCFDi();
