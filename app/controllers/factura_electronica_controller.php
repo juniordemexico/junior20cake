@@ -41,32 +41,52 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			}
 		}
 		
-		$docto=$this->Factura->getDoctoForCFDI( $id );		// Obtenemos los datos del documento desde el Modelo Factura
+		// Generamos el XML con Cadena Original y Sello
+		$docto=$this->Factura->getDoctoForCFDI( $id );
 		
-		if (!$this->AxFolioselectronicos->createCFDI( $docto )) echo "NO PUS NO SE CREO NADA";		// Pasamos el documento en formato json
-//		$this->AxFolioselectronicos->generaXML();
-//		echo '<pre>getXML():: '.$this->AxFolioselectronicos->getXML()."</pre>";	// Devuelve el XML
-		echo "<br/>\n\r";
-//		$cadena= $this->AxFolioselectronicos->generaCadenaOriginal();	// Devuelve la Cadena Original
-//		echo '<pre>generaCadenaOriginal():: '.$cadena.'</pre>';
-//		$cfdi= $this->AxFolioselectronicos->generaSello();		// Devuelve el Sello Digital
-		echo '<pre>getSello()::'.$this->AxFolioselectronicos->getSello().'</pre>';
-		echo '<pre>getCadenaOriginal()::'.$this->AxFolioselectronicos->getCadenaOriginal().'</pre>';
-//		echo '<pre>getXML()::'.$this->AxFolioselectronicos->getXML().'</pre>';
-		$cfdi= $this->AxFolioselectronicos->getCFDI();		// Devuelve el Sello Digital
-		echo 'getCFDI()::<br/><br/>'; echo htmlspecialchars($cfdi);
-		$this->AxFolioselectronicos->timbrarComprobanteFiscal($cfdi); // Envia el documento a timbrar por medio del Webservice
+		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
+			echo '<div class="well well-small text-error"><h3>Error al Crear XML CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+			return;
+		}
 		
-/*
-		$fac = new timbradoCFDi();
-		$fac->setData($data);
+		// Envia el documento a timbrar por medio del Webservice
+		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
+			echo '<div class="well well-small text-error"><h3>Error al Timbrar XML CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+			return;
+		}
 
-		echo $fac->getXML()."<br>";
-		$cadena= $fac->obtenerCadenaOriginal();
-		$cfdi= $fac->generarSello($cadena);
-		$fac->timbrarComprobanteFiscal($cfdi);
-*/
+		echo '<div class="well well-small"><h3>Respuesta del PAC</h3>'.
+			'<p class="text-info">'.$this->AxFolioselectronicos->message.'</p>'.
+			'<code>'.htmlspecialchars($this->Axfile->FileToString($this->AxFolioselectronicos->pathDOCS.DS.$this->AxFolioselectronicos->documento['filename'])).'</code>'.
+			'</div>';
+
+		echo '<div class="well well-small text-error"><h3>Datos obtenidos del PAC</h3>';
+		print_r($this->AxFolioselectronicos->documento);
+		echo '</div>';
+
 	}
+
+/*
+	public function imprime( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		$data=$this->{$this->masterModelName}->findById($id);
+
+		$this->layout='report';
+		$this->set('result', 'ok' );
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data[$this->masterModelName][$this->masterModelTitle]
+				);
+	}
+*/
+
 	
 	function download($id=null, $format='pdf') {
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
@@ -155,7 +175,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$logPath='/home/www/junior20cake/app/files/facturaselectronicas';
 		$folios_no_encontrados=array();
 		$folios_renombrados=array();
-//		echo json_encode($theFacturas);
+
 		echo "\n\n<table style='width: 75%; border: 1px solid #000; padding: 2px; margin:0px;font-family: courier;font-size:10px;' >\n\n";
 		ECHO "<thead><tr><th>RESULTADO</th><th>FOLIO</th><th>FECHA</th><th>ARCHIVO</th><th>NUEVO NOMBRE</th></tr></thead>";
 		foreach($theFacturas as $item) {

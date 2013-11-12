@@ -384,7 +384,7 @@ $response->userdata['name'] = 'Totals:';
 	}
 
 	public function autocomplete($keyword='', $tipo=0) {
- 		Configure::write ( 'debug', 0 );
+		Configure::write ( 'debug', 0 );
   		$this->layout = 'json';
 //		$this->autoRender=false;
 

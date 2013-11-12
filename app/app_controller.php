@@ -394,6 +394,21 @@ class MasterAppController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	public function imprime( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		$data=$this->{$this->masterModelName}->findById($id);
+
+		$this->layout='print';
+		$this->set('result', 'ok' );
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data[$this->masterModelName][$this->masterModelTitle]
+				);
+	}
+
 }
 
 // Controller class for List, Data Browsing, etc
@@ -432,9 +447,11 @@ class MasterDetailAppController extends AppController {
 		}
 
 		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$this->layout='print';
+		$this->set('result', 'ok' );
 		$this->set('data', $data );
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
-					$data['Master'][$this->{$this->masterModelName}->title]
+					$data['Master'][$this->masterModelTitle]
 				);
 	}
 

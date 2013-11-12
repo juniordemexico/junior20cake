@@ -26,6 +26,14 @@ class Factura extends AppModel
 	public $cache=false;
 	public $recursive=1;
 
+	public $title = 'farefer';
+	public $longTitle = null;
+	public $dateField='fafecha';
+	public $dateLimitField='fafvence';
+	public $stField='fast';
+
+	public $detailsModel='Facturadet';
+
 	public $virtualFields = array(
 		'faimporte' => 'faimporte',
 		'faimpoimpu' => 'faimpoimpu',
@@ -179,8 +187,6 @@ class Factura extends AppModel
 		 	"Receptor"	=>$receptor,
 		 	"Emisor"	=>$emisor,
 			);
-
-		echo '<h2>Out (final)::</h2>'; pr($out);
 
 		return json_encode($out);
 

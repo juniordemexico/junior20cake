@@ -1,0 +1,32 @@
+body {
+	font-family: 'helvetica', arial, sans-serif;
+	background-color: white;
+	color: black;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 8pt;
+	width: 8.5in;
+}
+
+code {
+	border: 0px none;
+	margin: 4px;
+	padding: 8px;
+	line-height: 14pt;
+}
+
+.roundcorners {
+	-webkit-border-radius:6px 6px 6px 6px;
+	-moz-border-radius:6px 6px 6px 6px;
+	border-radius:6px 6px 6px 6px;
+}
+
+div.reportheader, div.reportcontent, div.reportfooter, div.code {
+	text-align: center;
+	vertical-align: middle;
+	margin: 0px;
+	border: 0px none;
+	padding: 8px;
+	width: 98%;
+}
+

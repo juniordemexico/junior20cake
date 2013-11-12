@@ -9,26 +9,25 @@
 	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- CSS Style Includes -->
-	<?php echo $html->css('ax.report', 'stylesheet', array('media'=>'all', 'inline'=>true));?>
+	<?php echo $html->css('ax.print', 'stylesheet', array('media'=>'all', 'inline'=>true));?>
 
 	<!-- Action's Specific Scripts -->
 
 	<?php echo $scripts_for_layout; ?>
 
-
-	<title><?php echo $title_for_layout; ?></title>
+	<title>IMPRESION::<?php echo $title_for_layout; ?></title>
 
 </head>
 
 <body>
 
-
 <?php echo $this->TBS->myflashes(); ?>
 
-<section id="sectionReportContent">
+<div id="content">
 <?php echo $content_for_layout; ?>
-						
-</section>
+</div>						
+
+
 <section id="sectionWebAppCode" class="hidden script">
 <?php echo $this->Js->writeBuffer();?>
 </section>

@@ -3,24 +3,24 @@
 class AxFolioselectronicosComponent extends Component {
 
 	public $json_dec;
-	public $cfdi;
 	public $envtext;
 	public $version;
-	public $_data;
-	public $_xml;
+
 	public $_cert;
 	public $_pkey;
-	public $_cadenaoriginal;
-	public $_sello;
-	public $_cfdi;
-	public $c;
-	public $rfc;
-	public $folio;
-	public $serie;
-	public $consecutivo;
-	public $fecha;
-	public $filePath;
-	public $totalItems;
+	public $certificado;
+	public $certificadoSerial;
+	
+	public $_data;
+
+	public $xml;
+	public $cfdi;
+	public $cadenaoriginal;
+	public $sello;
+
+	public $documento= array();
+
+	public $message='';
 
 
 	function startup( &$controller ) {
@@ -30,29 +30,60 @@ class AxFolioselectronicosComponent extends Component {
 		$this->pathPKEY=APP.'files'.DS.'SAT'.DS.'SAT_PKEY_JME910405B83.pem';
 		$this->pathDOCS=APP.'files'.DS.'comprobantesdigitales';
 		$this->pathTEMP=APP.'files'.DS.'comprobantesdigitales'.DS.'tmp';
-		$this->_xml='';
-		$this->_data=array();
-		$this->_sello=null;
-		$this->_cadenaoriginal=null;
-		$this->docto_id=null;
-		$this->folio=null;
-		$this->serie=null;
-		$this->consecutivo=null;
-		$this->fecha=null;
-		$this->totalItems=0;
+		$this->pathXSLT=APP.'files'.DS.'SAT'.DS.'cadena_original.xsl';
+							
+		// Carga el certificado y llave privada
+		if( !$this->loadCert() ) {
+			echo 'Error cargando Certificado y Llave Privada';
+			return false;
+		}
+
 	}
 
+	public function initCFDI() {
+		$this->_data=array();
+		$this->sello=null;
+		$this->cadenaoriginal=null;
+		$this->xml='';
+		$this->documento=array(
+							'id'=>null,
+							'uuid'=>null,
+							'tipo'=>null,
+							'folio'=>null,
+							'serie'=>null,
+							'consecutivo'=>null,
+							'fecha'=>null,
+							'emisor_rfc'=>null,
+							'receptor_rfc'=>null
+							);		
+	}
+	
 	public function createCFDI( $data = null ) {
+
+		// Inicializa los datos del documento
+		$this->initCFDI();
+
 		// Si nos pasan los datos en json, los ponemos en la propiedad _data en forma de arreglo
 		if($data && is_string($data) && !empty($data)) $this->setData($data);
-		// Carga el certificado y llave privada
-		if( !$this->loadCert() ) return false;
+		
 		// Genera el XML basico, sin sello, ni cadena original
-		if( $this->generaXML() ) ECHO "MAL generaXML";
+		if( !$this->generaXML() ) {
+			$this->message='Error generando el XML inicial';
+			return false;
+		}
+		
 		// Genera la Cadena Original a partir del XML generado en primer termino
-		if( !$this->generaCadenaOriginal() )  ECHO "MAL generaCadenaOriginal";
+		if( !$this->generaCadenaOriginal() ) {
+			$this->message='Error creando Cadena Original';
+			return false;
+		}
+		
 		// Genera el Sello para el XML usando el Certificado y Llave Privada
-		if( !$this->generaSello() )  ECHO "MAL generaSello";
+		if( !$this->generaSello() ) {
+			$this->message='Error generando Sello';
+			return false;
+		}
+		
 		// Genera el XML con la Cadena Original y el Sello incrustados. Listo para Timbrarse.
 //		if( !$this->generaCFDI() ) return false;
 
@@ -71,176 +102,72 @@ class AxFolioselectronicosComponent extends Component {
 		$this->_cert = $this->controller->Axfile->FileToString( $this->pathCERT );
 		$this->_pkey = $this->controller->Axfile->FileToString( $this->pathPKEY );
 
-		if ($this->_cert && !empty($this->_cert) && $this->_pkey && !empty($this->_pkey)) {
-			return true;
+		if ( !($this->_cert && !empty($this->_cert) && $this->_pkey && !empty($this->_pkey)) ) {
+			$this->message='Error al cargar Certificado';
+			return false;
 		}
-		return false;
+
+		$cert509 = openssl_x509_read($this->_cert.$this->_pkey) or die("\nNo se puede leer el certificado\n");
+		$_data = openssl_x509_parse($cert509);
+		$serial1 = $_data['serialNumber'];
+		$serial2 = gmp_strval($serial1, 16);
+		$serial3 = explode("\n", chunk_split($serial2, 2, "\n"));
+		$serial = "";
+		foreach ($serial3 as $serialt) {
+			if (2 == strlen($serialt))
+				$serial .= chr('0x' . $serialt);
+		}
+
+		$serial="00001000000200904226";
+		$this->certificadoSerial = $serial;
+
+		unset($serial1, $serial2, $serial3, $serialt, $_data, $cert509);
+		preg_match('/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/msi', $this->_cert, $matches) or die("No certificado\n");
+		$algo = $matches[1];
+		$algo = preg_replace('/\n/', '', $algo);
+		$this->certificado = preg_replace('/\r/', '', $algo);
+
+		return true;
 	}
 
 	public function setData($data)
 	{
 		$this->_data=json_decode($data, TRUE);
-		$this->rfc=$this->_data['Emisor']['emrfc'];
-		$this->folio=$this->_data['Master']['folio'];
-		$this->serie=substr($this->_data['Master']['folio'],0,1);
-		$this->consecutivo=substr($this->_data['Master']['folio'],1,8);
-		$this->fecha=substr($this->_data['Master']['fecha'],0,10).'T'.substr($this->_data['Master']['fecha'],11,8);
+		$this->documento['id']=$this->_data['Master']['id'];
+		$this->documento['fecha']=substr($this->_data['Master']['fecha'],0,10).'T'.substr($this->_data['Master']['fecha'],11,8);
+		$this->documento['folio']=$this->_data['Master']['folio'];
+		$this->documento['serie']=substr($this->_data['Master']['folio'],0,1);
+		$this->documento['consecutivo']=substr($this->_data['Master']['folio'],1,8);
+		$this->documento['total']=round($this->_data['Master']['total'],2);
+		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
+		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
 		return true;
 	}
 
-	function getXML()	{
-		return $this->_xml;
-	}
-
-	function getCadenaOriginal()	{
-		return $this->_cadenaoriginal;
-	}
-
-	function getSello( $data=null )	{
-		return $this->_sello;
-	}
-
-	function getCFDI()	{
-		return $this->_cfdi;
-	}
-
 	public function generaXML() {
-
-		$jsonIterator = new RecursiveIteratorIterator(
-    	new RecursiveArrayIterator($this->_data),
-    	RecursiveIteratorIterator::SELF_FIRST);
 
 		$m=$this->_data['Master'];
 		$d=$this->_data['Details'];
 		$e=$this->_data['Emisor'];
 		$r=$this->_data['Receptor'];
-		
-/*
-		$comprobante=
-'<?xml version="1.0" encoding="utf-8"?>'.
-'<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3
-http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
-'serie="'.$this->serie.'" folio="'.$this->consecutivo.'" fecha="'.$this->fecha.'" sello="" '.
-		'NumCtaPago="'.$NUMCTA.'" TipoCambio="'.$TIPOCAMBIO.'" Moneda="'.$MONEDA.'" formaDePago="'.$FORMAPAGO.'" '.
-		'noCertificado="" certificado="" '.
-		'condicionesDePago="'.$CONDICIONESPAGO.'" subTotal="'.$SUBTOTAL.'" total="'.$TOTAL.'" tipoDeComprobante="'.$TIPOCOMPROBANTE.'" metodoDePago="'.$METODOPAGO.'" '.
-		'LugarExpedicion="'.$LUGEXP.'" xmlns:cfdi="http://www.sat.gob.mx/cfd/3">';
-		$rec='<cfdi:Receptor rfc="'.$RFC.'" nombre="'.$NOMBRE.'"><cfdi:Domicilio calle="'.$CALLE.'" noExterior="'.$NOEXT.'" colonia="'.$COLONIA.'" municipio="'.$MUNICIPIO.'" estado="'.$ESTADO.'" pais="'.$PAIS.'" codigoPostal="'.$CP.'"/></cfdi:Receptor>'; 
-		$emisor=' <cfdi:Emisor rfc="'.$RFC_E.'" nombre="'.$NOMBRE_E.'">'.
-				'<cfdi:DomicilioFiscal calle="'.$CALLE_E.'" noExterior="'.$NOEXT_E.'" colonia="'.$COLONIA_E.'" municipio="'.$MUNICIPIO_E.'" estado="'.$ESTADO_E.'" pais="'.$PAIS_E.'" codigoPostal="'.$CP_E.'"/><cfdi:RegimenFiscal Regimen="'.$REGFISL_E.'" /></cfdi:Emisor> ';
-		$traslados=	'<cfdi:Impuestos><cfdi:Traslados>'.
-					'<cfdi:Traslado importe="'.$IMPORTE.'" impuesto="'.$IMPUESTO.'" tasa="'.$TASA.'"/>'.
-					'</cfdi:Traslados></cfdi:Impuestos>';
-		$this->_xml=$comprobante.$emisor.$rec.$conceptos."</cfdi:Conceptos>".$traslados.'</cfdi:Comprobante>';
-*/
-/*
-		// Y luego hacer un foreach($encabezado as $key=>$value);
-		// y otro foreach($detalles as $key=>$values);
-		$conceptos='';
-		
-		foreach ($jsonIterator as $key => $val) 
-		{
 
-				if(is_array($val)) 
-				{
-					if($key=="Details:")
-					{
-						foreach ($val as $subkey => $subval) 
-						{
-							if(is_array($subval)) 
-							{
-								foreach ($subval as $ssubkey => $ssubval) 
-								{
-								    if(is_array($ssubval)) 
-									{
-										//echo "$ssubkey: <br />";
-									} else {
-										//echo "$ssubkey => $ssubval <br />";
-										if(trim($ssubkey)=="fadcant")		{$CANTIDAD=$ssubval;}
-										if(trim($ssubkey)=="unidad_cve")	{$UNIDAD=$ssubval;} 
-										if(trim($ssubkey)=="arcveart")		{$NOIDENTIFICACION=$ssubval;} 
-										if(trim($ssubkey)=="ardescrip")		{$DESCRIPCION=$ssubval;}
-										if(trim($ssubkey)=="fadprecio")		{$VALORUNITARIO=$ssubval;}               
-										if(trim($ssubkey)=="fadimporte")	{$IMPORTE=$ssubval;}
-									}
-								}
-								
-							}
-
-						}
-						$conceptos.='<cfdi:Concepto cantidad="'.$CANTIDAD.'" unidad="'.$UNIDAD.'" descripcion="'.$DESCRIPCION.'" valorUnitario="'.$VALORUNITARIO.'" importe="'.$IMPORTE.'"/>';
-					}
-				}
-*/
-/*
-				$VERSION="3.2";
-				if(trim($key)=="farefer")			$SERIE=substr($val,0,1);      // ???? (sera es el prefijo del folio??? ej: 'A')
-				if(trim($key)=="farefer")			$FOLIO=substr($val,1,10);      // ???? (sera lo mismo que farefer? ej: A0010345 )
-				if(trim($key)=="formapago")			$FORMAPAGO=$val;  // ???? (cual es el dato aqui?, la llave 'farefer' contiene el folio de la factura, ej: A0010345)  
-				if(trim($key)=="faplazo")			$CONDICIONESPAGO=$val;
-				if(trim($key)=="fasuma")			$SUBTOTAL=$val;
-				if(trim($key)=="fadesc1")			$DESCUENTO=$val;
-				if(trim($key)=="factura__fatotal")	$TOTAL=$val;
-				if(trim($key)=="dicve")				$MONEDA=$val;
-				if(trim($key)=="comprobante_tipo")	$TIPOCOMPROBANTE=$val;
-				if(trim($key)=="ditcambio")			$TIPOCAMBIO=$val;
-				if(trim($key)=="pcta")				$NUMCTA=$val;
-				if(trim($key)=="formapago")			$METODOPAGO=$val;
-				if(trim($key)=="lugar_expedicion")	$LUGEXP=$val;
-				if(trim($key)=="fafecha")			$FECHA=substr($val,0,10).'T'.substr($val,11,8);
-				
-				//Todos estos datos con prefijo 'em' (antes 've'), son los datos de la empresa???
-				if(trim($key)=="emrfc")				{$RFC=$val;}
-				if(trim($key)=="emnom")				{$NOMBRE=$val;}
-				if(trim($key)=="emcalle")			{$CALLE=$val;}
-				if(trim($key)=="emnoext")			{$NOEXT=$val;}
-				if(trim($key)=="emnoint")			{$NOINT=$val;}
-				if(trim($key)=="emcolonia")			{$COLONIA=$val;}
-				if(trim($key)=="emciu")				{$MUNICIPIO=$val;}
-				if(trim($key)=="emedo")				{$ESTADO=$val;}
-				if(trim($key)=="empais")			{$PAIS=$val;}
-				if(trim($key)=="emcp")				{$CP=$val;}
-				if(trim($key)=="vlocalidad")		{$LOCALIDAD_E=$val;}
-	            if(trim($key)=="vref" )				{$REFERENCIA_E=$val;}
-
-				if(trim($key)=="clrfc")				{$RFC_E=$val;}
-				if(trim($key)=="clnom")				{$NOMBRE_E=$val;}
-				if(trim($key)=="clcalle")			{$CALLE_E=$val;}
-				if(trim($key)=="clnoext")			{$NOEXT_E=$val;}
-				if(trim($key)=="clnoint")			{$NOINT_E=$val;}
-				if(trim($key)=="clcolonia")			{$COLONIA_E=$val;}
-				if(trim($key)=="cllocalidad")		{$LOCALIDAD_E=$val;}
-				if(trim($key)=="clreferencia")		{$REFERENCIA_E=$val;}
-				if(trim($key)=="clciu")				{$MUNICIPIO_E=$val;}
-				if(trim($key)=="cledo")				{$ESTADO_E=$val;} 
-				if(trim($key)=="clpais")			{$PAIS_E=$val;} 
-				if(trim($key)=="clcp")				{$CP_E=$val;}
-				if(trim($key)=="regegfis")			{$REGFISL_E=$val;} 
-				
-				if(trim($key)=="faimpu_cve")		{$IMPUESTO=$val;}
-				if(trim($key)=="faimpu")			{$TASA=$val;} 
-				if(trim($key)=="factura__fatotal")		{$IMPORTE=$val;} 
-				if(trim($key)=="factura__faimpoimpu")	{$totalTrasladados=$val;}
-
-		}
-*/
-
-		if(!isset($this->fecha) || !$this->fecha) {
-			$this->fecha=date("Y-m-d").'T'.date("H:i:s");
+		if(!isset($this->documento['fecha']) || !$this->documento['fecha']) {
+			$this->documento['fecha']=date("Y-m-d").'T'.date("H:i:s");
 		}
 		
 		// Datos del Comprobante Digital
 		$comprobante=
-		'serie="'.$this->serie.'" '.
-		'folio="'.$this->consecutivo.'" '.
-		'fecha="'.$this->fecha.'" '.
+		'serie="'.$this->documento['serie'].'" '.
+		'folio="'.$this->documento['consecutivo'].'" '.
+//		'fecha="'.$this->documento['fecha'].'" '.
+		'fecha="'.'2013-11-11T01:00:00'.'" '.
 		'sello="" '.
 		'NumCtaPago="'.$m['pago_numcta'].'" '.
 		'TipoCambio="'.round($m['tcambio'],2).'" '.
 		'Moneda="'.trim($m['divisa_cve']).'" '.
 		'formaDePago="'.'TRANSFERENCIA'.'" '.
-		'noCertificado="" '.
-		'certificado="" '.
+		'noCertificado="'.$this->certificadoSerial.'" '.
+		'certificado="'.$this->certificado.'" '.
 		'condicionesDePago="'.$m['plazo'].'" '.
 		'subTotal="'.round($m['suma'],2).'" '.
 		'total="'.round($m['total'],2).'" '.
@@ -299,7 +226,6 @@ http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version
 
 
 		// Seccion de Conceptos (son las partidas o items que el comprobante contiene)
-		$this->totalItems=0;
 		$conceptos="<cfdi:Conceptos>";
 		foreach($d as $detalle) {
 			$conceptos.=
@@ -310,20 +236,17 @@ http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version
 			'valorUnitario="'.round($detalle['precio'],2).'" '.
 			'importe="'.round($detalle['importe'],2).'" '.
 			'/>';
-			$this->totalItems+=1;
 		}
 		$conceptos=$conceptos."</cfdi:Conceptos>";
 
 		// Ensambla el XML (todavia sin cadena original, ni sello)
-		$this->_xml='<?xml version="1.0" encoding="utf-8"?>'.
+		$this->xml='<?xml version="1.0" encoding="utf-8"?>'.
 					'<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 '.
 					'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
 					$comprobante.$emisor.$receptor.$conceptos.$traslados.
 					'</cfdi:Comprobante>';
+//		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->xml);
 
-		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.'.fuente.xml', $this->_xml);
-
-		echo "<H2>XML::</H2>"; pr($this->_xml);
 		return true;
 	}
 
@@ -331,76 +254,55 @@ http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version
 	function generaCadenaOriginal()
 	{
 		$myDom = new DOMDocument();
-		$myDom->loadXML($this->_xml);
+		$myDom->loadXML($this->xml);
 		$xslt = new XSLTProcessor();
 		$XSL = new DOMDocument();
 		$XSL->load('../vendors/timbrado/cadenaoriginal_3_2.xslt', LIBXML_NOCDATA);
 		$xslt->importStylesheet($XSL);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 		$cadena_original = $xslt->transformToXML( $c );
-		$this->_cadenaoriginal=$cadena_original;
+		$this->cadenaoriginal=$cadena_original;
 		return true;
 	}
 
 	function generaSello()
 	{
-		$cert=
-		$this->controller->Axfile->FileToString($this->pathCERT).
-		$this->controller->Axfile->FileToString($this->pathPKEY);
-
-		$cert509 = openssl_x509_read($cert) or die("\nNo se puede leer el certificado\n");
-		$_data = openssl_x509_parse($cert509);
-		$serial1 = $_data['serialNumber'];
-		$serial2 = gmp_strval($serial1, 16);
-		$serial3 = explode("\n", chunk_split($serial2, 2, "\n"));
-		$serial = "";
-		foreach ($serial3 as $serialt) {
-			if (2 == strlen($serialt))
-				$serial .= chr('0x' . $serialt);
-		}
-		$serial="00001000000200904226";
-		$noCertificado = $serial;
-
-		unset($serial1, $serial2, $serial3, $serialt, $_data, $cert509);
-		preg_match('/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/msi', $this->_cert, $matches) or die("No certificado\n");
-		$algo = $matches[1];
-		$algo = preg_replace('/\n/', '', $algo);
-		$certificado = preg_replace('/\r/', '', $algo);
-		$key = openssl_pkey_get_private($cert) or die("No llave privada\n");
+		$key = openssl_pkey_get_private($this->_cert . $this->_pkey) or die("No llave privada\n");
 		$crypttext = "";
-		openssl_sign($this->_cadenaoriginal, $crypttext, $key, OPENSSL_ALGO_SHA1); // "sha1"
-		$this->_sello = base64_encode($crypttext);
+		openssl_sign($this->cadenaoriginal, $crypttext, $key, OPENSSL_ALGO_SHA1); // "sha1"
+		$this->sello = base64_encode($crypttext);
 
 		$myDom = new DOMDocument();
-		echo "<code>this->_xml:\n<br>"; echo htmlspecialchars($this->_xml); echo "</code>";
 
-		$myDom->loadXML($this->_xml);
+		$myDom->loadXML($this->xml);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 
-		$c->setAttribute('certificado', $certificado);
-		$c->setAttribute('sello', $this->_sello);
-		$c->setAttribute('noCertificado', $noCertificado);
-		echo "<pre>c (after setting attributes):\n<br>"; print_r($c); echo "</pre>";
-		$this->_cfdi = $myDom->saveXML();
-		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.'.sellado.xml', $this->_cfdi);
+		$c->setAttribute('sello', $this->sello);
+
+		$this->cfdi = $myDom->saveXML();
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->cfdi);
+
+//		echo '<div class=><h2>this->cfdi:</h2>'; echo htmlspecialchars($this->cfdi); echo "</pre>";
 
 		return true; 
 	}
 
 
-	function timbrarComprobanteFiscal($miCFDI=null) {
-		$envtext = '<?xml version="1.0" encoding="UTF-8"?>
-	<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:ns1="http://facturacion.finkok.com/stamp" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
-	<SOAP-ENV:Header/> <ns0:Body> <ns1:stamp> 
-	<ns1:xml>'.base64_encode($miCFDI).'</ns1:xml>
-	<ns1:username>v.islas.padilla@gmail.com</ns1:username>
-	<ns1:password>27Marzo!</ns1:password>
-	</ns1:stamp>
-	</ns0:Body>
-	</SOAP-ENV:Envelope>';
+	function timbrarComprobanteFiscal() {
+		$envtext = 
+		'<?xml version="1.0" encoding="UTF-8"?>
+		<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:ns1="http://facturacion.finkok.com/stamp" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
+		<SOAP-ENV:Header/> <ns0:Body> <ns1:stamp> 
+		<ns1:xml>'.base64_encode($this->cfdi).'</ns1:xml>
+		<ns1:username>v.islas.padilla@gmail.com</ns1:username>
+		<ns1:password>27Marzo!</ns1:password>
+		</ns1:stamp>
+		</ns0:Body>
+		</SOAP-ENV:Envelope>';
 
-		echo "<h1>REQUEST</h1>".htmlspecialchars($envtext);
+//		echo "<h1>REQUEST</h1>"."<pre>".htmlspecialchars($envtext)."</pre>";
+
 		$env = new DOMDocument();
 		$env->loadXML($envtext) or die("\n\n\nError interno en el sobre");
 		$env->saveXML();
@@ -419,7 +321,7 @@ http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version
 			die("Error en comunicacion\n");
 		}
 		curl_close($process);
-		echo "<h1>RESPONSE</h1>".htmlspecialchars($timbre);
+
 		$myXML="";
 		$xml = new DOMDocument();
 		$xml->loadXML($timbre) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
@@ -435,19 +337,22 @@ http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version
 
 		foreach ( $cfdi as $cfdi) {
 			$SelloSat = $cfdi->getAttribute('selloSAT');
-			$certificado = $cfdi->getAttribute('noCertificadoSAT');
-			$selloCFD = $cfdi->getAttribute('selloCFD');
-			$FecTim = $cfdi->getAttribute('FechaTimbrado');
-			$UUID = $cfdi->getAttribute('UUID');
+			$this->documento['certificado'] = $cfdi->getAttribute('noCertificado');
+			$this->documento['selloCFD'] = $cfdi->getAttribute('selloCFD');
+			$this->documento['FechaTimbrado'] = $cfdi->getAttribute('FechaTimbrado');
+			$this->documento['UUID'] = $cfdi->getAttribute('UUID');
 		}
-		$xml2->save($this->pathDOCS.DS.$this->rfc.'-'.$this->folio.$UUID.'.xml');
 
 		if($SelloSat=="") {
-			echo "Surgió un error y no fue posible timbrar el documento";
+			$this->message="Surgió un error y no fue posible timbrar el documento ".$this->documento['folio'];
+			return false;
 		}
-		else {
-			echo "se creo el CFDi ".$UUID.".xml";
-		}
+
+		$this->documento['filename']=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.xml';
+		$xml2->save($this->pathDOCS.DS.$this->documento['filename']);
+		
+		$this->message='Se creo el CFDi '.$this->documento['folio'].' ('.$this->documento['filename'].')';
+		return true;
 	}
 
 /*
@@ -579,3 +484,29 @@ openssl dgst -sha1 -out sign.bin -sign KEY.PEM CadOri.txt
 
 
 **/
+
+
+/*
+		$cert=
+		$this->controller->Axfile->FileToString($this->pathCERT).
+		$this->controller->Axfile->FileToString($this->pathPKEY);
+
+		$cert509 = openssl_x509_read($cert) or die("\nNo se puede leer el certificado\n");
+		$_data = openssl_x509_parse($cert509);
+		$serial1 = $_data['serialNumber'];
+		$serial2 = gmp_strval($serial1, 16);
+		$serial3 = explode("\n", chunk_split($serial2, 2, "\n"));
+		$serial = "";
+		foreach ($serial3 as $serialt) {
+			if (2 == strlen($serialt))
+				$serial .= chr('0x' . $serialt);
+		}
+		$serial="00001000000200904226";
+		$this->certificadoSerial = $serial;
+
+		unset($serial1, $serial2, $serial3, $serialt, $_data, $cert509);
+		preg_match('/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/msi', $this->_cert, $matches) or die("No certificado\n");
+		$algo = $matches[1];
+		$algo = preg_replace('/\n/', '', $algo);
+		$certificado = preg_replace('/\r/', '', $algo);
+*/
