@@ -21,47 +21,49 @@
 	<integer>229</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/config/bootstrap.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>30</integer>
-				<key>line</key>
-				<integer>116</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>86</integer>
-		</dict>
 		<key>app/controllers/components/ax_folioselectronicos.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>48</integer>
 				<key>line</key>
-				<integer>137</integer>
+				<integer>330</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>115</integer>
+			<integer>304</integer>
 		</dict>
 		<key>app/controllers/factura_electronica_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>125</integer>
-				<key>line</key>
 				<integer>63</integer>
+				<key>line</key>
+				<integer>55</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>54</integer>
+			<integer>35</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>55</integer>
+				<key>line</key>
+				<integer>55</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>63</integer>
+				<key>line</key>
+				<integer>55</integer>
+			</dict>
 		</dict>
 		<key>app/files/queries/queries-temp.sql</key>
 		<dict>
@@ -82,14 +84,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>102</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>16</integer>
+			<integer>103</integer>
+		</dict>
+		<key>app/views/factura_electronica/generaxml.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/factura_electronica/imprime.ctp</key>
 		<dict>
@@ -110,14 +126,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>33</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>48</integer>
+				<integer>117</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>87</integer>
+			<integer>91</integer>
 		</dict>
 		<key>app/views/layouts/report.ctp</key>
 		<dict>
@@ -167,9 +183,9 @@
 	<key>openDocuments</key>
 	<array>
 		<string>app/controllers/factura_electronica_controller.php</string>
+		<string>app/views/factura_electronica/generaxml.ctp</string>
 		<string>app/views/layouts/report.ctp</string>
 		<string>app/webroot/css/ax.report.css</string>
-		<string>app/config/bootstrap.php</string>
 		<string>app/models/factura.php</string>
 		<string>app/views/factura_electronica/imprime.ctp</string>
 		<string>app/controllers/components/ax_folioselectronicos.php</string>

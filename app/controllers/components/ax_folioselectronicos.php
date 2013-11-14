@@ -28,9 +28,11 @@ class AxFolioselectronicosComponent extends Component {
 		$this->version='3.2';
 		$this->pathCERT=APP.'files'.DS.'SAT'.DS.'SAT_CERT_JME910405B83.pem';
 		$this->pathPKEY=APP.'files'.DS.'SAT'.DS.'SAT_PKEY_JME910405B83.pem';
+//		$this->pathCERT=APP.'files'.DS.'SAT'.DS.'aad990814bp7_1210261233s.cer.pem';
+//		$this->pathPKEY=APP.'files'.DS.'SAT'.DS.'aad990814bp7_1210261233s.key.pem';
 		$this->pathDOCS=APP.'files'.DS.'comprobantesdigitales';
 		$this->pathTEMP=APP.'files'.DS.'comprobantesdigitales'.DS.'tmp';
-		$this->pathXSLT=APP.'files'.DS.'SAT'.DS.'cadena_original.xsl';
+		$this->pathXSLT=APP.'files'.DS.'SAT'.DS.'cadenaoriginal_3_2.xslt';
 							
 		// Carga el certificado y llave privada
 		if( !$this->loadCert() ) {
@@ -73,25 +75,12 @@ class AxFolioselectronicosComponent extends Component {
 		}
 		
 		// Genera la Cadena Original a partir del XML generado en primer termino
-		if( !$this->generaCadenaOriginal() ) {
-			$this->message='Error creando Cadena Original';
-			return false;
-		}
+		if( !$this->generaCadenaOriginal() ) return false;
 		
 		// Genera el Sello para el XML usando el Certificado y Llave Privada
-		if( !$this->generaSello() ) {
-			$this->message='Error generando Sello';
-			return false;
-		}
-		
-		// Genera el XML con la Cadena Original y el Sello incrustados. Listo para Timbrarse.
-//		if( !$this->generaCFDI() ) return false;
-
-		// Guarda el XML generado en la carpeta de archivos asignada o en GridFS
-//		$this->storeCFDI();
+		if( !$this->generaSello() ) return false;
 
 		return true;
-
 	}
 
 
@@ -107,7 +96,11 @@ class AxFolioselectronicosComponent extends Component {
 			return false;
 		}
 
-		$cert509 = openssl_x509_read($this->_cert.$this->_pkey) or die("\nNo se puede leer el certificado\n");
+		if( !( $cert509 = openssl_x509_read( $this->_cert . $this->_pkey )) ) {
+			$this->message='El Certificado NO se pudo leer.';
+			return false;
+		}
+		
 		$_data = openssl_x509_parse($cert509);
 		$serial1 = $_data['serialNumber'];
 		$serial2 = gmp_strval($serial1, 16);
@@ -119,6 +112,7 @@ class AxFolioselectronicosComponent extends Component {
 		}
 
 		$serial="00001000000200904226";
+//		$serial='20001000000200000293';
 		$this->certificadoSerial = $serial;
 
 		unset($serial1, $serial2, $serial3, $serialt, $_data, $cert509);
@@ -139,6 +133,7 @@ class AxFolioselectronicosComponent extends Component {
 		$this->documento['serie']=substr($this->_data['Master']['folio'],0,1);
 		$this->documento['consecutivo']=substr($this->_data['Master']['folio'],1,8);
 		$this->documento['total']=round($this->_data['Master']['total'],2);
+//		$this->documento['emisor_rfc']='AAD990814BP7';
 		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
 		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
 		return true;
@@ -160,7 +155,7 @@ class AxFolioselectronicosComponent extends Component {
 		'serie="'.$this->documento['serie'].'" '.
 		'folio="'.$this->documento['consecutivo'].'" '.
 //		'fecha="'.$this->documento['fecha'].'" '.
-		'fecha="'.'2013-11-11T01:00:00'.'" '.
+		'fecha="'.'2013-11-14T01:00:00'.'" '.
 		'sello="" '.
 		'NumCtaPago="'.$m['pago_numcta'].'" '.
 		'TipoCambio="'.round($m['tcambio'],2).'" '.
@@ -169,7 +164,7 @@ class AxFolioselectronicosComponent extends Component {
 		'noCertificado="'.$this->certificadoSerial.'" '.
 		'certificado="'.$this->certificado.'" '.
 		'condicionesDePago="'.$m['plazo'].'" '.
-		'subTotal="'.round($m['suma'],2).'" '.
+		'subTotal="'.round($m['importe'],2).'" '.
 		'total="'.round($m['total'],2).'" '.
 		'tipoDeComprobante="'.$m['comprobante_tipo'].'" '.
 		'metodoDePago="'.$m['metodo_pago'].'" '.
@@ -255,19 +250,29 @@ class AxFolioselectronicosComponent extends Component {
 	{
 		$myDom = new DOMDocument();
 		$myDom->loadXML($this->xml);
+
+		Configure::write('debug', 0);
+
 		$xslt = new XSLTProcessor();
 		$XSL = new DOMDocument();
-		$XSL->load('../vendors/timbrado/cadenaoriginal_3_2.xslt', LIBXML_NOCDATA);
+		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
 		$xslt->importStylesheet($XSL);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
-		$cadena_original = $xslt->transformToXML( $c );
-		$this->cadenaoriginal=$cadena_original;
+		$this->cadenaoriginal = $xslt->transformToXML( $c );
+		if( !$this->cadenaoriginal || empty($this->cadenaoriginal) ) {
+			$this->message='Error al generar la cadena original ('.xslt_error($xslt).')';
+			return false;
+		}
 		return true;
 	}
 
 	function generaSello()
 	{
-		$key = openssl_pkey_get_private($this->_cert . $this->_pkey) or die("No llave privada\n");
+		$key = openssl_pkey_get_private($this->_cert . $this->_pkey);
+		if( !$key ) {
+			$this->message='La llave privada NO se identifico';
+			return false;
+		}
 		$crypttext = "";
 		openssl_sign($this->cadenaoriginal, $crypttext, $key, OPENSSL_ALGO_SHA1); // "sha1"
 		$this->sello = base64_encode($crypttext);
@@ -280,10 +285,15 @@ class AxFolioselectronicosComponent extends Component {
 		$c->setAttribute('sello', $this->sello);
 
 		$this->cfdi = $myDom->saveXML();
+		if( !$this->cfdi || !isset($this->cfdi) || empty($this->cfdi) ) {
+			$this->message='Error al generar el archivo XML para timbrado.';
+			return false;
+		}
+		
 		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->cfdi);
+		echo "<div><h3>XML sellado</h3><pre>"; echo htmlspecialchars($this->cfdi); echo "</pre></div>";
 
-//		echo '<div class=><h2>this->cfdi:</h2>'; echo htmlspecialchars($this->cfdi); echo "</pre>";
-
+		$this->message='Se generó el XML sellado para timbrar';
 		return true; 
 	}
 
@@ -301,10 +311,17 @@ class AxFolioselectronicosComponent extends Component {
 		</ns0:Body>
 		</SOAP-ENV:Envelope>';
 
-//		echo "<h1>REQUEST</h1>"."<pre>".htmlspecialchars($envtext)."</pre>";
+
 
 		$env = new DOMDocument();
-		$env->loadXML($envtext) or die("\n\n\nError interno en el sobre");
+		
+		if( !$env->loadXML($envtext) ) {
+			$this->message='Error en el Ensobretado del XML. No se pudo timbrar.';
+			return false;
+		}
+//		echo "<div><h3>XML sellado y ensobretado</h3><pre>"; echo htmlspecialchars($envtext); echo "</pre></div>";
+		
+		// Hacemos peticion al Webservice del PAC. Enviando el XML dentro de un sobre SOAP
 		$env->saveXML();
 		$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl');
 		curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
@@ -315,35 +332,47 @@ class AxFolioselectronicosComponent extends Component {
 		curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($process, CURLOPT_SSLCERTPASSWD, 'AAAI8204261TA');
 		$timbre = curl_exec($process);
+		echo "<h3>Timbre::</h3>";
+		pr($timbre);
 		if (!$timbre) {
-			return "Error: ".curl_errno($process)." - ".curl_error($process)."<br>";
+			$this->message='Error de comunicación al Webservice: '.curl_errno($process)." - ".curl_error($process);
 			curl_close($process);
-			die("Error en comunicacion\n");
+			return false;
 		}
 		curl_close($process);
 
+		echo "<h1>RESPONSE</h1>"."<pre style='width: 400px;'>".htmlspecialchars($timbre)."</pre>";
+		
 		$myXML="";
 		$xml = new DOMDocument();
-		$xml->loadXML($timbre) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
-		$searchNode =   $xml->getElementsByTagName('xml');
+		if ( !$xml->loadXML($timbre) ) {
+			$this->message='Error al leer la respuesta del PAC';
+			return false;
+		}
+		
+		$searchNode = $xml->getElementsByTagName('xml');
 		foreach ( $searchNode as $searchNode) {
 			$myXML= $searchNode->nodeValue;
 		}
 		$myXML=str_replace('&gt;','>',$myXML);
 		$myXML=str_replace('&lt;','<',$myXML);
 		$xml2 = new DOMDocument();
-		$xml2->loadXML($myXML) or die("\n\n\nSurgió un error y no fue posible timbrar el documento");
+		if ( !$xml2->loadXML($myXML) ) {
+			$this->message='Se presento un error en el documento a timbrar.';
+			return false;
+		}
+
 		$cfdi = $xml2->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', '*');
 
 		foreach ( $cfdi as $cfdi) {
-			$SelloSat = $cfdi->getAttribute('selloSAT');
 			$this->documento['certificado'] = $cfdi->getAttribute('noCertificado');
+			$this->documento['selloSAT'] = $cfdi->getAttribute('selloSAT');
 			$this->documento['selloCFD'] = $cfdi->getAttribute('selloCFD');
 			$this->documento['FechaTimbrado'] = $cfdi->getAttribute('FechaTimbrado');
 			$this->documento['UUID'] = $cfdi->getAttribute('UUID');
 		}
 
-		if($SelloSat=="") {
+		if($this->documento['selloSAT']=='' || $this->documento['UUID']=='' ) {
 			$this->message="Surgió un error y no fue posible timbrar el documento ".$this->documento['folio'];
 			return false;
 		}
@@ -351,7 +380,28 @@ class AxFolioselectronicosComponent extends Component {
 		$this->documento['filename']=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.xml';
 		$xml2->save($this->pathDOCS.DS.$this->documento['filename']);
 		
-		$this->message='Se creo el CFDi '.$this->documento['folio'].' ('.$this->documento['filename'].')';
+		// Generamos el Codigo QR del documento y lo guardamos en un archivo
+		if( !$this->generaqr() ) {
+			$this->message='Error al crear el Código QR del Comprobante '.$this->document['folio'];
+			return false;
+		}
+
+		$this->message='Se creó el CFDi '.$this->documento['folio'].' ('.$this->documento['filename'].')';
+		return true;
+	}
+
+	public function generaqr() {
+		$total=$this->_data['Master']['total'];
+		$decimal=round($this->_data['Master']['total'],6);
+		$total=
+		$data=	'?re='.$this->document['emisor_rfc'].
+				'&rr='.$this->document['receptor_rfc'].
+				'&tt='.$this->document['total'].
+				'&id='.$this->document['receptor_rfc'].
+		$filename=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.png';
+		QRcode::png($data, $this->pathDOCS.DS.$filename, 'M', 4, 2);
+		$this->message='Se generó el Código QR para el CFDi '.$this->documento['folio'].
+						' ('.$this->pathDOCS.DS.$filename.')';
 		return true;
 	}
 

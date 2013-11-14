@@ -123,4 +123,5 @@
 
 	// Load jQuery's AjaxMultiUpload plugin's bootstrap file
 	require APP . 'config' . DS . 'ajaxmultiupload.bootstrap.php';
+	require APP . 'vendors' . DS . 'phpqrcode/qrlib.php';
 

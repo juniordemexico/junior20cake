@@ -14,6 +14,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 							'crefec','modfec');
 	var $layout = 'plain';
 	
+	var $pathDOCS;
+	
 	function index() {
 		$this->Factura->recursive = 0;
 		$this->paginate = array(
@@ -50,7 +52,12 @@ class FacturaElectronicaController extends MasterDetailAppController {
 				'</div>';
 			return;
 		}
-		
+		else {
+			echo '<div class="well well-small text-success"><h3>Creación de XML para CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+		}
+
 		// Envia el documento a timbrar por medio del Webservice
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
 			echo '<div class="well well-small text-error"><h3>Error al Timbrar XML CFDi</h3>'.
@@ -58,36 +65,42 @@ class FacturaElectronicaController extends MasterDetailAppController {
 				'</div>';
 			return;
 		}
+		else {
+			echo '<div class="well well-small text-success"><h3>Timbrado del CFDi por el PAC</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+		}
 
-		echo '<div class="well well-small"><h3>Respuesta del PAC</h3>'.
-			'<p class="text-info">'.$this->AxFolioselectronicos->message.'</p>'.
+		echo '<div class="well well-small text-info"><h3>Respuesta del PAC</h3>'.
+			'<p>'.$this->AxFolioselectronicos->message.'</p>'.
 			'<code>'.htmlspecialchars($this->Axfile->FileToString($this->AxFolioselectronicos->pathDOCS.DS.$this->AxFolioselectronicos->documento['filename'])).'</code>'.
 			'</div>';
 
-		echo '<div class="well well-small text-error"><h3>Datos obtenidos del PAC</h3>';
+		echo '<div class="well well-small text-error"><h3>Datos obtenidos del PAC</h3><code>';
 		print_r($this->AxFolioselectronicos->documento);
-		echo '</div>';
+		echo '</code></div>';
 
 	}
 
-/*
-	public function imprime( $id = null ) {
-		if (!$id || !$id>0) {
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			$this->redirect(array('action' => 'index'));
+	public function qrcode($id=null) {
+		if(!$id) {
+			$id=$this->params['url']['id'];
 		}
-		$data=$this->{$this->masterModelName}->findById($id);
 
-		$this->layout='report';
-		$this->set('result', 'ok' );
-		$this->set('data', $data );
-		$this->set('title_for_layout', ucfirst($this->name).'::'.
-					$data[$this->masterModelName][$this->masterModelTitle]
-				);
+		$appPath=APP.DS.'files/comprobantesdigitales/';
+		$filename='JME910405B83-'.$id.'.png';
+		$format='png';
+		
+		$this->view = 'Media';
+		$params = array('id' => $filename,
+						'name' => $filename,
+						'download' => false,
+						'extension' => $format,
+						'path' => $appPath.DS);
+		$this->set($params);
 	}
-*/
 
-	
+
 	function download($id=null, $format='pdf') {
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
