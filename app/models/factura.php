@@ -80,6 +80,8 @@ class Factura extends AppModel
 		'Cliente', 'Vendedor', 'Divisa'
 	);
 
+//	public $hasOne = array('Comprobante'=>array('className'=>'Comprobante','foreignKey'=>'id', 'conditions'=>array('Comprobante.model'=>'Factura')));
+
 	public $hasMany = array('Facturadet'=>array('className'=>'Facturadet','foreignKey'=>'factura_id'));
 	
 	function beforeFind( $options ) {

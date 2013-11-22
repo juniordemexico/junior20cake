@@ -32,7 +32,58 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('items', $this->paginate($filter));
 	}
-	
+
+	public function imprime( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+
+		$data['Comprobante']=array(
+			'uuid'=>'0749CF42-905C-4419-8095-15A4667B5FD7',
+			'sello_emisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'fecha_timbrado'=>'2013-11-19 01:00:00',
+			'no_certificado_sat'=>'01000006746677',
+			'sello_cfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'sello_sat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
+			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
+);
+		$this->layout='print';
+		$this->set('result', 'ok' );
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data['Master'][$this->masterModelTitle]
+				);
+	}
+
+	public function imprimepdf( $id = null ) {
+		if (!$id || !$id>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+
+		$data['Comprobante']=array(
+			'uuid'=>'0749CF42-905C-4419-8095-15A4667B5FD7',
+			'sello_emisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'fecha_timbrado'=>'2013-11-19 01:00:00',
+			'no_certificado_sat'=>'01000006746677',
+			'sello_cfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'sello_sat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
+			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
+);
+		$this->layout='pdf';
+		$this->set('result', 'ok' );
+		$this->set('data', $data );
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$data['Master'][$this->masterModelTitle]
+				);
+	}
+
+
 	public function generaxml($id=null) {
 		if (!$id) {
 			if(isset($this->params['url']['id'])) {

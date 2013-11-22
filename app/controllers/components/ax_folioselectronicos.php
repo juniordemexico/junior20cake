@@ -155,7 +155,7 @@ class AxFolioselectronicosComponent extends Component {
 		'serie="'.$this->documento['serie'].'" '.
 		'folio="'.$this->documento['consecutivo'].'" '.
 //		'fecha="'.$this->documento['fecha'].'" '.
-		'fecha="'.'2013-11-14T01:00:00'.'" '.
+		'fecha="'.'2013-11-19T01:00:00'.'" '.
 		'sello="" '.
 		'NumCtaPago="'.$m['pago_numcta'].'" '.
 		'TipoCambio="'.round($m['tcambio'],2).'" '.
@@ -365,7 +365,7 @@ class AxFolioselectronicosComponent extends Component {
 		$cfdi = $xml2->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', '*');
 
 		foreach ( $cfdi as $cfdi) {
-			$this->documento['certificado'] = $cfdi->getAttribute('noCertificado');
+			$this->documento['noCertificado'] = $cfdi->getAttribute('noCertificado');
 			$this->documento['selloSAT'] = $cfdi->getAttribute('selloSAT');
 			$this->documento['selloCFD'] = $cfdi->getAttribute('selloCFD');
 			$this->documento['FechaTimbrado'] = $cfdi->getAttribute('FechaTimbrado');
@@ -382,7 +382,6 @@ class AxFolioselectronicosComponent extends Component {
 		
 		// Generamos el Codigo QR del documento y lo guardamos en un archivo
 		if( !$this->generaqr() ) {
-			$this->message='Error al crear el Código QR del Comprobante '.$this->document['folio'];
 			return false;
 		}
 
@@ -391,17 +390,22 @@ class AxFolioselectronicosComponent extends Component {
 	}
 
 	public function generaqr() {
-		$total=$this->_data['Master']['total'];
-		$decimal=round($this->_data['Master']['total'],6);
-		$total=
-		$data=	'?re='.$this->document['emisor_rfc'].
-				'&rr='.$this->document['receptor_rfc'].
-				'&tt='.$this->document['total'].
-				'&id='.$this->document['receptor_rfc'].
+		$total=str_pad((int)$this->_data['Master']['total'], 10, '0', STR_PAD_LEFT);
+		$decimal=''.$this->_data['Master']['total']-(int)$total;
+		$decimal=str_pad($decimal, 6, '0', STR_PAD_RIGHT);
+		$total=$total.'.'.$decimal; //'0000050456.450000';
+		$data=	'?re='.$this->documento['emisor_rfc'].
+				'&rr='.$this->documento['receptor_rfc'].
+				'&tt='.$total.
+				'&id='.$this->documento['UUID'];
 		$filename=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.png';
 		QRcode::png($data, $this->pathDOCS.DS.$filename, 'M', 4, 2);
-		$this->message='Se generó el Código QR para el CFDi '.$this->documento['folio'].
-						' ('.$this->pathDOCS.DS.$filename.')';
+		if (!file_exists($this->pathDOCS.DS.$filename)) {
+			$this->message='Error NO se pudo generar el código QR';
+			return false;
+		}
+		echo 'Se generó el Código QR para el CFDi '.$this->documento['folio'].
+			' ('.$data.')';
 		return true;
 	}
 

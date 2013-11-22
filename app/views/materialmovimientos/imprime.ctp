@@ -1,178 +1,101 @@
+<div id="divLayout" style="width: 8in; height: 5in; border:0px none; font-size: 9pt; margin: 0px; padding: 0px;">
+
 <header>
-<div class="page-header">
-<h1><small>Movimiento de Almacén <strong class="text-info"><?php echo $data['Materialmovimientos']?></strong></small></h1>
-</div>
-</header>
-
-<pre>
-	<?php print_r($data['Master']);?>
-</pre>
-
-<pre>
-	<?php print_r($data['Details']);?>
-</pre>
-
-<div class="row">
-	<div class="span5">
-	<div class="control-group">
-		<label for="EntsalRefer" class="control-label">Folio:</label>
-		<div class="controls input">
-			<input type="text" id="EntsalRefer" name="data[Entsal][esrefer]" field="Entsal.esrefer"
-				data-ng-readonly="true" readonly="true"
-				data-ng-model="data.Master.esrefer"
-				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
-				class="date readonly" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="EntsalEsfecha" class="control-label">Fecha:</label>
-		<div class="controls input">
-			<input type="text" id="EntsalEsfecha" name="data[Entsal][esfecha]" field="Entsal.esfecha"
-				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="data.Master.esfecha" data-ng-required="true"
-				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="EntsalAlmacen_id" class="control-label">Almacén:</label>
-		<div class="controls input">
-			<select id="EntsalAlmacen_id" name="data[Entsal][almacen_id]"
-				field="Entsal.almacen_id"
-				class="span2"
-				data-ng-model="data.Master.almacen_id"
-				data-ng-options="i.id as i.cve for i in related.Almacen"
-				data-ng-required="true">
-			</select>
-		</div>
-	</div>
-
-	<div class="control-group">
-		<label class="control-label">Estatus:</label>
-		<div class="controls group">
-		<div class="btn-group">
-			<button type="button" id="EntsalStA" class="btn" data-ng-class="{'btn-success': data.Master.st==app.estatus.Activo}" name="data[Entsal][st]" data-ng-model="data.Master.st" data-btn-radio="'A'" data-ng-disabled="data.Master.st==estatus.Cancelado">Activo</button>
-			<button type="button" id="EntsalStC" class="btn" data-ng-class="{'btn-danger': data.Master.st==app.estatus.Cancelado}" name="data[Entsal][st]" data-ng-model="data.Master.st" data-btn-radio="'C'" data-ng-disabled="data.Master.st==estatus.Activo">Cancelado</button>
-		</div>
-		</div>
-	</div>
-
-	<div class="control-group">
-		<label for="EntsalOcompra_refer" class="control-label">Referencia Compra:</label>
-		<div class="controls input">
-			<input type="text" id="EntsalOcompra_refer" name="data[Entsal][ocompra_refer]" field="Entsal.ocompra_refer"
-				class="span2"
-				data-ng-model="data.Master.ocompra_refer"
-				data-ng-minlength="0" data-ng-maxlength="8"
-				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Orden de Compra, proporciona su Folio." />
-		</div>
-	</div>
-
-	<div class="control-group">
-		<label for="EntsalOproduce_refer" class="control-label">Referencia Órden de Prod:</label>
-		<div class="controls input">
-			<input type="text" id="EntsalOproduce_refer" name="data[Entsal][oproduce_refer]" field="Entsal.oproduce_refer"
-				class="span2"
-				data-ng-model="data.Master.oproduce_refer"
-				data-ng-minlength="0" data-ng-maxlength="8"
-				class="date" placeholder="Folio..." title="Si este movimiento corresponde a una Órden de Producción, proporciona su Folio." />
-		</div>
-	</div>
-
-	</div> <!-- div.span -->
-	<div class="span1">&nbsp;</div>
-
-	<div class="span5">
-
-	<div class="control-group">
-		<label for="EntsalTipoartmovbodega_id" class="control-label">Tipo de Mov:</label>
-		<div class="controls input">
-			<select id="EntsalTipoartmovbodega_id" name="data[Entsal][tipoartmovbodega_id]"
-				field="Entsal.tipoartmovbodega_id"
-				class="span3"
-				data-ng-model="data.Master.tipoartmovbodega_id"
-				data-ng-options="i.id as i.cve for i in related.Tipoartmovbodega"
-				data-ng-required="true">
-			</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="EntsalEsconcep" class="control-label">Concepto:</label>
-		<div class="controls input">
-			<input type="text" id="EntsalEsconcep" name="data[Entsal][esconcep]" field="Entsal.esconcep"
-				data-ng-model="data.Master.esconcep" ng-required="true"
-				data-ng-minlength="1" data-ng-maxlength="32" data-ng-required="true"
-				class="span3" placeholder="Concepto..." title="Concepto de la transacción" />
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="CompraObser" class="control-label">Observaciones:</label>
-		<div class="controls input">
-			<textarea name="data[Entsal][obser]" field="Entsal.Obser" maxlength="255"
-				class="span3" cols="20" rows="2" id="EntsalObser"
-				data-ng-model="data.Master.esobser"
-				data-ng-minlength="0" data-ng-maxlength="255"
-				placeholder="Observaciones..."
-			></textarea>
-		</div>
-	</div>
-
-	</div> <!-- div.span5 -->
-
-</div>
-
-
-		<div class="toolbar well well-small" data-ng-hide="data.Master.id>0">
-			<input class="span3" data-ng-model="currentItem.Articulo"
-				data-ui-select2="fieldItem" data-ui-event="{ change : 'getItemByCve()' }" 
-				data-item-placeholder="Código del Material..."
-				title="Proporciona el Código del Material ({{currentItem.Articulo.ardescrip}})" />
-
-			<select class="span3" data-ng-model="currentItem.Color" 
-				data-ng-options="c.cve for c in currentItem.ArticuloColor" 
-				title="Elige el Color del Material" />
-			</select>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="text" maxlength="8" data-ng-model="currentItem.cant"
-				data-ng-minlength="1" data-ng-maxlength="10"
-				class="cant" placeholder="Cant..." title="Especifica la cantidad" />
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button class="btn" type="button" data-ng-click="addCurrentItem()" 
-				data-ng-disabled="(!(currentItem.Articulo.id>0)||!(currentItem.cant>0))">
-				<i class="icon icon-plus-sign"></i> Agregar
-			</button>
-		</div>
-
-		<div id="detailContentTable">
-		<table class="table table-condensed table-bordered table-hover ax-detail-table">
-			<thead>
-			<tr>
-				<th class="span2">Material</th>
-				<th class="span2">Color</th>
-				<th class="">Descripción</th>
-				<th class="cant">Cant</th>
-				<th class="span1">&nbsp;</th>
-			</tr>
-			</thead>
+<div id="divHeader" style="width: 100%; text-align: left; height: 2in; max-height: 2in;">
+	
+	<div id="divCompanyData" style="float: left; width: 40%; text-align: left; vertical-align: top; padding: 4px; margin: 4px; font-size: 7pt; line-height: 9pt;">
+		<ul style="list-style-type: none;">
+			<li><img style="width: 1in; height: 0.5882;" src="/img/logos/oggi_logo_tiny.png" border="0"/></li>
+			<li style="font-weight: bold; font-size: 10pt; line-height: 12pt;">JUNIOR DE MEXICO, S.A. DE C.V.</li>
+			<li>JME910405B83</li>
+			<li>Av. Paseo de la Reforma, No. 2654 Piso15 Int. 1501</li>
+			<li>Constituyentes, Col. Lomas Altas Del. Miguel Hidalgo.</li>
+			<li>C.P. 11950 México D.F.</li>
+		</ul>
+	</div> <!-- #divCompanyData -->				
+	<div id="divDocumentData" style="width: 55%; float: right; text-align: left; vertical-align: middle; background-color: #D0D0D0; vertical-align: top; padding: 4px; margin: 0px; border: 1px solid #000;">
+		<table style="font-size: 9pt; line-height: 11pt; background-color: #D0D0D0; text-align: left;" cellspacing="0" cellpadding="0">
 			<tbody>
-			<tr data-ng-repeat="i in data.Details" data-detail-id="{{i.Detail.id}}" class="item-row">
-				<td class="span2">{{i.Articulo.arcveart}}</td>
-				<td class="span2">{{i.Color.cve}}</td>
-				<td class="">{{i.Articulo.ardescrip}}</td>
-				<td class="cant">{{i.Detail.esdt0}}</td>
-				<td class="span1">
-					<button type="button" class="btn btn-mini ax-btn-detail-delete"
-							data-ng-click="detailDelete($index, i, true)"
-							data-ng-hide="data.Master.id>0">
-							<i class="icon icon-trash"></i>
-					</button>
-				</td>
-			</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt; font-size: 10pt;">Folio: </td>
+					<td style="font-weight: bold; padding: 2pt; font-size: 10pt;"><?php echo $data['Master']['esrefer']?></td>
+				</tr>
+				<tr><td style="10pt; text-align: right; width: 33%; padding: 2pt; font-size: 10pt;">Fecha: </td>
+					<td style="font-weight: bold; padding: 2pt; font-size: 10pt;"><?php echo $data['Master']['esfecha']?></td>
+				</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt;">Almacén: </td>
+					<td style="font-weight: bold; padding: 2pt;"><?php echo $data['Almacen']['aldescrip']?></td>
+				</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt;">Tipo de Mov.: </td>
+					<td style="font-weight: bold; padding: 2pt;"><?php echo $data['Tipoartmovbodega']['cve']?></td>
+				</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt;">Referencia Compra: </td>
+					<td style="font-weight: bold; padding: 2pt;"><?php echo $data['Master']['ocompra_refer']?></td>
+				</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt;">Referencia Orden de Prod.: </td>
+					<td style="font-weight: bold; padding: 2pt;"><?php echo $data['Master']['oproduce_refer']?></td>
+				</tr>
+				<tr rowspan="2"><td style="text-align: right; width: 33%; padding: 2pt; vertical-align: top;">Concepto: </td>
+					<td style="font-weight: bold; padding: 2pt; text-align: left;"><?php echo $data['Master']['esconcep']?></td>
+				</tr>
+				<tr><td style="text-align: right; width: 33%; padding: 2pt;">Estatus: </td>
+					<td style="font-weight: bold; padding: 2pt;">&nbsp;	<?php //echo ($data['Master']['st'] == "C") ? 'CANCELADO' : (($data['Master']['st'] == "A")? 'ACTIVO' : $data['Master']['st']);?></td>
+				</tr>
 			</tbody>
 		</table>
-		</div>
+	</div> <!-- #divDocumentData -->
 
+</div> <!-- #divHeader -->
+</header>
 
+<section>
+<div id="divBody" style="width: 100%; text-align: left; min-height: 2.1in;">
 
-<script language="javascript">
+	<table style="font-size: 8pt; width: 100%; margin: 0px; padding: 0px; border: 1px solid #000;" cellspacing="0" cellpadding="0">
 
-</script>
+	<thead>
+		<tr style="text-align:center; background-color: #D0D0D0;">
+			<th style="width: 2in;">CÓDIGO</th>
+			<th style="width: 1.5in;">COLOR</th>
+			<th style="">DESCRIPCIÓN</th>
+			<th style="width: 1in;">CANTIDAD</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php 
+			$total=0;
+			foreach($data['Details'] as $item):
+				$total += $item['Detail']['esdcant'];
+		?>
+		<tr style="text-align: left;">
+			<td style=""><?php echo $item['Articulo']['arcveart']?></td>
+			<td style=""><?php echo $item['Color']['cve']?></td>
+			<td style=""><?php echo $item['Articulo']['ardescrip']?></td>
+			<td style="text-align: right;"><?php echo $item['Detail']['esdcant']?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+	<tfoot>
+		<tr style="background-color: #D0D0D0;font-size: 10pt; font-weight: bold;text-align:right;">
+			<td style="" colspan="3" style="">TOTAL UNIDADES:</td>
+			<td style=""><?php echo $total?></td>
+		</tr>
+	</tfoot>
+
+	</table>
+
+</div> <!-- #divBody -->
+</section>
+
+<footer>
+<div id="divFooter" style="width: 100%; height: 1.55in; max-height: 1.55in; border:1px solid #000;">
+	<div id="divObservaciones" style="font-size: 8pt; height:0.75in; font-weight: bold; width: 100%; text-align: left;">
+		<span style="font-weight: bold;">OBSERVACIONES:</span><br/>
+		<?php echo $data['Master']['esobser']?>
+	</div>
+	<div id="divOtros" style="font-size: 8pt; border-top: 1px solid #000; height:0.75in; font-weight: bold; width: 100%; text-align: left;">
+			<span style="font-weight: bold;">OTROS:</span><br/>
+	</div>
+</div> <!-- divFooter -->
+</footer>
+
+</div> <!-- #divLayout -->
