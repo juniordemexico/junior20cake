@@ -345,6 +345,10 @@ class AppModel extends Model
 	}
 
 	public function getItemWithDetails($id=null) {
+		echo "yuyuju";
+		//print_r($details);
+		die();
+
 		if( !$id && isset($this->id) && 
 			(is_numeric($this->id) || is_string($this->id)) ) {
 			$id=$this->id;
@@ -364,6 +368,7 @@ class AppModel extends Model
 		$method='findAllBy'.$this->name.'_id';
 		$Item['Details']=array();
 		$details=$this->{$this->detailsModel}->{$method}($id);
+
 		foreach($details as $detail) {
 			$row=array();
 			foreach($detail as $key=>$value) {

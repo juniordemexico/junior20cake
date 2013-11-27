@@ -351,6 +351,59 @@ $response->userdata['name'] = 'Totals:';
 	function inventario() {
 //		$filename='/home/www/junior20cake/app/files/materiales_para_baja_20130903.txt';
 $this->autoRender=false;
+		$filename=APP . DS . 'files/tmp/INVENTARIO-NOVIEMBRE2013.csv'; // '/home/www/junior20cake/app/files/tmp/materiales_inventario_20130917.txt';
+		$myFile=$this->Axfile->FileToArray($filename);
+//		print "trabajaando";
+//		print_r($myFile);
+		$records=array();
+		foreach($myFile as $item) {
+			$fields=split("\t",$item,16);
+			if($fields && count($fields)>4 && isset($fields[0]) && trim($fields[0])<>'' && $fields[0]>0) {
+			$record=array(
+				'articulo_id'=>$fields[0],
+				'articulo_cve'=>$fields[1],			
+				'color_id'=>$fields[2],
+				'color_cve'=>$fields[3],			
+				'familia_cve'=>$fields[4],
+//				'proveedor_cve'=>$fields[9],
+//				'costo'=>$fields[10],
+				'existencia'=>$fields[5]
+				);
+			$records[]=$record;
+
+			echo "<pre style='border: 1px solid #000'>\n\r";
+			echo "MATERIALES:<br/>"."\n";
+			print_r($record);
+
+echo "<code style='background-color: #CCC'>INSERT INTO tmpbodegamaterial(
+											articulo_id,articulo_cve,color_id,color_cve,
+											familia_cve,existencia)
+			 						VALUES (
+									{$record['articulo_id']}, '{$record['articulo_cve']}',
+									{$record['color_id']}, '{$record['color_cve']}',
+									'{$record['familia_cve']}',
+									{$record['existencia']}
+									)";
+									
+			echo "</code></pre>\n\r";
+			}
+			$this->Articulo->query("INSERT INTO tmpbodegamaterial(
+											articulo_id,articulo_cve,color_id,color_cve,
+											familia_cve,existencia)
+			 						VALUES (
+									{$record['articulo_id']}, '{$record['articulo_cve']}',
+									{$record['color_id']}, '{$record['color_cve']}',
+									'{$record['familia_cve']}',
+									{$record['existencia']}
+									);");
+	//		echo "$item\n";
+		}
+		die();
+	}
+
+	function inventario_old() {
+//		$filename='/home/www/junior20cake/app/files/materiales_para_baja_20130903.txt';
+$this->autoRender=false;
 		$filename='/home/www/junior20cake/app/files/tmp/materiales_inventario_20130917.txt';
 		$myFile=$this->Axfile->FileToArray($filename);
 //		print "trabajaando";

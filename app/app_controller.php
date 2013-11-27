@@ -15,7 +15,7 @@ class AppController extends Controller {
 							'Filter',
 							'PaginationRecall',
 							'Webservice.Webservice',
-							'Gmail',
+							'Email',
 							'Upload',
 							'AxFolioselectronicos',
 							);

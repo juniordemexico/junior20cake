@@ -6,7 +6,7 @@ class Facturadet extends AppModel
 	public $name = 'Facturadet';
 
 	public $table = 'Facturadet';
-//	public $useTable = 'Facturadet';
+	public $useTable = 'Facturadet';
 	public $alias = 'Facturadet';
 	public $recursive=0;
 	public $validate = array(
@@ -40,5 +40,3 @@ class Facturadet extends AppModel
 
 
 }
-
-?>
