@@ -302,7 +302,7 @@ $this->Email->smtpOptions = array(
 		$this->Email->from = 'Comprobantes Oggi <lev@oggi.com.mx>';
 		$this->Email->template = 'comprobantesdigitales'; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
-    $this->Email->sendAs = 'html'; // because we like to send pretty mail
+    	$this->Email->sendAs = 'html'; // because we like to send pretty mail
     //Set view variables as normal
     	$this->set('data', $docto);
     //Do not pass any args to send()

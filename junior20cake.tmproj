@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/materiales_controller.php</string>
+	<string>app/app_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>229</integer>
+	<integer>274</integer>
 	<key>metaData</key>
 	<dict>
 		<key>app/app_controller.php</key>
@@ -26,30 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>59</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>448</integer>
+				<integer>17</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>418</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>41</integer>
-				<key>line</key>
-				<integer>448</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>59</integer>
-				<key>line</key>
-				<integer>448</integer>
-			</dict>
+			<integer>615</integer>
 		</dict>
 		<key>app/app_model.php</key>
 		<dict>
@@ -65,20 +49,6 @@
 			<key>firstVisibleLine</key>
 			<integer>334</integer>
 		</dict>
-		<key>app/controllers/components/ax_folioselectronicos.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>43</integer>
-				<key>line</key>
-				<integer>166</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>137</integer>
-		</dict>
 		<key>app/controllers/factura_electronica_controller.php</key>
 		<dict>
 			<key>caret</key>
@@ -86,40 +56,28 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>7</integer>
+				<integer>293</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/controllers/materiales_controller.php</key>
-		<dict>
-			<key>caret</key>
+			<integer>274</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>391</integer>
+				<integer>291</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>362</integer>
-		</dict>
-		<key>app/controllers/ncredito_controller.php</key>
-		<dict>
-			<key>caret</key>
+			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>293</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 		<key>app/models/comprobante.php</key>
 		<dict>
@@ -135,20 +93,6 @@
 			<key>firstVisibleLine</key>
 			<integer>48</integer>
 		</dict>
-		<key>app/models/entsal.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>25</integer>
-				<key>line</key>
-				<integer>79</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>11</integer>
-		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
 			<key>caret</key>
@@ -163,21 +107,35 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/models/ncredito.php</key>
+		<key>app/views/elements/email/html/comprobantesdigitales.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>177</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>49</integer>
+			<integer>0</integer>
 		</dict>
-		<key>app/models/ncreditodet.php</key>
+		<key>app/views/elements/email/text/comprobantesdigitales.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/email-debug.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
@@ -191,47 +149,19 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/print.ctp</key>
+		<key>app/views/layouts/email/text/default.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>22</integer>
+				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>app/views/materialmovimientos/imprime.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>75</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>59</integer>
-		</dict>
-		<key>app/views/ncredito/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>55</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>46</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -240,16 +170,11 @@
 		<string>app/models/comprobante.php</string>
 		<string>app/app_controller.php</string>
 		<string>app/app_model.php</string>
-		<string>app/controllers/materiales_controller.php</string>
-		<string>app/views/materialmovimientos/imprime.ctp</string>
-		<string>app/views/layouts/print.ctp</string>
-		<string>app/controllers/components/ax_folioselectronicos.php</string>
-		<string>app/controllers/ncredito_controller.php</string>
-		<string>app/views/ncredito/index.ctp</string>
-		<string>app/models/ncredito.php</string>
-		<string>app/models/ncreditodet.php</string>
 		<string>app/controllers/factura_electronica_controller.php</string>
-		<string>app/models/entsal.php</string>
+		<string>app/views/elements/email/html/comprobantesdigitales.ctp</string>
+		<string>app/views/elements/email/text/comprobantesdigitales.ctp</string>
+		<string>app/views/layouts/email/text/default.ctp</string>
+		<string>app/views/layouts/email-debug.ctp</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

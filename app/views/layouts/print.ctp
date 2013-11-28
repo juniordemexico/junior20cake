@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body onload="<?php if($printdialog) echo "window.print();"; ?>">
 
 <?php echo $this->TBS->myflashes(); ?>
 

@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
+		<button type="button" class="btn btn-primary" data-ng-click="print(data.Master.id, 0)" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
 		</button>
 		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(data.Master.id>0)" title="Enviar por email la transacción" alt="Compartir">
@@ -241,6 +241,7 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 			if(typeof response.data != 'undefined' && 
 				typeof response.data.result != 'undefined' && response.data.result=='ok') {
 				axAlert(response.data.message, 'success', false);
+				$scope.print(response.data.savedWithID, 1);
 				$scope.data=angular.copy(data);
 				$scope.data.Master.esrefer=response.data.nextFolio;
 				return;
@@ -275,8 +276,12 @@ var emptyItem={Articulo: {'id': null, text: '', title:''}, Color:{}, ArticuloCol
 		});
 	}
 
-	$scope.print = function() {
-		window.open( '/Materialmovimientos/print/'+$scope.data.Master.id,
+	$scope.print = function( id, printdialog ) {
+		if(!angular.isDefined(id)) {
+			var id=$scope.data.Master.id;
+		}
+		var printdialog = angular.isDefined(printdialog) && printdialog==1 ? '1':'0';
+		window.open( '/Materialmovimientos/imprime/'+id+'?printdialog='+printdialog,
 					'_blank');
 	}
 

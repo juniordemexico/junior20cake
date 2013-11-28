@@ -404,6 +404,7 @@ class MasterAppController extends AppController {
 		$this->layout='print';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
+		$this->set('printdialog', (isset($this->params['url']['printdialog']) && $this->params['url']['printdialog']<>0?'1':'0') ); 
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 					$data[$this->masterModelName][$this->masterModelTitle]
 				);
@@ -450,6 +451,7 @@ class MasterDetailAppController extends AppController {
 		$this->layout='print';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
+		$this->set('printdialog', (isset($this->params['url']['printdialog']) && $this->params['url']['printdialog']<>0?'1':'0') ); 
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 					$data['Master'][$this->masterModelTitle]
 				);
@@ -535,6 +537,8 @@ class MasterDetailAppController extends AppController {
 			$id=$model->id;
 			$this->set('result','ok');
 			$this->set('message', "Transacción guardada {$folio}. (id: {$id})");
+			$this->set('savedWithID', $id);
+			$this->set('savedWithFolio', $folio);
 			$this->set('nextFolio', $model->getNextFolio($this->actualSerie, 0));
 		} else {
 			$this->set('result', 'error');
