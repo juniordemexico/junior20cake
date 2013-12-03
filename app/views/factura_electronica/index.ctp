@@ -52,7 +52,7 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<td class="cvecli" title="{{item.Cliente.clnom}}">{{item.Cliente.clcvecli}}</td>
 				<td class="tda" title="{{item.Cliente.clsuc}}">{{item.Cliente.cltda}}</td>
 				<td class="cveven" title="{{item.Vendedor.venom}}">{{item.Vendedor.vecveven}}</td>
-				<td class="total">{{item.Factura.fasuma | currency}}</td>
+				<td class="total">{{item.Factura.factura__fatotal | currency}}</td>
 				<td class="st">{{item.Factura.fast}}</td>
 				<td class="id" title="Creado: {{item.Factura.created}} Modificado: {{item.Factura.modified}}">{{item.Factura.id}}</td>
 				<td class="">

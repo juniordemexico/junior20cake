@@ -26,14 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>8</integer>
 				<key>line</key>
-				<integer>17</integer>
+				<integer>390</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>615</integer>
+			<integer>376</integer>
 		</dict>
 		<key>app/app_model.php</key>
 		<dict>
@@ -54,30 +54,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>293</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>274</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
+				<integer>31</integer>
 				<key>line</key>
 				<integer>291</integer>
 			</dict>
-			<key>selectTo</key>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>273</integer>
+		</dict>
+		<key>app/controllers/materialmovimientos_controller.php</key>
+		<dict>
+			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>293</integer>
+				<integer>71</integer>
 			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>42</integer>
 		</dict>
 		<key>app/models/comprobante.php</key>
 		<dict>
@@ -163,14 +161,61 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>app/views/layouts/print.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/materialmovimientos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>143</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>135</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>143</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/models/factura.php</string>
 		<string>app/models/comprobante.php</string>
 		<string>app/app_controller.php</string>
+		<string>app/views/layouts/print.ctp</string>
+		<string>app/views/materialmovimientos/edit.ctp</string>
 		<string>app/app_model.php</string>
 		<string>app/controllers/factura_electronica_controller.php</string>
+		<string>app/controllers/materialmovimientos_controller.php</string>
 		<string>app/views/elements/email/html/comprobantesdigitales.ctp</string>
 		<string>app/views/elements/email/text/comprobantesdigitales.ctp</string>
 		<string>app/views/layouts/email/text/default.ctp</string>
@@ -179,6 +224,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{29, 21}, {909, 844}}</string>
+	<string>{{-1780, -48}, {909, 844}}</string>
 </dict>
 </plist>

@@ -128,6 +128,7 @@ class Factura extends AppModel
 		$master["metodo_pago"]="PAGO EN UNA SOLA EXHIBICION";
 		$master["impuesto_cve"]="IVA";
 		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
+		$master["fecha"]=date('Y-m-d').'T'.date('H:i:s', time()-300); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
 
 		// Datos del Receptor (nuestro cliente)
 		$receptor=$docto['Cliente'];
@@ -160,6 +161,14 @@ class Factura extends AppModel
 			 					Facturadet.fadprecio, 
 								CAST(SUM(Facturadet.fadcant) AS NUMERIC(14,0)) fadcant,
 								CAST(SUM(Facturadet.fadimporte) AS NUMERIC(14,2)) fadimporte,
+								CAST( SUM( 
+									    ((Facturadet.fadimporteneto*
+										(1-(Factura.fadesc1/100))
+										)*
+										(1-(Factura.fadesc2/100))
+										)*
+										(1-(Factura.fadesc3/100))
+									) as NUMERIC(14,6)) fadimportefinal,
 								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
 								FROM Factura Factura
 								JOIN Facturadet Facturadet ON (Factura.id=Facturadet.factura_id)
@@ -174,9 +183,9 @@ class Factura extends AppModel
 			$Details[]=array(
 					'id'=>$item['Facturadet']['id'],
 					'articulo_id'=>$item['Facturadet']['articulo_id'],
-					'precio'=>$item['Facturadet']['fadprecio'],
+					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],6),
 					'cant'=>$item[0]['fadcant'],
-					'importe'=>$item[0]['fadimporte'],
+					'importe'=>$item[0]['fadimportefinal'],
 					'arcveart'=>$item['Articulo']['arcveart'],
 					'ardescrip'=>trim($item['Articulo']['ardescrip']),
 					'unidad_cve'=>trim($item[0]['unidad_cve']),
