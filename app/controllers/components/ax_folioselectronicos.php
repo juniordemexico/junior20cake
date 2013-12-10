@@ -15,6 +15,8 @@ class AxFolioselectronicosComponent extends Component {
 
 	public $xml;
 	public $cfdi;
+	public $cfdiSigned;
+	public $pacResponse=null;
 	public $cadenaoriginal;
 	public $sello;
 
@@ -32,11 +34,11 @@ class AxFolioselectronicosComponent extends Component {
 //		$this->pathPKEY=APP.'files'.DS.'SAT'.DS.'aad990814bp7_1210261233s.key.pem';
 		$this->pathDOCS=APP.'files'.DS.'comprobantesdigitales';
 		$this->pathTEMP=APP.'files'.DS.'comprobantesdigitales'.DS.'tmp';
-		$this->pathXSLT=APP.'files'.DS.'SAT'.DS.'cadenaoriginal_3_2.xslt';
+		$this->pathXSLT=APP.'files'.DS.'SAT'.DS.'cadenaoriginal_3_2.local.xslt';
 							
 		// Carga el certificado y llave privada
 		if( !$this->loadCert() ) {
-			echo 'Error cargando Certificado y Llave Privada';
+			$this->message='Error cargando Certificado y Llave Privada';
 			return false;
 		}
 
@@ -136,6 +138,9 @@ class AxFolioselectronicosComponent extends Component {
 //		$this->documento['emisor_rfc']='AAD990814BP7';
 		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
 		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
+
+		$this->documento['fecha']=date('Y-m-d').'T'.date('H:i:s',time()-300);
+
 		return true;
 	}
 
@@ -154,8 +159,7 @@ class AxFolioselectronicosComponent extends Component {
 		$comprobante=
 		'serie="'.$this->documento['serie'].'" '.
 		'folio="'.$this->documento['consecutivo'].'" '.
-//		'fecha="'.$this->documento['fecha'].'" '.
-		'fecha="'.'2013-11-25T01:00:00'.'" '.
+		'fecha="'.$this->documento['fecha'].'" '.
 		'sello="" '.
 		'NumCtaPago="'.$m['pago_numcta'].'" '.
 		'TipoCambio="'.(isset($m['tcambio']) && $m['tcambio']<>0 ? round($m['tcambio'],4):'1').'" '.
@@ -248,14 +252,18 @@ class AxFolioselectronicosComponent extends Component {
 
 	function generaCadenaOriginal()
 	{
-		$myDom = new DOMDocument();
+
+		$myDom = new DOMDocument('1.0', 'UTF-8');
 		$myDom->loadXML($this->xml);
 
+ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
+error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		Configure::write('debug', 0);
 
 		$xslt = new XSLTProcessor();
-		$XSL = new DOMDocument();
+		$XSL = new DOMDocument('1.0','UTF-8');
 		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
+ //		$XSL->loadXML(file_get_contents($this->pathXSLT));
 		$xslt->importStylesheet($XSL);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 		$this->cadenaoriginal = $xslt->transformToXML( $c );
@@ -291,7 +299,7 @@ class AxFolioselectronicosComponent extends Component {
 		}
 		
 		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->cfdi);
-		echo "<div><h3>XML sellado</h3><pre>"; echo htmlspecialchars($this->cfdi); echo "</pre></div>";
+//		echo "<div><h3>XML sellado</h3><pre>"; echo htmlspecialchars($this->cfdi); echo "</pre></div>";
 
 		$this->message='Se generó el XML sellado para timbrar';
 		return true; 
@@ -332,8 +340,8 @@ class AxFolioselectronicosComponent extends Component {
 		curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($process, CURLOPT_SSLCERTPASSWD, 'AAAI8204261TA');
 		$timbre = curl_exec($process);
-		echo "<h3>Timbre::</h3>";
-		pr($timbre);
+//		echo "<h3>Timbre::</h3>";
+//		pr($timbre);
 		if (!$timbre) {
 			$this->message='Error de comunicación al Webservice: '.curl_errno($process)." - ".curl_error($process);
 			curl_close($process);
@@ -341,15 +349,17 @@ class AxFolioselectronicosComponent extends Component {
 		}
 		curl_close($process);
 
-		echo "<h1>RESPONSE</h1>"."<pre style='width: 400px;'>".htmlspecialchars($timbre)."</pre>";
+//		echo "<h1>RESPONSE</h1>"."<pre style='width: 400px;'>".htmlspecialchars($timbre)."</pre>";
 		
+		$this->pacResponse=$timbre;
+
 		$myXML="";
 		$xml = new DOMDocument();
 		if ( !$xml->loadXML($timbre) ) {
 			$this->message='Error al leer la respuesta del PAC';
 			return false;
 		}
-		
+
 		$searchNode = $xml->getElementsByTagName('xml');
 		foreach ( $searchNode as $searchNode) {
 			$myXML= $searchNode->nodeValue;
@@ -379,6 +389,7 @@ class AxFolioselectronicosComponent extends Component {
 
 		$this->documento['filename']=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.xml';
 		$xml2->save($this->pathDOCS.DS.$this->documento['filename']);
+	//	$this->cfdiSigned=;
 		
 		// Generamos el Codigo QR del documento y lo guardamos en un archivo
 		if( !$this->generaqr() ) {
@@ -404,8 +415,7 @@ class AxFolioselectronicosComponent extends Component {
 			$this->message='Error NO se pudo generar el código QR';
 			return false;
 		}
-		echo 'Se generó el Código QR para el CFDi '.$this->documento['folio'].
-			' ('.$data.')';
+		$this->message='Se generó el Código QR para el CFDi '.$this->documento['folio'].' ('.$data.')';
 		return true;
 	}
 

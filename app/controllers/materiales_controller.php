@@ -351,7 +351,7 @@ $response->userdata['name'] = 'Totals:';
 	function inventario() {
 //		$filename='/home/www/junior20cake/app/files/materiales_para_baja_20130903.txt';
 $this->autoRender=false;
-		$filename=APP . DS . 'files/tmp/INVENTARIO-NOVIEMBRE2013.csv'; // '/home/www/junior20cake/app/files/tmp/materiales_inventario_20130917.txt';
+		$filename=APP . DS . 'files/tmp/INVENTARIO-NOVIEMBRE2013-v2.csv'; // '/home/www/junior20cake/app/files/tmp/materiales_inventario_20130917.txt';
 		$myFile=$this->Axfile->FileToArray($filename);
 //		print "trabajaando";
 //		print_r($myFile);
@@ -364,10 +364,10 @@ $this->autoRender=false;
 				'articulo_cve'=>$fields[1],			
 				'color_id'=>$fields[2],
 				'color_cve'=>$fields[3],			
-				'familia_cve'=>$fields[4],
-//				'proveedor_cve'=>$fields[9],
-//				'costo'=>$fields[10],
-				'existencia'=>$fields[5]
+//				'familia_cve'=>$fields[4],
+				'proveedor_cve'=>$fields[4],
+				'costo'=>$fields[5],
+				'existencia'=>$fields[6]
 				);
 			$records[]=$record;
 
@@ -377,11 +377,12 @@ $this->autoRender=false;
 
 echo "<code style='background-color: #CCC'>INSERT INTO tmpbodegamaterial(
 											articulo_id,articulo_cve,color_id,color_cve,
-											familia_cve,existencia)
+											proveedor_cve,COSTO,existencia)
 			 						VALUES (
 									{$record['articulo_id']}, '{$record['articulo_cve']}',
 									{$record['color_id']}, '{$record['color_cve']}',
-									'{$record['familia_cve']}',
+									'{$record['proveedor_cve']}',									
+									{$record['costo']},									
 									{$record['existencia']}
 									)";
 									
@@ -389,11 +390,12 @@ echo "<code style='background-color: #CCC'>INSERT INTO tmpbodegamaterial(
 			}
 			$this->Articulo->query("INSERT INTO tmpbodegamaterial(
 											articulo_id,articulo_cve,color_id,color_cve,
-											familia_cve,existencia)
+											proveedor_cve,costo,existencia)
 			 						VALUES (
 									{$record['articulo_id']}, '{$record['articulo_cve']}',
 									{$record['color_id']}, '{$record['color_cve']}',
-									'{$record['familia_cve']}',
+									'{$record['proveedor_cve']}',
+									{$record['costo']},
 									{$record['existencia']}
 									);");
 	//		echo "$item\n";

@@ -602,6 +602,44 @@ class MasterDetailAppController extends AppController {
 		$this->set('related', $model->loadDependencies());
 	}
 
+//Send EMail using SMTP 
+
+	public function _sendemail($sender = array(), $receipt = array(), $params = array(), $body =null){
+		$this->autoRender=false;
+		
+		$path='/mnt/idd-appdata/www.dev/junior20angel/app/files/comprobantesdigitales/';
+		$pathPdf='/mnt/idd-appdata/www.dev/junior20angel/app/webroot/';
+
+		
+//		$fileXML='JME910405B83-'.$sender['folio'].'.xml';
+//		$filePDF='JME910405B83-'.$sender['folio'].'.pdf';
+		
+		$this->Email->smtpOptions = array(
+			'port'=>'465',
+			'timeout'=>'60',
+			'host' => 'ssl://smtp.gmail.com',
+			'username'=>'azeron.oggi@gmail.com',
+			'password'=>'S0p0r1f3R022',);
+			
+		echo "Enviando Correo...".$sender['subject']."<br/>\n";
+		$this->Email->to = $receipt['to'];
+		$this->Email->subject = $sender['subject'];
+		$this->Email->replyTo = $receipt['replyTo'];
+		$this->Email->from = $sender['from'];
+		$this->Email->template = $params['template'];
+		$this->Email->attachments = $params['attachFiles']; //array($path.DS.$fileXML, $pathPdf.DS.$filePDF);
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs = $params['sendAs']; // because we like to send pretty mail
+		//Set view variables as normal
+		$this->set('data', $body);
+		//Do not pass any args to send()
+		$this->Email->delivery = $params['delivery'];	
+		$this->Email->send();
+		echo "Correo enviado...<br/>\n";
+
+	}
+
+
 }
 
 // Controller class for Transactions (inventory i/o, orders, invoices ...) 

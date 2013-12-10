@@ -21,7 +21,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->paginate = array(
 								'update' => '#content',
 								'evalScripts' => true,
-								'limit' => 20,
+								'limit' => 10,
 								'order' => array('Factura.farefer' => 'desc'),
 								'fields' => $this->tableFields,
 								'conditions' => array("Factura.crefec >" => date('Y-m-d', strtotime("-36 months")),'Factura.faT'=>'0'),
@@ -30,7 +30,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 								);
 
 		$filter = $this->Filter->process($this);
-		$this->set('facturas', $this->paginate($filter));
+		$this->set('items', $this->paginate($filter));
 	}
 
 	public function imprime( $id = null ) {
@@ -84,173 +84,53 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	}
 
 
-	public function generacfdi($id=null) {
+	public function generaxml($id=null) {
 		if (!$id) {
 			if(isset($this->params['url']['id'])) {
 				$id=$this->params['url']['id'];
 			}
 			else {
-//				$this->Session->setFlash(__('invalid_item', true), 'error');
-//				$this->redirect(array('action' => 'index'));
+				die("ERROR. NO PASA EL ID");
 			}
 		}
-
-ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
-error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
-
-		$this->View = 'generacfdi';
 		
-		if (isset($this->params['mailcfdi'])) {
-			$mailcfdi=$this->params['mailcfdi'];
-		}
-		else {
-			$mailcfdi=true;
-		}
-		
-		$responses=array();
-		$this->set('responses', $responses);
-
 		// Generamos el XML con Cadena Original y Sello
 		$docto=$this->Factura->getDoctoForCFDI( $id );
-
+		
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
-			$this->set('result', "error");
-			$this->set('message', "ERROR EN CREATECFDI:".$this->AxFolioselectronicos->message);
-	//		return;
-//			$this->Session->setFlash($this->AxFolioselectronicos->message, 'error');
-//			$this->redirect(array('action' => 'generacfdi'));
+			echo '<div class="well well-small text-error"><h3>Error al Crear XML CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+			return;
 		}
 		else {
-			$responses[]=array('default','Creación del XML, Cadena Original y Sello Digital',
-							$this->AxFolioselectronicos->message);
+			echo '<div class="well well-small text-success"><h3>Creación de XML para CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
 		}
 
-		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
-
+		// Envia el documento a timbrar por medio del Webservice
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
-			$this->set('result', "error");
-			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-		$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
-							$this->AxFolioselectronicos->message);
-//			return;
-//			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
-//			$this->redirect(array('action' => 'generacfdi'));
-		}
-
-		// Pasa los datos obtenidos a la vista
-		$responses[]=array('success', 'Timbrado del CFDI por parte del PAC',
-							$this->AxFolioselectronicos->message);
-
-		$responses[]=array('success', 'Respuesta del PAC',
-							json_encode($this->AxFolioselectronicos->documento));
-		
-		$responses[]=array('content', 'Datos del Timbrado',
-							$this->AxFolioselectronicos->pacResponse );
-
-		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
-//		$this->enviacorreo($id);
-/*
-		$mailResult=$this->requestAction('/FacturaElectronica/enviacorreo/'+$id.'.json');
-		if($mailResult && is_array($mailResult) && count($mailResult)>0) {
-			$responses[]=array('success', $mailResult['message']);
+			echo '<div class="well well-small text-error"><h3>Error al Timbrar XML CFDi</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
+			return;
 		}
 		else {
-			$responses[]=array($mailResult['result']=='ok'?'success':'error', 'Envio de XML y PDf por Email al Cliente', $mailResult['message']);			
-		}
-*/
-//		$this->set('result', 'ok');
-		$this->View="generacfdi";
-		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura '.$docto['Master']['Folio'].
-								' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
-		$this->set('responses', $responses);
-
-		$this->render("generacfdi");
-	}
-
-	public function enviacorreo( $id=null) {
-		$this->autoRender=false;
-		if(!$id && isset($this->params['url']['id'])) {
-			$id=$this->params['url']['id'];
-		}
-		$data=null;
-		if( !$data || !is_array($data) || !isset($data['Master']['id']) ) {
-			$data=json_decode($this->Factura->getDoctoForCFDI( $id ), TRUE);
+			echo '<div class="well well-small text-success"><h3>Timbrado del CFDi por el PAC</h3>'.
+				$this->AxFolioselectronicos->message.
+				'</div>';
 		}
 
-		$sender = array(
-			'subject'=>'Comprobante Digital.'.' Junior de Mexico'.'. '.
-								'Factura: '.$data['Master']['folio'].'. '.
-					'99999-87777-444-33'. '. '.	//$data['Master']['uuid']
-								' ['.$data['Master']['fecha'].']',
-			'from'=>'Comprobantes Oggi <azeron@oggi.mx>',
-		);
-		$receipt = array(
-//			'to'=>'azeron@oggi.mx',
-			'to'=>'lev@oggi.mx, azeron@oggi.mx',
-			'replyTo'=>'azeron@oggi.mx',
-		);
+		echo '<div class="well well-small text-info"><h3>Respuesta del PAC</h3>'.
+			'<p>'.$this->AxFolioselectronicos->message.'</p>'.
+			'<code>'.htmlspecialchars($this->Axfile->FileToString($this->AxFolioselectronicos->pathDOCS.DS.$this->AxFolioselectronicos->documento['filename'])).'</code>'.
+			'</div>';
 
-		$params = array(
-			'template'=>'comprobantesdigitales',
-			//Send as 'html', 'text' or 'both' (default is 'text')
-			'sendAs'=>'text',
-			'delivery'=>'smtp',
-			'attachFiles'=>array(
-								APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['folio'].'.xml',
-								APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['folio'].'.pdf'
-								)
-		);
+		echo '<div class="well well-small text-error"><h3>Datos obtenidos del PAC</h3><code>';
+		print_r($this->AxFolioselectronicos->documento);
+		echo '</code></div>';
 
-/*
-	pr($sender);
-	pr($receipt);
-	pr($params);
-	die();
-*/
-		$this->_sendemail($sender, $receipt, $params);
-/*
-		if(!($result = )) {
-			$this->set('result', 'error');
-			$this->set('message', 'Error enviando por correo los archivos XML y PDF al buzón '.$receipt['to']);			
-			$this->set('documento', $data);
-		}
-*/
-
-		$this->set('result', 'ok');
-		$this->set('message', 'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to']);
-		$this->set('documento', $data);
-	}
-
-//Send EMail using SMTP 
-
-	function _sendemail($sender = array(), $receipt = array(), $params = array(), $body=null) {
-//		$this->autoRender=false;
-	
-		$this->Email->smtpOptions = array(
-			'port'=>'465',
-			'timeout'=>'60',
-			'host' => 'ssl://smtp.gmail.com',
-			'username'=>'azeron.oggi@gmail.com',
-			'password'=>'S0p0r1f3R022',
-		);
-
-		if(!$body) $body='';
-		
-		$this->Email->to = $receipt['to'];
-		$this->Email->subject = $sender['subject'];
-		$this->Email->replyTo = $receipt['replyTo'];
-		$this->Email->from = $sender['from'];
-		$this->Email->template = $params['template'];
-		$this->Email->attachments = $params['attachFiles'];
-		//Send as 'html', 'text' or 'both' (default is 'text')
-		$this->Email->sendAs = $params['sendAs']; // because we like to send pretty mail
-		//Set view variables as normal
-		$this->set('data', $body);
-		//Do not pass any args to send()
-		$this->Email->delivery = $params['delivery'];	
-		$this->Email->send();
-		return true;
 	}
 
 	public function qrcode($id=null) {
@@ -396,35 +276,38 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		die();
 	}
 
-}
+	public function enviacorreo( $id=null ) {
+		if(!$id && isset($this->params['url']['id'])) {
+			$id=$this->params['url']['id'];
+		}
+//		$this->layout='empty';
+		$this->autoRender=false;
+		
+		$docto=$this->Factura->getDoctoForCFDI( $id );
 
+$this->Email->smtpOptions = array(
+     'port'=>'465',
+     'timeout'=>'60',
+     'host' => 'ssl://smtp.gmail.com',
+     'username'=>'lev@oggi.mx',
+     'password'=>'3l3ctr0n35',
+);
 
-/*
-		$this->Email->smtpOptions = array(
-						'port'=>'465',
-						'timeout'=>'60',
-						'host' => 'ssl://smtp.gmail.com',
-						'username'=>'lev@oggi.mx',
-						'password'=>'3l3ctr0n35',
-		);
+	echo "Enviando Correo...<br/>\n\l";
 
 		$this->Email->to = 'lev@oggi.mx';
-		$this->Email->bcc = array('lev@oggi.com.mx');
-		$this->Email->subject = 'Comprobante Digital.'.' Junior de Mexico'.'. '.
-								'Factura: '.$docto['Master']['folio'].'. '.
-								$docto['Master']['uuid'].'. '.
-								' ['.$docto['Master']['fecha'].']';
+//		$this->Email->bcc = array('secret@example.com');
+		$this->Email->subject = 'Junior de Mexico. Factura: B0056785 (2013-11-25)';
 		$this->Email->replyTo = 'lev@oggi.mx';
-		$this->Email->from = 'Comprobantes Oggi <lev@oggi.mx>';
+		$this->Email->from = 'Comprobantes Oggi <lev@oggi.com.mx>';
 		$this->Email->template = 'comprobantesdigitales'; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
-		$this->Email->sendAs = 'text'; // because we like to send pretty mail
-		//Set view variables as normal
-		$this->set('data', $docto);
-		//Do not pass any args to send()
+    	$this->Email->sendAs = 'html'; // because we like to send pretty mail
+    //Set view variables as normal
+    	$this->set('data', $docto);
+    //Do not pass any args to send()
 		$this->Email->delivery = 'smtp';	
-		$this->Email->send();
-		*
-		*
-	http://erpdev.oggi.net.mx/FacturaElectronica/generacfdi/6312150
-*/
+    	$this->Email->send();
+	echo "Correo enviado...<br/>\n\l";
+	}
+}

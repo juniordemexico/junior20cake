@@ -16,6 +16,8 @@
 
 	Configure::write('debug', 2);
 
+
+
 /**
  * CakePHP Log Level:
  *
