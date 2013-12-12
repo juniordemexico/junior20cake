@@ -98,7 +98,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
 error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 
-		$this->View = 'generacfdi';
+//		$this->View = 'generacfdi';
 		
 		if (isset($this->params['mailcfdi'])) {
 			$mailcfdi=$this->params['mailcfdi'];
@@ -127,15 +127,15 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 
 		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
 
-		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
-			$this->set('result', "error");
-			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-		$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
-							$this->AxFolioselectronicos->message);
+//		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
+//			$this->set('result', "error");
+//			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
+//		$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
+//							$this->AxFolioselectronicos->message);
 //			return;
 //			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
 //			$this->redirect(array('action' => 'generacfdi'));
-		}
+//		}
 
 		// Pasa los datos obtenidos a la vista
 		$responses[]=array('success', 'Timbrado del CFDI por parte del PAC',
@@ -147,7 +147,7 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		$responses[]=array('content', 'Datos del Timbrado',
 							$this->AxFolioselectronicos->pacResponse );
 
-		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
+//		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
 //		$this->enviacorreo($id);
 /*
 		$mailResult=$this->requestAction('/FacturaElectronica/enviacorreo/'+$id.'.json');
@@ -159,13 +159,13 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		}
 */
 //		$this->set('result', 'ok');
-		$this->View="generacfdi";
+//		$this->View="generacfdi";
 		$this->set('result', 'ok');
 		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura '.$docto['Master']['Folio'].
 								' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
 		$this->set('responses', $responses);
 
-		$this->render("generacfdi");
+//		$this->render("generacfdi");
 	}
 
 	public function enviacorreo( $id=null) {

@@ -264,7 +264,12 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		$XSL = new DOMDocument('1.0','UTF-8');
 		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
  //		$XSL->loadXML(file_get_contents($this->pathXSLT));
+		try {
 		$xslt->importStylesheet($XSL);
+		}
+		catch (e,i){
+			
+		}
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 		$this->cadenaoriginal = $xslt->transformToXML( $c );
 		if( !$this->cadenaoriginal || empty($this->cadenaoriginal) ) {
