@@ -12,7 +12,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'vendedor_id','Vendedor.vecveven','Vendedor.venom','fadivisa',
 							'crefec','modfec');
-	var $layout = 'plain';
+	var $layout = 'default';
 	
 	var $pathDOCS;
 	
@@ -74,7 +74,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'sello_cfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
 			'sello_sat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
 			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
-);
+			);
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
@@ -85,21 +85,23 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 
 	public function generacfdi($id=null) {
+		$this->layout='plain';
 		if (!$id) {
 			if(isset($this->params['url']['id'])) {
 				$id=$this->params['url']['id'];
 			}
 			else {
+			$this->set('result', "error");
+			$this->set('message', "Item Invalido");
+			return;
 //				$this->Session->setFlash(__('invalid_item', true), 'error');
 //				$this->redirect(array('action' => 'index'));
 			}
 		}
 
-ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
-error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
+//ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
+//error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 
-//		$this->View = 'generacfdi';
-		
 		if (isset($this->params['mailcfdi'])) {
 			$mailcfdi=$this->params['mailcfdi'];
 		}
@@ -108,7 +110,7 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		}
 		
 		$responses=array();
-		$this->set('responses', $responses);
+//		$this->set('responses', $responses);
 
 		// Generamos el XML con Cadena Original y Sello
 		$docto=$this->Factura->getDoctoForCFDI( $id );
@@ -116,67 +118,74 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
 			$this->set('result', "error");
 			$this->set('message', "ERROR EN CREATECFDI:".$this->AxFolioselectronicos->message);
-	//		return;
+			return;
 //			$this->Session->setFlash($this->AxFolioselectronicos->message, 'error');
-//			$this->redirect(array('action' => 'generacfdi'));
 		}
 		else {
 			$responses[]=array('default','Creación del XML, Cadena Original y Sello Digital',
 							$this->AxFolioselectronicos->message);
+
 		}
 
 		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
 
-//		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
-//			$this->set('result', "error");
-//			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-//		$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
-//							$this->AxFolioselectronicos->message);
-//			return;
+		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
+			$this->set('result', "error");
+			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
+			$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
+							$this->AxFolioselectronicos->message);
+			return;
 //			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
-//			$this->redirect(array('action' => 'generacfdi'));
-//		}
+		}
 
 		// Pasa los datos obtenidos a la vista
-		$responses[]=array('success', 'Timbrado del CFDI por parte del PAC',
-							$this->AxFolioselectronicos->message);
+//		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>',
+//							$this->AxFolioselectronicos->message);
 
-		$responses[]=array('success', 'Respuesta del PAC',
-							json_encode($this->AxFolioselectronicos->documento));
+	//	$responses[]=array('success', 'Respuesta del PAC',
+	//						);
 		
-		$responses[]=array('content', 'Datos del Timbrado',
-							$this->AxFolioselectronicos->pacResponse );
+		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
+		//					$this->AxFolioselectronicos->pacResponse );
 
 //		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
-//		$this->enviacorreo($id);
-/*
-		$mailResult=$this->requestAction('/FacturaElectronica/enviacorreo/'+$id.'.json');
-		if($mailResult && is_array($mailResult) && count($mailResult)>0) {
-			$responses[]=array('success', $mailResult['message']);
-		}
-		else {
-			$responses[]=array($mailResult['result']=='ok'?'success':'error', 'Envio de XML y PDf por Email al Cliente', $mailResult['message']);			
-		}
-*/
-//		$this->set('result', 'ok');
-//		$this->View="generacfdi";
+
+//		$this->_enviacorreo($id);
+
+//		$mailResult=$this->requestAction('/FacturaElectronica/enviacorreo/'+$id.'.json');
+//		if($mailResult && is_array($mailResult) && count($mailResult)>0) {
+//			$responses[]=array('success', $mailResult['message']);
+//		}
+//		else {
+//			$responses[]=array($mailResult['result']=='ok'?'success':'error', 'Envio de XML y PDf por Email al Cliente', $mailResult['message']);			
+//		}
+
 		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura '.$docto['Master']['Folio'].
-								' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
+		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong>');
+							//	' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
+		$this->set('docto', json_decode($docto));
+		$this->set('documento', $this->AxFolioselectronicos->documento);
 		$this->set('responses', $responses);
 
 //		$this->render("generacfdi");
 	}
 
-	public function enviacorreo( $id=null) {
-		$this->autoRender=false;
-		if(!$id && isset($this->params['url']['id'])) {
+	public function nada($id=null) {
+		$this->autoRender=true;
+		$this->layout='default';
+		echo "el id es:".$id;
+		die();
+	} 
+	
+	public function _enviacorreo( $id=null ) {
+//		$this->autoRender=false;
+		if(isset($this->params['url']['id'])) {
 			$id=$this->params['url']['id'];
 		}
 		$data=null;
-		if( !$data || !is_array($data) || !isset($data['Master']['id']) ) {
+//		if( !$data || !is_array($data) || !isset($data['Master']['id']) ) {
 			$data=json_decode($this->Factura->getDoctoForCFDI( $id ), TRUE);
-		}
+//		}
 
 		$sender = array(
 			'subject'=>'Comprobante Digital.'.' Junior de Mexico'.'. '.
@@ -202,13 +211,9 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 								)
 		);
 
-/*
-	pr($sender);
-	pr($receipt);
-	pr($params);
-	die();
-*/
 		$this->_sendemail($sender, $receipt, $params);
+
+
 /*
 		if(!($result = )) {
 			$this->set('result', 'error');
@@ -217,9 +222,10 @@ error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		}
 */
 
-		$this->set('result', 'ok');
-		$this->set('message', 'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to']);
-		$this->set('documento', $data);
+//		$this->set('result', 'ok');
+//		$this->set('message', 'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to']);
+//		$this->set('documento', $data);
+		return true;
 	}
 
 //Send EMail using SMTP 

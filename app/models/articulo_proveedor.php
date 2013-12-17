@@ -8,7 +8,7 @@ class ArticuloProveedor extends AppModel
 	var $alias = 'ArticuloProveedor';
 
 	var $belongsTo = array(
-		'Articulo', 'Proveedor', 'Unidad'
+		'Articulo', 'Proveedor', 'Unidad', 'Divisa'
 	);
 
 
@@ -41,7 +41,13 @@ class ArticuloProveedor extends AppModel
 							array(	'fields' => array('Unidad.id', 'Unidad.cve'),
 									'order'=>array('Unidad.id') 
 									 )));
-		return compact('Unidad');
+
+		$Divisa = $this->toJsonListArray( $this->Divisa->find('list', 
+							array(	'fields' => array('Divisa.id', 'Divida.dicve'),
+									'order'=>array('Divisa.id') 
+									 )));
+
+		return compact('Unidad', 'Divisa');
 	}
 
 }

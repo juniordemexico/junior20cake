@@ -2,11 +2,11 @@
 //EJEMPLO PARA GENERAR EL PDF
 App::import('Vendor','tcpdf');
 $tcpdf = new TCPDF();
-$tcpdf->SetCreator('JUNIOR');
-$tcpdf->SetAuthor('JUNIOR');
-$tcpdf->SetTitle('FACTURA');
-$tcpdf->SetSubject('EJEMPLO FACTURA');
-$tcpdf->SetKeywords("JUNIOR, CFDI, PDF, FACTURA ELECTRONICA");
+$tcpdf->SetCreator('AxBOS IDD');
+$tcpdf->SetAuthor('Junior de Mexico, SA de CV');
+$tcpdf->SetTitle('FACTURA '.$data['Master']['farefer']);
+$tcpdf->SetSubject('COMPROBANTE FISCAL CFDI INGRESO. FACTURA '.$data['Master']['farefer'].'.');
+$tcpdf->SetKeywords("JUNIOR, CFDI, PDF, COMPROBANTE FISCAL, FACTURA, FACTURA ELECTRONICA, ".$data['Master']['farefer']);
 $tcpdf->setPrintHeader(false);
 $tcpdf->setPrintFooter(false);
 $tcpdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
@@ -270,3 +270,20 @@ $html='
 $filename='JME910405B83-'.$data['Master']['farefer'].'.pdf';
 $tcpdf->writeHTML($html, false, false, false, false, '');
 $tcpdf->Output(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
+
+// El PDF ya se genero, pero no lo vamos a enviar al user-agent, solo lo dejamos 
+// grabado en nuestro sistema local de archivos.
+// Por lo tanto, la accion 'imprimepdf' usa esta vista inicialmente para generar
+// el PDF a partir de HTML. Una vez generado, tenemos que devolver al user-agent
+// El resultado de la creación, lo haremos interrumpiendo el curso normal de la
+// respuesta (incicialmente usando el layout 'media') y cambiamos al layout
+// 'default', para poder enviar el resultado de la operacion en formato json.
+//$this->controller->layout='default';
+
+//header('content type: application/json');
+echo json_encode( array(
+		'result'	=>'ok',
+		'message'	=> 'El PDF correspondiente al CFDI de la factura '.$data['Master']['farefer'].' se genero correctamente.',
+		'data'		=> $data			
+	));
+//$this->controller->_end();

@@ -2,40 +2,64 @@
 
 <header>
 <div class="page-header">
-<h1><small>Generación y Timbrado de CFDI <strong class="text-info">Factura <?php echo $data['Master']['folio']?> (<?php echo $data['Master']['fecha']?>)</strong></small></h1>
+<h3><strong>Timbrado de CFDI</strong> &nbsp;&nbsp;&nbsp;&nbsp; <em class="text-info">Factura <?php echo $docto->Master->folio; ?> (<?php echo $docto->Master->fecha; ?>)</em></h3>
 </div>
 </header>
 
-<div class="alert alert-error">
-<?php echo $message;?>	
-</div>	
-
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
+	<div class="btn-group">	
+		<button type="button" class="btn btn-primary" onclick="javascript: location.reload();" title="Reintentar el timbrado una vez más.">
+			<i class="icon icon-white icon-envelope"></i> Reintentar
+		</button>
+		<button type="button" class="btn btn-warning" onclick="javascript: window.close();" title="Cerrar esta ventana">
+			<i class="icon icon-white icon-envelope"></i> Cerrar
+		</button>
+	</div>
+
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $data['Master']['id'];?>);" title="Descargar el archivo XML.">
+		<button type="button" class="btn btn-warning" onclick="downloadXML(<?php echo $docto->Master->id;?>);" title="Descargar el archivo XML.">
 			<i class="icon icon-white icon-envelope"></i>XML
 		</button>
-		<button type="button" class="btn btn-danger btn-small" onclick="downloadPDF(<?php echo $data['Master']['id'];?>);"  title="Descargar el archivo PDF">
+		<button type="button" class="btn btn-danger" onclick="downloadPDF(<?php echo $docto->Master->id;?>);"  title="Descargar el archivo PDF">
 			<i class="icon icon-white icon-envelope"></i>PDF
 		</button>
-		<button type="button" class="btn btn-info btn-small" onclick="shareCFDI(<?php echo $data['Master']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
+		<button type="button" class="btn btn-info" onclick="shareCFDI(<?php echo $docto->Master->id;?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
 			<i class="icon icon-white icon-envelope"></i>Mail
 		</button>
 	</div>
 </div>
 
-<?php foreach($respuestas as $item): ?>
-<div class="well well-small round-corners">
-	<h2 class="text-<?php echo $item[0];?>"><?php echo $item[1];?></h2>
-	<pre class="preSmall">
+<div class="alert alert-success">
+<?php echo $message;?>	
+</div>	
+
+<?php foreach($responses as $item): ?>
+	<h3 class="text-<?php echo $item[0];?>"><?php echo $item[1];?></h3>
+	<div class="well">
+		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
 		<?php echo $item[2];?>
-	</pre>
-</div>
+		</pre>
+	</div>
+
+<hr/>
 
 <?php endforeach;?>
 
+	<h3 class="text-info">Creación del PDF <small>(representación impresa del xml)</small></h3>
+	<div class="well">
+		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
+<?php
+$aca=$this->requestAction('/FacturaElectronica/imprimepdf/'.$docto->Master->id, array('return'));
+print_r($aca);
+?>
+		</pre>
+	</div>
+
 <hr/>
+
+
+
 </div> <!-- ENDS .generacfdi-form -->
 
 

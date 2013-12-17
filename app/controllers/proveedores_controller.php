@@ -99,11 +99,13 @@ class ProveedoresController extends MasterDetailAppController {
 
 		$proveedor_id=$this->params['url']['proveedor_id'];
 		$material_id=$this->params['url']['material_id'];
+		$divisa_id=isset($this->params['url']['divida_id']) ? $this->params['url']['material_id'] : 1;
 		
 		$record=array('ArticuloProveedor'=>array(
 							'proveedor_id'=>$proveedor_id,
 							'articulo_id'=>$material_id,
 							'costo'=>$this->params['url']['costo'],
+							'divisa_id'=>$divisa_id,
 					));
 
 		if(!isset($this->params['url']['unidad_id']) || !($this->params['url']['unidad_id']>0) )

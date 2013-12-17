@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/components/ax_folioselectronicos.php</string>
+	<string>app/views/factura_electronica/imprimepdf.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,30 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>71</integer>
+				<integer>51</integer>
 				<key>line</key>
-				<integer>609</integer>
+				<integer>123</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>602</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>58</integer>
-				<key>line</key>
-				<integer>609</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>71</integer>
-				<key>line</key>
-				<integer>609</integer>
-			</dict>
+			<integer>80</integer>
 		</dict>
 		<key>app/config/bootstrap.php</key>
 		<dict>
@@ -84,28 +68,44 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>20</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>275</integer>
+				<integer>315</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>255</integer>
+			<integer>290</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>315</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>17</integer>
+				<key>line</key>
+				<integer>315</integer>
+			</dict>
 		</dict>
 		<key>app/controllers/factura_electronica_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>110</integer>
+				<integer>83</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>82</integer>
+			<integer>52</integer>
 		</dict>
 		<key>app/files/queries/queries-temp.sql</key>
 		<dict>
@@ -120,6 +120,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+		</dict>
+		<key>app/models/articulo_proveedor.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>35</integer>
+				<key>line</key>
+				<integer>20</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>2</integer>
 		</dict>
 		<key>app/models/comprobante.php</key>
 		<dict>
@@ -182,37 +196,81 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>52</integer>
+				<integer>47</integer>
 				<key>line</key>
-				<integer>15</integer>
+				<integer>30</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>8</integer>
 		</dict>
 		<key>app/views/factura_electronica/imprimepdf.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>272</integer>
+				<integer>14</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>232</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/views/factura_electronica/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>117</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>77</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>116</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>117</integer>
+			</dict>
+		</dict>
+		<key>app/views/factura_electronica/nada.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>app/views/layouts/default.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -267,8 +325,10 @@
 		<string>app/models/factura.php</string>
 		<string>app/models/comprobante.php</string>
 		<string>app/app_controller.php</string>
+		<string>app/views/layouts/default.ctp</string>
 		<string>app/views/layouts/print.ctp</string>
 		<string>app/controllers/factura_electronica_controller.php</string>
+		<string>app/models/articulo_proveedor.php</string>
 		<string>cake/libs/controller/components/email.php</string>
 		<string>app/files/queries/queries-temp.sql</string>
 		<string>app/controllers/components/ax_export.php</string>
@@ -276,6 +336,7 @@
 		<string>app/views/factura_electronica/imprimepdf.ctp</string>
 		<string>app/views/factura_electronica/generacfdi.ctp</string>
 		<string>app/views/factura_electronica/index.ctp</string>
+		<string>app/views/factura_electronica/nada.ctp</string>
 		<string>app/views/elements/email/html/comprobantesdigitales.ctp</string>
 		<string>app/views/elements/email/text/comprobantesdigitales.ctp</string>
 		<string>app/views/layouts/email/text/default.ctp</string>
@@ -284,6 +345,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{27, 29}, {909, 844}}</string>
+	<string>{{0, 0}, {909, 844}}</string>
 </dict>
 </plist>

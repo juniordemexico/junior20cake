@@ -61,7 +61,7 @@ class AxFolioselectronicosComponent extends Component {
 							'receptor_rfc'=>null
 							);		
 	}
-	
+
 	public function createCFDI( $data = null ) {
 
 		// Inicializa los datos del documento
@@ -78,7 +78,7 @@ class AxFolioselectronicosComponent extends Component {
 		
 		// Genera la Cadena Original a partir del XML generado en primer termino
 		if( !$this->generaCadenaOriginal() ) return false;
-		
+				
 		// Genera el Sello para el XML usando el Certificado y Llave Privada
 		if( !$this->generaSello() ) return false;
 
@@ -253,29 +253,31 @@ class AxFolioselectronicosComponent extends Component {
 	function generaCadenaOriginal()
 	{
 
-		$myDom = new DOMDocument('1.0', 'UTF-8');
+		$myDom = new DOMDocument();
 		$myDom->loadXML($this->xml);
 
-ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
-error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
+//ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
+//error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
 		Configure::write('debug', 0);
 
 		$xslt = new XSLTProcessor();
-		$XSL = new DOMDocument('1.0','UTF-8');
+		$XSL = new DOMDocument();
 		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
- //		$XSL->loadXML(file_get_contents($this->pathXSLT));
-		try {
-		$xslt->importStylesheet($XSL);
-		}
-		catch (e,i){
-			
-		}
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
+
+		ob_start();
+		
+		$xslt->importStylesheet($XSL);
 		$this->cadenaoriginal = $xslt->transformToXML( $c );
+
+		ob_end_clean();
+
 		if( !$this->cadenaoriginal || empty($this->cadenaoriginal) ) {
 			$this->message='Error al generar la cadena original ('.xslt_error($xslt).')';
 			return false;
 		}
+
+		$this->message='La cadena original se genero correctamente';
 		return true;
 	}
 
