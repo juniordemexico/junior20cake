@@ -12,7 +12,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'vendedor_id','Vendedor.vecveven','Vendedor.venom','fadivisa',
 							'crefec','modfec');
-	var $layout = 'default';
+	var $layout = 'plain';
 	
 	var $pathDOCS;
 	
@@ -85,7 +85,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 
 	public function generacfdi($id=null) {
-		$this->layout='plain';
 		if (!$id) {
 			if(isset($this->params['url']['id'])) {
 				$id=$this->params['url']['id'];
@@ -149,6 +148,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		//					$this->AxFolioselectronicos->pacResponse );
 
 //		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
+//		$responses[]=array('info', 'El archivo PDF se generó :: '.$pdfResult );
 
 //		$this->_enviacorreo($id);
 
@@ -170,14 +170,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 //		$this->render("generacfdi");
 	}
 
-	public function nada($id=null) {
-		$this->autoRender=true;
-		$this->layout='default';
-		echo "el id es:".$id;
-		die();
-	} 
 	
-	public function _enviacorreo( $id=null ) {
+	public function enviacorreo( $id=null ) {
 //		$this->autoRender=false;
 		if(isset($this->params['url']['id'])) {
 			$id=$this->params['url']['id'];
@@ -195,8 +189,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'from'=>'Comprobantes Oggi <azeron@oggi.mx>',
 		);
 		$receipt = array(
-//			'to'=>'azeron@oggi.mx',
-			'to'=>'lev@oggi.mx, azeron@oggi.mx',
+//			'to'=>'azeron@oggi.mx, lev@oggi.mx',
+			'to'=>'lev@oggi.mx, azeron@oggi.mx, aperez@oggi.mx, sera@oggi.mx',
 			'replyTo'=>'azeron@oggi.mx',
 		);
 
@@ -213,19 +207,15 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		$this->_sendemail($sender, $receipt, $params);
 
+		$this->set('result', 'ok');
+		$this->set('message', 'Se enviaron por correo los archivos XML y PDF al buzón <strong>'.$receipt['to'].'</strong>');
+		$this->set('documento', $data);
 
-/*
-		if(!($result = )) {
-			$this->set('result', 'error');
-			$this->set('message', 'Error enviando por correo los archivos XML y PDF al buzón '.$receipt['to']);			
-			$this->set('documento', $data);
-		}
-*/
-
-//		$this->set('result', 'ok');
-//		$this->set('message', 'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to']);
-//		$this->set('documento', $data);
-		return true;
+		return json_encode(array(
+					'result'=>'ok',
+					'message'=>'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to'].'.',
+//					'data'=>$data
+					));
 	}
 
 //Send EMail using SMTP 

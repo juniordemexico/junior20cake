@@ -280,7 +280,7 @@ $tcpdf->Output(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
 // 'default', para poder enviar el resultado de la operacion en formato json.
 //$this->controller->layout='default';
 
-//header('content type: application/json');
+header('content type: application/json');
 echo json_encode( array(
 		'result'	=>'ok',
 		'message'	=> 'El PDF correspondiente al CFDI de la factura '.$data['Master']['farefer'].' se genero correctamente.',
