@@ -68,9 +68,19 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['crefec'].'.'; ?>"><?php echo 'XXXXXX-YYYYY-ZZZZ-HHHHHHHH';//$factura['Factura']['id']; ?></td>
 				<td class="id" title="<?php echo 'Creado: '.$factura['Factura']['crefec'].'. Modificado: '.$factura['Factura']['modfec'].'.'; ?>"><?php echo $factura['Factura']['id']; ?></td>
 				<td class="action">
+
 				<div class="btn-group">
+				<button type="button" class="btn btn-danger btn-small" onclick="cancelaCFDI(<?php echo $factura['Factura']['id'];?>);" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
+					<i class="icon icon-white icon-qrcode"></i>Cancela
+				</button>
+				<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
+					<i class="icon icon-white icon-envelope"></i>XML
+				</button>
+				</div>
+
+				<div class="btn-group pull-right">
 				<button type="button" class="btn btn-primary btn-small" onclick="generaCFDI(<?php echo $factura['Factura']['id'];?>);" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
-					<i class="icon icon-white icon-qrcode"></i>Timbrar
+					<i class="icon icon-white icon-qrcode"></i>Timbra
 				</button>
 				<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
 					<i class="icon icon-white icon-envelope"></i>XML
@@ -79,9 +89,10 @@ echo $form->create('Factura',array('inputDefaults' => array(
 					<i class="icon icon-white icon-envelope"></i>PDF
 				</button>
 				<button type="button" class="btn btn-info btn-small" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
-					<i class="icon icon-white icon-envelope"></i>Mail
+					<i class="icon icon-white icon-envelope"></i>
 				</button>
 				</div>
+
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -112,6 +123,15 @@ var downloadPDF = function(id) {
 var shareCFDI = function(id) {
 	window.open('/FacturaElectronica/enviacorreo/'+id);
 }
+
+var cancelaCFDI = function(id) {
+	window.open('/FacturaElectronica/cancelacfdi/'+id);
+}
+
+var downloadCancelaCFDI = function(id) {
+	window.open('/FacturaElectronica/downloadcancela/'+id+'/xml');
+}
+
 
 </script>
 <script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

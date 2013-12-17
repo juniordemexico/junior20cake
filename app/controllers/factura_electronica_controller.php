@@ -90,11 +90,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 				$id=$this->params['url']['id'];
 			}
 			else {
-			$this->set('result', "error");
-			$this->set('message', "Item Invalido");
-			return;
-//				$this->Session->setFlash(__('invalid_item', true), 'error');
-//				$this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('invalid_item', true), 'error');
+				return;
 			}
 		}
 
@@ -113,6 +110,10 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		// Generamos el XML con Cadena Original y Sello
 		$docto=$this->Factura->getDoctoForCFDI( $id );
+		
+		$docto_arr=json_decode($docto);
+		
+		$this->set('title_for_layout', 'Factura CFDI :: '.$docto_arr->Master->folio);
 
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
 			$this->set('result', "error");
@@ -137,28 +138,9 @@ class FacturaElectronicaController extends MasterDetailAppController {
 //			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
 		}
 
-		// Pasa los datos obtenidos a la vista
-//		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>',
-//							$this->AxFolioselectronicos->message);
-
-	//	$responses[]=array('success', 'Respuesta del PAC',
-	//						);
-		
 		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
 		//					$this->AxFolioselectronicos->pacResponse );
 
-//		$pdfResult=$this->requestAction('/FacturaElectronica/imprimepdf/'+$id);
-//		$responses[]=array('info', 'El archivo PDF se generó :: '.$pdfResult );
-
-//		$this->_enviacorreo($id);
-
-//		$mailResult=$this->requestAction('/FacturaElectronica/enviacorreo/'+$id.'.json');
-//		if($mailResult && is_array($mailResult) && count($mailResult)>0) {
-//			$responses[]=array('success', $mailResult['message']);
-//		}
-//		else {
-//			$responses[]=array($mailResult['result']=='ok'?'success':'error', 'Envio de XML y PDf por Email al Cliente', $mailResult['message']);			
-//		}
 
 		$this->set('result', 'ok');
 		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong>');
@@ -166,10 +148,118 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->set('docto', json_decode($docto));
 		$this->set('documento', $this->AxFolioselectronicos->documento);
 		$this->set('responses', $responses);
-
-//		$this->render("generacfdi");
 	}
 
+	public function cancelacfdi( $id=null ) {
+
+/*
+		if (!$id) {
+			if(isset($this->params['url']['id'])) {
+				$id=$this->params['url']['id'];
+			}
+			else {
+				$this->Session->setFlash(__('invalid_item', true), 'error');
+				return;
+			}
+		}
+*/
+
+		$this->set('title_for_layout', 'Factura CFDI Cancelación :: '.$id);
+
+		$UUID= "4D991501-2F08-4CA2-95CC-29838B6A47A7";
+		$RFC= "JME910405B83";
+		$path_CERT=APP.'files'.DS.'SAT'.DS.'SAT_CERT_JME910405B83.pem';
+		$path_PKEY=APP.'files'.DS.'SAT'.DS.'SAT_PKEY_JME910405B83.pem';
+		$pathDOCS=APP.'files'.DS.'comprobantesdigitales';
+
+		$file_CERT = fopen($path_CERT, "r");
+		$content_CERT = base64_encode(fread($file_CERT, filesize($path_CERT)));
+		fclose($file_CERT);
+//		$content_CERT = base64_encode($this->Axfile->FileToString( $file_CERT ));
+		
+		$file_PKEY = fopen($path_PKEY, "r");
+		$content_PKEY = base64_encode(fread($file_PKEY, filesize($path_PKEY)));
+		fclose($file_PKEY);
+//		$content_PKEY = base64_encode($this->Axfile->FileToString( $path_PKEY ));
+
+		$item=$this->Factura->findById($id);
+		
+		if(!$item && !isset($item['Factura'])) {
+			$this->set('result', "error");
+			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Factura: '.$item['Factura']['farefer']. ' (id:'.$item['Factura']['id'].')');
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			return;			
+		}
+		$this->set('title_for_layout', 'Factura CFDI Cancelación :: '.$item['Factura']['farefer']);
+		
+		$textenv=
+		'<?xml version="1.0" encoding="UTF-8"?>
+		<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="uuid" xmlns:ns3="wis.soap.cacellation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:ns1="http://facturacion.finkok.com/cancel" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
+		<SOAP-ENV:Header/> <ns0:Body> <ns1:cancel>
+		<ns1:UUIDS><ns2:uuids><ns3:string>'.$UUID.'</ns3:string></ns2:uuids></ns1:UUIDS>
+		<ns1:username>v.islas.padilla@gmail.com</ns1:username>
+		<ns1:password>27Marzo!</ns1:password>
+		<ns1:taxpayer_id>'.$RFC.'</ns1:taxpayer_id>
+		<ns1:cer>'.$content_CERT.'</ns1:cer>
+		<ns1:key>'.$content_PKEY.'</ns1:key>
+		</ns1:cancel>
+		</ns0:Body>
+		</SOAP-ENV:Envelope>';
+		
+		$env = new DOMDocument();
+				
+		if( !$env->loadXML($textenv) ) {
+			$this->set('result', "error");
+			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Factura: '.$item['Factura']['farefer'].' (id:'.$id.')');
+			return;
+		}
+
+		// Envia XML dentro de un sobre SOAP
+		$env->saveXML();
+		$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl');
+		curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
+		curl_setopt($process, CURLOPT_POSTFIELDS, $env->saveXML());
+		curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($process, CURLOPT_POST, true);
+		curl_setopt($process, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
+		
+		$res = curl_exec($process);
+
+		if (!$res) {
+			curl_close($process);
+			$this->set('result', "error");
+			$this->set('message', 'Error de comunicación al Webservice: '.curl_errno($process)." - ".curl_error($process));
+			return;
+		}
+		curl_close($process);
+
+		$myXML="";
+		$xml = new DOMDocument();
+		if (!$xml->loadXML($res)) {
+			$this->set('result', "error");
+			$this->set('message', 'Error al leer respuesta del PAC al Cancelar Factura '.$item['Factura']['farefer'].' (id: '.$id.')');
+			$this->set('docto', $item);
+			return false;
+		}
+
+		$searchNode = $xml->getElementsByTagName('xml');
+		foreach($searchNode as $searchNode) {
+			$myXML= $searchNode->nodeValue;
+		}
+		
+		$myXML=str_replace('&gt;','>',$myXML);
+		$myXML=str_replace('&lt;','<',$myXML);
+
+		$filename= $RFC.'-'.$item['Factura']['farefer'].'.cancelada.xml';
+		$xml->save($pathDOCS.DS.$filename);
+		
+		$this->set('result', 'ok' );
+		$this->set('message', 'La Factura '.$item['Factura']['farefer'].' se canceló correctamente (id: '.$id.')');
+		$this->set('data', $item);	
+		$this->set('response', $this->Axfile->FileToString( $pathDOCS.DS.$filename ));	
+	}
 	
 	public function enviacorreo( $id=null ) {
 //		$this->autoRender=false;
@@ -186,12 +276,12 @@ class FacturaElectronicaController extends MasterDetailAppController {
 								'Factura: '.$data['Master']['folio'].'. '.
 					'99999-87777-444-33'. '. '.	//$data['Master']['uuid']
 								' ['.$data['Master']['fecha'].']',
-			'from'=>'Comprobantes Oggi <azeron@oggi.mx>',
+			'from'=>'Comprobantes (Junior de Mexico) <comprobantes@oggi.com.mx>',
 		);
 		$receipt = array(
-//			'to'=>'azeron@oggi.mx, lev@oggi.mx',
-			'to'=>'lev@oggi.mx, azeron@oggi.mx, aperez@oggi.mx, sera@oggi.mx',
-			'replyTo'=>'azeron@oggi.mx',
+			'to'=>'azeron@oggi.mx, comprobantes@oggi.mx',
+//			'to'=>'lev@oggi.mx, azeron@oggi.mx, aperez@oggi.mx, almacen@oggi.mx, sera@oggi.mx',
+			'replyTo'=>'comprobantes@oggi.com.mx',
 		);
 
 		$params = array(
@@ -227,8 +317,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'port'=>'465',
 			'timeout'=>'60',
 			'host' => 'ssl://smtp.gmail.com',
-			'username'=>'azeron.oggi@gmail.com',
-			'password'=>'S0p0r1f3R022',
+			'username'=>'comprobantes@oggi.mx',
+			'password'=>'3l3ctr0n',
 		);
 
 		if(!$body) $body='';

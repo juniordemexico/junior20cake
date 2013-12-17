@@ -34,6 +34,7 @@
 <?php echo $message;?>	
 </div>	
 
+<?php if( isset($responses)): ?>
 <?php foreach($responses as $item): ?>
 	<h3 class="text-<?php echo $item[0];?>"><?php echo $item[1];?></h3>
 	<div class="well">
@@ -47,6 +48,7 @@
 if($item[0]=='error') $ok=false; $ok=true;
 ?>
 <?php endforeach;?>
+<?php endif;?>
 
 	<h3 class="text-info">Creación del PDF <small>(representación impresa del xml)</small></h3>
 	<div class="well">
