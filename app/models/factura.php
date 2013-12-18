@@ -134,7 +134,11 @@ class Factura extends AppModel
 		$master["metodo_pago"]="PAGO EN UNA SOLA EXHIBICION";
 		$master["impuesto_cve"]="IVA";
 		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
-		$master["fecha"]=date('Y-m-d').'T'.date('H:i:s', time()-300); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
+
+		// CAMBIAR PARA PROPDUCCION  (IDD)
+//		$master["fecha"]=$master['fecha']date('Y-m-d').'T'.date('H:i:s', time()-600); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
+//		$master["folio"]="D0000001";
+
 
 		// Datos del Receptor (nuestro cliente)
 		$receptor=array_merge($docto['Clientesdireccion'], $docto['Cliente']);

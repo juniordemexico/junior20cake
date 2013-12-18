@@ -64,24 +64,24 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<td class="tda" title="<?php echo trim($factura['Cliente']['clsuc']); ?>"><?php echo $factura['Cliente']['cltda']; ?></td>
 				<td class="cveven" title="<?php echo $factura['Vendedor']['venom']; ?>"><?php echo $factura['Vendedor']['vecveven']; ?></td>
 				<td class="total"><?php echo $this->Number->currency($factura['Factura']['factura__fatotal']); ?></td>
-				<td class="st"><?php echo $factura['Factura']['fast']; ?></td>
-				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['crefec'].'.'; ?>"><?php echo 'XXXXXX-YYYYY-ZZZZ-HHHHHHHH';//$factura['Factura']['id']; ?></td>
+				<td class="st" title="Fecha de Cancelación: <?php echo $factura['Factura']['cancelafecha']; ?>"><?php echo $factura['Factura']['fast']; ?></td>
+				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['crefec'].'.'; ?>"><?php echo $factura['Factura']['uuid']; ?></td>
 				<td class="id" title="<?php echo 'Creado: '.$factura['Factura']['crefec'].'. Modificado: '.$factura['Factura']['modfec'].'.'; ?>"><?php echo $factura['Factura']['id']; ?></td>
 				<td class="action">
 
 				<div class="btn-group">
-				<button type="button" class="btn btn-danger btn-small" onclick="cancelaCFDI(<?php echo $factura['Factura']['id'];?>);" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
+<?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
+				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['cancelafecha'])) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['cancelafecha'])) echo "cancelaCFDI(".$factura['Factura']['id'].")";?>" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
 					<i class="icon icon-white icon-qrcode"></i>Cancela
 				</button>
-				<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
-					<i class="icon icon-white icon-envelope"></i>XML
-				</button>
+<?php endif;?>
 				</div>
-
 				<div class="btn-group pull-right">
-				<button type="button" class="btn btn-primary btn-small" onclick="generaCFDI(<?php echo $factura['Factura']['id'];?>);" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
+<?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
+				<button type="button" class="btn btn-primary btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['fechatimbrado'])) echo "generaCFDI(".$factura['Factura']['id'].")";?>" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
 					<i class="icon icon-white icon-qrcode"></i>Timbra
 				</button>
+<?php endif;?>
 				<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
 					<i class="icon icon-white icon-envelope"></i>XML
 				</button>
@@ -92,7 +92,6 @@ echo $form->create('Factura',array('inputDefaults' => array(
 					<i class="icon icon-white icon-envelope"></i>
 				</button>
 				</div>
-
 				</td>
 			</tr>
 		<?php endforeach; ?>

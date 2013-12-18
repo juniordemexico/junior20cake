@@ -8,10 +8,10 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 	var $tableFields = 	array(
 							'id','farefer','fafecha','fat','fast','fasuma','faimporte','faimpoimpu','fatotal',
-							'fapedido',
+							'fapedido','fast','cancela_uuid','cancelafecha',
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'vendedor_id','Vendedor.vecveven','Vendedor.venom','fadivisa',
-							'crefec','modfec');
+							'crefec','modfec', 'uuid', 'fechatimbrado');
 	var $layout = 'plain';
 	
 	var $pathDOCS;
@@ -66,6 +66,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
 
+/*
 		$data['Comprobante']=array(
 			'uuid'=>'0749CF42-905C-4419-8095-15A4667B5FD7',
 			'selloemisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
@@ -75,6 +76,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'sellosat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
 			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
 			);
+
+*/
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
@@ -107,13 +110,9 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		// Generamos el XML con Cadena Original y Sello
 		$docto=$this->Factura->getDoctoForCFDI( $id );
 		
-//		print_r($docto);
-//		die();
 		$docto_arr=json_decode($docto);
 	
-//		print_r($docto_arr->receptor);
-//		die();
-		$this->set('title_for_layout', 'Factura CFDI :: '.$docto_arr->Master->folio);
+		$this->set('title_for_layout', 'Factura CFDI');
 
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
 			$this->set('result', "error");
@@ -132,9 +131,10 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
 			$this->set('result', "error");
 			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-			$responses[]=array('info', 'RESULTADO MAL DEL TIMBRADO',
-							$this->AxFolioselectronicos->message);
-			return;
+//			$responses[]=array('info', 'RESPUESTA DEL PAC',
+//							$this->AxFolioselectronicos->pacResponse);
+//			$this->set('responses', $responses);
+			return false;
 //			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
 		}
 
@@ -161,11 +161,12 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 
 		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong>');
-							//	' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
+		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
+							' (uuid: '.$documento['UUID'].' fecha: '.$documento['FechaTimbrado'].')'); //$docto['Master']['uuid']
 		$this->set('docto', json_decode($docto));
 		$this->set('documento', $documento);
 		$this->set('responses', $responses);
+		$this->set('title_for_layout', 'Factura CFDI::'.$this->AxFolioselectronicos->documento['folio']);
 	}
 
 	public function cancelacfdi( $id=null ) {
@@ -181,6 +182,18 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			}
 		}
 */
+
+		// Produccion
+		$pac_username='lev@oggi.com.mx';
+		$pac_password='V3rn40gg1cfd2*';
+		$pac_url_timbrado='https://facturacion.finkok.com/servicios/soap/stamp.wsdl';
+		$pac_url_cancela='https://facturacion.finkok.com/servicios/soap/cancela.wsdl';
+		
+		// Pruebas
+//		$pac_username='v.islas.padilla@gmail.com';
+//		$pac_password='27Marzo!';
+//		$pac_url_timbrado='http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl';
+//		$pac_url_cancela='http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl';
 
 		$this->set('title_for_layout', 'Factura CFDI Cancelación :: '.$id);
 
@@ -203,7 +216,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		if(!$item && !isset($item['Factura'])) {
 			$this->set('result', "error");
 			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Factura: '.$item['Factura']['farefer']. ' (id:'.$item['Factura']['id'].')');
-			$this->Session->setFlash(__('invalid_item', true), 'error');
+//			$this->Session->setFlash(__('invalid_item', true), 'error');
 			return;			
 		}
 		$this->set('title_for_layout', 'Factura CFDI Cancelación :: '.$item['Factura']['farefer']);
@@ -214,8 +227,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		xmlns:ns1="http://facturacion.finkok.com/cancel" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
 		<SOAP-ENV:Header/> <ns0:Body> <ns1:cancel>
 		<ns1:UUIDS><ns2:uuids><ns3:string>'.$UUID.'</ns3:string></ns2:uuids></ns1:UUIDS>
-		<ns1:username>v.islas.padilla@gmail.com</ns1:username>
-		<ns1:password>27Marzo!</ns1:password>
+		<ns1:username>'.$pac_username.'</ns1:username>
+		<ns1:password>'.$pac_password.'</ns1:password>
 		<ns1:taxpayer_id>'.$RFC.'</ns1:taxpayer_id>
 		<ns1:cer>'.$content_CERT.'</ns1:cer>
 		<ns1:key>'.$content_PKEY.'</ns1:key>
@@ -233,7 +246,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		// Envia XML dentro de un sobre SOAP
 		$env->saveXML();
-		$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl');
+		$process = curl_init($pac_url_cancela);
 		curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
 		curl_setopt($process, CURLOPT_POSTFIELDS, $env->saveXML());
 		curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
@@ -295,8 +308,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'from'=>'Comprobantes (Junior de Mexico) <comprobantes@oggi.com.mx>',
 		);
 		$receipt = array(
-//			'to'=>'azeron@oggi.mx, comprobantes@oggi.mx',
-			'to'=>'lev@oggi.mx, azeron@oggi.mx, comprobantes@oggi.mx, almacen@oggi.mx, sera@oggi.mx',
+			'to'=>'comprobantes@oggi.mx, lev@oggi.mx, sacnite@oggi.mx',
+//			'to'=>'lev@oggi.mx, azeron@oggi.mx, comprobantes@oggi.mx, almacen@oggi.mx, sera@oggi.mx',
 			'replyTo'=>'comprobantes@oggi.com.mx',
 		);
 
@@ -333,7 +346,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'timeout'=>'60',
 			'host' => 'ssl://smtp.gmail.com',
 			'username'=>'comprobantes@oggi.mx',
-			'password'=>'3l3ctr0n',
+			'password'=>'micfdilocal',
 		);
 
 		if(!$body) $body='';

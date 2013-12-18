@@ -317,14 +317,26 @@ class AxFolioselectronicosComponent extends Component {
 
 
 	function timbrarComprobanteFiscal() {
+		// Produccion
+		$pac_username='lev@oggi.mx';
+		$pac_password='V3rn40gg1cfd2*';
+		$pac_url_timbrado='https://facturacion.finkok.com/servicios/soap/stamp.wsdl';
+		$pac_url_cancela='https://facturacion.finkok.com/servicios/soap/cancel.wsdl';
+		
+		// Pruebas
+//		$pac_username='v.islas.padilla@gmail.com';
+//		$pac_password='27Marzo!';
+//		$pac_url_timbrado='http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl';
+//		$pac_url_cancela='http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl';
+		
 		$envtext = 
 		'<?xml version="1.0" encoding="UTF-8"?>
 		<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xmlns:ns1="http://facturacion.finkok.com/stamp" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/"> 
 		<SOAP-ENV:Header/> <ns0:Body> <ns1:stamp> 
 		<ns1:xml>'.base64_encode($this->cfdi).'</ns1:xml>
-		<ns1:username>v.islas.padilla@gmail.com</ns1:username>
-		<ns1:password>27Marzo!</ns1:password>
+		<ns1:username>'.$pac_username.'</ns1:username>
+		<ns1:password>'.$pac_password.'</ns1:password>
 		</ns1:stamp>
 		</ns0:Body>
 		</SOAP-ENV:Envelope>';
@@ -341,7 +353,7 @@ class AxFolioselectronicosComponent extends Component {
 		
 		// Hacemos peticion al Webservice del PAC. Enviando el XML dentro de un sobre SOAP
 		$env->saveXML();
-		$process = curl_init('http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl');
+		$process = curl_init($pac_url_timbrado);
 		curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'charset=utf-8'));
 		curl_setopt($process, CURLOPT_POSTFIELDS, $env->saveXML());
 		curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
@@ -350,8 +362,6 @@ class AxFolioselectronicosComponent extends Component {
 		curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($process, CURLOPT_SSLCERTPASSWD, 'AAAI8204261TA');
 		$timbre = curl_exec($process);
-//		echo "<h3>Timbre::</h3>";
-//		pr($timbre);
 		if (!$timbre) {
 			$this->message='Error de comunicación al Webservice: '.curl_errno($process)." - ".curl_error($process);
 			curl_close($process);
@@ -359,9 +369,8 @@ class AxFolioselectronicosComponent extends Component {
 		}
 		curl_close($process);
 
-//		echo "<h1>RESPONSE</h1>"."<pre style='width: 400px;'>".htmlspecialchars($timbre)."</pre>";
-		
 		$this->pacResponse=$timbre;
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.respuesta.xml', $this->pacResponse);
 
 		$myXML="";
 		$xml = new DOMDocument();
@@ -374,6 +383,7 @@ class AxFolioselectronicosComponent extends Component {
 		foreach ( $searchNode as $searchNode) {
 			$myXML= $searchNode->nodeValue;
 		}
+
 		$myXML=str_replace('&gt;','>',$myXML);
 		$myXML=str_replace('&lt;','<',$myXML);
 		$xml2 = new DOMDocument();
@@ -399,7 +409,6 @@ class AxFolioselectronicosComponent extends Component {
 
 		$this->documento['filename']=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.xml';
 		$xml2->save($this->pathDOCS.DS.$this->documento['filename']);
-	//	$this->cfdiSigned=;
 		
 		// Generamos el Codigo QR del documento y lo guardamos en un archivo
 		if( !$this->generaqr() ) {
@@ -584,3 +593,14 @@ openssl dgst -sha1 -out sign.bin -sign KEY.PEM CadOri.txt
 		$algo = preg_replace('/\n/', '', $algo);
 		$certificado = preg_replace('/\r/', '', $algo);
 */
+
+/*
+FINKOK Y JUNIOR
+Valido a partir de:Apr 24 22:38:25 2012 GMT
+
+Valido hasta:Apr 24 22:38:25 2016 GMT
+
+Certificado No.:00001000000200904226
+
+Datos:/CN=JUNIOR DE MEXICO SA DE CV/name=JUNIOR DE MEXICO SA DE CV/O=JUNIOR DE MEXICO SA DE CV/x500UniqueIdentifier=JME910405B83 / DIAA6908018T1/serialNumber= / DIAA690801HDFCMB04/OU=unidad
+**/
