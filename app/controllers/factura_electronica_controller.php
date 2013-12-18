@@ -68,11 +68,11 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 		$data['Comprobante']=array(
 			'uuid'=>'0749CF42-905C-4419-8095-15A4667B5FD7',
-			'sello_emisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
-			'fecha_timbrado'=>'2013-11-19 01:00:00',
-			'no_certificado_sat'=>'01000006746677',
-			'sello_cfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
-			'sello_sat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
+			'selloemisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'fechatimbrado'=>'2013-11-19 01:00:00',
+			'nocertificadosat'=>'01000006746677',
+			'sellocfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
+			'sellosat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
 			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
 			);
 		$this->layout='pdf';
@@ -95,9 +95,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			}
 		}
 
-//ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
-//error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
-
 		if (isset($this->params['mailcfdi'])) {
 			$mailcfdi=$this->params['mailcfdi'];
 		}
@@ -106,13 +103,16 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		}
 		
 		$responses=array();
-//		$this->set('responses', $responses);
 
 		// Generamos el XML con Cadena Original y Sello
 		$docto=$this->Factura->getDoctoForCFDI( $id );
 		
+//		print_r($docto);
+//		die();
 		$docto_arr=json_decode($docto);
-		
+	
+//		print_r($docto_arr->receptor);
+//		die();
 		$this->set('title_for_layout', 'Factura CFDI :: '.$docto_arr->Master->folio);
 
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
@@ -132,10 +132,28 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
 			$this->set('result', "error");
 			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-			$responses[]=array('info', 'RESULTADO MAL DEL TIMBREADO',
+			$responses[]=array('info', 'RESULTADO MAL DEL TIMBRADO',
 							$this->AxFolioselectronicos->message);
 			return;
 //			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
+		}
+
+		$documento=$this->AxFolioselectronicos->documento;
+
+		$this->Factura->read(null, $id);
+		if( !$this->Factura->save(
+							array('uuid'=>$documento['UUID'], 'fechatimbrado'=>substr($documento['FechaTimbrado'],0,10).' '.substr($documento['FechaTimbrado'],11), 
+								'sellosat'=>$documento['selloSAT'], 'sellocfd'=>$documento['selloCFD'],
+								'nocertificadosat'=>$documento['noCertificadoSAT'],
+								'cadenaoriginal'=>$documento['cadenaoriginal']
+								),
+							false,
+							array('uuid', 'fechatimbrado', 'sellosat', 'sellocfd', 'nocertificadosat', 'cadenaoriginal')
+								)
+		) {
+			$this->set('result', "error");
+			$this->set('message','No se pudieron registrar los datos de timbrado');
+			return;			
 		}
 
 		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
@@ -146,7 +164,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong>');
 							//	' (uuid: '.'99999.999999-777-55'.')'); //$docto['Master']['uuid']
 		$this->set('docto', json_decode($docto));
-		$this->set('documento', $this->AxFolioselectronicos->documento);
+		$this->set('documento', $documento);
 		$this->set('responses', $responses);
 	}
 
@@ -175,12 +193,10 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$file_CERT = fopen($path_CERT, "r");
 		$content_CERT = base64_encode(fread($file_CERT, filesize($path_CERT)));
 		fclose($file_CERT);
-//		$content_CERT = base64_encode($this->Axfile->FileToString( $file_CERT ));
 		
 		$file_PKEY = fopen($path_PKEY, "r");
 		$content_PKEY = base64_encode(fread($file_PKEY, filesize($path_PKEY)));
 		fclose($file_PKEY);
-//		$content_PKEY = base64_encode($this->Axfile->FileToString( $path_PKEY ));
 
 		$item=$this->Factura->findById($id);
 		
@@ -262,13 +278,13 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	}
 	
 	public function enviacorreo( $id=null ) {
-//		$this->autoRender=false;
 		if(isset($this->params['url']['id'])) {
 			$id=$this->params['url']['id'];
 		}
 		$data=null;
+
 //		if( !$data || !is_array($data) || !isset($data['Master']['id']) ) {
-			$data=json_decode($this->Factura->getDoctoForCFDI( $id ), TRUE);
+		$data=json_decode($this->Factura->getDoctoForCFDI( $id ), TRUE);
 //		}
 
 		$sender = array(
@@ -279,8 +295,8 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'from'=>'Comprobantes (Junior de Mexico) <comprobantes@oggi.com.mx>',
 		);
 		$receipt = array(
-			'to'=>'azeron@oggi.mx, comprobantes@oggi.mx',
-//			'to'=>'lev@oggi.mx, azeron@oggi.mx, aperez@oggi.mx, almacen@oggi.mx, sera@oggi.mx',
+//			'to'=>'azeron@oggi.mx, comprobantes@oggi.mx',
+			'to'=>'lev@oggi.mx, azeron@oggi.mx, comprobantes@oggi.mx, almacen@oggi.mx, sera@oggi.mx',
 			'replyTo'=>'comprobantes@oggi.com.mx',
 		);
 
@@ -304,7 +320,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		return json_encode(array(
 					'result'=>'ok',
 					'message'=>'Se enviaron por correo los archivos XML y PDF al buzón '.$receipt['to'].'.',
-//					'data'=>$data
 					));
 	}
 

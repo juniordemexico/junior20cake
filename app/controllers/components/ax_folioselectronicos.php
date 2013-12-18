@@ -58,7 +58,8 @@ class AxFolioselectronicosComponent extends Component {
 							'consecutivo'=>null,
 							'fecha'=>null,
 							'emisor_rfc'=>null,
-							'receptor_rfc'=>null
+							'receptor_rfc'=>null,
+							'cadenaoriginal'=>null
 							);		
 	}
 
@@ -205,16 +206,17 @@ class AxFolioselectronicosComponent extends Component {
 		// Datos del receptor (cliente al que se le expide el comprobante)
 		$receptor=
 		'<cfdi:Receptor rfc="'.$r['clrfc'].'" '.'nombre="'.$r['clnom'].'">'.
-		'<cfdi:Domicilio calle="'.$r['clcalle'].'" '.
-		'noExterior="'.$r['clnumext'].'" '.
-		'colonia="'.$r['clcolonia'].'" '.
-		'municipio="'.$r['clciu'].'" '.
-		'estado="'.$r['cledo'].'" '.
-		'pais="'.$r['clpais'].'" '.
-		'codigoPostal="'.$r['clcp'].'" '.
+		'<cfdi:Domicilio calle="'.(!empty($r['clcalle'])?$r['clcalle']:'NA').'" '.
+		'noExterior="'.(!empty($r['clnumext'])?$r['clnumext']:'NA').'" '.
+		'colonia="'.(!empty($r['clcolonia'])?$r['clcolonia']:'NA').'" '.
+		'municipio="'.(!empty($r['clciu'])?$r['clciu']:'NA').'" '.
+
+		'estado="'.(!empty($r['cledo'])?$r['cledo']:'NA').'" '.
+		'pais="'.(!empty($r['clpais'])?$r['clpais']:'NA').'" '.
+		'codigoPostal="'.(!empty($r['clcp'])?$r['clcp']:'NA').'" '.
 		'/>'.
 		'</cfdi:Receptor> ';
-		
+
 		// Total y translados de Impuestos que aplican al Comprobante
 		$traslados=
 		'<cfdi:Impuestos>'.
@@ -268,14 +270,15 @@ class AxFolioselectronicosComponent extends Component {
 		ob_start();
 		
 		$xslt->importStylesheet($XSL);
-		$this->cadenaoriginal = $xslt->transformToXML( $c );
-
 		ob_end_clean();
+		$this->cadenaoriginal = $xslt->transformToXML( $c );
 
 		if( !$this->cadenaoriginal || empty($this->cadenaoriginal) ) {
 			$this->message='Error al generar la cadena original ('.xslt_error($xslt).')';
 			return false;
 		}
+
+		$this->documento['cadenaoriginal'] = $this->cadenaoriginal;
 
 		$this->message='La cadena original se genero correctamente';
 		return true;
@@ -382,7 +385,7 @@ class AxFolioselectronicosComponent extends Component {
 		$cfdi = $xml2->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', '*');
 
 		foreach ( $cfdi as $cfdi) {
-			$this->documento['noCertificado'] = $cfdi->getAttribute('noCertificado');
+			$this->documento['noCertificadoSAT'] = $cfdi->getAttribute('noCertificadoSAT');
 			$this->documento['selloSAT'] = $cfdi->getAttribute('selloSAT');
 			$this->documento['selloCFD'] = $cfdi->getAttribute('selloCFD');
 			$this->documento['FechaTimbrado'] = $cfdi->getAttribute('FechaTimbrado');

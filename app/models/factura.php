@@ -105,11 +105,17 @@ class Factura extends AppModel
 								Factura.fatotal total,
 								Factura.crefec created,
 								Factura.modfec modified,
-								Cliente.*
+								Clientesdireccione.*,
+								Cliente.clnom,
+								Cliente.clsuc,
+								Cliente.clcveven,
+								Cliente.clst,
+								Cliente.clrfc
 								FROM Factura Factura
 								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
 								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
 								JOIN Divisas Divisa ON (Divisa.id=Factura.divisa_id)
+								LEFT JOIN Clientesdirecciones Clientesdireccione ON (Clientesdireccione.cliente_id=Cliente.id AND Clientesdireccione.cltpodir='Fiscal')
 								WHERE Factura.id=$id
 							");
 
@@ -131,7 +137,9 @@ class Factura extends AppModel
 		$master["fecha"]=date('Y-m-d').'T'.date('H:i:s', time()-300); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
 
 		// Datos del Receptor (nuestro cliente)
-		$receptor=$docto['Cliente'];
+		$receptor=array_merge($docto['Clientesdireccion'], $docto['Cliente']);
+
+/*
 		$receptor["clcalle"]="CALLE DE PRUEBA";
 		$receptor["clnumext"]="SN EXT";
 		$receptor["clnumint"]="NA";
@@ -139,6 +147,7 @@ class Factura extends AppModel
 		$receptor["clciu"]="MIGUEL HIDALGO";
 		$receptor["cledo"]="DISTRITO FEDERAL";
 		$receptor["clpais"]="MEXICO";
+*/
 
 		// Datos del Emisor (nuestra empresa)
 		$emisor=array(
@@ -193,10 +202,10 @@ class Factura extends AppModel
 		}
 
 		$out=array(
-			"Master"	=>$master,
-		 	"Details"	=>$Details,
-		 	"Receptor"	=>$receptor,
-		 	"Emisor"	=>$emisor,
+			"Master"		=>$master,
+		 	"Details"		=>$Details,
+		 	"Receptor"		=>$receptor,
+		 	"Emisor"		=>$emisor,
 			);
 
 		return json_encode($out);
