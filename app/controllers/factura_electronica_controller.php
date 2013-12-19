@@ -346,7 +346,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			'timeout'=>'60',
 			'host' => 'ssl://smtp.gmail.com',
 			'username'=>'comprobantes@oggi.mx',
-			'password'=>'micfdilocal',
+			'password'=>'micfdijunior',
 		);
 
 		if(!$body) $body='';

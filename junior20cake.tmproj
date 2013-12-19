@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/controllers/factura_electronica_controller.php</string>
+	<string>app/views/factura_electronica/imprimepdf.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -51,34 +51,6 @@
 				<integer>832</integer>
 			</dict>
 		</dict>
-		<key>app/config/bootstrap.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>52</integer>
-				<key>line</key>
-				<integer>125</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>87</integer>
-		</dict>
-		<key>app/controllers/components/ax_export.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>132</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>196</integer>
-		</dict>
 		<key>app/controllers/components/ax_folioselectronicos.php</key>
 		<dict>
 			<key>caret</key>
@@ -114,7 +86,7 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>29</integer>
 				<key>line</key>
 				<integer>347</integer>
 			</dict>
@@ -122,62 +94,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>327</integer>
-		</dict>
-		<key>app/controllers/proveedores_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>145</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>118</integer>
-		</dict>
-		<key>app/files/queries/queries-temp.sql</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>29</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/articulo_proveedor.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>20</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>2</integer>
-		</dict>
-		<key>app/models/comprobante.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>5</integer>
-				<key>line</key>
-				<integer>63</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
@@ -312,9 +228,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>30</integer>
 				<key>line</key>
-				<integer>287</integer>
+				<integer>9</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -349,65 +265,153 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/default.ctp</key>
+		<key>vendors/tcpdf/config/tcpdf_config.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>31</integer>
+				<key>line</key>
+				<integer>113</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>210</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>29</integer>
+				<key>line</key>
+				<integer>113</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>31</integer>
+				<key>line</key>
+				<integer>113</integer>
+			</dict>
+		</dict>
+		<key>vendors/tcpdf/config/tcpdf_config_alt.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>30</integer>
+				<key>line</key>
+				<integer>108</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>204</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>28</integer>
+				<key>line</key>
+				<integer>108</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>30</integer>
+				<key>line</key>
+				<integer>108</integer>
+			</dict>
+		</dict>
+		<key>vendors/tcpdf/doc/index.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+		</dict>
+		<key>vendors/tcpdf/examples/example_004.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>58</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/layouts/print.ctp</key>
-		<dict>
-			<key>caret</key>
+			<integer>26</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>48</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>58</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>cake/libs/controller/components/email.php</key>
-		<dict>
-			<key>caret</key>
+			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>517</integer>
+				<integer>58</integer>
+			</dict>
+		</dict>
+		<key>vendors/tcpdf/examples/example_006.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>26</integer>
+				<key>line</key>
+				<integer>189</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>502</integer>
+			<integer>172</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>app/models/factura.php</string>
-		<string>app/models/comprobante.php</string>
 		<string>app/app_controller.php</string>
-		<string>app/views/layouts/default.ctp</string>
-		<string>app/views/layouts/print.ctp</string>
 		<string>app/controllers/factura_electronica_controller.php</string>
-		<string>app/controllers/proveedores_controller.php</string>
 		<string>app/views/factura_electronica/cancelacfdi.ctp</string>
-		<string>app/models/articulo_proveedor.php</string>
-		<string>cake/libs/controller/components/email.php</string>
-		<string>app/files/queries/queries-temp.sql</string>
-		<string>app/controllers/components/ax_export.php</string>
-		<string>app/config/bootstrap.php</string>
 		<string>app/views/factura_electronica/imprimepdf.ctp</string>
+		<string>vendors/tcpdf/examples/example_006.php</string>
+		<string>vendors/tcpdf/config/tcpdf_config.php</string>
+		<string>vendors/tcpdf/config/tcpdf_config_alt.php</string>
+		<string>vendors/tcpdf/examples/example_004.php</string>
+		<string>vendors/tcpdf/doc/index.html</string>
 		<string>app/views/factura_electronica/generacfdi.ctp</string>
 		<string>app/tmp/factura_electronica_controller.php</string>
 		<string>app/tmp/factura-5943345.html</string>

@@ -1,7 +1,7 @@
 <?php
 //EJEMPLO PARA GENERAR EL PDF
 App::import('Vendor','tcpdf');
-$tcpdf = new TCPDF();
+$tcpdf = new TCPDF('P');
 $tcpdf->SetCreator('AxBOS IDD');
 $tcpdf->SetAuthor('Junior de Mexico, SA de CV');
 $tcpdf->SetTitle('FACTURA '.$data['Master']['farefer']);
@@ -9,120 +9,190 @@ $tcpdf->SetSubject('COMPROBANTE FISCAL CFDI INGRESO. FACTURA '.$data['Master']['
 $tcpdf->SetKeywords("JUNIOR, CFDI, PDF, COMPROBANTE FISCAL, FACTURA, FACTURA ELECTRONICA, ".$data['Master']['farefer']);
 $tcpdf->setPrintHeader(false);
 $tcpdf->setPrintFooter(false);
-$tcpdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
+
+$tcpdf->setMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);
 $tcpdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+//$tcpdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+$tcpdf->SetFont('Helvetica', '', 7);
+
 $tcpdf->AddPage();
-$subtable='
-	<table cellpadding="0" style="font-size: 8pt; ">
-		<tr style="text-align:center;">
-			<td>
-				<img style="width: 1in; height: 0.6in;" src="/app/webroot/img/logos/oggi_logo_tiny.png" border="0"/>
-			</td>
-		</tr>
-		<tr style="text-align:center; font-weight: bold;">
-			<td>EMISOR</td>
-		</tr>
-		<tr style="font-size: 10pt; font-weight: bold;">
-			<td>JUNIOR DE MEXICO, S.A. DE C.V.</td>
-		</tr>
-		<tr>
-			<td>
-				<br>JME910405B83
-				<br>Av. Paseo de la Reforma, No. 2654 Piso15 Int. 1501
-				<br>Constituyentes, Col. Lomas Altas Del. Miguel Hidalgo.
-				<br>C.P. 11950 México D.F.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span style="font-weight: bold;">Lugar de Emisión:</span><br/>
-				<span>Av. Viaducto rio de la piedad No. 525 A Granjas México<br/>
-				 	C.P.: 08400<br/>
-				 	Iztacalco, Distrito Federal<br/>
-				 	México
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span style="font-weight: bold;">Regimen Fiscal: </span>
-				<span>Regimen General de ley Personas Morales</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span style="font-weight: bold;">Método de Pago: </span> 
-				<span>'. $data['Cliente']['clmtdopago'].'</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span style="font-weight: bold;">No. Cuenta Pago: </span>
-			</td>
-		</tr>
-	</table>';
-	
-$subtable1='<table style="font-size: 8pt; background-color: #D0D0D0; height: 100%;" cellpadding="0" cellspacing="0">
-				<tr>
-					<td style="text-align: left; width: 70%; font-weight: bold;" colspan="2">México, D.F. a '. $data['Master']['fafecha'].'</td>
-						<td style="text-align: middle; width: 30%; font-weight: bold;" colspan="2">'. $data['Master']['farefer'].'</td>
-				</tr>
-				<tr>
-					<td style="text-align: center; font-weight: bold" colspan="4">RECEPTOR</td>
-				</tr>
-				<tr height="100">
-					<td style="text-align: left;" colspan="4">'. $data['Cliente']['clnom'].'
-					<br>'. $data['Cliente']['cldir'].'
-					<br>'. $data['Cliente']['clciu'].' , 
-						'. $data['Cliente']['cledo'].' C.P. 
-						'. $data['Cliente']['clcp'].'
-						<br>Tels. '. $data['Cliente']['cltel'].'
-						<br>'. $data['Cliente']['clrfc'].'
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4">Enviar a:
-						<p>'. $data['Cliente']['clenviara'].'</p>
-					</td>
-				</tr>
-				<tr height="50">
-					<td style="text-align: left;" colspan="2">
-					Pedido: '. $data['Master']['pedido_id'].'
-					<p>Su Pedido:</p>
-					</td>
-					<td style="text-align: left;" colspan="2">
-					Prov.:
-					<p>Depto:</p>
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align: left;" height="50" colspan="4">Año de Aprobación:	
-						<br>Num. Aprobación:
-						<br>	
-						<br>Certificado:
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align: left;">Divisa: '. $data['Divisa']['dicve'].'</td>
-					<td style="text-align: left;">Tipo de Cambio: '.number_format(($data['Divisa']['ditcambio']), 0).'</td>
-				</tr>
-			</table>
+
+$head_left='
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr><td>
+			<img style="width: 100px; height: 50px; border: 0px;" border="0" src="/app/webroot/img/logos/oggi_logo_tiny.png" />
+	</td></tr>
+	<tr><td><b><u>E M I S O R</u></b></td></tr>
+	<tr><td><font size="+1"><b>JUNIOR DE MEXICO, S.A. DE C.V.</b></font></td></tr>
+	<tr><td><b>JME910405B83</b></td></tr>
+	<tr><td><font size="-1">Regimen General de Ley Personas Morales</font></td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td><b>Domicilio Fiscal:</b></td></tr>
+	<tr><td>
+		Av. Paseo de la Reforma #2654 Piso 15 Interior 1501<br />
+		Colonia Lomas Altas. Delegación Miguel Hidalgo.<br />
+		México D.F., C.P. 11950<br />
+	</td></tr>
+	<tr><td><b>Lugar de Emisión:</b></td></tr>
+	<tr><td>
+		Av. Viaducto Rio de la Piedad #525A<br />
+		Colonia Granjas México. Delegación Iztacalco<br/>
+		México D.F., C.P. 08400<br />
+	</td></tr>
+	<tr><td><b>Tipo de Comprobante:</b> ingreso.</td></tr>
+</table>
 ';
+
+$head_right='
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: transparent;">
+	<tr><td style="text-align: right;"><font size="-1"><b>Expedido en: México, D.F. a '. $data['Master']['fafecha'].'</b></FONT></td></tr>
+	<tr><td style="text-align: right;"><font size="+3"><b>FACTURA '.$data['Master']['farefer'].'</b></font></td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td><b><u>R E C E P T O R</u></b></td></tr>
+	<tr><td><font size="+1"><b>'.$data['Cliente']['clnom'].'</b></font></td></tr>
+	<tr><td><b>'.$data['Cliente']['clrfc'].'</b></td></tr>
+	<tr><td><b>Domicilio:</b></td></tr>
+	<tr><td>'.
+		$data['Cliente']['cldir'].'<br />'.
+		$data['Cliente']['clciu'].', '.$data['Cliente']['cledo'].'.<br />'.
+		'C.P. '.$data['Cliente']['clcp'].'<br />'.
+		'Tels: '.$data['Cliente']['cltel'].'<br />'.'
+	</td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td><b>Enviar a:</b><br/ >'.$data['Cliente']['clenviara'].'.</td></tr>
+	<tr><td><b>Pedido:</b> '.$data['Cliente']['fapedido'].'.</td></tr>
+	<tr><td><b>Método de Pago:</b> '.$data['Cliente']['clmtdopago'].'.</td></tr>
+	<tr><td><b>Num. Cta. Pago:</b> NO IDENTIFICADA.</td></tr>
+	<tr><td><b>Divisa:</b> '.$data['Divisa']['dicve'].'.&nbsp;&nbsp;&nbsp;&nbsp;<b>Tipo de Cambio:</b> '.$data['Master']['fatcambio'].'</td></tr>
+</table>
+';
+
+$head=	'<table cellspacing="4" cellpadding="0" border="0" width="100%"><tr><td width="50%">'.
+		$head_left.'</td><td style="background-color: #DDD;">'.
+		$head_right.
+		'</td></tr></table>';
+$tcpdf->writeHTML($head, true, false, true, false, '');
+
+
+$body='
+	<table style="font-size: 7pt; width: 100%; border: 1px solid #000000;" border="1">
+		<tr style="text-align:center; background-color: #D0D0D0; font-weight: bold;">
+			<td style="text-align: right; width: 0.5in;">Cantidad</td>
+			<td style="width: 0.5in;">Unidad</td>
+			<td style="width: 4in;">Descripción</td>
+			<td style="text-align: right; width: 0.75in;">Precio</td>
+			<td style="text-align: right; width: 1.25in;">Importe</td>
+		</tr>
+';
+		
+			$ptotal=0;
+			foreach($data['Details'] as $item):
+				$ptotal += $item['Detail']['fadcant'];
+				$body.='<tr>
+				<td style="text-align: right; width: 0.5in;">'.number_format(($item['Detail']['fadcant']), 0).'</td>
+				<td style="width: 0.5in;">'.$item['Articulo']['arunidad'].'</td>
+				<td style="width: 4in;">'.$item['Articulo']['ardescrip'].'</td>
+				<td style="text-align: right; width: 0.75in;">'.$item['Detail']['fadprecio'].'</td>
+				<td style="text-align: right; width: 1.25in;">'.$item['Detail']['fadimporteneto'].'</td>
+			</tr>
+			';
+			endforeach;
+			
+$body.='
+	</table>';
+
+$tcpdf->writeHTML($body, true, false, true, false, '');
+
+$avisos='
+	<div style="text-align: center; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
+		<font size="-1"><b><i>Este documento es una representación impresa de un CFDI versión 3.2</i></b></font><br />
+		<font size="-1"><b>Consulte nuestro aviso de privacidad en http://www.oggi.com.mx/aviso-de-privacidad.html</b></font><br />
+		<i>Las marcas registradas: HARD, WILD, BIG JOHN, OIL, STATION, OLE JEANS, SIENTE EL AZUL, OGGI STAR, OGGI MAX, <br />OG JEANS, OGGI JEANS, BLURING, OGGI RED, OGGI BLUE. Son propiedad de Junior de México, S.A. de C.V.</i>
+	</div>';
+	
+$tcpdf->writeHTML($avisos, true, false, true, false, '');
+
+$cadena='
+	<div style="font-size: 6pt;  border: 1px solid #000; width: 100%; ">
+		<b>CADENA ORIGINAL:</b> <br />
+		'. $data['Master']['cadenaoriginal'].'
+	</div>';
+
+$tcpdf->writeHTML($cadena, true, false, true, false, '');
+
+$sello='
+	<div style="font-size: 6pt;  border: 1px solid #000; width: 100%; ">
+		<b>SELLO CFD:</b> <br />
+		'. $data['Master']['sellocfd'].'
+	</div>';
+
+$tcpdf->writeHTML($sello, true, false, true, false, '');
+
+$timbre='
+	<table style="width: 100%; border: 1px solid #000000; padding: 4px;" border="1" cellpadding="2">
+		<tr style="background: transparent;" border="0">
+		<td style="width: 30%;">
+			<img style="width: 1.25in; height: 1.25in; border: 0px none #000000;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0" />
+		</td>
+		<td style="width: 70%; border: 1px none; background-color: #FFFFFF; " border="1">
+				<ul style="list-style-type: none; font-size: 7pt; background: transparent; padding: 8px;">
+					<li>
+						<b>FOLIO FISCAL: '.$data['Master']['uuid'].'</b>
+					</li>
+					<li>
+						<b>No. DE SERIE DEL CERTIFICADO DEL SAT: </b>'.$data['Master']['nocertificadosat'].'
+					</li>
+					<li>
+						<b>FECHA Y HORA DE CERTIFICACIÓN:</b> '.$data['Master']['fechatimbrado'].'
+					</li>
+					<li>
+						<b>NÚMERO DE SERIE DEL CSD DEL EMISOR:</b> 00001000000200904226
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+';
+
+$tcpdf->writeHTML($timbre, true, false, true, false, '');
+
+//$tcpdf->writeHTML($head_left, true, false, false, false, '');
+//$tcpdf->writeHTML($head_right, true, false, false, false, '');
+
+
+
+$tcpdf->lastPage();
+
+$filename='JME910405B83-'.$data['Master']['farefer'].'.pdf';
+
+//$this->controller->Axfile->StringToFile(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename.'.html', $head);
+$tcpdf->Output(APP.'files'.DS.'comprobantesdigitales'.DS.$filename , "FI");
+
+/*
+			<tr style="text-align:center; font-weight: bold;">
+				<td colspan="5">
+					Este documento es una representación impresa de un CFDI versión 3.2
+				</td>
+			</tr>
+
+**/
+/*
 $subtable2='
 	<table style="font-size: 8pt; width: 100%;" border="1px">
 		<tr style="text-align:center; background-color: #D0D0D0; font-weight: bold;">
 			<td width="10%">Cantidad</td>
 			<td width="10%">Unidad</td>
-			<td width="50%">Descripción</td>
+			<td>Descripción</td>
 			<td width="15%">Precio</td>
 			<td width="15%">Importe</td>
 		</tr>
-		<tbody>';
+';
 		
 			$ptotal=0;
 			foreach($data['Details'] as $item):
 				$ptotal += $item['Detail']['fadcant'];
-$subtable2.='<tr style="text-align:center;">
+$subtable2.='<tr>
 				<td>'.number_format(($item['Detail']['fadcant']), 0).'</td>
 				<td>'.$item['Articulo']['arunidad'].'</td>
 				<td>'.$item['Articulo']['ardescrip'].'</td>
@@ -133,50 +203,40 @@ $subtable2.='<tr style="text-align:center;">
 			endforeach;
 			
 $subtable2.='
-		</tbody>
-		<tfoot>
 			<tr style="text-align:center; font-weight: bold;">
 				<td colspan="5">
-					Este documento es una representación impresa de un CFD
+					Este documento es una representación impresa de un CFDI versión 3.2
 				</td>
 			</tr>
-		</tfoot>
 	</table>';
 $subtable3= '
-		<table style="text-align: right; font-size: 8pt; padding: 1px; font-weight: bold; padding: 2px;" cellpadding="0" width="100%" border="1px">
+		<table style="background-color: #D0D0D0; text-align: right; font-size: 8pt; padding: 1px; padding: 2px;" cellpadding="0" width="100%" border="1px">
 			<tr>
-				<td style="background-color: #D0D0D0;">Suma: </td>
-				<td style="font-weight: normal;">'. $data['Master']['fasuma'].'</td>
+				<td>Suma: </td>
+				<td>'. $data['Master']['fasuma'].'</td>
 			</tr>
 			<tr>
-				<td style="background-color: #D0D0D0;">Descuento: </td>
-				<td style="font-weight: normal;">'. $item['Articulo']['ardesc1'].'</td>
+				<td>Descuento: </td>
+				<td>'. $item['Articulo']['ardesc1'].'</td>
 			</tr>
 			<tr>
-				<td style="background-color: #D0D0D0;">Sub-Total: </td>
-				<td style="font-weight: normal;">'. $data['Master']['fasuma'].'</td>
+				<td>Sub-Total: </td>
+				<td>'. $data['Master']['fasuma'].'</td>
 			</tr>
 			<tr>
-				<td style="background-color: #D0D0D0;">IVA 16 % </td>
-				<td style="font-weight: normal;">'. number_format(($data['Master']['factura__faimpoimpu']), 4).'</td>
+				<td>IVA 16 % </td>
+				<td>'. number_format(($data['Master']['factura__faimpoimpu']), 4).'</td>
 			</tr>
 			<tr>
-				<td style="background-color: #D0D0D0;">Total: </td>
-				<td style="font-weight: normal;">'. number_format(($data['Master']['factura__fatotal']), 4).'</td>
+				<td>Total: </td>
+				<td>'. number_format(($data['Master']['factura__fatotal']), 4).'</td>
 			</tr>
 		</table>';
 $subtable4='
 	<table style="font-size: 8pt;"  border="1" cellpadding="0">
 		<tr style="text-align:center;">
 			<td style=" width: 80%; text-align: left;">Prendas Totales:  '.$ptotal.'</td>
-			<td style=" width: 20%;" rowspan="2">'.$subtable3.'</td>
-		</tr>
-		<tr>
-			<th align="left" valign="top" colspan="2">Importe con letra: </th>
-		</tr>
-		<tr>
-			<td style="width: 33%;">N.Cajas: 7</td>
-			<td style="width: 67%;">Transporte: </td>
+			<td style=" width: 20%;" colspan="2">'.$subtable3.'</td>
 		</tr>
 		<tr>
 			<td style="width: 33%;">
@@ -192,31 +252,30 @@ $subtable4='
 	</table>';
 $subtable5='
 	<table>
-		<tr style="width: 100%;">
-			<td style="width: 30%;"><img style="width: 2in; height: 2in;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0"/></td>
+		<tr>
+		<td style="width: 30%;"><img style="width: 1.25in; height: 1.25in;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0"/></td>
+<!--	<td style="width: 30%;"><img style="width: 1.25in; height: 1.25in;" src="/app/webroot/img/JME910405B83-B0059875.png" border="0"/></td>-->
 			<td style="width: 70%; text-align: left;">
-				<ul style="list-style-type: none; font-size: 8pt">
-					<li style="font-weight: bold;">
-						FOLIO FISCAL: 
-						<span style="font-weight: normal;">'.$data['Comprobante']['uuid'].'</span>
+				<ul style="list-style-type: none; font-size: 6pt;">
+					<li>
+						FOLIO FISCAL: '.$data['Master']['uuid'].'
 					</li>
-					<li style="font-weight: bold;"><br/>
-						No. DE SERIE DEL CERTIFICADO DEL SAT: 
-						<span style="font-weight: normal;">'.$data['Comprobante']['no_certificado_sat'].'</span>
+					<li>
+						No. DE SERIE DEL CERTIFICADO DEL SAT: '.$data['Master']['nocertificadosat'].'
 					</li>
-					<li style="font-weight: bold;"><br/>
-						FECHA Y HORA DE CERTIFICACIÓN: 
-						<span style="font-weight: normal;">'.$data['Comprobante']['fecha_timbrado'].'</span>
+					<li>
+						FECHA Y HORA DE CERTIFICACIÓN: '.$data['Master']['fechatimbrado'].'
 					</li>
-					<li style="font-weight: bold;"><br/>NÚMERO DE SERIE DEL CSD DEL EMISOR: 
-						<span style="font-weight: normal;"><!--'.$data['Comprobante']['fecha_timbrado'].'--></span>
+					<li>
+						NÚMERO DE SERIE DEL CSD DEL EMISOR: 00001000000200904226
 					</li>
 				</ul>
 			</td>
 		</tr>
 	</table>
 ';
-
+*/
+/*
 $html='
 <table style="width: 7.2in; height: 11in; min-height: 11in; border: 1px solid #000; margin: 2px; padding: 2px;">
 	<tr style=" width: 100%; margin: 2px; padding: 2px;">
@@ -233,28 +292,29 @@ $html='
 	</tr>
 	<tr>
 		<td colspan="2">
-			<div id="divObs" style="font-size: 8pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+			<div id="divObs" style="font-size: 7pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
 				Observaciones: <br/>
 				<span style="font-weight: normal;">
-					<!--'. $data['Comprobante']['sello_cfd'].'--><br/>
 				</span>
 			</div>
-			<div id="divPrivacidad" style="font-size: 8pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+			<div id="divPrivacidad" style="font-size: 6pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
 				Consulte nuestro aviso de privacidad en http://www.oggi.com.mx/aviso-de-privacidad.html
 			</div>
-			<div id="divMarcas" style="font-size: 8pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+			<div id="divMarcas" style="font-size: 6pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
 				Las marcas registradas: HARD, WILD, BIG JOHN, OIL, STATION, OLE JEANS, SIENTE EL AZUL, OGGI STAR, OGGI MAX, OG JEANS, OGGI JEANS, BLURING, OGGI RED, OGGI BLUE. Son propiedad de Junior de México, S.A. de C.V.
-				<!--<span style="font-weight: normal;">'. $data['Comprobante']['sello_cfd'].'</span>-->
 			</div>
-			<div id="divSelloDigital" style="font-size: 8pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
-				SELLO DIGITAL DEL CFDI: <br/>
-				<span style="font-weight: normal;">'. $data['Comprobante']['sello_cfd'].'
-				</span>
+			<div id="divCadenaOriginal" style="font-size: 6pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+				CADENA ORIGINAL: <br />
+				'. $data['Master']['cadenaoriginal'].'
 			</div>
-			<div id="divSelloSAT" style="font-size: 8pt; border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
-					SELLO DEL SAT: <br/>
-					<span style="font-weight: normal;">'. $data['Comprobante']['sello_sat'].'
-					</span>
+			<div id="divSelloDigital" style="font-size: 6pt;  border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+				SELLO DIGITAL DEL CFDI: <br />
+				'. $data['Master']['sellocfd'].'
+				
+			</div>
+			<div id="divSelloSAT" style="font-size: 6pt; border-top: 1px solid #000; font-weight: bold; width: 100%; text-align: left;">
+					SELLO DEL SAT: <br />
+					'. $data['Master']['sellosat'].'
 			</div>
 		</td>
 	</tr>
@@ -267,9 +327,10 @@ $html='
 	</tr>
 </table>
 ';
-$filename='JME910405B83-'.$data['Master']['farefer'].'.pdf';
-$tcpdf->writeHTML($html, false, false, false, false, '');
-$tcpdf->Output(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
+
+*/
+//$tcpdf->writeHTML($html, false, false, false, false, '');
+//$tcpdf->Output(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename , "FI");
 
 // El PDF ya se genero, pero no lo vamos a enviar al user-agent, solo lo dejamos 
 // grabado en nuestro sistema local de archivos.
@@ -280,10 +341,12 @@ $tcpdf->Output(APP.DS.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
 // 'default', para poder enviar el resultado de la operacion en formato json.
 //$this->controller->layout='default';
 
-header('content type: application/json');
+//header('content type: application/json');
+/*
 echo json_encode( array(
 		'result'	=>'ok',
 		'message'	=> 'El PDF correspondiente al CFDI de la factura '.$data['Master']['farefer'].' se genero correctamente.',
 		'data'		=> $data			
 	));
 //$this->controller->_end();
+*/
