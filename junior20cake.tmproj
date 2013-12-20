@@ -86,14 +86,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>14</integer>
 				<key>line</key>
-				<integer>347</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>327</integer>
+			<integer>0</integer>
 		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
@@ -228,14 +228,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>39</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>135</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>113</integer>
 		</dict>
 		<key>app/views/factura_electronica/index.ctp</key>
 		<dict>

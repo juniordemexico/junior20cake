@@ -8,7 +8,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 	var $tableFields = 	array(
 							'id','farefer','fafecha','fat','fast','fasuma','faimporte','faimpoimpu','fatotal',
-							'fapedido','fast','cancela_uuid','cancelafecha',
+							'fapedido','fast','cancelauuid','cancelafecha',
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'vendedor_id','Vendedor.vecveven','Vendedor.venom','fadivisa',
 							'crefec','modfec', 'uuid', 'fechatimbrado');

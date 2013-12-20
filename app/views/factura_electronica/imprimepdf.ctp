@@ -25,19 +25,19 @@ $head_left='
 	<tr><td><b><u>E M I S O R</u></b></td></tr>
 	<tr><td><font size="+1"><b>JUNIOR DE MEXICO, S.A. DE C.V.</b></font></td></tr>
 	<tr><td><b>JME910405B83</b></td></tr>
-	<tr><td><font size="-1">Regimen General de Ley Personas Morales</font></td></tr>
+	<tr><td><font size="-1">Régimen General de Ley Personas Morales.</font></td></tr>
 	<tr><td>&nbsp;</td></tr>
-	<tr><td><b>Domicilio Fiscal:</b></td></tr>
+	<tr><td><b>Domicilio Físcal:</b></td></tr>
 	<tr><td>
-		Av. Paseo de la Reforma #2654 Piso 15 Interior 1501<br />
+		Av. Paseo de la Reforma #2654 Piso 15 Interior 1501<.br />
 		Colonia Lomas Altas. Delegación Miguel Hidalgo.<br />
-		México D.F., C.P. 11950<br />
+		México D.F., C.P. 11950.<br />
 	</td></tr>
 	<tr><td><b>Lugar de Emisión:</b></td></tr>
 	<tr><td>
-		Av. Viaducto Rio de la Piedad #525A<br />
-		Colonia Granjas México. Delegación Iztacalco<br/>
-		México D.F., C.P. 08400<br />
+		Av. Viaducto Rio de la Piedad #525A.<br />
+		Colonia Granjas México. Delegación Iztacalco.<br/>
+		México D.F., C.P. 08400.<br />
 	</td></tr>
 	<tr><td><b>Tipo de Comprobante:</b> ingreso.</td></tr>
 </table>
@@ -45,19 +45,22 @@ $head_left='
 
 $head_right='
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: transparent;">
-	<tr><td style="text-align: right;"><font size="-1"><b>Expedido en: México, D.F. a '. $data['Master']['fafecha'].'</b></FONT></td></tr>
+	<tr><td style="text-align: right;"><font size="-1"><b>Expedido en: México, D.F. a '. $data['Master']['fafecha'].'</b></font></td></tr>
 	<tr><td style="text-align: right;"><font size="+3"><b>FACTURA '.$data['Master']['farefer'].'</b></font></td></tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr><td><b><u>R E C E P T O R</u></b></td></tr>
 	<tr><td><font size="+1"><b>'.$data['Cliente']['clnom'].'</b></font></td></tr>
-	<tr><td><b>'.$data['Cliente']['clrfc'].'</b></td></tr>
+	<tr><td><b>'.$data['Cliente']['clrfc'].'.</b></td></tr>
 	<tr><td><b>Domicilio:</b></td></tr>
 	<tr><td>'.
-		$data['Cliente']['cldir'].'<br />'.
-		$data['Cliente']['clciu'].', '.$data['Cliente']['cledo'].'.<br />'.
-		'C.P. '.$data['Cliente']['clcp'].'<br />'.
-		'Tels: '.$data['Cliente']['cltel'].'<br />'.'
+		'Calle: '.$data['Cliente']['cldir'].'.<br />'.
+		'Número Exterior: '.$data['Cliente']['clnumext'].'.&nbsp;&nbsp;&nbsp;&nbsp;'.'Número Interior: '.$data['Cliente']['clnumint'].'.<br />'.
+		'Colonia: '.$data['Cliente']['clcolonia'].'. '.
+		'Delegación: '.$data['Cliente']['cldelegacion'].'.<br />'.
+		'Ciudad: '.$data['Cliente']['clciu'].'.&nbsp;&nbsp;&nbsp;&nbsp;'.' Estado: '.$data['Cliente']['cledo'].'.<br />'.
+		'País: '.$data['Cliente']['clpais'].'.&nbsp;&nbsp;&nbsp;&nbsp;'.' C.P.: '.$data['Cliente']['clcp'].'.<br />'.
+		'Teléfonos: '.$data['Cliente']['cltel'].'.<br />'.'
 	</td></tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr><td><b>Enviar a:</b><br/ >'.$data['Cliente']['clenviara'].'.</td></tr>
@@ -69,7 +72,7 @@ $head_right='
 ';
 
 $head=	'<table cellspacing="4" cellpadding="0" border="0" width="100%"><tr><td width="50%">'.
-		$head_left.'</td><td style="background-color: #DDD;">'.
+		$head_left.'</td><td º>'.
 		$head_right.
 		'</td></tr></table>';
 $tcpdf->writeHTML($head, true, false, true, false, '');
@@ -104,53 +107,104 @@ $body.='
 
 $tcpdf->writeHTML($body, true, false, true, false, '');
 
+$totales='
+	<table style="width: 100%; border: 1px none;" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
+				<td style="width: 0.5in;">&nbsp;</td>
+				<td style="width: 4in;">&nbsp;</td>
+				<td style="text-align: right; width: 0.75in;">Suma: </td>
+				<td style="text-align: right; width: 1.25in;"><b>'. $data['Master']['fasuma'].'</b></td>
+			</tr>
+			<tr>
+				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
+				<td style="width: 0.5in;">&nbsp;</td>
+				<td style="width: 4in;">&nbsp;</td>
+				<td style="text-align: right; width: 0.75in;">DESCTO: '.$data['Master']['fadesc1'].'</td>
+				<td style="text-align: right; width: 1.25in;"><b>'. ($data['Master']['fasuma']*($data['Master']['fadesc1']/100)).'</b></td>
+			</tr>
+			<tr>
+				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
+				<td style="width: 0.5in;"> &nbsp;</td>
+				<td style="width: 4in;">&nbsp;</td>
+				<td style="text-align: right; width: 0.75in;">SUBTOTAL:</td>
+				<td style="text-align: right; width: 1.25in;"><b>'.number_format($data['Master']['factura__faimporte'], 4).'</b></td>
+			</tr>
+			<tr>
+				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
+				<td style="width: 0.5in;">&nbsp;</td>
+				<td style="width: 4in;">&nbsp;</td>
+				<td style="text-align: right; width: 0.75in;">IVA '.$data['Master']['faimpu'].'%:</td>
+				<td style="text-align: right; width: 1.25in;"><b>'.number_format($data['Master']['factura__faimpoimpu'], 4).'</b></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td style="width: 4in;">&nbsp;</td>
+				<td style="text-align: right; width: 0.75in;">TOTAL:</td>
+				<td style="text-align: right; width: 1.25in;"><b>'.number_format($data['Master']['factura__fatotal'],4).'</b></td>
+			</tr>
+	</table>';
+
+$tcpdf->writeHTML($totales, true, false, true, false, '');
+
+
 $avisos='
 	<div style="text-align: center; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
-		<font size="-1"><b><i>Este documento es una representación impresa de un CFDI versión 3.2</i></b></font><br />
-		<font size="-1"><b>Consulte nuestro aviso de privacidad en http://www.oggi.com.mx/aviso-de-privacidad.html</b></font><br />
-		<i>Las marcas registradas: HARD, WILD, BIG JOHN, OIL, STATION, OLE JEANS, SIENTE EL AZUL, OGGI STAR, OGGI MAX, <br />OG JEANS, OGGI JEANS, BLURING, OGGI RED, OGGI BLUE. Son propiedad de Junior de México, S.A. de C.V.</i>
+		<font size="+0"><b><i>Este documento es una representación impresa de un CFDI versión 3.2</i></b></font><br />
+		<font size="-1"><b>Consulte nuestro aviso de privacidad en <i>http://www.oggi.com.mx/aviso-de-privacidad.html</i></b></font><br />
+		<font size="-1"><b>HARD, WILD, BIG JOHN, OIL, STATION, OLE JEANS, SIENTE EL AZUL, OGGI STAR, OGGI MAX, OG JEANS, OGGI JEANS, BLURING, <br />OGGI RED, OGGI BLUE <i>Son marcas registradas propiedad de Junior de México, S.A. de C.V.</i></b></font>
 	</div>';
 	
 $tcpdf->writeHTML($avisos, true, false, true, false, '');
 
 $cadena='
-	<div style="font-size: 6pt;  border: 1px solid #000; width: 100%; ">
-		<b>CADENA ORIGINAL:</b> <br />
-		'. $data['Master']['cadenaoriginal'].'
+	<div style="border: 1px solid #000; width: 100%; padding: 4pt;">
+		<font size="-1"><b>CADENA ORIGINAL:</b></font> <br />
+		<font size="-2">'. htmlentities($data['Master']['cadenaoriginal']).'<br /></font>
 	</div>';
 
 $tcpdf->writeHTML($cadena, true, false, true, false, '');
 
 $sello='
-	<div style="font-size: 6pt;  border: 1px solid #000; width: 100%; ">
-		<b>SELLO CFD:</b> <br />
-		'. $data['Master']['sellocfd'].'
+	<div style="border: 1px solid #000; width: 100%; ">
+		<font size="-1"><b>SELLO CFDI:</b></font> <br />
+		<font size="-1">'. htmlentities($data['Master']['sellocfd']).'</font><br />
 	</div>';
 
 $tcpdf->writeHTML($sello, true, false, true, false, '');
 
+$sellosat='
+	<div style="border: 1px solid #000; width: 100%; ">
+		<font size="-1"><b>SELLO SAT:</b></font> <br />
+		<font size="-1">'. htmlentities($data['Master']['sellosat']).'</font><br />
+	</div>';
+
+$tcpdf->writeHTML($sellosat, true, false, true, false, '');
+
 $timbre='
-	<table style="width: 100%; border: 1px solid #000000; padding: 4px;" border="1" cellpadding="2">
-		<tr style="background: transparent;" border="0">
+	<table style="width: 100%; border: 1px solid #000000; padding: 0px;" border="1" cellpadding="2">
+		<tr style="background: transparent; border: 1px none;" border="0">
 		<td style="width: 30%;">
-			<img style="width: 1.25in; height: 1.25in; border: 0px none #000000;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0" />
+			<img style="width: 1.15in; height: 1.15in; border: 0px none #000000;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0" />
 		</td>
-		<td style="width: 70%; border: 1px none; background-color: #FFFFFF; " border="1">
-				<ul style="list-style-type: none; font-size: 7pt; background: transparent; padding: 8px;">
-					<li>
-						<b>FOLIO FISCAL: '.$data['Master']['uuid'].'</b>
-					</li>
-					<li>
-						<b>No. DE SERIE DEL CERTIFICADO DEL SAT: </b>'.$data['Master']['nocertificadosat'].'
-					</li>
-					<li>
-						<b>FECHA Y HORA DE CERTIFICACIÓN:</b> '.$data['Master']['fechatimbrado'].'
-					</li>
-					<li>
-						<b>NÚMERO DE SERIE DEL CSD DEL EMISOR:</b> 00001000000200904226
-					</li>
-				</ul>
-			</td>
+		<td style="width: 70%;">
+			<p>
+				<font size="+1"><b>FOLIO FISCAL: '. htmlentities($data['Master']['uuid']).'</b></font>
+			</p>
+			<p>
+				<b>NÚMERO DE SERIE DEL CSD EMISOR:</b> '.htmlentities('00001000000200904226').'
+			</p>
+			<p>
+				<br /><br />
+			</p>
+			<p>
+				<b>NÚMERO DE SERIE DEL CERTIFICADO DEL SAT:</b> '.htmlentities($data['Master']['nocertificadosat']).'
+			</p>
+			<p>
+				<b>FECHA Y HORA DE CERTIFICACIÓN:</b> '.htmlentities($data['Master']['fechatimbrado']).'
+			</p>
+		</td>
 		</tr>
 	</table>
 ';
