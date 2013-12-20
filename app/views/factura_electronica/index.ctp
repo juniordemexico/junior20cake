@@ -71,7 +71,8 @@ echo $form->create('Factura',array('inputDefaults' => array(
 
 				<div class="btn-group">
 <?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
-				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['cancelafecha'])) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['cancelafecha'])) echo "cancelaCFDI(".$factura['Factura']['id'].")";?>" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
+				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['cancelafecha']) || $factura['Factura']['fast']<>'C' ) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['cancelafecha']) && $factura['Factura']['fast']=='C') echo "cancelaCFDI(".$factura['Factura']['id'].")";?>" 
+					title="Timbrar la Cancelación de esta Factura con el PAC.">
 					<i class="icon icon-white icon-qrcode"></i>Cancela
 				</button>
 <?php endif;?>
@@ -82,10 +83,10 @@ echo $form->create('Factura',array('inputDefaults' => array(
 					<i class="icon icon-white icon-qrcode"></i>Timbra
 				</button>
 <?php endif;?>
-				<button type="button" class="btn btn-warning btn-small" onclick="downloadXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
+				<button type="button" class="btn btn-warning btn-small" onclick="verXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
 					<i class="icon icon-white icon-envelope"></i>XML
 				</button>
-				<button type="button" class="btn btn-danger btn-small" onclick="downloadPDF(<?php echo $factura['Factura']['id'];?>);"  title="Descargar el archivo PDF">
+				<button type="button" class="btn btn-danger btn-small" onclick="verPDF(<?php echo $factura['Factura']['id'];?>);"  title="Ver el archivo PDF">
 					<i class="icon icon-white icon-envelope"></i>PDF
 				</button>
 				<button type="button" class="btn btn-info btn-small" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
@@ -129,6 +130,14 @@ var cancelaCFDI = function(id) {
 
 var downloadCancelaCFDI = function(id) {
 	window.open('/FacturaElectronica/downloadcancela/'+id+'/xml');
+}
+
+var verPDF = function(id) {
+	window.open('/FacturaElectronica/ver/'+id+'/pdf');
+}
+
+var verXML = function(id) {
+	window.open('/FacturaElectronica/ver/'+id+'/xml');
 }
 
 

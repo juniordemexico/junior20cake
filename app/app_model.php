@@ -345,10 +345,6 @@ class AppModel extends Model
 	}
 
 	public function getItemWithDetails($id=null) {
-		echo "yuyuju";
-		//print_r($details);
-		die();
-
 		if( !$id && isset($this->id) && 
 			(is_numeric($this->id) || is_string($this->id)) ) {
 			$id=$this->id;

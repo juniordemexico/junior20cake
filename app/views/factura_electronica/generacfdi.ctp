@@ -18,10 +18,10 @@
 	</div>
 
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-warning" onclick="downloadXML(<?php echo $docto->Master->id;?>);" title="Descargar el archivo XML.">
+		<button type="button" class="btn btn-warning" onclick="viewXML(<?php echo $docto->Master->id;?>);" title="Ver el archivo XML.">
 			<i class="icon icon-white icon-envelope"></i>XML
 		</button>
-		<button type="button" class="btn btn-danger" onclick="downloadPDF(<?php echo $docto->Master->id;?>);"  title="Descargar el archivo PDF">
+		<button type="button" class="btn btn-danger" onclick="viewPDF(<?php echo $docto->Master->id;?>);"  title="Ver el archivo PDF">
 			<i class="icon icon-white icon-envelope"></i>PDF
 		</button>
 		<button type="button" class="btn btn-info" onclick="shareCFDI(<?php echo $docto->Master->id;?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
@@ -97,6 +97,14 @@ var downloadPDF = function(id) {
 
 var shareCFDI = function(id) {
 	window.open('/FacturaElectronica/enviacorreo/'+id);
+}
+
+var verXML = function(id) {
+	location.replace('/FacturaElectronica/ver/'+id+'/xml');
+}
+
+var verPDF = function(id) {
+	location.replace('/FacturaElectronica/ver/'+id+'/pdf');
 }
 
 </script>

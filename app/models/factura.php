@@ -216,5 +216,28 @@ class Factura extends AppModel
 
 	} 
 
+	public function getItemWithDetails($id=null) {
+		if( !$id && isset($this->id) && 
+			(is_numeric($this->id) || is_string($this->id)) ) {
+			$id=$this->id;
+		}
+		$item=parent::getItemWithDetails($id);
+		
+		$dircte=$this->query("SELECT 
+								Clientesdireccione.*,
+								Cliente.clnom,
+								Cliente.clsuc,
+								Cliente.clcveven,
+								Cliente.clst,
+								Cliente.clrfc
+								FROM Clientes Cliente
+								LEFT JOIN Clientesdirecciones Clientesdireccione ON (Clientesdireccione.cliente_id=Cliente.id AND Clientesdireccione.cltpodir='Fiscal')
+								WHERE Cliente.id=".$item['Master']['cliente_id']
+							);
+		$dircte=$dircte[0];
+		$item['Clientesdireccion']=$dircte['Clientesdireccion'];
+		return( $item );
+	}
+
 }
 
