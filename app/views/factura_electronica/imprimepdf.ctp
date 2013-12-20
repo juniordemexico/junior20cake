@@ -56,12 +56,12 @@ $head_right='
 	<tr><td>&nbsp;</td></tr>
 	<tr><td><b>Domicilio:</b></td></tr>
 	<tr><td>'.
-		'<b>Calle:</b> '.htmlentities($data['Clientesdireccion']['clcalle']).'.<br />'.
-		'<b>Núm Exterior:</b> '.$data['Clientesdireccion']['clnumext'].'.&nbsp;&nbsp;&nbsp;&nbsp;'.'<b>Núm Interior:</b> '.$data['Clientesdireccion']['clnumint'].'.<br />'.
-		'<b>Colonia:</b> '.$data['Clientesdireccion']['clcolonia'].'.<br />'.
-		'<b>Delegación:</b> '.htmlentities($data['Clientesdireccion']['cldelegacion']).'.<br />'.
-		'<b>Ciudad y Estado:</b> '.htmlentities($data['Clientesdireccion']['clciu']).', '.htmlentities($data['Clientesdireccion']['cledo']).'.<br/>'.
-		'<b>País:</b> '.$data['Clientesdireccion']['clpais'].',&nbsp;&nbsp;&nbsp;&nbsp;'.' <b>C.P.:</b> '.$data['Clientesdireccion']['clcp'].'.<br />'.
+		'<b>Calle:</b> '.htmlentities($data['Direccioncte']['clcalle']).'.<br />'.
+		'<b>Núm Exterior:</b> '.$data['Direccioncte']['clnumext'].'.&nbsp;&nbsp;&nbsp;&nbsp;'.'<b>Núm Interior:</b> '.$data['Direccioncte']['clnumint'].'.<br />'.
+		'<b>Colonia:</b> '.$data['Direccioncte']['clcolonia'].'.<br />'.
+		'<b>Delegación:</b> '.htmlentities($data['Direccioncte']['cldelegacion']).'.<br />'.
+		'<b>Ciudad y Estado:</b> '.htmlentities($data['Direccioncte']['clciu']).', '.htmlentities($data['Direccioncte']['cledo']).'.<br/>'.
+		'<b>País:</b> '.$data['Direccioncte']['clpais'].',&nbsp;&nbsp;&nbsp;&nbsp;'.' <b>C.P.:</b> '.$data['Direccioncte']['clcp'].'.<br />'.
 		'
 	</td></tr>
 	<tr><td><b>Enviar a:</b><br/ >'.htmlentities($data['Cliente']['clenviara']).'</td></tr>

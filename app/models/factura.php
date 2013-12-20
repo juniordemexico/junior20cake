@@ -105,7 +105,7 @@ class Factura extends AppModel
 								Factura.fatotal total,
 								Factura.crefec created,
 								Factura.modfec modified,
-								Clientesdireccione.*,
+								Direccioncte.*,
 								Cliente.clnom,
 								Cliente.clsuc,
 								Cliente.clcveven,
@@ -115,7 +115,7 @@ class Factura extends AppModel
 								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
 								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
 								JOIN Divisas Divisa ON (Divisa.id=Factura.divisa_id)
-								LEFT JOIN Clientesdirecciones Clientesdireccione ON (Clientesdireccione.cliente_id=Cliente.id AND Clientesdireccione.cltpodir='Fiscal')
+								LEFT JOIN Direccioncte Direccionctes ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
 								WHERE Factura.id=$id
 							");
 
@@ -141,7 +141,7 @@ class Factura extends AppModel
 
 
 		// Datos del Receptor (nuestro cliente)
-		$receptor=array_merge($docto['Clientesdireccion'], $docto['Cliente']);
+		$receptor=array_merge($docto['Direccioncte'], $docto['Cliente']);
 
 /*
 		$receptor["clcalle"]="CALLE DE PRUEBA";
@@ -224,18 +224,18 @@ class Factura extends AppModel
 		$item=parent::getItemWithDetails($id);
 		
 		$dircte=$this->query("SELECT 
-								Clientesdireccione.*,
+								Direccioncte.*,
 								Cliente.clnom,
 								Cliente.clsuc,
 								Cliente.clcveven,
 								Cliente.clst,
 								Cliente.clrfc
 								FROM Clientes Cliente
-								LEFT JOIN Clientesdirecciones Clientesdireccione ON (Clientesdireccione.cliente_id=Cliente.id AND Clientesdireccione.cltpodir='Fiscal')
+								LEFT JOIN Direccionctes Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
 								WHERE Cliente.id=".$item['Master']['cliente_id']
 							);
 		$dircte=$dircte[0];
-		$item['Clientesdireccion']=$dircte['Clientesdireccion'];
+		$item['Direccioncte']=$dircte[0];
 		return( $item );
 	}
 
