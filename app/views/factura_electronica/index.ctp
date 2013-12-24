@@ -83,13 +83,13 @@ echo $form->create('Factura',array('inputDefaults' => array(
 					<i class="icon icon-white icon-qrcode"></i>Timbra
 				</button>
 <?php endif;?>
-				<button type="button" class="btn btn-warning btn-small" onclick="verXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
+				<button type="button" class="btn btn-warning btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="verXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
 					<i class="icon icon-white icon-envelope"></i>XML
 				</button>
-				<button type="button" class="btn btn-danger btn-small" onclick="verPDF(<?php echo $factura['Factura']['id'];?>);"  title="Ver el archivo PDF">
+				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="verPDF(<?php echo $factura['Factura']['id'];?>);"  title="Ver el archivo PDF">
 					<i class="icon icon-white icon-envelope"></i>PDF
 				</button>
-				<button type="button" class="btn btn-info btn-small" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
+				<button type="button" class="btn btn-info btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
 					<i class="icon icon-white icon-envelope"></i>
 				</button>
 				</div>

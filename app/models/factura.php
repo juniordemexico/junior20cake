@@ -115,7 +115,7 @@ class Factura extends AppModel
 								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
 								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
 								JOIN Divisas Divisa ON (Divisa.id=Factura.divisa_id)
-								LEFT JOIN Direccioncte Direccionctes ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
+								LEFT JOIN Direccioncte Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
 								WHERE Factura.id=$id
 							");
 
@@ -141,7 +141,7 @@ class Factura extends AppModel
 
 
 		// Datos del Receptor (nuestro cliente)
-		$receptor=array_merge($docto['Direccioncte'], $docto['Cliente']);
+		$receptor=array_merge($docto[0], $docto['Cliente']);
 
 /*
 		$receptor["clcalle"]="CALLE DE PRUEBA";
@@ -231,11 +231,12 @@ class Factura extends AppModel
 								Cliente.clst,
 								Cliente.clrfc
 								FROM Clientes Cliente
-								LEFT JOIN Direccionctes Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
+								LEFT JOIN Direccioncte Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
 								WHERE Cliente.id=".$item['Master']['cliente_id']
 							);
 		$dircte=$dircte[0];
 		$item['Direccioncte']=$dircte[0];
+
 		return( $item );
 	}
 

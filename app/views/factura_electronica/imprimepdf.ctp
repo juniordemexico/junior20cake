@@ -197,21 +197,21 @@ $timbre='
 			<img style="width: 1.15in; height: 1.15in; border: 0px none #000000;" src="'.(APP.DS.'files'.DS.'comprobantesdigitales'.DS.'JME910405B83-'.$data['Master']['farefer'].'.png').'" border="0" />
 		</td>
 		<td style="width: 70%;">
-			<p>
+			<div>
 				<font size="+1"><b>FOLIO FISCAL: '. htmlentities($data['Master']['uuid']).'</b></font>
-			</p>
-			<p>
+			</div>
+			<div>
 				<b>NÚMERO DE SERIE DEL CSD EMISOR:</b> '.htmlentities('00001000000200904226').'
-			</p>
-			<p>
+			</div>
+			<div>
 				<br /><br />
-			</p>
-			<p>
+			</div>
+			<div>
 				<b>NÚMERO DE SERIE DEL CERTIFICADO DEL SAT:</b> '.htmlentities($data['Master']['nocertificadosat']).'
-			</p>
-			<p>
+			</div>
+			<div>
 				<b>FECHA Y HORA DE CERTIFICACIÓN:</b> '.htmlentities($data['Master']['fechatimbrado']).'
-			</p>
+			</div>
 		</td>
 		</tr>
 	</table>
