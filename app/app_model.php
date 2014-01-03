@@ -120,7 +120,9 @@ class AppModel extends Model
 	public function getNextFolio( $serie='', $advance=0, $model=null ) {
 		$oldCache=$this->cache;
 		$oldCacheQueries=$this->cacheQueries;
-
+		$this->cache=false;
+		$this->cacheQueries=false;
+		
 		$model=strtolower($model && is_string($model)?$model:$this->name);
 		$serie=strtoupper($serie);
 		$rs=$this->query("SELECT Folio.serie, Folio.generador, Folio.seriesize 
@@ -344,25 +346,26 @@ class AppModel extends Model
 		return false;
 	}
 
-	public function getItemWithDetails($id=null) {
+	public function getItemWithDetails( $id=null ) {
 		if( !$id && isset($this->id) && 
 			(is_numeric($this->id) || is_string($this->id)) ) {
 			$id=$this->id;
 		}
-		$this->recursive=0;
+		$oldRecursive=$this->recursive;
+		$this->recursive=2;
 
 		// Get and Process the Master
-		$Item=$this->findById($id);
-		if($Item && isset($Item[$this->name])) {
-			$Item['Master']=$Item[$this->name];
-			unset($Item[$this->name]);
+		$item=$this->findById($id);
+		if($item && isset($item[$this->name])) {
+			$item['Master']=$item[$this->name];
+			unset($item[$this->name]);
 		}
-		$Item['masterModel']=$this->name;
-		$Item['detailsModel']=$this->detailsModel;
+		$item['masterModel']=$this->name;
+		$item['detailsModel']=$this->detailsModel;
 		
-		// Get and Process the Details
-		$method='findAllBy'.$this->name.'_id';
-		$Item['Details']=array();
+		// Get the Details and Process Them
+		$method='findAllBy'.strtolower($this->name).'_id';
+		$item['Details']=array();
 		$details=$this->{$this->detailsModel}->{$method}($id);
 
 		foreach($details as $detail) {
@@ -372,10 +375,12 @@ class AppModel extends Model
 				if( $key==$this->detailsModel ) $key='Detail';
 				$row[$key]=$value;
 			}
-			$Item['Details'][]=$row;
+			$item['Details'][]=$row;
 		}
 
-		return( $Item );
+		$this->recursive=$oldRecursive;
+		
+		return( $item );
 	}
 
 }

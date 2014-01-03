@@ -260,7 +260,6 @@ class ProveedoresController extends MasterDetailAppController {
 		$this->set('item', $item);
 	}
 
-
 	/* Text Field Autocomplete action */
 	public function autoComplete() {
  		Configure::write ( 'debug', 0 );

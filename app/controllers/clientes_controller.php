@@ -264,6 +264,9 @@ class ClientesController extends MasterDetailAppController {
 	$this->set('myMessage',$myMessage);
 	}
 
+	public function getmovs() {
+		return($this->Cliente->getMovs());
+	}
 }
 
 ?>

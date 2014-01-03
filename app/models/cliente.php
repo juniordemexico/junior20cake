@@ -158,4 +158,11 @@ class Cliente extends AppModel
 		return (parent::beforeFind($options));
 	}
 
+
+	function getMovs() {
+		$rs=$this->query("SELECT CTEMOV.* from CTEMOV CTEMOV ORDER BY CTEMOV.cmcvecli,CTEMOV.cmtda,CTEMOV.cmfecha,CTEMOV.cmrefer ROWS 10000");
+		print_r($rs);
+		die();
+		return($rs);
+	}
 }

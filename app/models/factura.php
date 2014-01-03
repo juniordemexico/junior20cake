@@ -27,7 +27,7 @@ class Factura extends AppModel
 	public $recursive=1;
 
 	public $title = 'farefer';
-	public $longTitle = null;
+	public $longTitle = 'uuid';
 	public $dateField='fafecha';
 	public $dateLimitField='fafvence';
 	public $stField='fast';
@@ -93,6 +93,23 @@ class Factura extends AppModel
 
 	public function getDoctoForCFDI( $id=null ) {
 
+		// Datos del Emisor (nuestra empresa)
+		$emisor=array(
+					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
+					"emrfc"=>"JME910405B83",
+					"emcalle"=>"AV PASEO DE LA REFORMA",
+					"emnumext"=>"2654",
+					"emnumint"=>"1501",
+					"emcol"=>"LOMAS ALTAS",	
+					"emciu"=>"MIGUEL HIDALGO",
+					"emedo"=>"DISTRITO FEDERAL",
+					"empais"=>"MEXICO",
+					"emcp"=>"11950",
+					"vlocalidad"=>"",
+					"vref"=>"",
+					"regimen_fiscal"=>"Regimen General de ley Personas Morales"
+					);
+
 		$docto=$this->query("SELECT Factura.id, Factura.farefer folio,
 								Factura.fafecha fecha,
 								Factura.fatcambio tcambio,	
@@ -139,36 +156,8 @@ class Factura extends AppModel
 //		$master["fecha"]=$master['fecha']date('Y-m-d').'T'.date('H:i:s', time()-600); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
 //		$master["folio"]="D0000001";
 
-
 		// Datos del Receptor (nuestro cliente)
 		$receptor=array_merge($docto[0], $docto['Cliente']);
-
-/*
-		$receptor["clcalle"]="CALLE DE PRUEBA";
-		$receptor["clnumext"]="SN EXT";
-		$receptor["clnumint"]="NA";
-		$receptor["clcolonia"]="COL. OBRERA";
-		$receptor["clciu"]="MIGUEL HIDALGO";
-		$receptor["cledo"]="DISTRITO FEDERAL";
-		$receptor["clpais"]="MEXICO";
-*/
-
-		// Datos del Emisor (nuestra empresa)
-		$emisor=array(
-					"emnom"=>"JUNIOR DE MEXICO, S.A. de C.V.",
-					"emrfc"=>"JME910405B83",
-					"emcalle"=>"AV PASEO DE LA REFORMA",
-					"emnumext"=>"2654",
-					"emnumint"=>"1501",
-					"emcol"=>"LOMAS ALTAS",	
-					"emciu"=>"MIGUEL HIDALGO",
-					"emedo"=>"DISTRITO FEDERAL",
-					"empais"=>"MEXICO",
-					"emcp"=>"11950",
-					"vlocalidad"=>"",
-					"vref"=>"",
-					"regimen_fiscal"=>"Regimen General de ley Personas Morales"
-					);
 
 		$items=$this->query("SELECT Facturadet.id, Facturadet.articulo_id,
 			 					Facturadet.fadprecio, 
@@ -213,7 +202,6 @@ class Factura extends AppModel
 			);
 
 		return json_encode($out);
-
 	} 
 
 	public function getItemWithDetails($id=null) {

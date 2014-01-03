@@ -184,7 +184,7 @@ class AxFolioselectronicosComponent extends Component {
 		'<cfdi:DomicilioFiscal '.
 		'calle="'.$e['emcalle'].'" '.
 		'noExterior="'.$e['emnumext'].'" '.
-//		'noInterior="'.$e['emnumint'].'" '.
+		'noInterior="'.$e['emnumint'].'" '.
 		'colonia="'.$e['emcol'].'" '.
 		'municipio="'.$e['emciu'].'" '.
 		'estado="'.$e['emedo'].'" '.
@@ -221,7 +221,7 @@ class AxFolioselectronicosComponent extends Component {
 		$traslados=
 		'<cfdi:Impuestos>'.
 		'<cfdi:Traslados>'.
-		'<cfdi:Traslado importe="'.round($m['impoimpu'],2).'" impuesto="'.$m['impuesto_cve'].'" tasa="'.$m['impuesto_tasa'].'"/>'.
+		'<cfdi:Traslado importe="'.round($m['impoimpu'],4).'" impuesto="'.$m['impuesto_cve'].'" tasa="'.$m['impuesto_tasa'].'"/>'.
 		'</cfdi:Traslados>'.
 		'</cfdi:Impuestos>';
 
@@ -234,8 +234,8 @@ class AxFolioselectronicosComponent extends Component {
 			'cantidad="'.floor($detalle['cant']).'" '.
 			'unidad="'.trim($detalle['unidad_cve']).'" '.
 			'descripcion="('.trim($detalle['arcveart']).') '.trim($detalle['ardescrip']).'" '.
-			'valorUnitario="'.round($detalle['precio'],2).'" '.
-			'importe="'.round($detalle['importe'],2).'" '.
+			'valorUnitario="'.round($detalle['precio'],4).'" '.
+			'importe="'.round($detalle['importe'],4).'" '.
 			'/>';
 		}
 		$conceptos=$conceptos."</cfdi:Conceptos>";
@@ -246,7 +246,7 @@ class AxFolioselectronicosComponent extends Component {
 					'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
 					$comprobante.$emisor.$receptor.$conceptos.$traslados.
 					'</cfdi:Comprobante>';
-//		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->xml);
+		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->xml);
 
 		return true;
 	}
