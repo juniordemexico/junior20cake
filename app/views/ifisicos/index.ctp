@@ -61,12 +61,12 @@ echo $form->create('Ifisico', array('inputDefaults' => array(
 		<tbody>
 		<?php foreach ($items as $item): ?>
 			<tr id="<?php echo $item['Ifisico']['id'];?>" class="t-row">
-				<td class="" title="<?php echo $item['Articulo']['ardescrip']; ?> [articulo_id: <?php echo $item['Ifisico']['articulo_id']; ?>]"><strong><?php echo $item['Articulo']['arcveart']; ?></strong></td>
+				<td class="<?php if($item['Ifisico']['cant_2']==$item['Ifisico']['existencia'] && $item['Ifisico']['existencia']<>0) echo "text-info";?><?php if($item['Ifisico']['cant_2']<>$item['Ifisico']['existencia'] && $item['Ifisico']['existencia']<>0 && $item['Ifisico']['modified_user_id']>0) echo "text-error";?>" title="<?php echo $item['Articulo']['ardescrip']; ?> [articulo_id: <?php echo $item['Ifisico']['articulo_id']; ?>]"><strong><?php echo $item['Articulo']['arcveart']; ?></strong></td>
 				<td class="cveart" title="<?php echo $item['Color']['cve']; ?> [color_id: <?php echo $item['Color']['id']; ?>]"><?php echo $item['Color']['cve'];?></td>
 				<td class="cveart"><?php echo $item['Articulo']['arlinea'];?></td>
 				<td class="cant"><strong><?php echo $item['Ifisico']['existencia']; ?></strong></td>
-				<td class="cant"><strong><?php echo $item['Ifisico']['cant_1']; ?></strong></td>
-				<td class="cant"><strong><?php echo $item['Ifisico']['cant_2']; ?></strong></td>
+				<td class="cant <?php if($item['Ifisico']['cant_1']<>$item['Ifisico']['existencia']) echo "text-error";?>"><strong><?php echo $item['Ifisico']['cant_1']; ?></strong></td>
+				<td class="cant <?php if($item['Ifisico']['cant_2']<>$item['Ifisico']['existencia'] && $item['Ifisico']['modified_user_id']>0 ) echo "text-error";?>"><strong><?php echo $item['Ifisico']['cant_2']; ?></strong></td>
 				<td class="cant"><?php echo $item['Ifisico']['t0_1']; ?></td>
 				<td class="cant"><?php echo $item['Ifisico']['t1_1']; ?></td>
 				<td class="cant"><?php echo $item['Ifisico']['t2_1']; ?></td>

@@ -21,7 +21,7 @@
 	</div>
 	<div class="row">
 		<div class="span5">
-		<h3>Conteo 1</h3>
+		<h4><em class="<?php if ($this->data['Ifisico']['existencia']<>$this->data['Ifisico']['cant_1']) echo "text-error";?>">Primer Conteo</em></h4>
 		<?php echo $this->TBS->input('Ifisico.t0_1', array('type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1')); ?>
 		<?php echo $this->TBS->input('Ifisico.t1_1', array('type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1')); ?>
 		<?php echo $this->TBS->input('Ifisico.t2_1', array('type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1')); ?>
@@ -35,7 +35,7 @@
 		<?php echo $this->TBS->input('Ifisico.cant_1', array('type' => 'text', 'label' => '<strong>Suma 1</strong>', 'ly_w'=>'1', 'readonly'=>'readonly')); ?>
 		</div>
 		<div class="span5">
-		<h3>Conteo 2</h3>
+		<h4><em class="<?php if ($this->data['Ifisico']['existencia']<>$this->data['Ifisico']['cant_2']) echo "text-error";?>">Segundo Conteo</em></h4>
 		<?php echo $this->TBS->input('Ifisico.t0_2', array('type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1')); ?>
 		<?php echo $this->TBS->input('Ifisico.t1_2', array('type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1')); ?>
 		<?php echo $this->TBS->input('Ifisico.t2_2', array('type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1')); ?>
@@ -50,17 +50,15 @@
 		</div>
 	</div>
 
-
-<div class="row">
-	<?php echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content')); ?>
-	<br /><br />
-	<ul>
-		<li class="label">ifisico_id: <em><?php echo $this->data['Ifisico']['id']?></em></li>
-		<li class="label">articulo_id: <em><?php echo $this->data['Ifisico']['articulo_id']?></em></li>
-		<li class="label">color_id: <em><?php echo $this->data['Ifisico']['color_id']?></em></li>
-		<li class="label">Creado: <em><?php echo $this->data['Ifisico']['created_user_id']?> ( <?php echo $this->data['Ifisico']['created']?> )</em></li>
-		<li class="label">Modificado: <em><?php echo $this->data['User']['username']?> ( <?php echo $this->data['Ifisico']['modified']?> )</em></li>
-	</ul>
+<div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
+	<div class="btn-group">	
+		<?php echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content', 'escape'=>false)); ?>
+	</div>
+	<div class="btn-group pull-right">	
+		<button type="button" class="btn btn-primary" data-ng-click="copiaasegundo()" data-ng-disabled="!(data.Master.id>0)" title="Copiar Primer Conteo al Segundo Conteo" alt="Copiar">
+		<i class="icon-plus-sign icon-white"></i>
+		</button>
+	</div>
 </div>
 
 </div> <!-- span12 -->
