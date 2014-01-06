@@ -18,7 +18,7 @@ echo $form->create('Ifisico', array('inputDefaults' => array(
 			<tr class="row-filter">
 				<th class="cveart"><?php echo $form->text('Articulo.arcveart', array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Clave', 'class' => 'search-query'));?></th>
 				<th class=""><?php echo $form->text('Color.cve',array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Color', 'class' => 'search-query'));?></th>
-				<th class="cveart"><?php echo $form->text('Articulo.arlinea', array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Clave', 'class' => 'search-query'));?></th>
+				<th class="cant"><?php echo $form->text('Articulo.arlinea', array('label' => false, 'type' => 'search', 'maxLength' => '32', 'placeholder'=>'Clave', 'class' => 'search-query'));?></th>
 				<th class="cant"><?php echo $form->text('existencia',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Exist', 'class' => 'search-query'));?></th>
 				<th class="cant"><?php echo $form->text('cant_1',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Cont 1', 'class' => 'search-query'));?></th>
 				<th class="cant"><?php echo $form->text('cant_2',array('label' => false, 'type' => 'search', 'maxLength' => '1', 'placeholder'=>'Cont 2', 'class' => 'search-query'));?></th>
@@ -40,7 +40,7 @@ echo $form->create('Ifisico', array('inputDefaults' => array(
 			<tr class="row-labels">
 				<th class=""><?php echo $this->Paginator->sort('Clave','Articulo.arcveart'); ?></th>
 				<th class="cveart"><?php echo $this->Paginator->sort('Color','Color.cve'); ?></th>
-				<th class="cveart"><?php echo $this->Paginator->sort('Linea','Articulo.arlinea'); ?></th>
+				<th class="cant"><?php echo $this->Paginator->sort('Linea','Articulo.arlinea'); ?></th>
 				<th class="cant"><?php echo $this->Paginator->sort('Exist','Ifisico.existencia'); ?></th>
 				<th class="cant"><?php echo $this->Paginator->sort('Cont 1','Ifisico.cant_1'); ?></th>
 				<th class="cant"><?php echo $this->Paginator->sort('Cont 2','Ifisico.cant_2'); ?></th>
@@ -63,7 +63,7 @@ echo $form->create('Ifisico', array('inputDefaults' => array(
 			<tr id="<?php echo $item['Ifisico']['id'];?>" class="t-row">
 				<td class="<?php if($item['Ifisico']['cant_2']==$item['Ifisico']['existencia'] && $item['Ifisico']['existencia']<>0) echo "text-info";?><?php if($item['Ifisico']['cant_2']<>$item['Ifisico']['existencia'] && $item['Ifisico']['existencia']<>0 && $item['Ifisico']['modified_user_id']>0) echo "text-error";?>" title="<?php echo $item['Articulo']['ardescrip']; ?> [articulo_id: <?php echo $item['Ifisico']['articulo_id']; ?>]"><strong><?php echo $item['Articulo']['arcveart']; ?></strong></td>
 				<td class="cveart" title="<?php echo $item['Color']['cve']; ?> [color_id: <?php echo $item['Color']['id']; ?>]"><?php echo $item['Color']['cve'];?></td>
-				<td class="cveart"><?php echo $item['Articulo']['arlinea'];?></td>
+				<td class="cant"><?php echo $item['Articulo']['arlinea'];?></td>
 				<td class="cant"><strong><?php echo $item['Ifisico']['existencia']; ?></strong></td>
 				<td class="cant <?php if($item['Ifisico']['cant_1']<>$item['Ifisico']['existencia']) echo "text-error";?>"><strong><?php echo $item['Ifisico']['cant_1']; ?></strong></td>
 				<td class="cant <?php if($item['Ifisico']['cant_2']<>$item['Ifisico']['existencia'] && $item['Ifisico']['modified_user_id']>0 ) echo "text-error";?>"><strong><?php echo $item['Ifisico']['cant_2']; ?></strong></td>

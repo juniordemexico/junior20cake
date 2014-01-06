@@ -97,7 +97,7 @@ $body='
 				<td style="width: 0.5in;">'.htmlentities($item['Articulo']['arunidad']).'</td>
 				<td style="width: 1.6in;"><b>'.htmlentities($item['Articulo']['arcveart']).'</b></td>
 				<td style="width: 2.8in;">'.htmlentities($item['Articulo']['ardescrip']).'</td>
-				<td style="text-align: right; width: 0.6in;">'. number_format($item['Detail']['fadprecio'],4).'</td>
+				<td style="text-align: right; width: 0.6in;">'. number_format($item['Detail']['fadimporteneto']/$item['Detail']['fadcant'],4).'</td>
 				<td style="text-align: right; width: 1in;">'. number_format($item['Detail']['fadimporteneto'],4).'</td>
 			</tr>
 			';

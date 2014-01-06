@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/ifisicos/edit.ctp</string>
+	<string>app/controllers/ifisicos_controller.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -40,14 +40,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>60</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
+			<integer>35</integer>
+		</dict>
+		<key>app/files/queries/create_artmov_from_facturadet.sql</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>66</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
 			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>31</integer>
 		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
@@ -77,6 +91,20 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>app/views/factura_electronica/imprimepdf.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>77</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>65</integer>
+		</dict>
 		<key>app/views/factura_electronica/index.ctp</key>
 		<dict>
 			<key>caret</key>
@@ -96,28 +124,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>117</integer>
 				<key>line</key>
-				<integer>49</integer>
+				<integer>37</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>27</integer>
+			<integer>19</integer>
 		</dict>
 		<key>app/views/ifisicos/index.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>50</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>64</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>51</integer>
+			<integer>14</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -127,6 +155,8 @@
 		<string>app/controllers/components/ax_folioselectronicos.php</string>
 		<string>app/models/ifisico.php</string>
 		<string>app/views/ifisicos/index.ctp</string>
+		<string>app/files/queries/create_artmov_from_facturadet.sql</string>
+		<string>app/views/factura_electronica/imprimepdf.ctp</string>
 		<string>app/views/ifisicos/edit.ctp</string>
 		<string>app/controllers/ifisicos_controller.php</string>
 	</array>
