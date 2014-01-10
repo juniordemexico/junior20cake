@@ -216,7 +216,8 @@ class AxFolioselectronicosComponent extends Component {
 		'codigoPostal="'.(!empty($r['clcp'])?$r['clcp']:'NA').'" '.
 		'/>'.
 		'</cfdi:Receptor> ';
-
+		$receptor=replaceSpecialChars($receptor);
+		
 		// Total y translados de Impuestos que aplican al Comprobante
 		$traslados=
 		'<cfdi:Impuestos>'.
@@ -233,7 +234,7 @@ class AxFolioselectronicosComponent extends Component {
 			'<cfdi:Concepto '.
 			'cantidad="'.floor($detalle['cant']).'" '.
 			'unidad="'.trim($detalle['unidad_cve']).'" '.
-			'descripcion="('.trim($detalle['arcveart']).') '.trim($detalle['ardescrip']).'" '.
+			'descripcion="('.cleanSpecialChars(trim($detalle['arcveart'])).') '.cleanSpecialChars(trim($detalle['ardescrip'])).'" '.
 			'valorUnitario="'.round($detalle['precio'],4).'" '.
 			'importe="'.round($detalle['importe'],4).'" '.
 			'/>';
@@ -246,6 +247,7 @@ class AxFolioselectronicosComponent extends Component {
 					'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
 					$comprobante.$emisor.$receptor.$conceptos.$traslados.
 					'</cfdi:Comprobante>';
+
 		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->xml);
 
 		return true;
@@ -260,19 +262,23 @@ class AxFolioselectronicosComponent extends Component {
 
 //ini_set('error_reporting', E_ALL & ~E_WARNING & ~E_NOTICE );
 //error_reporting( E_ALL & ~E_WARNING & ~E_NOTICE );
-		Configure::write('debug', 0);
+		Configure::write('debug', 2);
 
 		$xslt = new XSLTProcessor();
 		$XSL = new DOMDocument();
 		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 
+		print_r($this->xml);
+		echo "-------<br />";
 		ob_start();
-		
 		$xslt->importStylesheet($XSL);
-		ob_end_clean();
+//		ob_end_clean();
+		$z=ob_get_clean();
+		print_r($z);
+//		print_r($this->cadenaoriginal);
+//		die();
 		$this->cadenaoriginal = $xslt->transformToXML( $c );
-
 		if( !$this->cadenaoriginal || empty($this->cadenaoriginal) ) {
 			$this->message='Error al generar la cadena original ('.xslt_error($xslt).')';
 			return false;
@@ -604,3 +610,13 @@ Certificado No.:00001000000200904226
 
 Datos:/CN=JUNIOR DE MEXICO SA DE CV/name=JUNIOR DE MEXICO SA DE CV/O=JUNIOR DE MEXICO SA DE CV/x500UniqueIdentifier=JME910405B83 / DIAA6908018T1/serialNumber= / DIAA690801HDFCMB04/OU=unidad
 **/
+	function cleanSpecialChars($data) {
+		$data = preg_replace('/[^a-zA-Z0-9_\ \'\[\]\(\)&-]/s', ' ', $data);
+		$data = str_replace('&', '&amp;', $data);
+		return $data;
+	}
+
+	function replaceSpecialChars($data) {
+		$data = str_replace('&', '&amp;', $data);
+		return $data;
+	}

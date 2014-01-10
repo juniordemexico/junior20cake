@@ -24,7 +24,7 @@
 							'class'=>(($mode=='edit' && $itemCodeReadOnly==1)?'readonly':''), 'readonly'=>(($mode=='edit' && $itemCodeReadOnly==1)?'readonly':''?'true':''))); ?>
 <?php echo $this->TBS->input('Articulo.ardescrip', array('type' => 'text', 'label' => 'Descripción', 'ly_w'=>'4')); ?>
 <?php echo $this->TBS->input('arst', array('type'=>'radiogroup', 'label'=>'Estatus', 
-							'selectOptions'=>array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'),
+							'selectOptions'=>array('A'=>'Activo', 'B'=>'Baja', 'S'=>'Suspendido'),
 							'title'=>'Elige el Estatus del producto: Activo, Baja (descontinuado, eliminado), Suspendido (bloqueado temporalmente)'
 							));
 ?>

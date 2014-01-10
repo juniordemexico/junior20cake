@@ -22,30 +22,30 @@
 	<div class="row">
 		<div class="span5">
 		<h4><em class="<?php if ($this->data['Ifisico']['existencia']<>$this->data['Ifisico']['cant_1']) echo "text-error";?>">Primer Conteo</em></h4>
-		<?php echo $this->TBS->input('Ifisico.t0_1', array('type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t1_1', array('type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t2_1', array('type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t3_1', array('type' => 'text', 'label' => $this->data['Talla']['tat3'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t4_1', array('type' => 'text', 'label' => $this->data['Talla']['tat4'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t5_1', array('type' => 'text', 'label' => $this->data['Talla']['tat5'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t6_1', array('type' => 'text', 'label' => $this->data['Talla']['tat6'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t7_1', array('type' => 'text', 'label' => $this->data['Talla']['tat7'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t8_1', array('type' => 'text', 'label' => $this->data['Talla']['tat8'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t9_1', array('type' => 'text', 'label' => $this->data['Talla']['tat9'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t0_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t0_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t1_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t1_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t2_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t2_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t3_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat3'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t3_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t4_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat4'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t4_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t5_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat5'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t5_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t6_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat6'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t6_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t7_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat7'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t7_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t8_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat8'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t8_2']?'readonly':'') )); ?>
+		<?php echo $this->TBS->input('Ifisico.t9_1', array('class' => 'cont1', 'type' => 'text', 'label' => $this->data['Talla']['tat9'], 'ly_w'=>'1', 'readonly'=>($this->data['Ifisico']['t9_2']?'readonly':'') )); ?>
 		<?php echo $this->TBS->input('Ifisico.cant_1', array('type' => 'text', 'label' => '<strong>Suma 1</strong>', 'ly_w'=>'1', 'readonly'=>'readonly')); ?>
 		</div>
 		<div class="span5">
 		<h4><em class="<?php if ($this->data['Ifisico']['existencia']<>$this->data['Ifisico']['cant_2']) echo "text-error";?>">Segundo Conteo</em></h4>
-		<?php echo $this->TBS->input('Ifisico.t0_2', array('type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t1_2', array('type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t2_2', array('type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t3_2', array('type' => 'text', 'label' => $this->data['Talla']['tat3'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t4_2', array('type' => 'text', 'label' => $this->data['Talla']['tat4'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t5_2', array('type' => 'text', 'label' => $this->data['Talla']['tat5'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t6_2', array('type' => 'text', 'label' => $this->data['Talla']['tat6'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t7_2', array('type' => 'text', 'label' => $this->data['Talla']['tat7'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t8_2', array('type' => 'text', 'label' => $this->data['Talla']['tat8'], 'ly_w'=>'1')); ?>
-		<?php echo $this->TBS->input('Ifisico.t9_2', array('type' => 'text', 'label' => $this->data['Talla']['tat9'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t0_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat0'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t1_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat1'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t2_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat2'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t3_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat3'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t4_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat4'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t5_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat5'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t6_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat6'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t7_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat7'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t8_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat8'], 'ly_w'=>'1')); ?>
+		<?php echo $this->TBS->input('Ifisico.t9_2', array('class' => 'cont2', 'type' => 'text', 'label' => $this->data['Talla']['tat9'], 'ly_w'=>'1')); ?>
 		<?php echo $this->TBS->input('Ifisico.cant_2', array('type' => 'text', 'label' => '<strong>Suma 2</strong>', 'ly_w'=>'1', 'readonly'=>'readonly')); ?>
 		</div>
 	</div>
@@ -55,7 +55,7 @@
 		<?php echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content', 'escape'=>false)); ?>
 	</div>
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="copiaasegundo()" data-ng-disabled="!(data.Master.id>0)" title="Copiar Primer Conteo al Segundo Conteo" alt="Copiar">
+		<button type="button" class="btn btn-primary" data-ng-click="copiaasegundo()" data-ng-disabled="(data.Master.id>0)" title="Copiar Primer Conteo al Segundo Conteo" alt="Copiar">
 		<i class="icon-plus-sign icon-white"></i>
 		</button>
 	</div>
@@ -63,5 +63,17 @@
 
 </div> <!-- span12 -->
 
+<script>
+$(function() {
+	$("button")
+	.button()
+	.click(function (event) {
+
+	$('.cont1').each(function(i, valor){
+		$('#IfisicoT'+i+'2').val(valor.value);
+		});
+	});
+});
+</script>
 
 <script><?php echo $this->AxUI->initAndCloseAppControllerLegacy(); ?></script>

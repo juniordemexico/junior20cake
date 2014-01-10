@@ -53,28 +53,32 @@ if($item[0]=='error') $ok=false; $ok=true;
 	<h3 class="text-info">Creación del PDF <small>(representación impresa del xml)</small></h3>
 	<div class="well">
 		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
+		<iframe src="/FacturaElectronica/imprimepdf/<?php echo <?php echo $docto->Master->id; ?>?>"></iframe>
 <?php
+/*
 	if($ok) {
 		$aca=$this->requestAction('/FacturaElectronica/imprimepdf/'.$docto->Master->id, array('return'));
 		print_r($aca);
 	}
+*/
 ?>
-		</pre>
 	</div>
 
 	<h3 class="text-info">Envio de Correo <small>(con archivos XML y PDF adjuntos)</small></h3>
 	<div class="well">
 		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
 <?php
+/*
 if ($ok) {
 	$joe=$this->requestAction('/FacturaElectronica/enviacorreo/'.$docto->Master->id);
 	print_r($joe);
 }
+**/
 ?>
 		</pre>
 	</div>
 
-<hr/>
+<hr />
 
 
 

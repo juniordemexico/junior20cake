@@ -158,7 +158,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			return;			
 		}
 
-		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
+		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexión al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
 		//					$this->AxFolioselectronicos->pacResponse );
 
 

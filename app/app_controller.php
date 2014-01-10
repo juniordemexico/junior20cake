@@ -318,6 +318,11 @@ class AppController extends Controller {
 		$this->set('items', $this->paginate($this->masterModelName, $filter));
 	}
 
+	public function cleanSpecialChars($data) {
+		$data = preg_replace('/[^a-zA-Z0-9_\ \[\]\(\)&-]/s', ' ', $data);
+		return $data;
+	}
+
 }
 // Internet - Public Base Class Categories 
 

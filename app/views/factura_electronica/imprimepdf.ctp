@@ -95,8 +95,8 @@ $body='
 				$body.='<tr>
 				<td style="text-align: right; width: 0.5in;">'.number_format(($item['Detail']['fadcant']), 0).'</td>
 				<td style="width: 0.5in;">'.htmlentities($item['Articulo']['arunidad']).'</td>
-				<td style="width: 1.6in;"><b>'.htmlentities($item['Articulo']['arcveart']).'</b></td>
-				<td style="width: 2.8in;">'.htmlentities($item['Articulo']['ardescrip']).'</td>
+				<td style="width: 1.6in;"><b>'.htmlentities($this->AxUI->cleanSpecialChars($item['Articulo']['arcveart'])).'</b></td>
+				<td style="width: 2.8in;">'.htmlentities($this->AxUI->cleanSpecialChars($item['Articulo']['ardescrip'])).'</td>
 				<td style="text-align: right; width: 0.6in;">'. number_format($item['Detail']['fadimporteneto']/$item['Detail']['fadcant'],4).'</td>
 				<td style="text-align: right; width: 1in;">'. number_format($item['Detail']['fadimporteneto'],4).'</td>
 			</tr>
@@ -116,35 +116,35 @@ $totales='
 				<td style="width: 0.5in;">&nbsp;</td>
 				<td style="width: 4.4in;">&nbsp;</td>
 				<td style="text-align: right; width: 0.6in;"><b>SUMA:</b> </td>
-				<td style="text-align: right; width: 1in; background-color: #E0E0E0;"><b>'. number_format($data['Master']['fasuma'],4).'</b>&nbsp;&nbsp;</td>
+				<td style="text-align: right; width: 1in; background-color: #E0E0E0;"><b>'. round($data['Master']['fasuma'],4).'</b>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
 				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
 				<td style="width: 0.5in;">&nbsp;</td>
 				<td style="width: 4.4in;">&nbsp;</td>
-				<td style="text-align: right; width: 0.6in; background-color: #E0E0E0;"><b>DESCTO '. number_format($data['Master']['fadesc1'],1).' %:</b></td>
-				<td style="text-align: right; width: 1in; background-color: #E0E0E0;"><b>'. number_format($data['Master']['fasuma']*($data['Master']['fadesc1']/100),4).'</b>&nbsp;&nbsp;</td>
+				<td style="text-align: right; width: 0.6in; background-color: #E0E0E0;"><b>DESC '. number_format($data['Master']['fadesc1'],1).' %:</b></td>
+				<td style="text-align: right; width: 1in; background-color: #E0E0E0;"><b>'. number_format(round($data['Master']['fasuma']*($data['Master']['fadesc1']/100),2),2).'</b>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
 				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
 				<td style="width: 0.5in;"> &nbsp;</td>
 				<td style="width: 4.4in;">&nbsp;</td>
 				<td style="text-align: right; width: 0.6in;"><b>SUBTOTAL:</b></td>
-				<td style="text-align: right; width: 1in;"><b>'.number_format($data['Master']['factura__faimporte'], 4).'</b>&nbsp;&nbsp;</td>
+				<td style="text-align: right; width: 1in;"><b>'.number_format(round($data['Master']['factura__faimporte'], 2),2).'</b>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
 				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
 				<td style="width: 0.5in;">&nbsp;</td>
 				<td style="width: 4.4in;">&nbsp;</td>
 				<td style="text-align: right; width: 0.6in;"><b>IVA '.number_format($data['Master']['faimpu'],1).' %:</b></td>
-				<td style="text-align: right; width: 1in;"><b>'.number_format($data['Master']['factura__faimpoimpu'], 4).'</b>&nbsp;&nbsp;</td>
+				<td style="text-align: right; width: 1in;"><b>'.number_format(round($data['Master']['factura__faimpoimpu'], 2),2).'</b>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
 				<td style="text-align: right; width: 0.5in;">&nbsp;</td>
 				<td style="width: 0.5in;">&nbsp;</td>
 				<td style="width: 4.4in;">&nbsp;</td>
 				<td style="text-align: right; width: 0.6in;"><b>TOTAL:</b></td>
-				<td style="text-align: right; width: 1in;"><b>'.number_format($data['Master']['factura__fatotal'],4).'</b>&nbsp;&nbsp;</td>
+				<td style="text-align: right; width: 1in;"><b>'.number_format(round($data['Master']['factura__fatotal'],2),2).'</b>&nbsp;&nbsp;</td>
 			</tr>
 	</table>';
 
@@ -244,16 +244,16 @@ $tcpdf->Output(APP.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
 // El resultado de la creacion, lo haremos interrumpiendo el curso normal de la
 // respuesta (incicialmente usando el layout 'media') y cambiamos al layout
 // 'default', para poder enviar el resultado de la operacion en formato json.
-//$this->controller->layout='default';
+$this->controller->layout='json';
 
 //header('content type: application/json');
 
 echo json_encode( array(
 		'result'	=>'ok',
 		'message'	=> 'El PDF correspondiente al CFDI de la factura '.$data['Master']['farefer'].' se genero correctamente.',
-		'data'		=> $data			
+		'data'		=> $data['Master']			
 	));
-//$this->controller->_end();
+$this->controller->_end();
 
 /*
 header('content type: application/json');

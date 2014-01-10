@@ -398,4 +398,23 @@ axApp.value('ui.config', {
 			$this->getAppDefaults().LF.CR
 		);
 	}
+
+	public function cleanSpecialChars($data) {
+		$data = preg_replace('/[^a-zA-Z0-9_\ \'\[\]\(\)&-]/s', ' ', $data);
+		$data = str_replace('&', '&amp;', $data);
+		return $data;
+	}
+
+	public function replaceSpecialChars($data) {
+		$data = str_replace('&', '&amp;', $data);
+		return $data;
+	}
+
+/*
+	public function cleanSpecialChars($data) {
+		$data = preg_replace('/[^a-zA-Z0-9_\ \[\]\(\)&-]/s', ' ', $data);
+		return $data;
+	}
+*/
+
 }

@@ -188,19 +188,19 @@ class Factura extends AppModel
 					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],6),
 					'cant'=>$item[0]['fadcant'],
 					'importe'=>$item[0]['fadimportefinal'],
+//					'arcveart'=>parent::_cleanSpecialChars($item['Articulo']['arcveart']),
+//					'ardescrip'=>parent::_cleanSpecialChars(trim($item['Articulo']['ardescrip'])),
 					'arcveart'=>$item['Articulo']['arcveart'],
 					'ardescrip'=>trim($item['Articulo']['ardescrip']),
 					'unidad_cve'=>trim($item[0]['unidad_cve']),
 					);
 		}
-
 		$out=array(
 			"Master"		=>$master,
 		 	"Details"		=>$Details,
 		 	"Receptor"		=>$receptor,
 		 	"Emisor"		=>$emisor,
 			);
-
 		return json_encode($out);
 	} 
 
