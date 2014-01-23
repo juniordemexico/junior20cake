@@ -126,7 +126,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			);
 
 */
-
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
@@ -138,12 +137,11 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	public function autogenerapdf() {
 		Configure::write('debug', 0);
 		$this->layout='default';
-		$this->recursive=-1; //B0061829
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'B0060000','Factura.farefer <='=>'B0060050', 'fat'=>0),
-							'order'=>array('Factura.farefer'),
-							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
-											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
-							));
+		$this->recursive=-1;
+		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'B0060000','Factura.farefer <='=>'B0061000', 'fat'=>0),
+							'order'=>array('Factura.farefer')),
+							array('Factura.id,Factura.farefer,Factura.fafecha,Factura.cliente_id,Factura.facvecli,Factura.fatda,Factura.fatotal,Factura.fast,Factura.fat')
+							);
 		$this->set('items', $items);
 	}
 
@@ -589,7 +587,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	}
 
 	function ver($id=null, $format='pdf') {
-/*
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
 		}
@@ -607,49 +604,22 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-*/
-
-
-		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
-			$format=strtolower(trim($params['named']['format']));
-		}
-		if ( isset($params['url']['format']) && !empty($params['url']['format']) ) {
-			$format=strtolower(trim($params['url']['format']));
-		}
-		
-		$this->Factura->Recursive=0;
-		$result=$this->Factura->read(null, $id);
-		// The Requested ID doesn't exists
-		if(!$result) { 
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			$this->redirect(array('action' => 'index'));
-		}
-
-//		$appPath=APP;
-//antes del 2014 buscar en APP.DS.'files'.DS.'facturaelectronica/xml' y 
-//APP.DS.'files'.DS.'facturaelectronica/pdf'
-		if($result['Factura']['fafecha']>='2014-01-01') {
-			$appPathPDF=APP.'files'.DS.'comprobantesdigitales';
-			$appPathXML=APP.'files'.DS.'comprobantesdigitales';			
-		}
-		else {
-			$appPathPDF=APP.'files'.DS.'facturaselectronicas'.DS.'pdf';
-			$appPathXML=APP.'files'.DS.'facturaselectronicas'.DS.'xml';
-		}
 
 		if($format=='pdf') {
-			// Search the related media file		
+			// Search the related media file
+			$folder='pdf';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists($appPathPDF.DS.$filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$appPathPDF.DS.$filename, 'error');
+			if(!file_exists($appPath.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$appPath.DS.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 		}
 		elseif ($format=='xml') {
 			// Search the related media file
+			$folder='xml';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists($appPathXML.DS.$filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$appPathXML.DS.$filename, 'error');
+			if(!file_exists($appPath.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$appPath.DS.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 			
@@ -661,7 +631,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 						'name' => 'JME910405B83-'.trim($result['Factura']['farefer']),
 						'download' => false,
 						'extension' => $format,
-						'path' => ($format==='pdf'?$appPathPDF:$appPathXML).DS);
+						'path' => $appPath.DS);
 		$this->set($params);
 	}
 

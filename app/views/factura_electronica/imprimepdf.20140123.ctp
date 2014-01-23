@@ -117,7 +117,7 @@ $body.='
 	</table>';
 
 $tcpdf->writeHTML($body, true, false, true, false, '');
-//$tcpdf->Ln();
+$tcpdf->Ln();
 
 $totales='
 	<table style="width: 100%; border: 1px solid #000; background-color: #E0E0E0;" cellspacing="0" cellpadding="0">
@@ -160,13 +160,25 @@ $totales='
 
 $tcpdf->writeHTML($totales, true, false, true, false, '');
 
+//Agregado para obtener método de pago, combinando mtdopago y clbancocta ej.(CHEQUE 0430)
+$mpago="";
+if($data['Cliente']['clbancocta']==null || $data['Cliente']['clbancocta']=="NO IDENTIFICADO" || $data['Cliente']['clbancocta']==""){
+	$mpago="NO IDENTIFICADO";
+}
+elseif($data['Cliente']['clmtdopago']=="EFECTIVO" || $data['Cliente']['clmtdopago']=="NO IDENTIFICADO"){
+	$mpago= $data['Cliente']['clmtdopago'];
+}
+else{
+	$mpago= $data['Cliente']['clmtdopago'].' '.$data['Cliente']['clbancocta'];
+}
+//
 $pago='
 	<div style="border: 1px solid #000; width: 100%; background-color: #E0E0E0;">
-		<font size="-1"><b> Prendas totales:</b> '.$ptotal.'</font>&nbsp;&nbsp;
-		<font size="-1"><b> Forma de pago:</b> EN UNA SOLA EXHIBICION</font>&nbsp;&nbsp;
-		<font size="-1"><b> Condiciones de pago:</b> '.html($data['Master']['faplazo']).' dias</font>&nbsp;&nbsp;
-		<font size="-1"><b> Metodo de pago:</b> '.html($data['Cliente']['clmtdopago']).'</font>&nbsp;&nbsp;
-		<font size="-1"><b> Num. cta. pago:</b> '.html($data['Cliente']['clbancocta']).'</font>
+		<font size="-1"><b> Prendas totales: </b>'.$ptotal.'</font>&nbsp;&nbsp;
+		<font size="-1"><b> Forma de pago: </b>EN UNA SOLA EXHIBICION</font>&nbsp;&nbsp;
+		<font size="-1"><b> Condiciones de pago: </b>'.html($data['Master']['faplazo']).' dias</font>&nbsp;&nbsp;
+		<font size="-1"><b> Metodo de pago: </b>'.html(($data['Cliente']['clmtdopago']!="") ? $data['Cliente']['clmtdopago'] : "NO IDENTIFICADO").'</font>&nbsp;&nbsp;
+		<font size="-1"><b> Num. cta. pago: </b>'.html(($data['Cliente']['clbancocta']!="") ? $data['Cliente']['clbancocta'] : "NO IDENTIFICADO").'</font>
 		<br />
 	</div>
 ';
@@ -174,11 +186,11 @@ $tcpdf->writeHTML($pago, true, false, true, false, '');
 
 $observaciones='
 	<div style="text-align: left; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
-		<font size="+0"><b>Observaciones:</b> &nbsp;&nbsp;&nbsp;<i>'.html($data['Master']['faobser']).'</i></font><br />
+		<font size="+0"><b><i>Observaciones: '.html($data['Master']['faobser']).'</i></b></font><br />
 	</div>';
 	
 $tcpdf->writeHTML($observaciones, true, false, true, false, '');
-//$tcpdf->Ln();
+$tcpdf->Ln();
 
 $avisos='
 	<div style="text-align: center; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
@@ -188,7 +200,7 @@ $avisos='
 	</div>';
 	
 $tcpdf->writeHTML($avisos, true, false, true, false, '');
-//$tcpdf->Ln();
+$tcpdf->Ln();
 
 $cadena='
 	<div style="border: 1px solid #000; width: 100%; padding: 4pt;">
@@ -227,6 +239,9 @@ $timbre='
 			</div>
 			<div>
 				<b>NUMERO DE SERIE DEL CSD EMISOR:</b> '.html('00001000000200904226').'
+			</div>
+			<div>
+				<br /><br />
 			</div>
 			<div>
 				<b>NUMERO DE SERIE DEL CERTIFICADO DEL SAT:</b> '.html($data['Master']['nocertificadosat']).'

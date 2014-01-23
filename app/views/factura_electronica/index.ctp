@@ -65,11 +65,16 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<td class="cveven" title="<?php echo $factura['Vendedor']['venom']; ?>"><?php echo $factura['Vendedor']['vecveven']; ?></td>
 				<td class="total"><?php echo $this->Number->currency($factura['Factura']['factura__fatotal']); ?></td>
 				<td class="st" title="Fecha de Cancelación: <?php echo $factura['Factura']['cancelafecha']; ?>"><?php echo $factura['Factura']['fast']; ?></td>
-				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['crefec'].'.'; ?>"><?php echo $factura['Factura']['uuid']; ?></td>
+				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['fechatimbrado'].'.'; ?>"><?php echo $factura['Factura']['uuid']; ?></td>
 				<td class="id" title="<?php echo 'Creado: '.$factura['Factura']['crefec'].'. Modificado: '.$factura['Factura']['modfec'].'.'; ?>"><?php echo $factura['Factura']['id']; ?></td>
 				<td class="action">
 
 				<div class="btn-group">
+<?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
+				<button type="button" class="btn btn-primary btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['fechatimbrado'])) echo "generaCFDI(".$factura['Factura']['id'].")";?>" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
+					<i class="icon icon-white icon-qrcode"></i>Timbra
+				</button>
+<?php endif;?>
 <?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
 				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['cancelafecha']) || $factura['Factura']['fast']<>'C' ) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['cancelafecha']) && $factura['Factura']['fast']=='C') echo "cancelaCFDI(".$factura['Factura']['id'].")";?>" 
 					title="Timbrar la Cancelación de esta Factura con el PAC.">
@@ -78,18 +83,13 @@ echo $form->create('Factura',array('inputDefaults' => array(
 <?php endif;?>
 				</div>
 				<div class="btn-group pull-right">
-<?php if(substr($factura['Factura']['farefer'],0,1)=='D'):?>
-				<button type="button" class="btn btn-primary btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="<?php if(empty($factura['Factura']['fechatimbrado'])) echo "generaCFDI(".$factura['Factura']['id'].")";?>" title="Generar el XML. Timbrarlo con el PAC. Y enviar XML y PDF al Cliente.">
-					<i class="icon icon-white icon-qrcode"></i>Timbra
-				</button>
-<?php endif;?>
-				<button type="button" class="btn btn-warning btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="verXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
+				<button type="button" class="btn btn-warning btn-small <?php if(empty($factura['Factura']['uuid'])) echo "disabled";?>" onclick="verXML(<?php echo $factura['Factura']['id'];?>);" title="Descargar el archivo XML.">
 					<i class="icon icon-white icon-envelope"></i>XML
 				</button>
-				<button type="button" class="btn btn-danger btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="verPDF(<?php echo $factura['Factura']['id'];?>);"  title="Ver el archivo PDF">
+				<button type="button" class="btn btn-danger btn-small <?php if(empty($factura['Factura']['uuid'])) echo "disabled";?>" onclick="verPDF(<?php echo $factura['Factura']['id'];?>);"  title="Ver el archivo PDF">
 					<i class="icon icon-white icon-envelope"></i>PDF
 				</button>
-				<button type="button" class="btn btn-info btn-small <?php if(!empty($factura['Factura']['fechatimbrado'])) echo "disabled";?>" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
+				<button type="button" class="btn btn-info btn-small <?php if(empty($factura['Factura']['uuid'])) echo "disabled";?>" onclick="shareCFDI(<?php echo $factura['Factura']['id'];?>);" title="Enviar archivos XML y PDF por Email al Cliente.">
 					<i class="icon icon-white icon-envelope"></i>
 				</button>
 				</div>

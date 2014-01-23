@@ -13,7 +13,7 @@ class Cliente extends AppModel
 		),
 		'cltda' => array(
 			'type' => 'string', 
-			'length' => 3
+			'length' => 4
 		),
 		'clnom' => array(
 			'type' => 'string',
@@ -52,8 +52,8 @@ class Cliente extends AppModel
 		),
 		'cltda' => array(
 			'tdabetween' => array(
-				'rule' => array('between', 0, 3),
-				'message' => 'CLAVE debe contener hasta 3 caracteres',
+				'rule' => array('between', 0, 4),
+				'message' => 'TIENDA debe contener hasta 4 caracteres',
 				'required' => true,
 				'allowEmpty' => true,
 				)
@@ -68,9 +68,9 @@ class Cliente extends AppModel
 		),
 		'clst' => array(
 			'inlist' => array(
-				'rule' => array('inList', array('A', 'C', 'S') ),
+				'rule' => array('inList', array('A', 'B', 'C', 'S') ),
 				'allowEmpty' => false,
-				'message' => 'ESTATUS debe ser Activo/Baja/Suspendido'
+				'message' => 'ESTATUS debe ser Activo/Cancelado/Suspendido'
 				)
 		),
 		'cllocfor' => array(
@@ -83,8 +83,7 @@ class Cliente extends AppModel
 					)
 				),
 				'required' => false,
-				'allowEmpty' => false,
-				'on' => null,
+				'allowEmpty' => true,
 				'message' => 'Los posibles valores son: 0-Local, 1-Foráneo'
 			)
 		),
@@ -94,13 +93,16 @@ class Cliente extends AppModel
 					'inList',
 					array(
 						'A',
-						'B'
+						'B',
+						'C',
+						'D',
+						'E'
 					)
 				),
 				'required' => false,
 				'allowEmpty' => false,
 				'on' => null,
-				'message' => 'Elige serie A o B'
+				'message' => 'Elige serie ( A / B / C / D)'
 			)
 		),
 		'clt' => array(
@@ -113,27 +115,11 @@ class Cliente extends AppModel
 					)
 				),
 				'required' => false,
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'on' => null,
 				'message' => 'Los posibles valores son 0 y 1'
 			)
 		),
-		'clst' => array(
-			'inlist' => array(
-				'rule' => array(
-					'inList',
-					array(
-						'B',
-						'A',
-						'S'
-					)
-				),
-				'required' => false,
-				'allowEmpty' => false,
-				'on' => null,
-				'message' => 'Not in list, please enter an item within Clst list'
-			)
-		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

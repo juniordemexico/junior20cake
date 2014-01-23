@@ -122,7 +122,6 @@ class Factura extends AppModel
 								Factura.fatotal total,
 								Factura.crefec created,
 								Factura.modfec modified,
-								Factura.faobser observaciones,
 								Factura.uuid uuid,
 								Factura.fechatimbrado fechatimbrado,
 								Factura.cadenaoriginal cadenaoriginal,
@@ -135,8 +134,7 @@ class Factura extends AppModel
 								Cliente.clcveven,
 								Cliente.clst,
 								Cliente.clrfc,
-								Cliente.clmtdopago,
-								Cliente.clbancocta
+								Cliente.clmtdopago
 								FROM Factura Factura
 								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
 								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
@@ -151,35 +149,19 @@ class Factura extends AppModel
 
 		// Datos del Documento (la factura)
 		$docto=$docto[0];
-		$docto['Cliente']['clmtdopago']=trim($docto['Cliente']['clmtdopago']);
-		$docto['Cliente']['clbancocta']=trim($docto['Cliente']['clbancocta']);
-		
 		$master=array();
 		$master=$docto['Factura'];
-		$master["comprobante_tipo"]="ingreso";
-		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
-		$master["impuesto_cve"]="IVA";
-		$master["formapago"]="PAGO EN UNA SOLA EXHIBICION";
+		$master["pago_numcta"]="NO IDENTIFICADO";
 		$master["lugar_expedicion"]="DISTRITO FEDERAL";
+		$master["formapago"]="PAGO EN UNA SOLA EXHIBICION";
+		$master["comprobante_tipo"]="ingreso";
+		$master["metodo_pago"]=$docto['Cliente']['clmtdopago'];
+		$master["impuesto_cve"]="IVA";
+		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
 
-		// Determina el metodo y la cta de pago
-		// Determina el metodo y la cta de pago
-		if(	($docto['Cliente']['clmtdopago']=='CHEQUE' || 
-			$docto['Cliente']['clmtdopago']=='TRANSFERENCIA BANCARIA') &&
-			!empty($docto['Cliente']['clbancocta']) && strlen($docto['Cliente']['clbancocta'])>=4
-		) {
-			$master["metodo_pago"]=$docto['Cliente']['clmtdopago'];
-			$master["num_cta_pago"]=$docto['Cliente']['clbancocta'];
-		}
-		elseif(	$docto['Cliente']['clmtdopago']=='EFECTIVO' ) {
-			$master["metodo_pago"]=$docto['Cliente']['clmtdopago'];
-			$master["num_cta_pago"]='NO IDENTIFICADO';
-		}
-		else {
-			$master["metodo_pago"]='NO IDENTIFICADO';
-			$master["num_cta_pago"]='NO IDENTIFICADO';			
-		}
-
+		// CAMBIAR PARA PROPDUCCION  (IDD)
+//		$master["fecha"]=$master['fecha']date('Y-m-d').'T'.date('H:i:s', time()-600); //date('H:i:s'); //$docto['Divisa']['divisa_cve'];
+//		$master["folio"]="D0000001";
 
 		// Datos del Receptor (nuestro cliente)
 		$receptor=array_merge($docto[0], $docto['Cliente']);
@@ -190,11 +172,11 @@ class Factura extends AppModel
 								CAST(SUM(Facturadet.fadimporte) AS NUMERIC(14,2)) fadimporte,
 								CAST( SUM( 
 									    ((Facturadet.fadimporteneto*
-										(1-(cast(Factura.fadesc1 as float)/100))
+										(1-(CAST(Factura.fadesc1 AS FLOAT)/100))
 										)*
-										(1-(cast(Factura.fadesc2 as float)/100))
+										(1-(CAST(Factura.fadesc2 AS FLOAT)/100))
 										)*
-										(1-(cast(Factura.fadesc3 as float)/100))
+										(1-(CAST(Factura.fadesc3 AS FLOAT)/100))
 									) as NUMERIC(14,6)) fadimportefinal,
 								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
 								FROM Factura Factura
@@ -249,26 +231,7 @@ class Factura extends AppModel
 							);
 		$dircte=$dircte[0];
 		$item['Direccioncte']=$dircte[0];
-
-		$item['Cliente']['clmtdopago']=trim($item['Cliente']['clmtdopago']);
-		$item['Cliente']['clbancocta']=trim($item['Cliente']['clbancocta']);
-		// Determina el metodo y la cta de pago
-		if(	($item['Cliente']['clmtdopago']=='CHEQUE' || 
-			$item['Cliente']['clmtdopago']=='TRANSFERENCIA BANCARIA') &&
-			!empty($item['Cliente']['clbancocta']) && strlen($item['Cliente']['clbancocta'])>=4
-		) {
-			$item['Cliente']['clmtdopago']=$item['Cliente']['clmtdopago'];
-			$item['Cliente']['clbancocta']=$item['Cliente']['clbancocta'];
-		}
-		elseif(	$item['Cliente']['clmtdopago']=='EFECTIVO' ) {
-			$item['Cliente']['clmtdopago']=$item['Cliente']['clmtdopago'];
-			$item['Cliente']['clbancocta']='NO IDENTIFICADO';			
-		}
-		else {
-			$item['Cliente']['clmtdopago']='NO IDENTIFICADO';
-			$item['Cliente']['clbancocta']='NO IDENTIFICADO';						
-		}
-
+		
 		return( $item );
 	}
 

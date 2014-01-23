@@ -1,0 +1,7 @@
+
+# Renombrar multiples archivos.
+for filename in B0*.pdf; do mv "$filename" "JME910405B83-$filename"; done;
+
+# renombrar un archivo
+mv {,prefijo}D001000.pdf
+

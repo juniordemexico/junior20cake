@@ -221,8 +221,8 @@ class AxUIHelper extends Helper {
 "
 var axApp=angular.module('AxApp', ['ui','ui.bootstrap','ngGrid','LocalStorageModule']).
 controller('AxAppCtrl', 
-['\$scope', '\$rootScope', '\$http', '\$window', '\$location', '\$dialog', 'localStorageService',
-function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, localStorageService) {
+['\$scope', '\$rootScope', '\$http', '\$window', '\$location', '\$dialog', '\$timeout', 'localStorageService',
+function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout, localStorageService) {
 ".
 "\n\r".
 '/* Begins WebUI\'s global states and data ************************/'.

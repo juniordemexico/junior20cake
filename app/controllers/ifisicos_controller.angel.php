@@ -36,6 +36,7 @@ class IfisicosController extends MasterDetailAppController {
 		$filter = $this->Filter->process($this);
 		$this->set('items', $this->paginate($filter));
 		$this->set('totales', $this->Ifisico->totales());
+		$this->render('index');
 	}
 
 	function edit($id = null) {
@@ -73,7 +74,7 @@ class IfisicosController extends MasterDetailAppController {
 	public function imprime() {
 		$this->Ifisico->recursive=0;
 		$items = $this->Ifisico->find('all', array('order' => array('Articulo.arcveart ASC', 'Color.cve ASC',),  
-													'conditions' => array('Ifisico.existencia <>0 OR Ifisico.cant_2<>0'),
+													'conditions' => array('Ifisico.existencia !='=>0, 'Ifisico.cant_2 !='=>0),
 													));
 //		print_r($items);
 //		die();
@@ -84,7 +85,6 @@ class IfisicosController extends MasterDetailAppController {
 		$this->set('title_for_layout', 'REPORTE DE INVENTARIO FISICO');
 	}
 
-	
 /*
 	function delete($id) {
 		if (!$id) {
@@ -113,7 +113,4 @@ class IfisicosController extends MasterDetailAppController {
 
 	}
 */
-
-
 }
-

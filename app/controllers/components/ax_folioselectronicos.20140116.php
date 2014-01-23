@@ -86,62 +86,30 @@ class AxFolioselectronicosComponent extends Component {
 		return true;
 	}
 
+/*
 	public function createCFDI2( $data = null ) {
 
-//		$this->initCFDI();
-		Configure::write('debug', 2);
-
-		$this->_data=array();
-		$this->sello=null;
-		$this->cadenaoriginal=null;
-		$this->xml='';
-
 		// Inicializa los datos del documento
+		$this->initCFDI();
 
 		// Si nos pasan los datos en json, los ponemos en la propiedad _data en forma de arreglo
-//		if($data && is_string($data) && !empty($data)) $this->setData($data);
-		$this->_data=json_decode($data, TRUE);
-/*
-		$this->documento=array(
-							'id'=> $data['Master']['id'],
-							'uuid'=> $data['Master']['uuid'],
-							'tipo'=> $data['Master']['ingreso'],
-							'folio'=> $data['Master']['farefer'],
-							'serie'=>substr($data['Master']['farefer'],0,1),
-							'consecutivo'=>substr($data['Master']['farefer'],0,1),
-							'fecha'=>null,
-							'emisor_rfc'=>null,
-							'receptor_rfc'=>null,
-							'cadenaoriginal'=>null
-							);		
-*/
-		$this->documento['id']=$this->_data['Master']['id'];
-		$this->documento['fecha']=substr($this->_data['Master']['fecha'],0,10).'T'.substr($this->_data['Master']['fecha'],11,8);
-		$this->documento['folio']=$this->_data['Master']['folio'];
-		$this->documento['serie']=substr($this->_data['Master']['folio'],0,1);
-		$this->documento['consecutivo']=substr($this->_data['Master']['folio'],1,8);
-		$this->documento['total']=round($this->_data['Master']['total'],2);
-//		$this->documento['emisor_rfc']='AAD990814BP7';
-		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
-		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
-
-//		$this->documento['fecha']=substr($this->_data['Receptor']['fechatimbrado'],0,10).'T'.substr($this->_data['Receptor']['fechatimbrado'],12,8);
-
-		$this->documento['uuid']=$this->_data['Master']['uuid'];
-		$this->documento['cadenaoriginal']=$this->_data['Master']['cadenaoriginal'];
-		$this->documento['sellocfd']=$this->_data['Master']['sellocfd'];
-		$this->documento['nocertificadosat']=$this->_data['Master']['nocertificadosat'];
-		$this->documento['fechatimbrado']=substr($this->_data['Master']['fechatimbrado'],0,10).'T'.substr($this->_data['Master']['fechatimbrado'],11,8);
-		$this->documento['sellosat']=$this->_data['Master']['sellosat'];
-
+		if($data && is_string($data) && !empty($data)) $this->setData($data);
+		
 		// Genera el XML basico, sin sello, ni cadena original
 		if( !$this->generaXML() ) {
 			$this->message='Error generando el XML inicial';
 			return false;
 		}
+		
+		// Genera la Cadena Original a partir del XML generado en primer termino
+		if( !$this->generaCadenaOriginal() ) return false;
+				
+		// Genera el Sello para el XML usando el Certificado y Llave Privada
+		if( !$this->generaSello() ) return false;
+
 		return true;
 	}
-
+*/
 
 	public function loadCert($fileCERT = null, $filePKEY = null) {
 		if($fileCERT && !empty($fileCERT)) { $this->pathCERT=$fileCERT; }
@@ -213,44 +181,22 @@ class AxFolioselectronicosComponent extends Component {
 		}
 		
 		// Datos del Comprobante Digital
-		if(isset($this->documento['uuid']) && isset($this->documento['sellocfd'])) {
-			$comprobante=
-				'serie="'.$this->documento['serie'].'" '.
-				'folio="'.$this->documento['consecutivo'].'" '.
-				'fecha="'.$this->documento['fecha'].'" '.
-				'sello="'.$this->documento['sellocfd'].'" ';
-			$complemento='<cfdi:Complemento>'.
-						'<tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" '.
-						'FechaTimbrado="'.$this->documento['fechatimbrado'].'" '.
-						'UUID="'.$this->documento['uuid'].'" '.
-						'noCertificadoSAT="'.$this->documento['nocertificadosat'].'" '.
-						'selloCFD="'.$this->documento['sellocfd'].'" '.
-						'selloSAT="'.$this->documento['sellosat'].'" '.
-						'version="1.0" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/TimbreFiscalDigital/TimbreFiscalDigital.xsd"/>'.
-						'</cfdi:Complemento>';			
-			}
-		else {
-			$comprobante=
-				'serie="'.$this->documento['serie'].'" '.
-				'folio="'.$this->documento['consecutivo'].'" '.
-				'fecha="'.$this->documento['fecha'].'" '.
-				'sello="" ';
-			$complemento='';
-			}
-
-
-		$comprobante.=
-		'tipoDeComprobante="'.$m['comprobante_tipo'].'" '.
+		$comprobante=
+		'serie="'.$this->documento['serie'].'" '.
+		'folio="'.$this->documento['consecutivo'].'" '.
+		'fecha="'.$this->documento['fecha'].'" '.
+		'sello="" '.
+		'NumCtaPago="'.$m['pago_numcta'].'" '.
 		'TipoCambio="'.(isset($m['tcambio']) && $m['tcambio']<>0 ? round($m['tcambio'],4):'1').'" '.
 		'Moneda="'.trim($m['divisa_cve']).'" '.
-		'formaDePago="'.'UNA SOLA EXHIBICION'.'" '.
-		'metodoDePago="'.$m['metodo_pago'].'" '.
-		'NumCtaPago="'.$m['num_cta_pago'].'" '.
+		'formaDePago="'.'TRANSFERENCIA'.'" '.
 		'noCertificado="'.$this->certificadoSerial.'" '.
 		'certificado="'.$this->certificado.'" '.
 		'condicionesDePago="'.(isset($m['plazo']) && $m['plazo']<>0 ? $m['plazo']:'0').'" '.
 		'subTotal="'.round($m['importe'],2).'" '.
 		'total="'.round($m['total'],2).'" '.
+		'tipoDeComprobante="'.$m['comprobante_tipo'].'" '.
+		'metodoDePago="'.$m['metodo_pago'].'" '.
 		'LugarExpedicion="'.$e['emedo'].'" '.
 		'xmlns:cfdi="http://www.sat.gob.mx/cfd/3"> ';
 
@@ -270,14 +216,13 @@ class AxFolioselectronicosComponent extends Component {
 		'codigoPostal="'.$e['emcp'].'" '.
 		'/>'.
 		'<cfdi:ExpedidoEn '.
-		'calle="Av. Viaducto Rio La Piedad" '.
-		'noExterior="525A" '.
-		'colonia="Granjas Mexico" '.
+		'calle="Av. Viaducto La Piedad" '.
+		'noExterior="11111" '.
 		'localidad="Distrito Federal" '.
-		'municipio="Iztacalco" '.
+		'municipio="Gustavo A Madero" '.
 		'estado="Distrito Federal" '.
 		'pais="Mexico" '.
-		'codigoPostal="08400" '.
+		'codigoPostal="06000" '.
 		'/>'.		
 		'<cfdi:RegimenFiscal Regimen="'.$e['regimen_fiscal'].'" />'.
 		'</cfdi:Emisor>';
@@ -324,16 +269,10 @@ class AxFolioselectronicosComponent extends Component {
 		$this->xml='<?xml version="1.0" encoding="utf-8"?>'.
 					'<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 '.
 					'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd" version="'.$this->version.'" '.
-					$comprobante.$emisor.$receptor.$conceptos.$traslados.$complemento.
+					$comprobante.$emisor.$receptor.$conceptos.$traslados.
 					'</cfdi:Comprobante>';
 
 		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.fuente.xml', $this->xml);
-		$this->controller->Axfile->StringToFile($this->pathDOCS.DS.$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.xml', $this->xml);
-
-		// Generamos el Codigo QR del documento y lo guardamos en un archivo
-		if( !$this->generaqr() ) {
-			return false;
-		}
 
 		return true;
 	}
@@ -354,8 +293,8 @@ class AxFolioselectronicosComponent extends Component {
 		$XSL->load($this->pathXSLT, LIBXML_NOCDATA);
 		$c = $myDom->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
 
-//		print_r($this->xml);
-//		echo "-------<br />";
+		print_r($this->xml);
+		echo "-------<br />";
 		ob_start();
 		$xslt->importStylesheet($XSL);
 		ob_end_clean();
@@ -517,7 +456,7 @@ class AxFolioselectronicosComponent extends Component {
 		$data=	'?re='.$this->documento['emisor_rfc'].
 				'&rr='.$this->documento['receptor_rfc'].
 				'&tt='.$total.
-				'&id='.(isset($this->documento['UUID'])?$this->documento['UUID']:$this->documento['uuid']);
+				'&id='.$this->documento['UUID'];
 		$filename=$this->documento['emisor_rfc'].'-'.$this->documento['folio'].'.png';
 		QRcode::png($data, $this->pathDOCS.DS.$filename, 'M', 4, 2);
 		if (!file_exists($this->pathDOCS.DS.$filename)) {

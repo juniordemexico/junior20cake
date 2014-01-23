@@ -2,6 +2,8 @@
 
 class FacturaElectronicaController extends MasterDetailAppController {
 
+	var $components=array('AxFoliosElectronicoos');
+
 	var $uses = array('Factura','Facturadet','Cliente','Vendedor','Divisa');
 
 	var $cacheAction = array();
@@ -63,7 +65,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 	}
 */	
-	
 	function index() {
 		$this->Factura->recursive = 0;
 		$this->paginate = array(
@@ -126,25 +127,12 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			);
 
 */
-
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
 		$this->set('data', $data );
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 					$data['Master'][$this->masterModelTitle]
 				);
-	}
-
-	public function autogenerapdf() {
-		Configure::write('debug', 0);
-		$this->layout='default';
-		$this->recursive=-1; //B0061829
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'B0060000','Factura.farefer <='=>'B0060050', 'fat'=>0),
-							'order'=>array('Factura.farefer'),
-							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
-											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
-							));
-		$this->set('items', $items);
 	}
 
 //<--Método temporal
@@ -589,7 +577,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	}
 
 	function ver($id=null, $format='pdf') {
-/*
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
 		}
@@ -607,49 +594,22 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
 			$this->redirect(array('action' => 'index'));
 		}
-*/
-
-
-		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
-			$format=strtolower(trim($params['named']['format']));
-		}
-		if ( isset($params['url']['format']) && !empty($params['url']['format']) ) {
-			$format=strtolower(trim($params['url']['format']));
-		}
-		
-		$this->Factura->Recursive=0;
-		$result=$this->Factura->read(null, $id);
-		// The Requested ID doesn't exists
-		if(!$result) { 
-			$this->Session->setFlash(__('invalid_item', true), 'error');
-			$this->redirect(array('action' => 'index'));
-		}
-
-//		$appPath=APP;
-//antes del 2014 buscar en APP.DS.'files'.DS.'facturaelectronica/xml' y 
-//APP.DS.'files'.DS.'facturaelectronica/pdf'
-		if($result['Factura']['fafecha']>='2014-01-01') {
-			$appPathPDF=APP.'files'.DS.'comprobantesdigitales';
-			$appPathXML=APP.'files'.DS.'comprobantesdigitales';			
-		}
-		else {
-			$appPathPDF=APP.'files'.DS.'facturaselectronicas'.DS.'pdf';
-			$appPathXML=APP.'files'.DS.'facturaselectronicas'.DS.'xml';
-		}
 
 		if($format=='pdf') {
-			// Search the related media file		
+			// Search the related media file
+			$folder='pdf';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists($appPathPDF.DS.$filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$appPathPDF.DS.$filename, 'error');
+			if(!file_exists($appPath.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$appPath.DS.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 		}
 		elseif ($format=='xml') {
 			// Search the related media file
+			$folder='xml';
 			$filename='JME910405B83-'.trim($result['Factura']['farefer']).'.'.$format;
-			if(!file_exists($appPathXML.DS.$filename)) {
-				$this->Session->setFlash(__('file does not exist', true).': '.$appPathXML.DS.$filename, 'error');
+			if(!file_exists($appPath.DS.$filename)) {
+				$this->Session->setFlash(__('file does not exist', true).': '.$appPath.DS.$filename, 'error');
 				$this->redirect(array('action' => 'index'));			
 			}
 			
@@ -661,7 +621,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 						'name' => 'JME910405B83-'.trim($result['Factura']['farefer']),
 						'download' => false,
 						'extension' => $format,
-						'path' => ($format==='pdf'?$appPathPDF:$appPathXML).DS);
+						'path' => $appPath.DS);
 		$this->set($params);
 	}
 
@@ -738,94 +698,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->Axfile->StringToFile($logPath.'/folios_no_encontrados.20130801.json', json_encode($folios_no_encontrados) );
 		$this->Axfile->StringToFile($logPath.'/folios_renombrados.20130801.json', json_encode($folios_renombrados) );
 		die();
-	}
-
-	public function generacfdi2($id=null) {
-		if (!$id) {
-			if(isset($this->params['url']['id'])) {
-				$id=$this->params['url']['id'];
-			}
-			else {
-				$this->Session->setFlash(__('invalid_item', true), 'error');
-				return;
-			}
-		}
-		
-		if (isset($this->params['mailcfdi'])) {
-			$mailcfdi=$this->params['mailcfdi'];
-		}
-		else {
-			$mailcfdi=true;
-		}
-		
-		$responses=array();
-/*		
-		$estatus=$this->Factura->findById($id);
-		if(!$estatus || !empty($estatus['Factura']['sellosat'])) {
-				$this->Session->setFlash(__('Esa Factura YA se Timbró. Tiene el UUID: '.$estatus['Factura']['uuid'], true), 'error');
-				return;			
-		}
-*/		
-		// Generamos el XML con Cadena Original y Sello
-		$docto=$this->Factura->getDoctoForCFDI( $id );
-		
-		$docto_arr=json_decode($docto);
-	
-		$this->set('title_for_layout', 'Factura CFDI');
-
-		if ( !$this->AxFolioselectronicos->createCFDI2( $docto ) ) {
-			$this->set('result', "error");
-			$this->set('message', "ERROR EN CREATECFDI:".$this->AxFolioselectronicos->message);
-			return;
-//			$this->Session->setFlash($this->AxFolioselectronicos->message, 'error');
-		}
-		else {
-			$responses[]=array('default','Creación del XML, Cadena Original y Sello Digital',
-							$this->AxFolioselectronicos->message);
-
-		}
-		die();
-		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
-/*
-		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
-			$this->set('result', "error");
-			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
-//			$responses[]=array('info', 'RESPUESTA DEL PAC',
-//							$this->AxFolioselectronicos->pacResponse);
-//			$this->set('responses', $responses);
-			return false;
-//			$this->Session->setFlash('Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message, 'error');
-		}
-
-		$documento=$this->AxFolioselectronicos->documento;
-
-		$this->Factura->read(null, $id);
-		if( !$this->Factura->save(
-							array('uuid'=>$documento['UUID'], 'fechatimbrado'=>substr($documento['FechaTimbrado'],0,10).' '.substr($documento['FechaTimbrado'],11), 
-								'sellosat'=>$documento['selloSAT'], 'sellocfd'=>$documento['selloCFD'],
-								'nocertificadosat'=>$documento['noCertificadoSAT'],
-								'cadenaoriginal'=>$documento['cadenaoriginal']
-								),
-							false,
-							array('uuid', 'fechatimbrado', 'sellosat', 'sellocfd', 'nocertificadosat', 'cadenaoriginal')
-								)
-		) {
-			$this->set('result', "error");
-			$this->set('message','No se pudieron registrar los datos de timbrado');
-			return;			
-		}
-*/
-		$responses[]=array('success', 'Timbrado del CFDI con el PAC <small>(conexción al webservice del proveedor)</small>', json_encode($this->AxFolioselectronicos->documento) );
-		//					$this->AxFolioselectronicos->pacResponse );
-
-
-		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
-							' (uuid: '.$documento['UUID'].' fecha: '.$documento['FechaTimbrado'].')'); //$docto['Master']['uuid']
-		$this->set('title_for_layout', 'Factura CFDI::'.$this->AxFolioselectronicos->documento['folio']);
-		$this->set('docto', json_decode($docto));
-		$this->set('documento', $documento);
-		$this->set('responses', $responses);
 	}
 
 }

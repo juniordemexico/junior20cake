@@ -6,7 +6,7 @@
 	<?php echo $this->element('includes_meta', array('request'=>$request, 'session'=>$session, 'title_for_layout'=>$title_for_layout, 'metatags'=>array() )); ?>
 
 	<!-- Request, User and Session Data -->
-	<?php echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
+	<?php //echo $this->element('requestdata', array('request'=>$request, 'session'=>$session)); ?>
 
 	<!-- CSS Style Includes -->
 	<?php echo $this->element('includes_css', array('request'=>$request, 'session'=>$session)); ?>

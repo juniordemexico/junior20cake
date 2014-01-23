@@ -1,0 +1,26 @@
+#!/bin/bash
+
+BASE_PATH=`pwd`
+
+HTTP_PROTO="http"
+DOMAIN="erp.oggi.net.mx"
+
+AUTH_ACTION="/Users/login"
+AUTH_URL="${HTTP_PROTO}://${DOMAIN}${AUTH_ACTION}"
+AUTH_COOKIE_FILENAME="${BASE_PATH}/erp.oggi.mx.cookie.txt"
+
+REQUEST_ACTION="/FacturaElectronica/imprimepdfold/"
+REQUEST_URL="${HTTP_PROTO}://${DOMAIN}${REQUEST_ACTION}"
+REQUEST_LOG_FILE="${BASE_PATH}/FacturaElectronica-imprimepdf.log"
+
+
+# Login
+
+#curl --connect-timeout 60 --max-time 60 --retry 2 \
+#--user-agent "AxBOS (ADMII WebKit Compatible Mozilla Compatible)"
+#-c ${AUTH_COOKIE_FILENAME} \
+#-d "data[User][username]=IDD&data[User][password]=123&_method=POST&data[User][redirect]=/FacturaElectronica" \
+#--url "${AUTH_URL}" >>"${REQUEST_LOG_FILE}"
+
+curl --verbose -c "${AUTH_COOKIE_FILENAME}" \
+--url "${REQUEST_URL}/B0061000" >>"${REQUEST_LOG_FILE}"

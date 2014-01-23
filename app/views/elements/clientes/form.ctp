@@ -25,14 +25,14 @@
 <?php echo $this->TBS->input('Cliente.clemail', array('type' => 'text', 'label' => 'Email', 'placeholder' => 'Correo Electronico', 'ly_w'=>'4', 'prepend'=>'<i class="icon icon-envelope"></i>')); ?>
 <?php
 	echo $this->TBS->input('Cliente.clst', array('label'=>'Estatus', 'type' => 'radiogroup',
-											'selectOptions'=> array('A'=>'Activo','B'=>'Baja','S'=>'Suspendido'))
+											'selectOptions'=> array('A'=>'Activo', 'C'=>'Cancelado', 'S'=>'Suspendido'))
 							);
 ?>
 </div>
 <div id="tabs-1" class="tab-pane">
 <?php
 	echo $this->TBS->input('Cliente.cllocfor', array('label'=>'Estatus', 'type' => 'radiogroup',
-											'selectOptions'=> array('0'=>'Local', 'F'=>'Foraneo'))
+											'selectOptions'=> array('0'=>'Local', '1'=>'Foraneo'))
 							);
 ?>
  

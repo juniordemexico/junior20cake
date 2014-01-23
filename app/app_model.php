@@ -374,6 +374,8 @@ class AppModel extends Model
 			$Item['Details'][]=$row;
 		}
 
+//		print_r($Item);
+//		die();
 		return( $Item );
 	}
 
