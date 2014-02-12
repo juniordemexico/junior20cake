@@ -112,15 +112,14 @@ class Factura extends AppModel
 
 		$docto=$this->query("SELECT Factura.id, Factura.farefer folio,
 								Factura.fafecha fecha,
-								Factura.fapedido pedido,
 								Factura.fatcambio tcambio,	
 								Factura.divisa_id, Divisa.dicve divisa_cve,
 								Factura.faplazo plazo,
 								Factura.faimpu impuesto_tasa,
-								CAST(Factura.fasuma AS numeric(14,2)) suma,
-								CAST(Factura.fatotal-Factura.faimpoimpu as NUMERIC(14,2)) importe,
-								CAST(Factura.faimpoimpu AS NUMERIC(14,2)) impoimpu,
-								CAST(Factura.fatotal AS NUMERIC(14,2)) total,
+								Factura.fasuma suma,
+								Factura.faimporte importe,
+								Factura.faimpoimpu impoimpu,
+								Factura.fatotal total,
 								Factura.crefec created,
 								Factura.modfec modified,
 								Factura.faobser observaciones,
@@ -137,8 +136,7 @@ class Factura extends AppModel
 								Cliente.clst,
 								Cliente.clrfc,
 								Cliente.clmtdopago,
-								Cliente.clbancocta,
-								Cliente.clenviara
+								Cliente.clbancocta
 								FROM Factura Factura
 								JOIN Clientes Cliente ON (Cliente.id=Factura.cliente_id)
 								JOIN Vendedores Vendedor ON (Vendedor.id=Factura.vendedor_id)
@@ -159,17 +157,12 @@ class Factura extends AppModel
 		$master=array();
 		$master=$docto['Factura'];
 		$master["comprobante_tipo"]="ingreso";
-		$master["divisa_cve"]=trim($docto['Divisa']['divisa_cve'])=='MN'?'MXP':trim($docto['Divisa']['divisa_cve']);
+		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
 		$master["impuesto_cve"]="IVA";
 		$master["formapago"]="PAGO EN UNA SOLA EXHIBICION";
 		$master["lugar_expedicion"]="DISTRITO FEDERAL";
-		$master['suma']=$docto[0]['suma'];
-		$master['importe']=$docto[0]['importe'];
-		$master['impoimpu']=$docto[0]['impoimpu'];
-		$master['total']=$docto[0]['total'];
-		$master['tcambio']=(isset($docto['Factura']['tcambio']) && $docto['Factura']['tcambio']<>0 && $docto['Factura']['tcambio']<>1 ? round($docto['Factura']['tcambio'],2):'1.00');
-		$master['plazo']=(isset($docto['Factura']['plazo']) && $docto['Factura']['plazo']<>0 ? $docto['Factura']['plazo']:'0');
 
+		// Determina el metodo y la cta de pago
 		// Determina el metodo y la cta de pago
 		if(	($docto['Cliente']['clmtdopago']=='CHEQUE' || 
 			$docto['Cliente']['clmtdopago']=='TRANSFERENCIA BANCARIA') &&
@@ -193,8 +186,6 @@ class Factura extends AppModel
 
 		$items=$this->query("SELECT Facturadet.id, Facturadet.articulo_id,
 			 					Facturadet.fadprecio, 
-			 					MAX(Facturadet.fadpreciodesc) fadpreciodesc, 
-			 					SUM(Facturadet.fadimporteneto) fadimporteneto, 
 								CAST(SUM(Facturadet.fadcant) AS NUMERIC(14,0)) fadcant,
 								CAST(SUM(Facturadet.fadimporte) AS NUMERIC(14,2)) fadimporte,
 								CAST( SUM( 
@@ -204,7 +195,7 @@ class Factura extends AppModel
 										(1-(cast(Factura.fadesc2 as float)/100))
 										)*
 										(1-(cast(Factura.fadesc3 as float)/100))
-									) as NUMERIC(14,2)) fadimportefinal,
+									) as NUMERIC(14,6)) fadimportefinal,
 								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
 								FROM Factura Factura
 								JOIN Facturadet Facturadet ON (Factura.id=Facturadet.factura_id)
@@ -219,10 +210,11 @@ class Factura extends AppModel
 			$Details[]=array(
 					'id'=>$item['Facturadet']['id'],
 					'articulo_id'=>$item['Facturadet']['articulo_id'],
-					'precio'=>$item[0]['fadpreciodesc'],
-/*					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],2), */
+					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],6),
 					'cant'=>$item[0]['fadcant'],
-					'importe'=>$item[0]['fadimporteneto'],
+					'importe'=>$item[0]['fadimportefinal'],
+//					'arcveart'=>parent::_cleanSpecialChars($item['Articulo']['arcveart']),
+//					'ardescrip'=>parent::_cleanSpecialChars(trim($item['Articulo']['ardescrip'])),
 					'arcveart'=>$item['Articulo']['arcveart'],
 					'ardescrip'=>trim($item['Articulo']['ardescrip']),
 					'unidad_cve'=>trim($item[0]['unidad_cve']),
@@ -234,7 +226,6 @@ class Factura extends AppModel
 		 	"Receptor"		=>$receptor,
 		 	"Emisor"		=>$emisor,
 			);
-		
 		return json_encode($out);
 	} 
 
@@ -281,5 +272,25 @@ class Factura extends AppModel
 		return( $item );
 	}
 
+
+//--Temporal
+public function correctos(){
+$desc = $this->query("SELECT Factura.id, Factura.farefer, Factura.fasuma,
+CAST(Factura.fatotal AS NUMERIC(14,2)) fatotal, Factura.fadesc1, Facturadet.fadcant, Facturadet.fadprecio, Facturadet.fadimporteneto,
+CAST(Facturadet.fadprecio*.95 AS NUMERIC(12,4)) precio_correcto,
+CAST(CAST(Facturadet.fadprecio*.95 AS NUMERIC(12,4))*Facturadet.fadcant AS NUMERIC(12,4)) importe_correcto,
+CAST((SELECT
+SUM(
+CAST(Facturadet.fadprecio*.95 AS NUMERIC(14,6))*Facturadet2.fadcant) 
+FROM Facturadet Facturadet2 
+WHERE Facturadet2.factura_id = Factura.id) AS NUMERIC(14,2))*1.16 total_con_descto 
+FROM Factura Factura
+JOIN Facturadet Facturadet ON Factura.id=Facturadet.factura_id
+WHERE Factura.farefer>='B0060000' AND Factura.farefer<='B061800' AND
+(Factura.fadesc1<>0 OR Factura.fadesc2<>0 OR Factura.fadesc3<>0)");
+
+$desc=$desc[0][0];
+return( $desc );
+}
 }
 

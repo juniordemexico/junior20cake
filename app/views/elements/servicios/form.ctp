@@ -9,7 +9,6 @@
 		<li class="active"><a href="#tabs-0" data-toggle="tab">Generales</a></li>
 		<li><a href="#tabs-1" data-toggle="tab">Clasificacion</a></li>
 		<li><a href="#tabs-3" data-toggle="tab">Costos</a></li>
-		<li><a href="#tabs-4" data-toggle="tab">Caracteristicas</a></li>
 		<?php if ($mode == 'edit') {?>
 		<li><a href="#tabs-5" data-toggle="tab">Historial</a></li>
 		<?php }?>
@@ -36,14 +35,6 @@
 <?php echo $this->TBS->input('divisa_id', array('label' => 'Divisa', 'ly_w'=>'1')); ?>
 <?php echo $this->TBS->input('Articulo.arimpu1', array('label' => 'Impuesto 1', 'append'=>'%', 'ly_w'=>'1', 'format'=>'currency', 'placeholder'=>'I.V.A.')); ?>
 <?php echo $this->TBS->input('Articulo.arimpu2', array('label' => 'Impuesto 2', 'append'=>'%', 'ly_w'=>'1', 'format'=>'currency')); ?>
-</div>
-
-<div id="tabs-4" class="tab-pane">
-	<?php echo $this->TBS->input('Articulo.arinvmin', array('label' => 'Inventario Mínimo', 'append'=>'Unidades', 'ly_w'=>'1')); ?>
-	<?php echo $this->TBS->input('Articulo.arinvmax', array('label' => 'Inventario Máximo', 'append'=>'Unidades', 'ly_w'=>'1')); ?>
-	<?php echo $this->TBS->input('Articulo.arcomposicion', array('label' => 'Composicion', 'ly_w'=>'4', 'placeholder'=>'Composición física / química')); ?>
-	<?php echo $this->TBS->input('Articulo.arorigen', array('label' => 'Origen', 'ly_w'=>'4', 'placeholder'=>'Pais o Lugar de Origen')); ?>
-	<?php echo $this->TBS->input('Articulo.arancho', array('label' => 'Ancho', 'append'=>'Mts','ly_w'=>'1')); ?>
 </div>
 
 <?php if ($mode == 'edit') {?>

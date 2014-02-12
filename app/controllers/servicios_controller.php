@@ -4,7 +4,7 @@ class ServiciosController extends MasterDetailAppController {
 	var $name='Servicios';
 
 	var $uses = array(
-		 'Articulo', 'Color', 'Linea', 'Marca', 'ArticulosColor'
+		 'Articulo', 'Color', 'Linea', 'Marca', 'Familia', 'ArticulosColor'
 	);
 
 	var $cacheAction = array('view');
@@ -12,44 +12,21 @@ class ServiciosController extends MasterDetailAppController {
 	var $tipoarticulo_id = 2;
 	
 	public function beforeFilter() {
-		parent::beforeFilter();
-
 		$this->Articulo->tipoarticulo=$this->tipoarticulo_id;
-		
-		$this->Articulo->hasMany['Linea']=array("Linea.tipoarticulo_id=".$this->tipoarticulo_id);
+
 		if(isset($this->data['Articulo'])) {
+			$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
 			if(isset($this->data['Articulo']['arcveart'])) {
 				$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
 			}
-//			if(isset($this->data['Articulo']['tipoarticulo_id'])) {
-				$this->data['Articulo']['tipoarticulo_id']=$this->tipoarticulo_id;
-//			}
-		}
-	}
+			// Forzamos el Sevicio al Color Unico
 
-/*
-	public function beforeRender() {
-		if(isset($this->data['Articulo']['arcveart'])) {
-			$this->data['Articulo']['arcveart']=strtoupper(trim($this->data['Articulo']['arcveart']));
-		}
-	}
-*/
-
-	public function index() {
-		$this->paginate = array(
-								'update' => '#content',
-								'evalScripts' => true,
-								'limit' => PAGE_ROWS,
-								'order' => array('Linea.licve', 'Articulo.arcveart'),
-								'fields' => array('Articulo.id','Articulo.arcveart','Articulo.ardescrip',
-												'Articulo.tipoarticulo_id','Articulo.arst','Articulo.art',
-												'Tipoarticulo.cve',
-												'Marca.macve','Linea.licve','Temporada.tecve','Unidad.cve',
-												'Articulo.modified'),
-								'conditions' => array('Articulo.tipoarticulo_id'=>$this->tipoarticulo_id),
-								);
-		$filter = $this->Filter->process($this);
-		$this->set('articulos', $this->paginate("Articulo"));
+			if( ($this->action=='add' || $this->action=='edit') &&
+				(!isset($this->data['Color']) || !is_array($this->data['Color']) ) ) {
+				$this->data['Color']=array(1);
+			}
+		}		
+		parent::beforeFilter();
 	}
 
 	public function view($id = null) {
@@ -86,10 +63,7 @@ class ServiciosController extends MasterDetailAppController {
 			$this->set('title_for_layout', $this->name.'::'.$this->data['Articulo']['arcveart']);
 		}
 
-		$this->set($this->Articulo->loadDependencies($this->tipoarticulo_id));
-//				$divisas = $this->Articulo->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
-//				$this->set(compact('divisas'));
-
+		$this->set( $this->Articulo->loadDependencies($this->tipoarticulo_id) );
 	}
 
 	public function add() { 
@@ -105,10 +79,7 @@ class ServiciosController extends MasterDetailAppController {
 			}
 		}
 
-		$this->set($this->Articulo->loadDependencies(1));
-//		$divisas = $this->Articulo->Divisa->find('list', array('fields' => array('Divisa.id', 'Divisa.dicve')));
-//		$this->set(compact('divisas'));
-
+		$this->set( $this->Articulo->loadDependencies($this->tipoarticulo_id) );
 	}
 
 

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/models/factura.php</string>
+	<string>app/models/ventaexpo.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,209 +18,117 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>381</integer>
+	<integer>227</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/app_controller.php</key>
+		<key>app/controllers/servicios_controller.php</key>
 		<dict>
 			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>131</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>98</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>65</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>131</integer>
-			</dict>
-		</dict>
-		<key>app/controllers/components/ax_folioselectronicos.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>356</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>330</integer>
-		</dict>
-		<key>app/controllers/factura_electronica_controller.20140116.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>60</integer>
-				<key>line</key>
-				<integer>639</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>594</integer>
-			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>16</integer>
 				<key>line</key>
-				<integer>639</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>60</integer>
-				<key>line</key>
-				<integer>639</integer>
-			</dict>
-		</dict>
-		<key>app/controllers/factura_electronica_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>139</integer>
+				<integer>24</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>117</integer>
+			<integer>0</integer>
+		</dict>
+		<key>app/controllers/ventaexpos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>54</integer>
+				<key>line</key>
+				<integer>110</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>74</integer>
+		</dict>
+		<key>app/files/queries/gm3_articlos_migracion.sql</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>80</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>57</integer>
+		</dict>
+		<key>app/files/queries/ncredito_2014_pendientes_para_timbrar.20140206.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>app/models/factura.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>7</integer>
+				<integer>12</integer>
 				<key>line</key>
 				<integer>202</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>182</integer>
+			<integer>190</integer>
 		</dict>
-		<key>app/views/factura_electronica/autogenerapdf.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>16</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/factura_electronica/imprimepdf.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>23</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/factura_electronica/imprimepdfold.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>6</integer>
-				<key>line</key>
-				<integer>224</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>199</integer>
-		</dict>
-		<key>app/views/factura_electronica/index.ctp</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>74</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/helpers/ax_u_i.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>85</integer>
-				<key>line</key>
-				<integer>223</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>203</integer>
-		</dict>
-		<key>app/views/ventaexpos/view.ctp</key>
+		<key>app/models/ventaexpo.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>146</integer>
+				<integer>137</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>165</integer>
+			<integer>109</integer>
+		</dict>
+		<key>app/models/ventaexpodet.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>28</integer>
+				<key>line</key>
+				<integer>108</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>92</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/factura_electronica/index.ctp</string>
-		<string>app/controllers/components/ax_folioselectronicos.php</string>
-		<string>app/controllers/factura_electronica_controller.php</string>
-		<string>app/controllers/factura_electronica_controller.20140116.php</string>
-		<string>app/views/factura_electronica/autogenerapdf.ctp</string>
-		<string>app/views/ventaexpos/view.ctp</string>
 		<string>app/models/factura.php</string>
-		<string>app/views/factura_electronica/imprimepdfold.ctp</string>
-		<string>app/views/factura_electronica/imprimepdf.ctp</string>
-		<string>app/views/helpers/ax_u_i.php</string>
-		<string>app/app_controller.php</string>
+		<string>app/files/queries/ncredito_2014_pendientes_para_timbrar.20140206.php</string>
+		<string>app/models/ventaexpo.php</string>
+		<string>app/controllers/ventaexpos_controller.php</string>
+		<string>app/models/ventaexpodet.php</string>
+		<string>app/controllers/servicios_controller.php</string>
+		<string>app/files/queries/gm3_articlos_migracion.sql</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

@@ -34,7 +34,7 @@
 </div>
 
 <div class="alert alert-success">
-<?php echo $message;?>
+<?php echo $message;?>	
 </div>	
 
 <?php if( isset($responses)): ?>
@@ -52,34 +52,41 @@ if($item[0]=='error') $ok=false; $ok=true;
 ?>
 <?php endforeach;?>
 <?php endif;?>
-<?php if( isset($result) && $result!='ok'): ?>
-	<h3 class="text-info">Respuesta del PAC <small>(representación impresa del xml)</small></h3>
-	<div class="well">
-		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
-			<?php //echo $this->Axfile->FileToString( APP.DS.'files'.'comprobantesdigitales'.DS.'JME910405B83-'.$docto->Master->folio.'.respuesta.xml' ));?>
-		</pre>
-	</div>
-<?php endif;?>
 
-<?php if( isset($result) && $result==='ok'): ?>
 	<h3 class="text-info">Creación del PDF <small>(representación impresa del xml)</small></h3>
 	<div class="well">
 		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
+<?php //if( isset($response) && isset($response['result']) && $response['result']=='ok'): ?>
 		<iframe style="height: 48px; max-height: 48px; overflow: scroll;" src="/FacturaElectronica/imprimepdf/<?php echo $docto->Master->id; ?>"></iframe>
+<?php //endif;?>
 		</pre>
+<?php
+/*
+	if($ok) {
+		$aca=$this->requestAction('/FacturaElectronica/imprimepdf/'.$docto->Master->id, array('return'));
+		print_r($aca);
+	}
+*/
+?>
 	</div>
-<?php endif;?>
 
-<?php if( isset($result) && $result==='ok'): ?>
 	<h3 class="text-info">Envio de Correo <small>(con archivos XML y PDF adjuntos)</small></h3>
 	<div class="well">
 		<pre style="height: 32px; min-height: 32px; max-height: 32px; overflow: scroll;">
-<?php if( false && isset($result) && $result=='ok'): ?>
+<?php if( false && isset($response) && isset($response['result']) && $response['result']=='ok'): ?>
 		<iframe style="height: 48px; max-height: 48px; overflow: scroll;" src="/FacturaElectronica/enviacorreo/<?php echo $docto->Master->id; ?>"></iframe>
 <?php endif;?>
 		</pre>
+<?php
+/*
+		<iframe style="height: 48px; max-height: 48px; overflow: scroll;" src="/FacturaElectronica/enviacorreo/<?php echo <?php echo $docto->Master->id; ?>?>"></iframe>
+if ($ok) {
+	$joe=$this->requestAction('/FacturaElectronica/enviacorreo/'.$docto->Master->id);
+	print_r($joe);
+}
+**/
+?>
 	</div>
-<?php endif;?>
 
 <hr />
 

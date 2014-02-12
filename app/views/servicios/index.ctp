@@ -39,15 +39,15 @@ echo $form->create('Articulo', array('inputDefaults' => array(
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($articulos as $articulo): ?>
-			<tr id="<?php echo $articulo['Articulo']['id'];?>" class="t-row">
-				<td class="cveart"><?php echo $articulo['Articulo']['arcveart']; ?></td>
-				<td class=""><?php echo $articulo['Articulo']['ardescrip'];?></td>
-				<td class="licve"><?php echo $articulo['Linea']['licve']; ?></td>
-				<td class="macve"><?php echo $articulo['Marca']['macve']; ?></td>
-				<td class="datetime"><?php echo $articulo['Articulo']['modified']; ?></td>
-				<td class="st"><?php echo $articulo['Articulo']['arst']; ?></td>
-				<td class="id"><?php echo $articulo['Articulo']['id']; ?></td>
+		<?php foreach ($items as $item): ?>
+			<tr id="<?php echo $item['Articulo']['id'];?>" class="t-row">
+				<td class="cveart"><?php echo $item['Articulo']['arcveart']; ?></td>
+				<td class=""><?php echo $item['Articulo']['ardescrip'];?></td>
+				<td class="licve"><?php echo $item['Linea']['licve']; ?></td>
+				<td class="macve"><?php echo $item['Marca']['macve']; ?></td>
+				<td class="datetime"><?php echo $item['Articulo']['modified']; ?></td>
+				<td class="st"><?php echo $item['Articulo']['arst']; ?></td>
+				<td class="id"><?php echo $item['Articulo']['id']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

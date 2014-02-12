@@ -112,15 +112,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$docto=$this->{$this->masterModelName}->getDoctoForCFDI( $id );
-		$docto_arr=json_decode($docto);
-
-
-		$folio=$docto_arr->Master->folio;
-		$appPathXML=APP.'files'.DS.'comprobantesdigitales';
-		$filename=$docto_arr->Emisor->emrfc.'-'.$folio.'.xml';
-		$xmlString= $this->Axfile->FileToString( $appPathXML.DS.$filename);
-		$cfdi = simplexml_load_string($xmlString);
+		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
 
 /*
 		$data['Comprobante']=array(
@@ -134,87 +126,33 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			);
 
 */
+
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
-//		$this->set('data', $data );
-		$this->set('docto', $docto_arr);
-		$this->set('cfdi', $cfdi);
+		$this->set('data', $data );
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
-					$docto_arr->Master->folio
+					$data['Master'][$this->masterModelTitle]
 				);
 	}
 
 	public function autogenerapdf() {
 		Configure::write('debug', 0);
-		$pathDOCS=APP.'files'.DS.'comprobantesdigitales';
 		$this->layout='default';
 		$this->recursive=-1; //B0061829
-		$allItems=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D00001045','Factura.farefer <='=>'D0002200', 'fat'=>0, 'sellosat !='=>null),
-							'order'=>array('Factura.farefer'),
-							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
-											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
-							));
-		$items=array();
-		foreach($allItems as $item) {
-			$filename='JME910405B83-'.trim($item['Factura']['farefer']).'.pdf';
-			if( !file_exists($pathDOCS.DS.$filename) ) {
-				$items[]=$item;
-			}
-		}
-
-		$this->set('items', $items);
-	}
-
-	public function autocancela() {
-		Configure::write('debug', 0);
-		$this->layout='default';
-		$this->recursive=-1; //D000XXXX
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0000001','Factura.farefer <='=>'D0000013', 'fat'=>0, 'fast'=>'C', 'oldst'=>'A'),
+		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'B0060000','Factura.farefer <='=>'B0061800', 'fat'=>0),
 							'order'=>array('Factura.farefer'),
 							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
 											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
 							));
 		$this->set('items', $items);
 	}
-
-	public function autogeneracfdi() {
-		Configure::write('debug', 0);
-		$this->layout='default';
-		$this->recursive=-1; //D000XXXX
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0000001','Factura.farefer <='=>'D0000013', 'fat'=>0, 'fast'=>'C', 'oldst'=>'A'),
-							'order'=>array('Factura.farefer'),
-							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
-											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
-							));
-		$this->set('items', $items);
-
-		/*
-		GENERAR NUEVAS FACTURAS
-		SELECT a.ID, a.PEDIDO_ID, 'D'||LPAD(gen_id(tmp,1),7,'0') farefer, a.FAFECHA, a.FAPLAZO, a.FATIPO, a.FADIVISA, a.DIVISA_ID,
-a.FAPRECIO, a.FAALMACEN, a.FAPEDIDO, a.FAST, a.FACVECLI, a.FATDA, a.CLIENTE_ID, a.FACVEVEN, 
-a.VENDEDOR_ID, a.FACOMIS, a.FACVETRANS, a.FASUMA,
-a.FADESC1, a.FADESC2, a.FADESC3, /*a.FAIMPORTE,*/ a.FAIMPU, /*a.FAIMPOIMPU, a.FATOTAL, */
-trim(a.FAOBSER)||' (ant: '||a.farefer||')' faobser, a.FAT, a.CREUSR, a.CREFEC, a.MODUSR, a.MODFEC, a.FECENV, 
-a.FACAJAS, a.FATALONEMB, a.FAFEMBARQUE, a.FAFENTREGA, a.FACANT, a.FATCAMBIO, 
-a.FALEMPAQUE, a.FAOSURTIDO, a.FASIG, a.FASERIE, a.FATVTA, a.FADVORIG, a.FADVVTA, 
-a.FATPOVTA, a.FACVEEMPRESA, a.FASERIEFOL, a.TRANSPORTE_ID, a.UUID, a.FECHATIMBRADO, 
-a.CADENAORIGINAL, a.SELLOCFD, a.NOCERTIFICADOSAT, a.SELLOSAT, a.CANCELAUUID, 
-a.CANCELAFECHA, a.OLDST, a.farefer oldrefer
-FROM FACTURA a
-where a.farefer>='D0000001' and a.farefer<='D0000010' and a.oldst='A' and a.fat=0
-order by a.farefer
-
-
-		**/
-	}
-
 
 //<--Método temporal
 	public function imprimepdfold( $folio = null ) {
 		$RFC= "JME910405B83";
 		$pathCAD= APP.'files'.DS.'folios_cambio';
 
-		$cadOriginal= $RFC.'-'.$folio.'.cadena.xml';	
+		$cadOriginal= $RFC.'-'.$folio.'.cadena.xml';
 		$xmldata= $RFC.'-'.$folio.'.original.xml';
 
 		// extraer sello del xml sellado ($xmldata)
@@ -222,8 +160,9 @@ order by a.farefer
 		$sello= $this->Axfile->FileToString( $pathCAD.DS.$xmldata );
 		$xml = simplexml_load_string($sello);
 		
-		$sello1 = $xml['sello'];
-		
+		$sello = $xml['sello'];
+		$metodoDePago = $xml['metodoDePago'];
+		$numctapago = $xml['NumCtaPago'];
 //		echo "<br/>".preg_replace('/60001/','61111', $c_original);
 
 		if (!$folio || !$folio>0) {
@@ -238,6 +177,9 @@ order by a.farefer
 		$id=$theID['Factura']['id'];
 		
 		$data=$this->{$this->masterModelName}->getItemWithDetails($id);
+		$data['Cliente']['clmtdopago']=$metodoDePago;
+		$data['Cliente']['clbancocta']=$numctapago;
+
 		$correctos=$this->{$this->masterModelName}->correctos($id);
 
 //	print_r($correctos);
@@ -263,7 +205,7 @@ order by a.farefer
 		$this->set('data', $data );
 		$this->set('correctos', $correctos);
 		$this->set('c_original', $c_original);
-		$this->set('sello1', $sello1);
+		$this->set('sello', $sello);
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 					$data['Master'][$this->masterModelTitle]
 				);
@@ -290,26 +232,16 @@ order by a.farefer
 		
 		$responses=array();
 		
-		// Obtenemos los datos de la factura listos para generar XML y PDF
-		$docto=$this->Factura->getDoctoForCFDI( $id );
-		$docto_arr=json_decode($docto);
-		$this->set('docto', $docto_arr);
-
 		$estatus=$this->Factura->findById($id);
 		if(!$estatus || !empty($estatus['Factura']['sellosat'])) {
 				$this->Session->setFlash(__('Esa Factura YA se Timbró. Tiene el UUID: '.$estatus['Factura']['uuid'], true), 'error');
 				return;			
 		}
-
-		if($estatus['Factura']['fadesc1']<>0 || 
-			$estatus['Factura']['fadesc2']<>0 ||
-			$estatus['Factura']['fadesc3']<>0
-		) {
-				$this->Session->setFlash(__('Esa Factura TIENE DESCUENTO GLOBAL. En este momento no podremos timbrarla. Gracias.', true), 'error');
-				return;			
-		}
 		
 		// Generamos el XML con Cadena Original y Sello
+		$docto=$this->Factura->getDoctoForCFDI( $id );
+		
+		$docto_arr=json_decode($docto);
 	
 		$this->set('title_for_layout', 'Factura CFDI');
 
@@ -326,11 +258,9 @@ order by a.farefer
 		}
 
 		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
-//		print_r($docto_arr);
 
-//		die();
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
-			$this->set('result', 'error');
+			$this->set('result', "error");
 			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
 //			$responses[]=array('info', 'RESPUESTA DEL PAC',
 //							$this->AxFolioselectronicos->pacResponse);
@@ -365,7 +295,7 @@ order by a.farefer
 		$this->set('message', 'Se generó el comprobante digital CFDI de la Factura <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
 							' (uuid: '.$documento['UUID'].' fecha: '.$documento['FechaTimbrado'].')'); //$docto['Master']['uuid']
 		$this->set('title_for_layout', 'Factura CFDI::'.$this->AxFolioselectronicos->documento['folio']);
-//		$this->set('docto', json_decode($docto));
+		$this->set('docto', json_decode($docto));
 		$this->set('documento', $documento);
 		$this->set('responses', $responses);
 	}

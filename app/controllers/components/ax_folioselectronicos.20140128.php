@@ -120,7 +120,7 @@ class AxFolioselectronicosComponent extends Component {
 		$this->documento['folio']=$this->_data['Master']['folio'];
 		$this->documento['serie']=substr($this->_data['Master']['folio'],0,1);
 		$this->documento['consecutivo']=substr($this->_data['Master']['folio'],1,8);
-		$this->documento['total']=$this->_data['Master']['total'];
+		$this->documento['total']=round($this->_data['Master']['total'],2);
 //		$this->documento['emisor_rfc']='AAD990814BP7';
 		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
 		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
@@ -191,10 +191,7 @@ class AxFolioselectronicosComponent extends Component {
 		$this->documento['folio']=$this->_data['Master']['folio'];
 		$this->documento['serie']=substr($this->_data['Master']['folio'],0,1);
 		$this->documento['consecutivo']=substr($this->_data['Master']['folio'],1,8);
-		$this->documento['total']=$this->_data['Master']['total'];
-		$this->documento['importe']=$this->_data['Master']['importe'];
-		$this->documento['impoimpu']=$this->_data['Master']['impoimpu'];
-		$this->documento['total']=$this->_data['Master']['total'];
+		$this->documento['total']=round($this->_data['Master']['total'],2);
 //		$this->documento['emisor_rfc']='AAD990814BP7';
 		$this->documento['emisor_rfc']=$this->_data['Emisor']['emrfc'];
 		$this->documento['receptor_rfc']=$this->_data['Receptor']['clrfc'];
@@ -244,22 +241,22 @@ class AxFolioselectronicosComponent extends Component {
 
 		$comprobante.=
 		'tipoDeComprobante="'.$m['comprobante_tipo'].'" '.
+		'TipoCambio="'.(isset($m['tcambio']) && $m['tcambio']<>0 ? round($m['tcambio'],4):'1').'" '.
 		'Moneda="'.trim($m['divisa_cve']).'" '.
-		'TipoCambio="'.$m['tcambio'].'" '. //(isset($m['tcambio']) && $m['tcambio']<>0 ? round($m['tcambio'],4):'1.00').'" '.
-		'subTotal="'.$m['importe'].'" '.
-		'total="'.$m['total'].'" '.
-		'condicionesDePago="'.$m['plazo'].'" '.
 		'formaDePago="'.'UNA SOLA EXHIBICION'.'" '.
 		'metodoDePago="'.$m['metodo_pago'].'" '.
 		'NumCtaPago="'.$m['num_cta_pago'].'" '.
 		'noCertificado="'.$this->certificadoSerial.'" '.
 		'certificado="'.$this->certificado.'" '.
+		'condicionesDePago="'.(isset($m['plazo']) && $m['plazo']<>0 ? $m['plazo']:'0').'" '.
+		'subTotal="'.round($m['importe'],2).'" '.
+		'total="'.round($m['total'],2).'" '.
 		'LugarExpedicion="'.$e['emedo'].'" '.
 		'xmlns:cfdi="http://www.sat.gob.mx/cfd/3"> ';
 
 		// Datos del Emisor del Comprobante 
 		// (nuestra razon social: direccion fiscal y direccion de expedicion)
-		$emisor=replaceSpecialChars(
+		$emisor=
 		'<cfdi:Emisor rfc="'.$e['emrfc'].'" '.
 		'nombre="'.$e['emnom'].'">'.
 		'<cfdi:DomicilioFiscal '.
@@ -283,10 +280,10 @@ class AxFolioselectronicosComponent extends Component {
 		'codigoPostal="08400" '.
 		'/>'.		
 		'<cfdi:RegimenFiscal Regimen="'.$e['regimen_fiscal'].'" />'.
-		'</cfdi:Emisor>');
+		'</cfdi:Emisor>';
 
 		// Datos del receptor (cliente al que se le expide el comprobante)
-		$receptor=replaceSpecialChars(
+		$receptor=
 		'<cfdi:Receptor rfc="'.$r['clrfc'].'" '.'nombre="'.$r['clnom'].'">'.
 		'<cfdi:Domicilio calle="'.(!empty($r['clcalle'])?$r['clcalle']:'NA').'" '.
 		'noExterior="'.(!empty($r['clnumext'])?$r['clnumext']:'NA').'" '.
@@ -297,14 +294,14 @@ class AxFolioselectronicosComponent extends Component {
 		'pais="'.(!empty($r['clpais'])?$r['clpais']:'NA').'" '.
 		'codigoPostal="'.(!empty($r['clcp'])?$r['clcp']:'NA').'" '.
 		'/>'.
-		'</cfdi:Receptor> ');
-//		$receptor=replaceSpecialChars($receptor);
+		'</cfdi:Receptor> ';
+		$receptor=replaceSpecialChars($receptor);
 		
 		// Total y translados de Impuestos que aplican al Comprobante
 		$traslados=
 		'<cfdi:Impuestos>'.
 		'<cfdi:Traslados>'.
-		'<cfdi:Traslado importe="'.$m['impoimpu'].'" impuesto="'.$m['impuesto_cve'].'" tasa="'.$m['impuesto_tasa'].'"/>'.
+		'<cfdi:Traslado importe="'.round($m['impoimpu'],4).'" impuesto="'.$m['impuesto_cve'].'" tasa="'.$m['impuesto_tasa'].'"/>'.
 		'</cfdi:Traslados>'.
 		'</cfdi:Impuestos>';
 
@@ -317,8 +314,8 @@ class AxFolioselectronicosComponent extends Component {
 			'cantidad="'.floor($detalle['cant']).'" '.
 			'unidad="'.trim($detalle['unidad_cve']).'" '.
 			'descripcion="('.cleanSpecialChars(trim($detalle['arcveart'])).') '.cleanSpecialChars(trim($detalle['ardescrip'])).'" '.
-			'valorUnitario="'.$detalle['precio'].'" '.
-			'importe="'.$detalle['importe'].'" '.
+			'valorUnitario="'.round($detalle['precio'],4).'" '.
+			'importe="'.round($detalle['importe'],4).'" '.
 			'/>';
 		}
 		$conceptos=$conceptos."</cfdi:Conceptos>";
@@ -480,7 +477,7 @@ class AxFolioselectronicosComponent extends Component {
 		$myXML=str_replace('&gt;','>',$myXML);
 		$myXML=str_replace('&lt;','<',$myXML);
 		$xml2 = new DOMDocument();
-		if ( !isset($myXML) || empty($myXML) || !$xml2->loadXML($myXML) ) {
+		if ( !$xml2->loadXML($myXML) ) {
 			$this->message='Se presento un error en el documento a timbrar.';
 			return false;
 		}

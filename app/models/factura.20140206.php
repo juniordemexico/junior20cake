@@ -193,8 +193,6 @@ class Factura extends AppModel
 
 		$items=$this->query("SELECT Facturadet.id, Facturadet.articulo_id,
 			 					Facturadet.fadprecio, 
-			 					MAX(Facturadet.fadpreciodesc) fadpreciodesc, 
-			 					SUM(Facturadet.fadimporteneto) fadimporteneto, 
 								CAST(SUM(Facturadet.fadcant) AS NUMERIC(14,0)) fadcant,
 								CAST(SUM(Facturadet.fadimporte) AS NUMERIC(14,2)) fadimporte,
 								CAST( SUM( 
@@ -204,7 +202,7 @@ class Factura extends AppModel
 										(1-(cast(Factura.fadesc2 as float)/100))
 										)*
 										(1-(cast(Factura.fadesc3 as float)/100))
-									) as NUMERIC(14,2)) fadimportefinal,
+									) as NUMERIC(14,6)) fadimportefinal,
 								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
 								FROM Factura Factura
 								JOIN Facturadet Facturadet ON (Factura.id=Facturadet.factura_id)
@@ -219,10 +217,9 @@ class Factura extends AppModel
 			$Details[]=array(
 					'id'=>$item['Facturadet']['id'],
 					'articulo_id'=>$item['Facturadet']['articulo_id'],
-					'precio'=>$item[0]['fadpreciodesc'],
-/*					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],2), */
+					'precio'=>round($item[0]['fadimportefinal']/$item[0]['fadcant'],2),
 					'cant'=>$item[0]['fadcant'],
-					'importe'=>$item[0]['fadimporteneto'],
+					'importe'=>$item[0]['fadimportefinal'],
 					'arcveart'=>$item['Articulo']['arcveart'],
 					'ardescrip'=>trim($item['Articulo']['ardescrip']),
 					'unidad_cve'=>trim($item[0]['unidad_cve']),

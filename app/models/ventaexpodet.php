@@ -100,9 +100,9 @@ class Ventaexpodet extends AppModel
 								JOIN Lineas Linea ON Linea.id=Articulo.linea_id
 								LEFT JOIN Bases Base ON Base.id=Articulo.base_id
 								LEFT JOIN Estilos Estilo ON Estilo.id=Articulo.estilo_id
-								WHERE Articulo.arst='A' AND Articulo.tipoarticulo_id=0
+								WHERE Articulo.arst='A' AND Articulo.tipoarticulo_id=0 AND Articulo.arcveart NOT LIKE '1%'
 								ORDER BY Articulo.linea_id, Articulo.estilo_id, Articulo.base_id,  Articulo.id, Color.id
-		ROWS 20000");
+		ROWS 1000");
 //		print_r($items);
 //		die();
 		$out=array();

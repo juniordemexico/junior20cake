@@ -116,7 +116,8 @@
 </div> <!-- div tabs tabbable-->
 <?php
 if( $session->read('Auth.User.group_id') == 1 || $session->read('Auth.User.group_id') == 2 ||
-	$session->read('Auth.User.group_id') == 10 || $session->read('Auth.User.group_id') == 21 ) {
+	$session->read('Auth.User.group_id') == 10 || $session->read('Auth.User.group_id') == 21 ||
+	$session->read('Auth.User.id') == 228571) {
 	echo $this->Js->submit('GUARDAR', array('class' => 'btn btn-primary', 'update' => '#content'));
 }
 echo $this->Form->end(); 

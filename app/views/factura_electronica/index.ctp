@@ -25,6 +25,7 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<th class="cveven"><?php echo $form->text('Vendedor.vecveven',array('label' => '', 'type' => 'search', 'maxLength' => '4', 'placeholder' => 'Vend'));?></th>
 				<th class="total"><?php echo $form->text('fatotal',array('label' => '', 'type' => 'search', 'maxLength' => '14', 'placeholder' => 'Total'));?></th>
 				<th class="st"><?php echo $form->text('fast',array('label' => '', 'type' => 'search', 'maxLength' => '1', 'placeholder' => 'ST'));?></th>
+				<th class="refer"><?php echo $form->text('oldrefer', array('label' => '', 'type' => 'search', 'maxLength' => '8', 'placeholder' => 'Esta Factura Reemplaza a la Factura Cancelada...'));?></th>
 				<th class="uuid"><?php echo $form->text('UUID',array('label' => '', 'type' => 'search', 'maxLength' => '36', 'placeholder' => 'UUID...'));?></th>
 				<th class="id">
 				<?php
@@ -41,6 +42,7 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<th class="cveven"><?php echo $this->Paginator->sort('Vend','Vendedor.vecveven'); ?></th>
 				<th class="total"><?php echo $this->Paginator->sort('Total','fatotal'); ?></th>
 				<th class="st"><?php echo $this->Paginator->sort('ST','fast'); ?></th>
+				<th class="refer"><?php echo $this->Paginator->sort('Reemplaza','oldrefer'); ?></th>
 				<th class="uuid"><?php echo $this->Paginator->sort('UUID','uuid'); ?></th>
 				<th class="id"><?php echo $this->Paginator->sort('ID','id'); ?></th>
 				<th class="action">ACCIONES</th>
@@ -65,6 +67,7 @@ echo $form->create('Factura',array('inputDefaults' => array(
 				<td class="cveven" title="<?php echo $factura['Vendedor']['venom']; ?>"><?php echo $factura['Vendedor']['vecveven']; ?></td>
 				<td class="total"><?php echo $this->Number->currency($factura['Factura']['factura__fatotal']); ?></td>
 				<td class="st" title="Fecha de Cancelación: <?php echo $factura['Factura']['cancelafecha']; ?>"><?php echo $factura['Factura']['fast']; ?></td>
+				<td class="refer" title="<?php echo $factura['Factura']['oldfactura_id']; ?>"><?php echo $factura['Factura']['oldrefer']; ?></td>
 				<td class="uuid" title="<?php echo 'Fecha Timbrado: '.$factura['Factura']['fechatimbrado'].'.'; ?>"><?php echo $factura['Factura']['uuid']; ?></td>
 				<td class="id" title="<?php echo 'Creado: '.$factura['Factura']['crefec'].'. Modificado: '.$factura['Factura']['modfec'].'.'; ?>"><?php echo $factura['Factura']['id']; ?></td>
 				<td class="action">

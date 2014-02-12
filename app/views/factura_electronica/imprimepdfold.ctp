@@ -1,4 +1,12 @@
 <?php
+
+define('CHARSET', 'UTF-8');
+define('REPLACE_FLAGS', ENT_COMPAT | ENT_XHTML);
+
+function html($string) {
+    return htmlspecialchars($string, REPLACE_FLAGS, CHARSET);
+}
+
 //EJEMPLO PARA GENERAR EL PDF
 App::import('Vendor','tcpdf');
 $tcpdf = new TCPDF('P');
@@ -46,26 +54,28 @@ $head_left='
 
 $head_right='
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: transparent;">
-	<tr><td style="text-align: right;"><b>Expedido en: Mexico, D.F. a '. $data['Master']['fafecha'].'</font></td></tr>
-	<tr><td style="text-align: right;"><font size="+3"><b>FACTURA '.$data['Master']['farefer'].'</b></font></td></tr>
+	<tr><td style="text-align: right;"><b>Expedido en: Mexico, D.F. a '.html($data['Master']['fafecha']).'</font></td></tr>
+	<tr><td style="text-align: right;"><font size="+3"><b>FACTURA '.html($data['Master']['farefer']).'</b></font></td></tr>
 	<tr><td style="text-align: right;"><b>Certificado: </b>00001000000200904226</td></tr>
+	<tr><td style="text-align: right;"><b>No. Aprobacion: </b>1161602</td></tr>
+	<tr><td style="text-align: right;"><b>Año de aprobacion: </b>2013</td></tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr><td><font size="+1"><b><u>R E C E P T O R</u></b></font></td></tr>
-	<tr><td><font size="+1"><b>'.htmlentities($data['Cliente']['clnom']).'</b></font></td></tr>
-	<tr><td><b>'.$data['Cliente']['clrfc'].'.</b></td></tr>
+	<tr><td><font size="+1"><b>'.html($data['Cliente']['clnom']).'</b></font></td></tr>
+	<tr><td><b>'.html($data['Cliente']['clrfc']).'.</b></td></tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr><td><b>Domicilio:</b></td></tr>
 	<tr><td>'.
-		'<b>Calle:</b> '.htmlentities($data['Direccioncte']['clcalle']).'.<br />'.
-		'<b>Num Exterior:</b> '.htmlentities($data['Direccioncte']['clnumext']).'.&nbsp;&nbsp;&nbsp;&nbsp;'.'<b>Num Interior:</b> '.$data['Direccioncte']['clnumint'].'.<br />'.
-		'<b>Colonia:</b> '.htmlentities($data['Direccioncte']['clcolonia']).'.<br />'.
-		'<b>Delegacion:</b> '.htmlentities($data['Direccioncte']['cldelegacion']).'.<br />'.
-		'<b>Ciudad y Estado:</b> '.htmlentities($data['Direccioncte']['clciu']).', '.htmlentities($data['Direccioncte']['cledo']).'.<br/>'.
-		'<b>Pais:</b> '.htmlentities($data['Direccioncte']['clpais']).',&nbsp;&nbsp;&nbsp;&nbsp;'.' <b>C.P.:</b> '.$data['Direccioncte']['clcp'].'.<br />'.
+		'<b>Calle:</b> '.html($data['Direccioncte']['clcalle']).'.<br />'.
+		'<b>Num Exterior:</b> '.html($data['Direccioncte']['clnumext']).'.&nbsp;&nbsp;&nbsp;&nbsp;'.'<b>Num Interior:</b> '.html($data['Direccioncte']['clnumint']).'.<br />'.
+		'<b>Colonia:</b> '.html($data['Direccioncte']['clcolonia']).'.<br />'.
+		'<b>Delegacion:</b> '.html($data['Direccioncte']['cldelegacion']).'.<br />'.
+		'<b>Ciudad y Estado:</b> '.html($data['Direccioncte']['clciu']).', '.html($data['Direccioncte']['cledo']).'.<br/>'.
+		'<b>Pais:</b> '.html($data['Direccioncte']['clpais']).',&nbsp;&nbsp;&nbsp;&nbsp;'.' <b>C.P.:</b> '.html($data['Direccioncte']['clcp']).'.<br />'.
 		'
 	</td></tr>
-	<tr><td><b>Enviar a:</b><br/ >'.htmlentities($data['Cliente']['clenviara']).'</td></tr>
-	<tr><td><b>Pedido:</b> '.htmlentities($data['Master']['fapedido']).'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Divisa:</b> '.$data['Divisa']['dicve'].'.&nbsp;&nbsp;<b>Tipo de Cambio:</b> '.$data['Master']['fatcambio'].'</td></tr>
+	<tr><td><b>Enviar a:</b><br/ >'.html($data['Cliente']['clenviara']).'</td></tr>
+	<tr><td><b>Pedido:</b> '.html($data['Master']['fapedido']).'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Divisa:</b> '.html(($data['Divisa']['dicve']=="MN ") ? "MXP" : $data['Divisa']['dicve']).'.&nbsp;&nbsp;<b>Tipo de Cambio:</b> '.html($data['Master']['fatcambio']).'</td></tr>
 </table>
 ';
 
@@ -94,9 +104,9 @@ $body='
 				$ptotal += $item['Detail']['fadcant'];
 				$body.='<tr>
 				<td style="text-align: right; width: 0.5in;">'.number_format(($item['Detail']['fadcant']), 0).'</td>
-				<td style="width: 0.5in;">'.htmlentities($item['Articulo']['arunidad']).'</td>
-				<td style="width: 1.6in;"><b>'.htmlentities($this->AxUI->cleanSpecialChars($item['Articulo']['arcveart'])).'</b></td>
-				<td style="width: 2.8in;">'.htmlentities($this->AxUI->cleanSpecialChars($item['Articulo']['ardescrip'])).'</td>
+				<td style="width: 0.5in;">'.html($item['Articulo']['arunidad']).'</td>
+				<td style="width: 1.6in;"><b>'.html($this->AxUI->cleanSpecialChars($item['Articulo']['arcveart'])).'</b></td>
+				<td style="width: 2.8in;">'.html($this->AxUI->cleanSpecialChars($item['Articulo']['ardescrip'])).'</td>
 				<td style="text-align: right; width: 0.6in;">'. number_format($item['Detail']['fadimporteneto']/$item['Detail']['fadcant'],4).'</td>
 				<td style="text-align: right; width: 1in;">'. number_format($item['Detail']['fadimporteneto'],4).'</td>
 			</tr>
@@ -154,13 +164,21 @@ $pago='
 	<div style="border: 1px solid #000; width: 100%; background-color: #E0E0E0;">
 		<font size="-1"><b> Prendas totales: </b>'.$ptotal.'</font>&nbsp;&nbsp;
 		<font size="-1"><b> Forma de pago: </b>EN UNA SOLA EXHIBICION</font>&nbsp;&nbsp;
-		<font size="-1"><b> Condiciones de pago: </b>'.$data['Master']['faplazo'].' dias</font>&nbsp;&nbsp;
-		<font size="-1"><b> Metodo de pago: </b>'.$data['Cliente']['clmtdopago'].'</font>&nbsp;&nbsp;
-		<font size="-1"><b> Num. cta. pago: </b>NO IDENTIFICADA</font>
+		<font size="-1"><b> Condiciones de pago: </b>'.html($data['Master']['faplazo']).' dias</font>&nbsp;&nbsp;
+		<font size="-1"><b> Metodo de pago: </b>'.html($data['Cliente']['clmtdopago']).'</font>&nbsp;&nbsp;
+		<font size="-1"><b> Num. cta. pago: </b>'.html($data['Cliente']['clbancocta']).'</font>
 		<br />
 	</div>
 ';
 $tcpdf->writeHTML($pago, true, false, true, false, '');
+
+$observaciones='
+	<div style="text-align: left; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
+		<font size="+0"><b><i>Observaciones: '.html($data['Master']['faobser']).'</i></b></font><br />
+	</div>';
+	
+$tcpdf->writeHTML($observaciones, true, false, true, false, '');
+$tcpdf->Ln();
 
 $avisos='
 	<div style="text-align: center; border: 1px solid #000000; padding: 8px; margin: 8px; background: transparent;">
@@ -175,7 +193,7 @@ $tcpdf->Ln();
 $cadena='
 	<div style="border: 1px solid #000; width: 100%; padding: 4pt;">
 		<font size="-1"><b>CADENA ORIGINAL:</b></font> <br />
-		<font size="-2">'.$c_original.'<br /></font>
+		<font size="-2">'.html($c_original).'<br /></font>
 	</div>';
 
 $tcpdf->writeHTML($cadena, true, false, true, false, '');
@@ -183,7 +201,7 @@ $tcpdf->writeHTML($cadena, true, false, true, false, '');
 $sello='
 	<div style="border: 1px solid #000; width: 100%; ">
 		<font size="-1"><b>SELLO DIGITAL:</b></font> <br />
-		<font size="-1">'.$sello1.'</font><br />
+		<font size="-1">'.html($sello).'</font><br />
 	</div>';
 
 $tcpdf->writeHTML($sello, true, false, true, false, '');
@@ -207,6 +225,7 @@ $tcpdf->Output(APP.'files'.DS.'comprobantesdigitales'.DS.$filename , "F");
 // El resultado de la creacion, lo haremos interrumpiendo el curso normal de la
 // respuesta (incicialmente usando el layout 'media') y cambiamos al layout
 // 'default', para poder enviar el resultado de la operacion en formato json.
+
 $this->controller->layout='json';
 
 //header('content type: application/json');
@@ -224,16 +243,3 @@ echo "</pre>\n";
 echo '<script> window.close();</script>'."\n\r";
 die();
 //$this->controller->_end();
-
-/*
-header('content type: application/json');
-echo json_encode( array(
-		'result'	=>'ok',
-		'message'	=> 'El PDF correspondiente al CFDI de la factura '.$data['Master']['farefer'].' se genero correctamente.',
-		'data'		=> $data			
-	));
-$this->controller->_end();
-
-
-*
-**/
