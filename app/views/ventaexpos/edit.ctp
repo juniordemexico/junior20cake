@@ -43,14 +43,28 @@
 		<div class="gridStyle" ng-grid="masterGridOptions"></div>
 	</div>
 	
-	<div class="span5 well well-small">
+	<div class="span5">
 		<!-- Despliega los Pedidos registrados Localmente y su detalle al dar click -->
-		<ul ng-hide="!isDefined(selectedMasterItems[0])">
-			<li data-ng-repeat="i in selectedMasterItems[0].Details" id="rowDetail_{{i.Master.Fecha}}_{{i.Master.id}}">
-				<strong>{{i.Detail.articulo_id}}</strong> <strong>Color:</strong> {{i.Detail.color_id}} <strong>Unidades:</strong> {{i.Detail.cant}} <strong>Precio:</strong> {{i.Detail.precio | currency}}.
-			</li>
-		</ul>
-		<pre>selectedMasterItems: {{selectedMasterItems[0] | json}}</pre>
+		<table class="table table-condensed" ng-hide="!isDefined(selectedMasterItems[0])">
+			<thead>
+			<tr>
+				<th>Producto</th>
+				<th class="cve">Color</th>
+				<th class="cant">Cant</th>
+				<th class="cant">Importe</th>
+			</tr>
+			</thead>
+			<tbody>
+			</tr>
+			<tr data-ng-repeat="i in selectedMasterItems[0].Details" id="rowDetail_{{i.Master.Fecha}}_{{i.Master.id}}">
+				<td>{{getFieldFromItemCollection(items, 'arcveart', 'id', i.Detail.articulo_id )}}</th>
+				<td>{{getFieldFromItemCollection(items, 'color_cve', 'color_id', i.Detail.color_id )}}</th>
+				<td>{{i.Detail.cant}}</th>
+				<td>{{i.Detail.importe | currency}}</td>
+			</tr>
+			</tbody>
+		</table>
+		<pre>{{selectedMasterItems[0].Cliente}}</pre>
 	</div>
 </div>
 
@@ -226,7 +240,7 @@
 	<div class="control-group">
 		<div class="controls input">
 			<input type="text" class="form-control span2"  placeholder="Producto..." type="edit"
-			ng-model="filterText" data-ng-change="gridOptions.filterOptions.filterText=filterText"
+			data-ng-model="filterText" data-ng-change="gridOptions.filterOptions.filterText=filterText"
 			class="ng-valid ng-dirty" data-ng-minlength="0" data-ng-maxlength="32" />
 		</div>
 	</div>
@@ -303,6 +317,7 @@ var emptyItem={
 	$scope.selectedMasterItems=[];
 	$scope.masterItems=$scope.loadLocalCollection('ITEMS');
 
+//	$scope.productFilter.articulo_id
 	$scope.isDefined=function(item) {
 		return angular.isDefined(item);
 	};
@@ -371,35 +386,42 @@ var emptyItem={
 							$scope.data.detailModel
 						);
 
-		$scope.masterItems=$scope.addAndLoadToFromLocalCollection('ITEMS', $scope.data);
+		$scope.masterItems=$scope.addAndLoadToLocalCollection('ITEMS', $scope.data);
 
-		$scope.log('The DOCUMENT was saved on localStorage: ' + angular.toJson($scope.data));
-		axAlert('El PEDIDO se Guardó LOCALMENTE');
+		axAlert('El PEDIDO se Guardó LOCALMENTE', 'success');
 		$scope.saveText='Guardar';
 
 		// Si la aplicacion esta onLine....
 		if ( $scope.app.onlineStatus.isOnline() ) {
-			$scope.log('Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido. ¿ Deseas hacerlo ahora ?');
 			var title = 'Sincronización del Pedido';
 			var msg = 'Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido.<br/>¿ Deseas hacerlo ahora ?';
-			var btns = [{result:0, label: 'Después'}, {result:1, label: 'Sincronizar', cssClass: 'btn-primary'}];
+			var btns = [{result:0, label: 'Luego'}, {result:1, label: 'Sincronizar', cssClass: 'btn-primary'}];
 			$dialog.messageBox(title, msg, btns)
 			.open()
 			.then( function(result) {
 				// El Usuario desea Sincronizar con el servidor....
 				if(result) {
+					$scope.log('El Usuario SI quizo sincronizar al guardar.')
 					alert('SI quiere sincronizar');
 					return;
 				}
 				// El Usuario Sincronizará después....
 				else {
-					alert('NO quiere sincronizar');					
+					$scope.log('El Usuario NO quizo sincronizar al guardar.');					
+					alert('NO quiere sincronizar');
 				}
 			});
 		}
 		else {
-			$scope.log('Actualmente NO hay conexión a Internet. Se sincronizará después...')
+			$scope.log('El usuario NO tiene conexión a Internet. No podra sincronizar ahora mismo.');
 		}
+
+		// Clean the actual Document Data...
+//		$scope.items=angular.copy(items);
+//		$scope.totalize( {} );
+//		if(angular.isDefined(response.data.nextFolio)) {
+//			$scope.data.Master.folio=response.data.nextFolio;
+//		}
 
 	}
 
@@ -459,9 +481,7 @@ var emptyItem={
 							$scope.data.detailModel
 						);
 
-		$scope.masterItems=$scope.addAndLoadItemToLocalCollection('ITEMS', $scope.data);
-
-		$scope.log('The DOCUMENT was saved on localStorage: ' + serializedData);
+//		$scope.masterItems=$scope.addAndLoadToLocalCollection('ITEMS', $scope.data);//
 
 		if ( !$scope.app.onlineStatus.isOnline() ) {
 
@@ -630,6 +650,8 @@ var emptyItem={
 				$scope.Cliente.clcvecli=value.clcvecli;
 				$scope.Cliente.cltda=value.cltda;
 				$scope.Cliente.clnom=value.clnom;
+				$scope.data.Cliente=angular.copy($scope.Cliente);
+				return;
 			}
 		});
 	}
@@ -674,17 +696,20 @@ var emptyItem={
 		i18n: 'es',
 
 //		enableCellEditOnFocus: false,
+// 			{field: 'Master.id', displayName: 'ID', enableCellEdit: false, width: '75', visible: false, groupable: true}, 
 
 		columnDefs: [
-			{field: 'Master.id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: true}, 
-			{field: 'Master.cliente_id', displayName: 'Cliente', enableCellEdit: false, pinned: true, width: '125', sortable: true, groupable: true}, 
+			{field: 'Cliente.clcvecli', displayName: 'Cliente', enableCellEdit: false, pinned: true, width: '75', sortable: true, groupable: true}, 
+			{field: 'Cliente.cltda', displayName: 'Tda', enableCellEdit: false, pinned: false, width: '75', sortable: true, groupable: true}, 
 			{field: 'Master.fecha', displayName: 'Fecha', enableCellEdit: false, pinned: false, pinnable: true, width: '100', sortable: true, groupable: true}, 
-			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '125', sortable: true, groupable: false}, 
-			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '100', sortable: true, groupable: true, visible: true },
-			{field: 'acciones', displayName:'Acciones', enableCellEdit: false, pinned: false, pinnable: true, width: '150', sortable: true, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="sync(row.entity, row.getProperty(col.field), col.field)" title="Sincronizar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
+			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '110', sortable: true, groupable: false}, 
+			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '110', sortable: true, groupable: true, visible: true },
+			{field: 'acciones', displayName:'Acciones', enableCellEdit: false, pinned: false, pinnable: true, width: '120', sortable: true, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="sync(row.entity, row.getProperty(col.field), col.field)" title="Sincronizar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
 			],
 		groups: ['cliente_id'],
     };
+
+//getFieldFromItemCollection(items, 'color_cve', 'color_id', i.Detail.color_id )
 
     $scope.gridOptions = { 
  		data: 'items',
@@ -769,6 +794,17 @@ var emptyItem={
     	}
   	}
 
+	$scope.getFieldFromItemCollection = function( collection, field, searchField, searchValue ) {
+		var theValue=false;
+		angular.forEach( collection, function(value, index) {
+			if(value[searchField]==searchValue) {
+				theValue=value[field];
+				return;
+			}
+		}, theValue);
+		return theValue;
+	}
+	
 	$scope.saveAllDetailToCache = function() {
 		var items=[];
 		

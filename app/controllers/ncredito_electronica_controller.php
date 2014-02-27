@@ -608,7 +608,7 @@ function _sendemail($sender = array(), $receipt = array(), $params = array(), $b
 						'name' => 'JME910405B83-'.trim($result['Ncredito']['ncrefer']),
 						'download' => true,
 						'extension' => $format,
-						'path' => ($format==='pdf'?$appPathPDF:$appPathXML));
+						'path' => ($format=='pdf'?$appPathPDF:$appPathXML).DS);
 		$this->set($params);
 	}
 

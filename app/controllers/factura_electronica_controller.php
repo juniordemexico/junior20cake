@@ -8,7 +8,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 
 	var $tableFields = 	array(
 							'id','farefer','fafecha','fat','fast','fasuma','faimporte','faimpoimpu','fatotal',
-							'fapedido','fast','cancelauuid','cancelafecha',
+							'fapedido','fast','oldrefer','oldfactura_id','cancelauuid','cancelafecha',
 							'cliente_id','Cliente.clcvecli','Cliente.cltda','Cliente.clnom','Cliente.clsuc',
 							'vendedor_id','Vendedor.vecveven','Vendedor.venom','fadivisa',
 							'crefec','modfec', 'uuid', 'fechatimbrado');
@@ -105,7 +105,32 @@ class FacturaElectronicaController extends MasterDetailAppController {
 					$data['Master'][$this->masterModelTitle]
 				);
 	}
+	
+//Método imprimepdf para autogeneración (se usa el folio en vez del id)
+/*
+	public function imprimepdf( $folio = null ) {
+		if (!$folio || !$folio>0) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));
+		}
+		$theID=$this->{$this->masterModelName}->findByFarefer($folio);
+		if(!$theID) {
+			$this->Session->setFlash(__('invalid_item', true), 'error');
+			$this->redirect(array('action' => 'index'));			
+		}
+		$id=$theID['Factura']['id'];
+		
+		$docto=$this->{$this->masterModelName}->getDoctoForCFDI( $id );
+		$docto_arr=json_decode($docto);
 
+		$this->layout='pdf';
+		$this->set('result', 'ok' );
+		$this->set('docto', $docto_arr);
+		$this->set('title_for_layout', ucfirst($this->name).'::'.
+					$docto_arr->Master->folio
+				);
+		}
+*/
 	public function imprimepdf( $id = null ) {
 		if (!$id || !$id>0) {
 			$this->Session->setFlash(__('invalid_item', true), 'error');
@@ -115,99 +140,72 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$docto=$this->{$this->masterModelName}->getDoctoForCFDI( $id );
 		$docto_arr=json_decode($docto);
 
-
-		$folio=$docto_arr->Master->folio;
-		$appPathXML=APP.'files'.DS.'comprobantesdigitales';
-		$filename=$docto_arr->Emisor->emrfc.'-'.$folio.'.xml';
-		$xmlString= $this->Axfile->FileToString( $appPathXML.DS.$filename);
-		$cfdi = simplexml_load_string($xmlString);
-
-/*
-		$data['Comprobante']=array(
-			'uuid'=>'0749CF42-905C-4419-8095-15A4667B5FD7',
-			'selloemisor'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
-			'fechatimbrado'=>'2013-11-19 01:00:00',
-			'nocertificadosat'=>'01000006746677',
-			'sellocfd'=>'aegaMjno7PYJ512c0OZIxKrsWX0x5xYA7/qbT3Xn//Fby4pyfntTuD+msJXMcB6/TqmEmt1lPKGurCvHgxJg0kAgV3zxTH1H85gJboxSDdv98tp5+BApBIGA0KYm0TdcXnzHR/UAL+5jEKblWCHvoHb+mgW5LZaPDjVk7DxMZpo=',
-			'sellosat'=>'5aLqDjNxqBZ8skNBZa03+WHpgwE6lbcEtGJ3EPlUqkndlFDoK9/Ub4GZQS0rheqbcl5A2zlWIzAbtL+GWFdDOXVLzNkL6qNl8VV+OZOcVB6/34sVJyEq4/8fxeIh7UIGKwz9gl7vwHMik0C7F4N622Yv6q7Zcrg5trszkCXvBU4=',
-			'codigo_qr'=>'?re=JME910405B83&rr=GOCG650610IXA&tt=0000003336.060000&id=0749CF42-905C-4419-8095-15A4667B5FD7'
-			);
-
-*/
 		$this->layout='pdf';
 		$this->set('result', 'ok' );
-//		$this->set('data', $data );
 		$this->set('docto', $docto_arr);
-		$this->set('cfdi', $cfdi);
 		$this->set('title_for_layout', ucfirst($this->name).'::'.
 					$docto_arr->Master->folio
 				);
 	}
 
+/*
 	public function autogenerapdf() {
 		Configure::write('debug', 0);
-		$pathDOCS=APP.'files'.DS.'comprobantesdigitales';
 		$this->layout='default';
 		$this->recursive=-1; //B0061829
-		$allItems=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D00001045','Factura.farefer <='=>'D0002200', 'fat'=>0, 'sellosat !='=>null),
+		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'B0060000','Factura.farefer <='=>'B0060050', 'fat'=>0),
 							'order'=>array('Factura.farefer'),
 							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
 											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
 							));
-		$items=array();
-		foreach($allItems as $item) {
-			$filename='JME910405B83-'.trim($item['Factura']['farefer']).'.pdf';
-			if( !file_exists($pathDOCS.DS.$filename) ) {
-				$items[]=$item;
-			}
-		}
-
 		$this->set('items', $items);
 	}
+*/	
+	//Nueva autogenerapdf
+	public function autogenerapdf() {
+	Configure::write('debug', 0);
+	$pathDOCS=APP.'files'.DS.'comprobantesdigitales';
+	$this->layout='default';
+	$this->recursive=-1; //D000020
+	$allItems=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D00001045','Factura.farefer <='=>'D0002069', 'fat'=>0, 'sellosat !='=>null),
+	'order'=>array('Factura.farefer'),
+	'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
+	'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
+	));
+	$items=array();
+	foreach($allItems as $item) {
+	$filename='JME910405B83-'.trim($item['Factura']['farefer']).'.pdf';
+	if( !file_exists($pathDOCS.DS.$filename) ) {
+	$items[]=$item;
+	}
+	}
 
+	$this->set('items', $items);
+	}
+	//
 	public function autocancela() {
 		Configure::write('debug', 0);
 		$this->layout='default';
 		$this->recursive=-1; //D000XXXX
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0000001','Factura.farefer <='=>'D0000013', 'fat'=>0, 'fast'=>'C', 'oldst'=>'A'),
+		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0000001','Factura.farefer <='=>'D0001050', 'fat'=>0, 'fast'=>'C', 'oldst'=>'A', 'cancelauuid'=>null),
 							'order'=>array('Factura.farefer'),
 							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
 											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
 							));
 		$this->set('items', $items);
 	}
-
-	public function autogeneracfdi() {
+	
+	public function autotimbra() {
 		Configure::write('debug', 0);
 		$this->layout='default';
 		$this->recursive=-1; //D000XXXX
-		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0000001','Factura.farefer <='=>'D0000013', 'fat'=>0, 'fast'=>'C', 'oldst'=>'A'),
+		$items=$this->Factura->find('all', array('conditions'=>array('Factura.farefer >='=>'D0002072','Factura.farefer <='=>'D0009999', 'fat'=>0, 'fast'=>'A', /*'oldst'=>'A', 'oldfactura_id !='=>null,*/ 'fadesc1'=>'0', 'sellosat'=>null),
 							'order'=>array('Factura.farefer'),
 							'fields'=>array('Factura.id','Factura.farefer','Factura.fafecha','Factura.cliente_id',
 											'Factura.facvecli','Factura.fatda','Factura.fatotal','Factura.fast','Factura.fat')
 							));
 		$this->set('items', $items);
-
-		/*
-		GENERAR NUEVAS FACTURAS
-		SELECT a.ID, a.PEDIDO_ID, 'D'||LPAD(gen_id(tmp,1),7,'0') farefer, a.FAFECHA, a.FAPLAZO, a.FATIPO, a.FADIVISA, a.DIVISA_ID,
-a.FAPRECIO, a.FAALMACEN, a.FAPEDIDO, a.FAST, a.FACVECLI, a.FATDA, a.CLIENTE_ID, a.FACVEVEN, 
-a.VENDEDOR_ID, a.FACOMIS, a.FACVETRANS, a.FASUMA,
-a.FADESC1, a.FADESC2, a.FADESC3, /*a.FAIMPORTE,*/ a.FAIMPU, /*a.FAIMPOIMPU, a.FATOTAL, */
-trim(a.FAOBSER)||' (ant: '||a.farefer||')' faobser, a.FAT, a.CREUSR, a.CREFEC, a.MODUSR, a.MODFEC, a.FECENV, 
-a.FACAJAS, a.FATALONEMB, a.FAFEMBARQUE, a.FAFENTREGA, a.FACANT, a.FATCAMBIO, 
-a.FALEMPAQUE, a.FAOSURTIDO, a.FASIG, a.FASERIE, a.FATVTA, a.FADVORIG, a.FADVVTA, 
-a.FATPOVTA, a.FACVEEMPRESA, a.FASERIEFOL, a.TRANSPORTE_ID, a.UUID, a.FECHATIMBRADO, 
-a.CADENAORIGINAL, a.SELLOCFD, a.NOCERTIFICADOSAT, a.SELLOSAT, a.CANCELAUUID, 
-a.CANCELAFECHA, a.OLDST, a.farefer oldrefer
-FROM FACTURA a
-where a.farefer>='D0000001' and a.farefer<='D0000010' and a.oldst='A' and a.fat=0
-order by a.farefer
-
-
-		**/
 	}
-
 
 //<--Método temporal
 	public function imprimepdfold( $folio = null ) {
@@ -512,7 +510,8 @@ order by a.farefer
 			
 		$this->set('result', 'ok' );
 		$this->set('message', 'La Factura '.$item['Factura']['farefer'].' se canceló correctamente (id: '.$id.')');
-		$this->set('data', $item);	
+		$this->set('data', $item);
+		$this->set('textenv', $textenv);	
 		$this->set('response', $this->Axfile->FileToString( $pathDOCS.DS.$filename ));	
 	}
 
@@ -733,7 +732,7 @@ order by a.farefer
 		$this->view = 'Media';
 		$params = array('id' => $filename,
 						'name' => 'JME910405B83-'.trim($result['Factura']['farefer']),
-						'download' => false,
+						'download' => true,
 						'extension' => $format,
 						'path' => ($format==='pdf'?$appPathPDF:$appPathXML).DS);
 		$this->set($params);

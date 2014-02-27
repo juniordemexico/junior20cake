@@ -307,26 +307,26 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		if (typeof related != 'undefined') {
 			\$scope.related=angular.copy(related);
 			localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(related));
-			console.log('RELATED comes as plain JS!');
+			console.log('AX: RELATED comes as plain JS!');
 			return true;
 		}
 		else {
 			if(	theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
 		 		theRelated!=null) {
 				\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
-				console.log('RELATED not embeded. But found in localStorage!');
+				console.log('AX: RELATED not embeded. But found in localStorage!');
 				return true;
 			} 
 			else {
 				if ( \$scope.app.onlineStatus.isOnline() ) {
-					console.log('RELATED not found in plain JS or localStorage. I will request it to '+\$scope.app.actions.getRelated+' .');
+					console.log('AX: RELATED not found in plain JS or localStorage. I will request it to '+\$scope.app.actions.getRelated+' .');
 					\$http.get(\$scope.app.actions.getRelated
 					).then(function(response) {
 					if(typeof response.data != 'undefined' && 
 						typeof response.data.result != 'undefined' && response.data.result=='ok') {
 						\$scope.related=angular.copy(response.data.related);
 						localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
-						console.log('RELATED received and saved in localStorage');
+						console.log('AX: RELATED received and saved in localStorage');
 						return true;
 					}
 					else {
@@ -340,7 +340,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
        				});
 				}
 				else {
-					console.log('RELATED no se encuentra incluido en la respuesta, ni en el cache y la Aplicación esta FUERA DE LINEA.');
+					console.log('AX: RELATED no se encuentra incluido en la respuesta, ni en el cache y la Aplicación esta FUERA DE LINEA.');
 				}
 			}
 		}
@@ -379,9 +379,12 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			container={};
 			container[collection]=[];
 		}
-		container[collection].push( angular.copy(\$scope.data) );
+		container[collection].push( item );
 		localStorageService.add(\$scope.app.localCachePrefix+collection, angular.toJson(container));
-		console.log('Metido:' + angular.toJson(container));
+		if (collection!='LOG') {
+			console.log('AX: Local Collection (ADDED: '+ container[collection].length +'): ' + angular.toJson(item));
+		}
+		return container[collection].length;
 	}
 
 	\$scope.loadLocalCollection = function (collection) {
@@ -390,20 +393,24 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			container={};
 			container[collection]=[];
 		}
-		return angular.copy(container[collection]);
-	}
-
-	\$scope.addAndLoadToCollection = function (collection) {
-		var container=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+collection));
-		if( !container ) {
-			container={};
-			container[collection]=[];
+		if (collection!='LOG') {
+			console.log('AX: Local Collection (LOADED: '+ container[collection].length +'): ' + collection);
 		}
 		return angular.copy(container[collection]);
 	}
 
+	\$scope.addAndLoadToLocalCollection = function (collection, item) {
+		\$scope.addItemToLocalCollection(collection, item);
+		return \$scope.loadLocalCollection(collection);
+	}
+
+	\$scope.log = function(text) {
+		console.log('AX: ' + text);
+		\$scope.addItemToLocalCollection('LOG', text);
+	}
+
 ".
-		"\n\r";
+	"\n\r";
 	}
 
 	public function getAppDefaults($options=null) {
