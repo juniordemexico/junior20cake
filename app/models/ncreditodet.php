@@ -6,7 +6,7 @@ class Ncreditodet extends AppModel
 	public $name = 'Ncreditodet';
 
 	public $table = 'Ncreditodet';
-	public $useTable = 'Ncreditodet';
+	//public $useTable = 'Ncreditodet';
 	public $alias = 'Ncreditodet';
 	public $recursive=0;
 	public $validate = array(

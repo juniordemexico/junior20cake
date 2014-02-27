@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/models/ventaexpo.php</string>
+	<string>app/views/ventaexpos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,75 +21,33 @@
 	<integer>227</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/servicios_controller.php</key>
+		<key>app/app_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>24</integer>
+				<integer>600</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>576</integer>
 		</dict>
 		<key>app/controllers/ventaexpos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>54</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>110</integer>
+				<integer>42</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>74</integer>
-		</dict>
-		<key>app/files/queries/gm3_articlos_migracion.sql</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>80</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>57</integer>
-		</dict>
-		<key>app/files/queries/ncredito_2014_pendientes_para_timbrar.20140206.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>19</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/factura.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>12</integer>
-				<key>line</key>
-				<integer>202</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>190</integer>
+			<integer>22</integer>
 		</dict>
 		<key>app/models/ventaexpo.php</key>
 		<dict>
@@ -98,12 +56,12 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>137</integer>
+				<integer>149</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>109</integer>
+			<integer>129</integer>
 		</dict>
 		<key>app/models/ventaexpodet.php</key>
 		<dict>
@@ -117,18 +75,45 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>92</integer>
+			<integer>88</integer>
+		</dict>
+		<key>app/views/index.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>42</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>19</integer>
+		</dict>
+		<key>app/views/ventaexpos/edit.ctp</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>17</integer>
+				<key>line</key>
+				<integer>331</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>317</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/models/factura.php</string>
-		<string>app/files/queries/ncredito_2014_pendientes_para_timbrar.20140206.php</string>
+		<string>app/views/ventaexpos/edit.ctp</string>
 		<string>app/models/ventaexpo.php</string>
-		<string>app/controllers/ventaexpos_controller.php</string>
 		<string>app/models/ventaexpodet.php</string>
-		<string>app/controllers/servicios_controller.php</string>
-		<string>app/files/queries/gm3_articlos_migracion.sql</string>
+		<string>app/controllers/ventaexpos_controller.php</string>
+		<string>app/views/index.ctp</string>
+		<string>app/app_controller.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

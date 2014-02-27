@@ -165,6 +165,8 @@ class AxUIHelper extends Helper {
 			'lastAction'			=> null,
 			'isDebugCollapsed'		=> false,
 		);
+
+		$onlineStatus=array('online'=>false, 'lastPageReload'=>null);
 		
 		$lastRequest=array(
 			'url'		=> null,
@@ -220,9 +222,10 @@ class AxUIHelper extends Helper {
 		return ( "\n\r".
 "
 var axApp=angular.module('AxApp', ['ui','ui.bootstrap','ngGrid','LocalStorageModule']).
+
 controller('AxAppCtrl', 
-['\$scope', '\$rootScope', '\$http', '\$window', '\$location', '\$dialog', '\$timeout', 'localStorageService',
-function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout, localStorageService) {
+['\$scope', '\$rootScope', '\$http', '\$window', '\$location', '\$dialog', '\$timeout', 'localStorageService', 'onlineStatus',
+function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout, localStorageService, onlineStatus) {
 ".
 "\n\r".
 '/* Begins WebUI\'s global states and data ************************/'.
@@ -238,13 +241,23 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			'actions'				=> $actions,
 			'state'					=> $state,
 			'lastRequest'			=> $lastRequest,
-			'estatus'				=> $estatus
+			'estatus'				=> $estatus,
+			'isOnline'				=> 'SIN CONEXION'
 		)).";".
 "\n\r".
 "
 	\$http.defaults.headers.post[\"Content-Type\"] = 'application/x-www-form-urlencoded';
-
 	\$scope.\$window=\$window;
+
+	/* Internet/network connection status */
+	\$scope.app.isOnline=false;
+	\$scope.app.onlineStatus = onlineStatus;
+
+    \$scope.\$watch('app.onlineStatus.isOnline()', function(online) {
+        \$scope.app.isOnline = online ? 'EN LINEA' : 'SIN CONEXION';
+//		axAlert('ESTATUS DE CONEXIÓN<br/>'+'<strong>'+$scope.app.isOnline+'</strong>');
+    });
+
 /*
 	if (typeof \$scope.items != 'undefined' && typeof \$scope.items[0].id != 'undefined') {
 		\$scope.page.state.selectedItems=new Array(\$scope.items.length+1);
@@ -262,7 +275,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 	public function getAppGlobalMethods($options=null) {
 		return "\n\r".
 "
-
+	
 	\$scope.serializeToServer = function ( data, masterModel, detailsModel ) {
 		
 		// Serialize Master
@@ -291,39 +304,44 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		// Load page's related models from local cache or doing an http request
 		var theRelated=false;
 		
-		if( theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
-		 	theRelated!=null) {
-			\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
-			console.log('RELATED found in LocalCache: '+localStorageService.get(\$scope.app.localCachePrefix+'related'));
+		if (typeof related != 'undefined') {
+			\$scope.related=angular.copy(related);
+			localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(related));
+			console.log('RELATED comes as plain JS!');
 			return true;
 		}
 		else {
-			if (typeof related != 'undefined') {
-				\$scope.related=angular.copy(related);
-				localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(related));
-				console.log('RELATED not in Local Cache. It cames as Plain JS: '+\$scope.related);
+			if(	theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
+		 		theRelated!=null) {
+				\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
+				console.log('RELATED not embeded. But found in localStorage!');
 				return true;
 			} 
 			else {
-				console.log('No viene en JS, No en Cache, Hay que pedirlo...');
-				\$http.get(\$scope.app.actions.getRelated
-				).then(function(response) {
-				if(typeof response.data != 'undefined' && 
-					typeof response.data.result != 'undefined' && response.data.result=='ok') {
-					\$scope.related=angular.copy(response.data.related);
-					localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
-					console.log('Not in Local Cache, not in Plain JS, I had to request to the server. RESPONSE: '+angular.toJson(\$scope.related));
-					return true;
-				}
-				else {
-					if(typeof response.data.result != 'undefined' && typeof response.data.message != 'undefined') {
-						axAlert(response.data.message, 'error', false);
+				if ( \$scope.app.onlineStatus.isOnline() ) {
+					console.log('RELATED not found in plain JS or localStorage. I will request it to '+\$scope.app.actions.getRelated+' .');
+					\$http.get(\$scope.app.actions.getRelated
+					).then(function(response) {
+					if(typeof response.data != 'undefined' && 
+						typeof response.data.result != 'undefined' && response.data.result=='ok') {
+						\$scope.related=angular.copy(response.data.related);
+						localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
+						console.log('RELATED received and saved in localStorage');
+						return true;
 					}
 					else {
-						axAlert('Error Desconocido', 'error', false);
+						if(typeof response.data.result != 'undefined' && typeof response.data.message != 'undefined') {
+							axAlert(response.data.message, 'error', false);
+						}
+						else {
+							axAlert('Error Desconocido', 'error', false);
+						}
 					}
+       				});
 				}
-       			});
+				else {
+					console.log('RELATED no se encuentra incluido en la respuesta, ni en el cache y la Aplicación esta FUERA DE LINEA.');
+				}
 			}
 		}
 		\$scope.related={};
@@ -355,12 +373,67 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		}
 	}
 
+	\$scope.addItemToLocalCollection = function (collection, item) {
+		var container=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+collection));
+		if( !container ) {
+			container={};
+			container[collection]=[];
+		}
+		container[collection].push( angular.copy(\$scope.data) );
+		localStorageService.add(\$scope.app.localCachePrefix+collection, angular.toJson(container));
+		console.log('Metido:' + angular.toJson(container));
+	}
+
+	\$scope.loadLocalCollection = function (collection) {
+		var container=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+collection));
+		if( !container ) {
+			container={};
+			container[collection]=[];
+		}
+		return angular.copy(container[collection]);
+	}
+
+	\$scope.addAndLoadToCollection = function (collection) {
+		var container=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+collection));
+		if( !container ) {
+			container={};
+			container[collection]=[];
+		}
+		return angular.copy(container[collection]);
+	}
+
 ".
 		"\n\r";
 	}
 
 	public function getAppDefaults($options=null) {
 		$out="
+		
+axApp.factory('onlineStatus', ['\$window', '\$rootScope', function (\$window, \$rootScope) {
+    var onlineStatus = {};
+
+    onlineStatus.onLine = \$window.navigator.onLine;
+	onlineStatus.lastPageLoad = new Date();
+	
+    onlineStatus.isOnline = function() {
+        return onlineStatus.onLine;
+    }
+
+    \$window.addEventListener('online', function () {
+        onlineStatus.onLine = true;
+        onlineStatus.lastOnline = new Date();
+        \$rootScope.\$digest();
+    }, true);
+
+    \$window.addEventListener('offline', function () {
+        onlineStatus.onLine = false;
+        onlineStatus.lastOffline = new Date();
+        \$rootScope.\$digest();
+    }, true);
+
+    return onlineStatus;
+}]);
+
 axApp.value('ui.config', {
 	jq: {
 		datepicker: {

@@ -4,7 +4,6 @@ class Ventaexpo extends AppModel
 {
 	var $name = 'Ventaexpo';
 //	var $table = 'Ventaexpos';
-//	var $useTable= 'Ventaexpos';
 	var $alias = 'Ventaexpo';
 
 	public $primaryKey = 'id';
@@ -156,7 +155,7 @@ class Ventaexpo extends AppModel
         if (!empty($arr)) {
             $ret = array();
             foreach ($arr as $k => $v) {
-                $ret[] = array('id' => $v['Cliente']['id'], 'cve' => '( '.trim($v['Cliente']['clcvecli']).' - '.$v['Cliente']['cltda'].' ) '.$v['Cliente']['clnom'] );
+                $ret[] = array('id' => $v['Cliente']['id'], 'cve' => trim($v['Cliente']['clcvecli']).' '.$v['Cliente']['cltda'].' - '.$v['Cliente']['clnom'] );
             }
         }
 		return $ret;

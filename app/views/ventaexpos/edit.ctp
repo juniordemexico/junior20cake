@@ -1,6 +1,6 @@
 <header>
 <div class="page-header">
-<h1><small>Pedido Expo <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small></h1>
+<h1><small>Pedido Expo <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small><span class="badge pull-right" ng-class="onLineClass()"><strong>{{app.isOnline}}</strong></span></h1>
 
 </div>
 </header>
@@ -17,8 +17,14 @@
 		</button>
 	</div>
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir la transacción" alt="Imprimir">
+		<button type="button" class="btn btn-primary" data-ng-click="sync()" data-ng-disabled="data.Master.fsync || !app.onlineStatus.isOnline" title="Sincroniza y Genera Definitivamente el Documento en el Servidor" alt="Sync">
+		<i class="icon-sync icon-white"></i>
+		</button>
+		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir el Documento" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
+		</button>
+		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(data.Master.id>0)" title="Envia el Documento por Correo, Guardalo en la Nube o Descargalo como Texto" alt="Compartir">
+		<i class="icon-share icon-white"></i>
 		</button>
 	</div>
 
@@ -30,7 +36,27 @@
 <!-- Form's Tabbed Divs -->
 <tabs id="tabs">
 
-<pane id="tabs-0" heading="General" class="well">
+<pane id="tabs-0" heading="Lista">
+
+<div class="row">
+	<div class="span7">
+		<div class="gridStyle" ng-grid="masterGridOptions"></div>
+	</div>
+	
+	<div class="span5 well well-small">
+		<!-- Despliega los Pedidos registrados Localmente y su detalle al dar click -->
+		<ul ng-hide="!isDefined(selectedMasterItems[0])">
+			<li data-ng-repeat="i in selectedMasterItems[0].Details" id="rowDetail_{{i.Master.Fecha}}_{{i.Master.id}}">
+				<strong>{{i.Detail.articulo_id}}</strong> <strong>Color:</strong> {{i.Detail.color_id}} <strong>Unidades:</strong> {{i.Detail.cant}} <strong>Precio:</strong> {{i.Detail.precio | currency}}.
+			</li>
+		</ul>
+		<pre>selectedMasterItems: {{selectedMasterItems[0] | json}}</pre>
+	</div>
+</div>
+
+</pane> <!-- pane#tabs0 -->
+
+<pane id="tabs-1" heading="General" class="well">
 
 <div class="row">
 	<div class="span6">
@@ -155,9 +181,9 @@
 
 </div>
 
-</pane>
+</pane> <!-- #tabs-1 -->
 
-<pane id="tabs-1" heading="Detalle">
+<pane id="tabs-2" heading="Detalle">
 	<div style="margin-bottom: 16px;">
 		<table class="">
 			<thead>
@@ -196,13 +222,22 @@
 				<td>{{currentProporcionpedido.cant}}</td>
 			</tbody>
 		</table>
+
+	<div class="control-group">
+		<div class="controls input">
+			<input type="text" class="form-control span2"  placeholder="Producto..." type="edit"
+			ng-model="filterText" data-ng-change="gridOptions.filterOptions.filterText=filterText"
+			class="ng-valid ng-dirty" data-ng-minlength="0" data-ng-maxlength="32" />
+		</div>
+	</div>
+
 	</div>
 
 	<div class="gridStyle" ng-grid="gridOptions"></div>
 
-</pane> <!-- div tabs1 -->
+</pane> <!-- div tabs2 -->
 
-<pane id="tabs-4" heading="Datos adicionales">
+<pane id="tabs-3" heading="Datos adicionales">
 <div class="control-group">
 	<label for="VentaexpoObser" class="control-label">Observaciones</label>
 	<div class="controls input">
@@ -215,11 +250,12 @@
 	</div>
 </div>
 
-</pane> <!-- pane#tabs4 -->
+</pane> <!-- pane#tabs3 -->
 
 </tabs> <!-- div tabbable -->
 
 </form>
+
 
 <script language="javascript">
 
@@ -263,6 +299,14 @@ var emptyItem={
     $scope.selectedColumn={};
 	$scope.Cliente={};
 	$scope.myItems={};
+	$scope.filterText='';
+	$scope.selectedMasterItems=[];
+	$scope.masterItems=$scope.loadLocalCollection('ITEMS');
+
+	$scope.isDefined=function(item) {
+		return angular.isDefined(item);
+	};
+
 	
 	if(!angular.isDefined($scope.data.Master.id) && $scope.data.Master.id>0) {
 		$scope.data.Master.impo1=16;
@@ -275,7 +319,97 @@ var emptyItem={
 
 	/* Begins the angular controller's code specific to this View */
 	$scope.theRespose={};
+
 	$scope.save = function() {
+		// Serialize the full form, including details items
+		$scope.data.Details=[];
+		$scope.saveText='GUARDANDO';
+
+		$scope.data.Master.suma=0;
+
+		angular.forEach($scope.items, function(value, key) {
+			if( angular.isDefined(value.cant) && angular.isNumber(value.cant) && value.cant>0 ) {
+				$scope.data.Details.push({
+					"Detail": {
+						'id': null,
+						'ventaexpo_id': null,
+						'articulo_id': value.id,
+						'color_id': value.color_id,
+						'talla_id': value.talla_id,
+						'precio': value.precio,
+						't0': value.t0,
+						't1': value.t1,
+						't2': value.t2,
+						't3': value.t3,
+						't4': value.t4,
+						't5': value.t5,
+						't6': value.t6,
+						't7': value.t7,
+						't8': value.t8,
+						't9': value.t9,
+						'cant': value.cant,
+						'importe': value.importe}
+					}
+				);
+				$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(value.importe) ).toFixed(2);
+			}
+		});
+		
+		$scope.totalize($scope.data.Details);
+
+		if(!$scope.data.Master.suma>0) {
+			axAlert('El Pedido esta Vacio', 'warning');
+			$scope.saveText='Guardar';
+			return;
+		}
+		
+		var serializedData=$scope.serializeToServer( {
+							"Master" 	: $scope.data.Master,
+							"Details"	: $scope.data.Details
+							},
+							$scope.data.masterModel,
+							$scope.data.detailModel
+						);
+
+		$scope.masterItems=$scope.addAndLoadToFromLocalCollection('ITEMS', $scope.data);
+
+		$scope.log('The DOCUMENT was saved on localStorage: ' + angular.toJson($scope.data));
+		axAlert('El PEDIDO se Guardó LOCALMENTE');
+		$scope.saveText='Guardar';
+
+		// Si la aplicacion esta onLine....
+		if ( $scope.app.onlineStatus.isOnline() ) {
+			$scope.log('Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido. ¿ Deseas hacerlo ahora ?');
+			var title = 'Sincronización del Pedido';
+			var msg = 'Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido.<br/>¿ Deseas hacerlo ahora ?';
+			var btns = [{result:0, label: 'Después'}, {result:1, label: 'Sincronizar', cssClass: 'btn-primary'}];
+			$dialog.messageBox(title, msg, btns)
+			.open()
+			.then( function(result) {
+				// El Usuario desea Sincronizar con el servidor....
+				if(result) {
+					alert('SI quiere sincronizar');
+					return;
+				}
+				// El Usuario Sincronizará después....
+				else {
+					alert('NO quiere sincronizar');					
+				}
+			});
+		}
+		else {
+			$scope.log('Actualmente NO hay conexión a Internet. Se sincronizará después...')
+		}
+
+	}
+
+	$scope.sync = function( id ) {
+		if(!angular.isDefined(id)) {
+			id=$scope.dataMaster.id;
+		}
+		alert('sincronizando en rutina');
+		return;
+		
 		// Serialize the full form, including details items
 		$scope.data.Details=[];
 		$scope.saveText='GUARDANDO';
@@ -308,14 +442,9 @@ var emptyItem={
 				$scope.data.Master.suma=( parseFloat($scope.data.Master.suma) + parseFloat(value.importe) ).toFixed(2);
 			}
 		});
-		
+
 		$scope.totalize($scope.data.Details);
-/*
-		$scope.data.Master.importe=$scope.data.Master.suma;
-		$scope.data.Master.impo1=16;
-		$scope.data.Master.impoimpu=(parseFloat($scope.data.Master.importe) * 0.16).toFixed(2);
-		$scope.data.Master.total=( parseFloat($scope.data.Master.importe) + parseFloat($scope.data.Master.impoimpu) ).toFixed(2);
-*/
+
 		if(!$scope.data.Master.suma>0) {
 			axAlert('El Pedido esta Vacio', 'warning');
 			$scope.saveText='Guardar';
@@ -330,15 +459,19 @@ var emptyItem={
 							$scope.data.detailModel
 						);
 
-		console.log(serializedData);
-		
+		$scope.masterItems=$scope.addAndLoadItemToLocalCollection('ITEMS', $scope.data);
+
+		$scope.log('The DOCUMENT was saved on localStorage: ' + serializedData);
+
+		if ( !$scope.app.onlineStatus.isOnline() ) {
+
 		// Send the PUT request to the server
 		$http.post('/Ventaexpos/save.json', serializedData
 		).then(function(response) {
 			// We got a response to process
 			$scope.theResponse=response.data;
 			if( angular.isDefined(response.data) && angular.isDefined(response.data.result) ) {
-				console.log("RESPUESTA data: "+angular.toJson(response.data));
+				$scope.log('RESPUESTA data: ' + angular.toJson(response.data));
 				if(response.data.result=='ok') {
 					axAlert(response.data.message, 'success', false);
 					$scope.items=angular.copy(items);
@@ -350,7 +483,7 @@ var emptyItem={
 				else {
 					var errorText='<strong>Error al Guardar</strong><br/>';
 					if( angular.isDefined(response.data.validationErrors) ) {
-						console.log("ERROR AL GUARDAR:" + angular.toJson(response.data));
+						$scope.log('ERROR AL GUARDAR:' + angular.toJson(response.data));
 						errorText='<ul class="unstyled">';
 						angular.forEach(response.data.validationErrors, function(value, model) {
 							errorText=errorText+'<li><strong>' + model + '</strong><ul>' ;
@@ -365,11 +498,18 @@ var emptyItem={
 				}
 			}
 			else {
-				console.log("ERROR AL GUARDAR:" + (angular.isDefined(response)?angular.toJson(response):'') );
-				axAlert('Error DESCONOCIDO Guardar el Pedido', 'error', false);				
+				$scope.log('ERROR AL GUARDAR EN EL SERVIDOR:' + (angular.isDefined(response)?angular.toJson(response):'') );
+				axAlert('Error al Guardar el Pedido en el Servidor', 'error', false);				
 			}
 			$scope.saveText='Guardar';
 		});
+		}
+		else {
+			axAlert('El PEDIDO se Guardó LOCALMENTE');
+			$scope.log('AxApp offline. Leaving the transaction in localStorage for latter sync.');
+			$scope.saveText='Guardar';
+		}
+
 	}
 
 	$scope.cancel = function() {
@@ -421,81 +561,47 @@ var emptyItem={
 		return true;
 	}
 
-//    $scope.myData = $scope.data.Details;
 
     $scope.detailEdit = function (row, cell, column) {
-		if($scope.selectedRow!=row) {
-			$scope.currentItem = angular.copy(row);
-//			$scope.currentItem= {t0: row['tl0'], t1: row['tl1'], t2: row['tl2'], t3: row['tl3'],t4: row['tl4'],
-//			  					t5: row['tl5'], t6: row['tl6'], t7: row['tl7'], t8: row['tl8'], t9: row['tl9'] };
-		}
+		$scope.currentItem = row;
 		$scope.selectedRow = row;
 		$scope.selectedCell = cell;
     	$scope.selectedColumn = column;
-		row['cant']=
-				((angular.isDefined(row['t0']) && row['t0']!='')?parseInt(row['t0'],10):0)+
-				((angular.isDefined(row['t1']) && row['t1']!='')?parseInt(row['t1'],10):0)+
-				((angular.isDefined(row['t2']) && row['t2']!='')?parseInt(row['t2'],10):0)+
-				((angular.isDefined(row['t3']) && row['t3']!='')?parseInt(row['t3'],10):0)+
-				((angular.isDefined(row['t4']) && row['t4']!='')?parseInt(row['t4'],10):0)+
-				((angular.isDefined(row['t5']) && row['t5']!='')?parseInt(row['t5'],10):0)+
-				((angular.isDefined(row['t6']) && row['t6']!='')?parseInt(row['t6'],10):0)+
-				((angular.isDefined(row['t7']) && row['t7']!='')?parseInt(row['t7'],10):0)+
-				((angular.isDefined(row['t8']) && row['t8']!='')?parseInt(row['t8'],10):0)+
-				((angular.isDefined(row['t9']) && row['t9']!='')?parseInt(row['t9'],10):0);
-		row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
+		row['cant']=0;
+		$scope.totalizeDetail(row);
 		$scope.totalize( $scope.items );
 	};
-	
+
+	$scope.totalizeDetail = function (row) {
+		row['cant']=0;
+		for(var i=9; i>=0; i--) {
+			row['cant']+=((angular.isDefined(row['tl'+i]) && row['tl'+i]!='' && angular.isDefined(row['t'+i]) && parseInt(row['t'+i],10)>=0)?parseInt(row['t'+i],10):0);
+		}	
+		row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
+		if(!row['importe'] || row['importe']==null || row['importe']=='null') delete row['importe'];
+	}
+
     $scope.detailCopy = function (row, cell, column) {
-		var itemCant={
-			t0: row['t0'],
-			t1: row['t1'],
-			t2: row['t2'],
-			t3: row['t3'],
-			t4: row['t4'],
-			t5: row['t5'],
-			t6: row['t6'],
-			t7: row['t7'],
-			t8: row['t8'],
-			t9: row['t9']
-		};
-		localStorageService.add($scope.app.localCachePrefix+'detailsClipboard', angular.toJson(itemCant));
-		axAlert('Detalle guardado en cache local', 'warning', false);
+		localStorageService.add($scope.app.localCachePrefix+'detailsClipboard', angular.toJson(row));
+//		axAlert('Detalle guardado en cache local', 'warning', false);
     };
 
     $scope.detailPaste = function (row, cell, column) {
-		var itemCantString;
-		if( itemCantString=localStorageService.get($scope.app.localCachePrefix+'detailsClipboard') ) {
-			if( angular.isDefined(itemCantString) && angular.isString(itemCantString) ) {
-				var itemCant=angular.fromJson(itemCantString);
-				if (angular.isDefined(itemCant.t0) && angular.isDefined(row['tl0']) && row['tl0']!='') row['t0']=parseInt(itemCant.t0,10);
-				if (angular.isDefined(itemCant.t1) && angular.isDefined(row['tl1']) && row['tl1']!='') row['t1']=parseInt(itemCant.t1,10);
-				if (angular.isDefined(itemCant.t2) && angular.isDefined(row['tl2']) && row['tl2']!='') row['t2']=parseInt(itemCant.t2,10);
-				if (angular.isDefined(itemCant.t3) && angular.isDefined(row['tl3']) && row['tl3']!='') row['t3']=parseInt(itemCant.t3,10);
-				if (angular.isDefined(itemCant.t4) && angular.isDefined(row['tl4']) && row['tl4']!='') row['t4']=parseInt(itemCant.t4,10);
-				if (angular.isDefined(itemCant.t5) && angular.isDefined(row['tl5']) && row['tl5']!='') row['t5']=parseInt(itemCant.t5,10);
-				if (angular.isDefined(itemCant.t6) && angular.isDefined(row['tl6']) && row['tl6']!='') row['t6']=parseInt(itemCant.t6,10);
-				if (angular.isDefined(itemCant.t7) && angular.isDefined(row['tl7']) && row['tl7']!='') row['t7']=parseInt(itemCant.t7,10);
-				if (angular.isDefined(itemCant.t8) && angular.isDefined(row['tl8']) && row['tl8']!='') row['t8']=parseInt(itemCant.t8,10);
-				if (angular.isDefined(itemCant.t9) && angular.isDefined(row['tl9']) && row['tl9']!='') row['t9']=parseInt(itemCant.t9,10);
-				row['cant']=
-					(angular.isDefined(row['t0'])?parseInt(row['t0'],10):0)+
-					(angular.isDefined(row['t1'])?parseInt(row['t1'],10):0)+
-					(angular.isDefined(row['t2'])?parseInt(row['t2'],10):0)+
-					(angular.isDefined(row['t3'])?parseInt(row['t3'],10):0)+
-					(angular.isDefined(row['t4'])?parseInt(row['t4'],10):0)+
-					(angular.isDefined(row['t5'])?parseInt(row['t5'],10):0)+
-					(angular.isDefined(row['t6'])?parseInt(row['t6'],10):0)+
-					(angular.isDefined(row['t7'])?parseInt(row['t7'],10):0)+
-					(angular.isDefined(row['t8'])?parseInt(row['t8'],10):0)+
-					(angular.isDefined(row['t9'])?parseInt(row['t9'],10):0);
-				row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
-				$scope.totalize( $scope.items );
+		var cliRow={};
+		if( clipRow=angular.fromJson(localStorageService.get($scope.app.localCachePrefix+'detailsClipboard')) ) {
+			row['cant']=0;
+			for(var i=9; i>=0; i-- ) {
+				if ( angular.isDefined(row['tl'+i]) && row['tl'+i]!='' ) {
+					if( angular.isDefined(clipRow['t'+i]) && clipRow['t'+i]>=0 &&
+						angular.isDefined(clipRow['tl'+i]) && clipRow['tl'+i]==row['tl'+i] ) {
+							row['t'+i]=parseInt(clipRow['t'+i],10);						
+					}
+				}
 			}
-			else {
-				axAlert('El Detalle en el cache local esta vacio');				
-			}
+			$scope.totalizeDetail(row);
+			row['importe']=( parseFloat(row['cant']) * parseFloat(row['precio'])).toFixed(2);
+			if(!row['importe'] || row['importe']==null) row['importe']=0;
+			$scope.totalize( $scope.items );
 		}
 		else {
 			axAlert('El cache local no contiene Detalle');
@@ -530,15 +636,85 @@ var emptyItem={
 	$scope.updateCurrentItem = function ( row ) {
 		$scope.currentItem=angular.copy(row);
 	}
-	
+
+    $scope.masterItemsListClick = function (row, cell, column) {
+//		$scope.selectedMasterItem = row;
+		$scope.selectedMasterItems[0] = row;
+	};
+
+
+    $scope.masterGridOptions = { 
+ 		data: 'masterItems',
+
+		showColumnMenu: true,
+
+		enableColumnResize: false,
+		enableColumnReordering: true,
+		enablePinning: true,
+
+		enableHighlighting: true,
+//        enableCellSelection: true,
+ //       enableRowSelection: false,
+
+//		enableCellSelection: false,
+//		enableRowSelection: true,
+//		enableCellEdit: false,
+
+		multiSelect: false,
+		showSelectionCheckbox: false,
+		selectedItems: $scope.selectedMasterItems,
+
+		showFilter: true,
+		filterOptions: {filterText: $scope.masterFilterText, useExternalFilter: false},
+
+		groups: ['cliente_id'],
+		showGroupPanel: true,
+		groupsCollapsedByDefault: false,
+
+		i18n: 'es',
+
+//		enableCellEditOnFocus: false,
+
+		columnDefs: [
+			{field: 'Master.id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: true}, 
+			{field: 'Master.cliente_id', displayName: 'Cliente', enableCellEdit: false, pinned: true, width: '125', sortable: true, groupable: true}, 
+			{field: 'Master.fecha', displayName: 'Fecha', enableCellEdit: false, pinned: false, pinnable: true, width: '100', sortable: true, groupable: true}, 
+			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '125', sortable: true, groupable: false}, 
+			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '100', sortable: true, groupable: true, visible: true },
+			{field: 'acciones', displayName:'Acciones', enableCellEdit: false, pinned: false, pinnable: true, width: '150', sortable: true, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="sync(row.entity, row.getProperty(col.field), col.field)" title="Sincronizar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
+			],
+		groups: ['cliente_id'],
+    };
+
     $scope.gridOptions = { 
-        data: 'items',
-        enableCellSelection: true,
+ 		data: 'items',
+
+		showColumnMenu: false,
+
+		enableColumnResize: false,
+		enableColumnReordering: false,
+		enablePinning: false,
+
+		enableHighlighting: false,
+      	enableCellSelection: true,
         enableRowSelection: false,
-        enableCellEditOnFocus: true,
- 		allowMultiSelect: false,
+        enableCellEdit: true,
+
+ 		multiSelect: true,
 		showSelectionCheckbox: false,
 		selectedItems: $scope.selectedItems,
+
+		showFilter: true,
+		filterOptions: {filterText: $scope.filterText, useExternalFilter: false},
+
+		groups: ['linea_cve','estilo_cve'],
+		showGroupPanel: true,
+		groupsCollapsedByDefault: false,
+
+		i18n: 'es',
+
+//		enableCellEditOnFocus: true,
+
 		columnDefs: [
 			{field: 'id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: true}, 
 			{field: 'arcveart', displayName: 'Clave', enableCellEdit: false, pinned: true, width: '150', groupable: true}, 
@@ -575,10 +751,9 @@ var emptyItem={
 //			{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false},
 //			{field:'precio', displayName:'Precio', enableCellEdit: false, pinnable: false},
 			],
-		groups: ['linea_cve','estilo_cve'],
-		showGroupPanel: false,
-		showFilter: true,
+		groups: ['linea_cve'],
     };
+/*		showColumnMenu: true,*/
 //		cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()" title="col.tl0"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>'
 	
 	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
@@ -593,13 +768,13 @@ var emptyItem={
       		}
     	}
   	}
-	
+
 	$scope.saveAllDetailToCache = function() {
 		var items=[];
 		
 		if( $scope.items.length>0 ) {
 			var i=0;
-			console.log('Tengo ' + $scope.items.length + ' Articulos en total');
+			$scope.log('Tengo ' + $scope.items.length + ' Articulos en total');
 			
 			angular.forEach( $scope.items, function(value, key) {
 				var item={};
@@ -611,14 +786,14 @@ var emptyItem={
 				}
 				if( angular.isDefined(item.cant) && angular.isNumber(item.cant) && item.cant>0 ) {
 					i=i+1;
-					console.log('Uno mas (' + i + ')::'+angular.toJson(item));
+					$scope.log('Uno mas (' + i + ')::'+angular.toJson(item));
 					this.push(item);
 				}
 			}, items);
-			console.log(  angular.toJson(items) );
+			$scope.log(  angular.toJson(items) );
 		}
 
-		localStorageService.add($scope.app.localCachePrefix+'allDetailsClipboard', angular.toJson(items));
+		localStorageService.add( $scope.app.localCachePrefix+'allDetailsClipboard', angular.toJson(items) );
 		axAlert(i + ' Partidas guardadas en el portapapeles local', 'warning', false);
 	}
 
@@ -672,6 +847,7 @@ var emptyItem={
 		}
 	}
 
+    $scope.onLineClass = function() { return $scope.app.onlineStatus.isOnline() ? 'badge-warning' : '' }
 
 	$scope.clienteChange();
 

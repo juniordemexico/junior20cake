@@ -21,13 +21,13 @@ class Ncredito extends AppModel
 {
 	public $name = 'Ncredito';
 	public $table = 'Ncredito';
-	public $useTable = 'Ncredito';
+//	public $useTable = 'Ncredito';
 	public $alias = 'Ncredito';
 	public $cache=false;
 	public $recursive=1;
 
 	public $title = 'ncrefer';
-	public $longTitle = null;
+	public $longTitle = 'uuid';
 	public $dateField='ncfecha';
 	public $dateLimitField='ncfvence';
 	public $stField='ncst';
@@ -82,9 +82,7 @@ class Ncredito extends AppModel
 
 //	public $hasOne = array('Comprobante'=>array('className'=>'Comprobante','foreignKey'=>'id', 'conditions'=>array('Comprobante.model'=>'Ncredito')));
 
-	public $hasMany = array('Ncreditodet'=>array(
-							'className'=>'Ncreditodet',
-							'foreignKey'=>'ncredito_id'));
+	public $hasMany = array('Ncreditodet'=>array('className'=>'Ncreditodet','foreignKey'=>'ncredito_id'));
 	
 	function beforeFind( $options ) {
 		if( isset( $options['doJoinUservendedor'] )) {
@@ -94,51 +92,6 @@ class Ncredito extends AppModel
 	}
 
 	public function getDoctoForCFDI( $id=null ) {
-
-		$docto=$this->query("SELECT Ncredito.id, Ncredito.ncrefer folio,
-								Ncredito.ncfecha fecha,
-								Divisa.ditcambio tcambio,	
-								Ncredito.divisa_id, Divisa.dicve divisa_cve,
-								Ncredito.ncimpu impuesto_tasa,
-								Ncredito.ncsuma suma,
-								Ncredito.ncimporte importe,
-								Ncredito.ncimpoimpu impoimpu,
-								Ncredito.nctotal total,
-								Ncredito.crefec created,
-								Ncredito.modfec modified,
-								Cliente.*
-								FROM Ncredito Ncredito
-								JOIN Clientes Cliente ON (Cliente.id=Ncredito.cliente_id)
-								JOIN Vendedores Vendedor ON (Vendedor.id=Ncredito.vendedor_id)
-								JOIN Divisas Divisa ON (Divisa.id=Ncredito.divisa_id)
-								WHERE Ncredito.id=$id
-							");
-
-		if(!$docto || !is_array($docto) || count($docto)<1) {
-			return false;
-		}
-
-		// Datos del Documento (la factura)
-		$docto=$docto[0];
-		$master=array();
-		$master=$docto['0'];
-		$master["pago_numcta"]="NO IDENTIFICADO";
-		$master["lugar_expedicion"]="DISTRITO FEDERAL";
-		$master["formapago"]="TRANSFERENCIA";
-		$master["comprobante_tipo"]="egreso";
-		$master["metodo_pago"]="PAGO EN UNA SOLA EXHIBICION";
-		$master["impuesto_cve"]="IVA";
-		$master["divisa_cve"]=$docto['Divisa']['divisa_cve'];
-
-		// Datos del Receptor (nuestro cliente)
-		$receptor=$docto['Cliente'];
-		$receptor["clcalle"]="CALLE DE PRUEBA";
-		$receptor["clnumext"]="SN EXT";
-		$receptor["clnumint"]="NA";
-		$receptor["clcolonia"]="COL. OBRERA";
-		$receptor["clciu"]="MIGUEL HIDALGO";
-		$receptor["cledo"]="DISTRITO FEDERAL";
-		$receptor["clpais"]="MEXICO";
 
 		// Datos del Emisor (nuestra empresa)
 		$emisor=array(
@@ -157,10 +110,99 @@ class Ncredito extends AppModel
 					"regimen_fiscal"=>"Regimen General de ley Personas Morales"
 					);
 
+		$docto=$this->query("SELECT Ncredito.id, Ncredito.ncrefer folio,
+								Ncredito.ncfecha fecha,
+								Ncredito.nctcambio tcambio,
+								Ncredito.ncdevol ncdevol,
+								Ncredito.ncfactura ncfactura,
+								Ncredito.divisa_id, Divisa.dicve divisa_cve,
+								Ncredito.ncimpu impuesto_tasa,
+								CAST(Ncredito.ncsuma AS numeric(14,2)) suma,
+								CAST(Ncredito.nctotal-Ncredito.ncimpoimpu as NUMERIC(14,2)) importe,
+								CAST(Ncredito.ncimpoimpu AS NUMERIC(14,2)) impoimpu,
+								CAST(Ncredito.nctotal AS NUMERIC(14,2)) total,
+								Ncredito.crefec created,
+								Ncredito.modfec modified,
+								Ncredito.ncobser observaciones,
+								Ncredito.uuid uuid,
+								Ncredito.fechatimbrado fechatimbrado,
+								Ncredito.cadenaoriginal cadenaoriginal,
+								Ncredito.sellocfd sellocfd,
+								Ncredito.nocertificadosat nocertificadosat,
+								Ncredito.sellosat sellosat,
+								Direccioncte.*,
+								Cliente.clnom,
+								Cliente.clsuc,
+								Cliente.clcveven,
+								Cliente.clst,
+								Cliente.clrfc,
+								Cliente.clmtdopago,
+								Cliente.clbancocta,
+								Cliente.clenviara
+								FROM Ncredito Ncredito
+								JOIN Clientes Cliente ON (Cliente.id=Ncredito.cliente_id)
+								JOIN Vendedores Vendedor ON (Vendedor.id=Ncredito.vendedor_id)
+								JOIN Divisas Divisa ON (Divisa.id=Ncredito.divisa_id)
+								LEFT JOIN Direccioncte Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
+								WHERE Ncredito.id=$id
+							");
+
+		if(!$docto || !is_array($docto) || count($docto)<1) {
+			return false;
+		}
+
+		// Datos del Documento (nota de credito)
+		$docto=$docto[0];
+		$docto['Cliente']['clmtdopago']=trim($docto['Cliente']['clmtdopago']);
+		$docto['Cliente']['clbancocta']=trim($docto['Cliente']['clbancocta']);
+		
+		$master=array();
+		$master=$docto['Ncredito'];
+		$master["comprobante_tipo"]="egreso";
+		$master["divisa_cve"]=trim($docto['Divisa']['divisa_cve'])=='MN'?'MXP':trim($docto['Divisa']['divisa_cve']);
+		$master["impuesto_cve"]="IVA";
+		$master["formapago"]="PAGO EN UNA SOLA EXHIBICION";
+		$master["lugar_expedicion"]="DISTRITO FEDERAL";
+		$master['suma']=$docto[0]['suma'];
+		$master['importe']=$docto[0]['importe'];
+		$master['impoimpu']=$docto[0]['impoimpu'];
+		$master['total']=$docto[0]['total'];
+		$master['tcambio']=(isset($docto['Ncredito']['tcambio']) && $docto['Ncredito']['tcambio']<>0 && $docto['Ncredito']['tcambio']<>1 ? round($docto['Ncredito']['tcambio'],2):'1.00');
+		$master['plazo']=(isset($docto['Ncredito']['plazo']) && $docto['Ncredito']['plazo']<>0 ? $docto['Ncredito']['plazo']:'0');
+
+		// Determina el metodo y la cta de pago
+		if(	($docto['Cliente']['clmtdopago']=='CHEQUE' || 
+			$docto['Cliente']['clmtdopago']=='TRANSFERENCIA BANCARIA') &&
+			!empty($docto['Cliente']['clbancocta']) && strlen($docto['Cliente']['clbancocta'])>=4
+		) {
+			$master["metodo_pago"]=$docto['Cliente']['clmtdopago'];
+			$master["num_cta_pago"]=$docto['Cliente']['clbancocta'];
+		}
+		elseif(	$docto['Cliente']['clmtdopago']=='EFECTIVO' ) {
+			$master["metodo_pago"]=$docto['Cliente']['clmtdopago'];
+			$master["num_cta_pago"]='NO IDENTIFICADO';
+		}
+		else {
+			$master["metodo_pago"]='NO IDENTIFICADO';
+			$master["num_cta_pago"]='NO IDENTIFICADO';			
+		}
+
+
+		// Datos del Receptor (nuestro cliente)
+		$receptor=array_merge($docto[0], $docto['Cliente']);
+
 		$items=$this->query("SELECT Ncreditodet.id, Ncreditodet.articulo_id,
 			 					Ncreditodet.ncdprecio, 
 								CAST(SUM(Ncreditodet.ncdcant) AS NUMERIC(14,0)) ncdcant,
 								CAST(SUM(Ncreditodet.ncdimporte) AS NUMERIC(14,2)) ncdimporte,
+								CAST( SUM( 
+									    ((Ncreditodet.ncdimporteneto*
+										(1-(cast(Ncredito.ncdesc1 as float)/100))
+										)*
+										(1-(cast(Ncredito.ncdesc2 as float)/100))
+										)*
+										(1-(cast(Ncredito.ncdesc3 as float)/100))
+									) as NUMERIC(14,6)) ncdimportefinal,
 								Articulo.arcveart, Articulo.ardescrip, Unidad.cve unidad_cve
 								FROM Ncredito Ncredito
 								JOIN Ncreditodet Ncreditodet ON (Ncredito.id=Ncreditodet.ncredito_id)
@@ -173,27 +215,68 @@ class Ncredito extends AppModel
 		$Details=array();		
 		foreach($items as $item) {
 			$Details[]=array(
-					'id'=>$item['0']['id'],
-					'articulo_id'=>$item[0]['articulo_id'],
-					'precio'=>$item[0]['ncdprecio'],
+					'id'=>$item['Ncreditodet']['id'],
+					'articulo_id'=>$item['Ncreditodet']['articulo_id'],
+					'precio'=>round($item[0]['ncdimportefinal']/$item[0]['ncdcant'],6),
 					'cant'=>$item[0]['ncdcant'],
-					'importe'=>$item[0]['ncdimporte'],
+					'importe'=>$item[0]['ncdimportefinal'], 
 					'arcveart'=>$item['Articulo']['arcveart'],
 					'ardescrip'=>trim($item['Articulo']['ardescrip']),
 					'unidad_cve'=>trim($item[0]['unidad_cve']),
 					);
 		}
-
 		$out=array(
-			"Master"	=>$master,
-		 	"Details"	=>$Details,
-		 	"Receptor"	=>$receptor,
-		 	"Emisor"	=>$emisor,
+			"Master"		=>$master,
+		 	"Details"		=>$Details,
+		 	"Receptor"		=>$receptor,
+		 	"Emisor"		=>$emisor,
 			);
-
 		return json_encode($out);
-
 	} 
+
+
+	public function getItemWithDetails($id=null) {
+		if( !$id && isset($this->id) && 
+			(is_numeric($this->id) || is_string($this->id)) ) {
+			$id=$this->id;
+		}
+		$item=parent::getItemWithDetails($id);
+		
+		$dircte=$this->query("SELECT 
+								Direccioncte.*,
+								Cliente.clnom,
+								Cliente.clsuc,
+								Cliente.clcveven,
+								Cliente.clst,
+								Cliente.clrfc
+								FROM Clientes Cliente
+								LEFT JOIN Direccioncte Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
+								WHERE Cliente.id=".$item['Master']['cliente_id']
+							);
+		$dircte=$dircte[0];
+		$item['Direccioncte']=$dircte[0];
+
+		$item['Cliente']['clmtdopago']=trim($item['Cliente']['clmtdopago']);
+		$item['Cliente']['clbancocta']=trim($item['Cliente']['clbancocta']);
+		// Determina el metodo y la cta de pago
+		if(	($item['Cliente']['clmtdopago']=='CHEQUE' || 
+			$item['Cliente']['clmtdopago']=='TRANSFERENCIA BANCARIA') &&
+			!empty($item['Cliente']['clbancocta']) && strlen($item['Cliente']['clbancocta'])>=4
+		) {
+			$item['Cliente']['clmtdopago']=$item['Cliente']['clmtdopago'];
+			$item['Cliente']['clbancocta']=$item['Cliente']['clbancocta'];
+		}
+		elseif(	$item['Cliente']['clmtdopago']=='EFECTIVO' ) {
+			$item['Cliente']['clmtdopago']=$item['Cliente']['clmtdopago'];
+			$item['Cliente']['clbancocta']='NO IDENTIFICADO';
+		}
+		else {
+			$item['Cliente']['clmtdopago']='NO IDENTIFICADO';
+			$item['Cliente']['clbancocta']='NO IDENTIFICADO';
+		}
+
+		return( $item );
+	}
 
 }
 

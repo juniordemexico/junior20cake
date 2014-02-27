@@ -156,7 +156,8 @@
 </pane>
 
 <pane id="tabs-1" heading="Detalle">
-	<div style="margin-bottom: 16px;">
+	<div class="col-sm-6 well well-small" style="margin-bottom: 16px;">
+<?php /*
 		<table class="">
 			<thead>
 				<th class="">Paquete</th>
@@ -194,6 +195,17 @@
 				<td>{{currentItem.Proporcionpedido.cant}}</td>
 			</tbody>
 		</table>
+*/ ?>
+
+<div class="control-group">
+	<div class="controls input">
+		<input type="text" class="form-control span2"  placeholder="Producto..." type="edit"
+		ng-model="filterText" ng-change="gridOptions.filterOptions.filterText=filterText"
+		class="ng-valid ng-dirty" data-ng-minlength="0" data-ng-maxlength="32" />
+	</div>
+</div>
+
+		<div class="spacer3">&nbsp</div>
 	</div>
 
 	<div class="gridStyle" ng-grid="gridOptions"></div>
@@ -257,6 +269,7 @@ var emptyItem={
 	$scope.selectedRow={};
     $scope.selectedColumn={};
 	$scope.Cliente={};
+	$scope.filterText='';
 	
 	if(!angular.isDefined($scope.data.Master.id) && $scope.data.Master.id>0) {
 		$scope.data.Master.peimpu1=16;
@@ -412,6 +425,7 @@ var emptyItem={
 		$scope.data.Master.peimporte=$scope.data.Master.pesuma;
 		$scope.data.Master.peimpoimpu=(parseFloat($scope.data.Master.peimporte) * ($scope.data.Master.peimpu1/100).toFixed(4) ).toFixed(2);
 		$scope.data.Master.petotal=( parseFloat($scope.data.Master.peimporte) + parseFloat($scope.data.Master.peimpoimpu) ).toFixed(2);
+		$scope.data.Master.petotal=( parseFloat($scope.data.Master.peimporte) + parseFloat($scope.data.Master.peimpoimpu) ).toFixed(2);
 		return true;
 	}
 
@@ -564,13 +578,33 @@ var emptyItem={
 	}
 
     $scope.gridOptions = { 
-        data: 'items',
+		data: 'items',
+
+		showColumnMenu: false,
+
+		enableColumnResize: false,
+		enableColumnReordering: false,
+		enablePinning: false,
+
+		enableHighlighting: false,
         enableCellSelection: true,
         enableRowSelection: false,
-        enableCellEditOnFocus: true,
- 		allowMultiSelect: false,
+
+ 		allowMultiSelect: true,
 		showSelectionCheckbox: false,
 		selectedItems: $scope.selectedItems,
+
+		showFilter: true,
+		filterOptions: {filterText: $scope.filterText, useExternalFilter: false},
+
+		groups: ['linea_cve','estilo_cve'],
+		showGroupPanel: true,
+		groupsCollapsedByDefault: false,
+
+		i18n: 'es',
+
+		enableCellEditOnFocus: true,
+
 		columnDefs: [
 			{field: 'id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: true}, 
 			{field: 'arcveart', displayName: 'Clave', enableCellEdit: false, pinned: true, width: '150', groupable: true}, 
@@ -579,16 +613,16 @@ var emptyItem={
 			{field: 'linea_cve', displayName: 'Linea', enableCellEdit: false, pinned: true, width: '100', visible: false, groupable: true}, 
 			{field: 'talla_cve', displayName: 'Tallas', enableCellEdit: false, pinned: true, width: '100', groupable: false, visible: false}, 
 			{field: 'precio', displayName: 'Precio', enableCellEdit: false, pinned: true, width: '75', groupable: false, visible: true, cellFilter: 'currency'}, 
-			{field:'t0', displayName:'T0', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl0\')}}" title="Talla {{row.getProperty(\'tl0\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t1', displayName:'T1', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl1\')}}" title="Talla {{row.getProperty(\'tl1\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t2', displayName:'T2', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl2\')}}" title="Talla {{row.getProperty(\'tl2\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t3', displayName:'T3', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl3\')}}" title="Talla {{row.getProperty(\'tl3\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t4', displayName:'T4', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl4\')}}" title="Talla {{row.getProperty(\'tl4\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t5', displayName:'T5', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl5\')}}" title="Talla {{row.getProperty(\'tl5\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t6', displayName:'T6', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl6\')}}" title="Talla {{row.getProperty(\'tl6\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t7', displayName:'T7', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl7\')}}" title="Talla {{row.getProperty(\'tl7\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t8', displayName:'T8', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl8\')}}" title="Talla {{row.getProperty(\'tl8\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t9', displayName:'T9', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl9\')}}" title="Talla {{row.getProperty(\'tl9\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t0', displayName:'T0', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl0\')}}" title="Talla {{row.getProperty(\'tl0\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t1', displayName:'T1', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl1\')}}" title="Talla {{row.getProperty(\'tl1\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t2', displayName:'T2', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl2\')}}" title="Talla {{row.getProperty(\'tl2\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t3', displayName:'T3', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl3\')}}" title="Talla {{row.getProperty(\'tl3\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t4', displayName:'T4', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl4\')}}" title="Talla {{row.getProperty(\'tl4\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t5', displayName:'T5', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl5\')}}" title="Talla {{row.getProperty(\'tl5\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t6', displayName:'T6', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl6\')}}" title="Talla {{row.getProperty(\'tl6\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t7', displayName:'T7', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl7\')}}" title="Talla {{row.getProperty(\'tl7\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t8', displayName:'T8', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl8\')}}" title="Talla {{row.getProperty(\'tl8\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field:'t9', displayName:'T9', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl9\')}}" title="Talla {{row.getProperty(\'tl9\')}}" maxlenght="8" style="width:36px;" data-ng-maxlength="8" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
 			{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'t0\')+row.getProperty(\'t1\')}}" title="Total de Piezas" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
 			{field:'importe', displayName:'Importe', enableCellEdit: false, pinnable: false, width: '70', sortable: false, groupable: false, visible: false },
 			{field:'copiar', displayName:'Editar', enableCellEdit: false, pinnable: false, width: '120', sortable: false, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="detailCopy(row.entity, row.getProperty(col.field), col.field)" title="Copiar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
@@ -606,13 +640,23 @@ var emptyItem={
 			{field: 'estilo_cve', displayName: 'Estilo', enableCellEdit: false, pinned: true, width: '100', visible: false, groupable: true}, 
 //			{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false},
 //			{field:'precio', displayName:'Precio', enableCellEdit: false, pinnable: false},
-			],
-		groups: ['linea_cve','estilo_cve'],
-		showGroupPanel: false,
-		showFilter: true,
+			]
     };
 //		cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()" title="col.tl0"><span ng-cell-text>{{COL_FIELD CUSTOM_FILTERS}}</span></div>'
+/*
 
+not into footer, but header
+1. expanded header ( gridOption: headerRowHeight: 60) 
+2. then for columns that needs to sum values changed custom header template 
+<div class="ngCellNumber">{{total(col.field).toLocaleString("et-EE",{"style": "currency", "currency": "EUR", minimumFractionDigits: 2})}}</div>
+3. then in controller added this function
+	$scope.total = function(col){
+		x = 0;
+		return $scope.myData.reduce(function(a, b){x += b[col]; return x;}, $scope.myData[0]);
+	};
+	
+where myData is data
+*/
 	// Binds and initializates a Twitter Bootstrap's Typeahead inside our AngularJS context
 	$scope.fieldItem = {
 		ajax: {

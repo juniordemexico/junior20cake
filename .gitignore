@@ -19,10 +19,14 @@ app/files/tmp			# Temporary files
 app/tmp				# Temporary files
 app/tmp/*
 
-app/files/facturaselectronicas/		# Invoice's pdf file store folder
-app/files/facturaselectronicas/*	# Invoice's pdf file store folder
-app/files/facturas_electronicas/*	# Invoice's pdf file store folder
-app/files/facturaselectronicas/*	# Invoice's pdf file store folder
+app/files/facturaselectronicas/		# Invoice's pdf file store folder (cfd < 2014)
+app/files/facturaselectronicas/*	# Invoice's pdf file store folder (cfd < 2014)
+
+app/files/comprobantesdigitales/*	# Invoice's pdf file store folder (cfdi >=2014)
+app/files/queries/*			# Queries
+
+app/files/SAT
+app/files/SAT/*
 
 app/webroot/files/
 
