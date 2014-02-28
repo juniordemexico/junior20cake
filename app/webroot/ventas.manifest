@@ -1,0 +1,74 @@
+CACHE MANIFEST
+# 2014-02-28:v13
+
+# Explicitly cached 'master entries'.
+
+CACHE:
+
+/favicon.ico
+
+/Ventaexpos
+/Ventaexpos/add
+/Ventaexpos/add/
+/Ventaexpos/edit
+/Ventaexpos/edit/
+/Ventaexpos/view
+/Ventaexpos/view/
+
+/Ventaexpos.html
+
+/css/
+/css/core.css
+/css/ui.css
+/css/jquery-ui/
+#/css/jquery-ui/select2
+/css/jquery-ui/jquery-ui-1.9.1.custom.css
+/css/ui.css
+
+/css/img/glyphicons-halflings-white.png
+/css/img/glyphicons-halflings.png
+
+/css/images/topbar.png
+/css/images/ajaxok.png
+/css/images/loadingsmall.gif
+
+/js/
+/js_files/
+/js_files/core.js
+/js_files/ui.js
+
+#/images/
+
+/img/
+/img/logos/oggi_logo_tiny.png
+/img/glyphicons-halflings.png
+/img/glyphicons-halflings-white.png
+/img/ajaxmultiupload/fileicons/jpg.png
+/img/select2.png
+/img/select2x2.png
+/img/gritter.png
+/img/gritter-light.png
+/img/gritter/gritter-light.png
+/img/gritter/gritter.png
+/img/gritter/gritter-long.png
+/img/gritter-long.png
+
+/files/ico/Articulo/
+/files/doc/Articulo/
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+# static.html will be served if main.py is inaccessible
+# offline.jpg will be served in place of all images in images/large/
+# offline.html will be served in place of all other .html files
+FALLBACK:
+/ /Ventaexpos.html
+/Ventaexpos/edit /Ventaexpos/add
+/Ventaexpos/edit/ /Ventaexpos/add
+/Ventaexpos/index /Ventaexpos/add
+/Ventaexpos/index/ /Ventaexpos/add
+
+
+

@@ -7,7 +7,7 @@ class VentaexposController extends MasterDetailAppController {
 		'Ventaexpo', 'Ventaexpodet', 'Vendedor', 'Cliente', 'Articulo', 'Color', 'Bases', 'Estilos', 'Tallas'
 	);
 
-	public $layout = 'default';
+	public $layout = 'ventas';
 	
 	public $cacheAction = array('view'
 							);

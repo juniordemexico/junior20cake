@@ -270,11 +270,64 @@
 
 </form>
 
-
+<pre>{{appCache | json}}</pre>
 <script language="javascript">
 
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
+
+var appCache = window.applicationCache;
+/*
+switch (appCache.status) {
+  case appCache.UNCACHED: // UNCACHED == 0
+    return 'UNCACHED';
+    break;
+  case appCache.IDLE: // IDLE == 1
+    return 'IDLE';
+    break;
+  case appCache.CHECKING: // CHECKING == 2
+    return 'CHECKING';
+    break;
+  case appCache.DOWNLOADING: // DOWNLOADING == 3
+    return 'DOWNLOADING';
+    break;
+  case appCache.UPDATEREADY:  // UPDATEREADY == 4
+    return 'UPDATEREADY';
+    break;
+  case appCache.OBSOLETE: // OBSOLETE == 5
+    return 'OBSOLETE';
+    break;
+  default:
+    return 'UKNOWN CACHE STATUS';
+    break;
+};
+*/
+
+// Check if a new cache is available on page load.
+window.addEventListener('load', function(e) {
+
+  window.applicationCache.addEventListener('updateready', function(e) {
+	console.log('Evento Update Ready Disparado <br>'+e );
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+      // Browser downloaded a new app cache.
+      if (confirm('A new version of this site is available. Load it?')) {
+        window.location.reload();
+      }
+    } else {
+      alert('No hay cambios para sincronizar'); // Manifest didn't changed. Nothing new to server.
+    }
+  }, false);
+
+}, false);
+
+console.log('Haciendo appCache.update()');
+//appCache.update(); // Attempt to update the user's cache.
+
+if (appCache.status == window.applicationCache.UPDATEREADY) {
+	console.log('si UPDATEREADY voy a hacer swapcache');
+  appCache.swapCache();
+}
+
 
 var emptyTalla={tl0:"T0", tl1:"T1", tl2:"T2", tl3:"T3", tl4:"T4", tl5:"T5", tl6:"T6", tl7:"T7", tl8:"T8", tl9:"T9" };
 var emptyItem={	
@@ -316,7 +369,8 @@ var emptyItem={
 	$scope.filterText='';
 	$scope.selectedMasterItems=[];
 	$scope.masterItems=$scope.loadLocalCollection('ITEMS');
-
+	$scope.appCache=appCache;
+	
 //	$scope.productFilter.articulo_id
 	$scope.isDefined=function(item) {
 		return angular.isDefined(item);
