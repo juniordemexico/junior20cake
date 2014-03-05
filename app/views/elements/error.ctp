@@ -1,5 +1,5 @@
 <div id="flashMessage" class="alert alert-error">
-	<a class="close" data-dismiss="alert">×</a>
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<h4 class="alert-heading">Ha Ocurrido el Siguiente Error :</h4>
 	<p>
 	<?php echo $message;?>

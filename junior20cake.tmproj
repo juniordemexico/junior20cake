@@ -21,75 +21,77 @@
 	<integer>303</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/components/axreport.php</key>
+		<key>app/controllers/factura_electronica_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>24</integer>
 				<key>line</key>
-				<integer>11</integer>
+				<integer>382</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
+			<integer>365</integer>
+		</dict>
+		<key>app/controllers/pedidos_controller.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>36</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
 			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>9</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>35</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>36</integer>
+			</dict>
 		</dict>
 		<key>app/controllers/ventaexpos_controller.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>25</integer>
+				<integer>27</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/files/queries/queries-temp.sql</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/models/ventaexpo.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>149</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>129</integer>
+			<integer>2</integer>
 		</dict>
 		<key>app/views/helpers/ax_u_i.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>421</integer>
+				<integer>457</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>266</integer>
+			<integer>439</integer>
 		</dict>
 		<key>app/views/layouts/default.ctp</key>
 		<dict>
@@ -110,28 +112,44 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>83</integer>
+				<integer>35</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>67</integer>
+			<integer>3</integer>
 		</dict>
 		<key>app/views/ventaexpos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>45</integer>
 				<key>line</key>
-				<integer>706</integer>
+				<integer>313</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>699</integer>
+			<integer>305</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>313</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>45</integer>
+				<key>line</key>
+				<integer>313</integer>
+			</dict>
 		</dict>
 		<key>app/webroot/ventas.manifest</key>
 		<dict>
@@ -140,7 +158,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>4</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -150,15 +168,14 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/ventaexpos/edit.ctp</string>
-		<string>app/files/queries/queries-temp.sql</string>
 		<string>app/views/helpers/ax_u_i.php</string>
+		<string>app/views/ventaexpos/edit.ctp</string>
 		<string>app/views/layouts/ventas.ctp</string>
 		<string>app/webroot/ventas.manifest</string>
+		<string>app/controllers/factura_electronica_controller.php</string>
 		<string>app/controllers/ventaexpos_controller.php</string>
+		<string>app/controllers/pedidos_controller.php</string>
 		<string>app/views/layouts/default.ctp</string>
-		<string>app/models/ventaexpo.php</string>
-		<string>app/controllers/components/axreport.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

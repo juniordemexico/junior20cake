@@ -1,6 +1,11 @@
 <header>
 <div class="page-header">
-<h1><small>Pedido Expo <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small><span class="badge pull-right" ng-class="onLineClass()"><strong>{{app.isOnline}}</strong></span></h1>
+<h1><small>Ventas Offline <strong class="text-info">{{data.Master.folio}}</strong></small> <small class="text-info">( {{Cliente.clcvecli}} {{Cliente.cltda}} ) {{Cliente.clnom}}</small>
+	<span class="pull-right">
+		<span class="badge" ng-class="app.onlineStatus.getAppCacheClass()">Cache: <strong>{{app.onlineStatus.getAppCacheStatusText()}}</strong></span>
+		<span class="badge" ng-class="app.onlineStatus.getClass()"><strong>{{app.onlineStatus.asString()}}</strong></span>
+	</span>
+</h1>
 
 </div>
 </header>
@@ -16,9 +21,10 @@
 		<i class="icon icon-ok-circle icon-white"></i> Cancelar
 		</button>
 	</div>
+
 	<div class="btn-group pull-right">	
-		<button type="button" class="btn btn-primary" data-ng-click="sync()" data-ng-disabled="data.Master.fsync || !app.onlineStatus.isOnline" title="Sincroniza y Genera Definitivamente el Documento en el Servidor" alt="Sync">
-		<i class="icon-sync icon-white"></i>
+		<button type="button" class="btn btn-primary" data-ng-click="sync()" data-ng-disabled="!app.onlineStatus.onLine" title="SINCRONIZAR (actualizar solo los catálogos y la ultima version de esta aplicación)" alt="Sync">
+		<i class="icon-refresh icon-white"></i>
 		</button>
 		<button type="button" class="btn btn-primary" data-ng-click="print()" data-ng-disabled="!(data.Master.id>0)" title="Imprimir el Documento" alt="Imprimir">
 		<i class="icon-print icon-white"></i>
@@ -26,6 +32,7 @@
 		<button type="button" class="btn btn-primary" data-ng-click="share()" data-ng-disabled="!(data.Master.id>0)" title="Envia el Documento por Correo, Guardalo en la Nube o Descargalo como Texto" alt="Compartir">
 		<i class="icon-share icon-white"></i>
 		</button>
+	</div>
 	</div>
 
 </div>
@@ -45,6 +52,22 @@
 	
 	<div class="span5">
 		<!-- Despliega los Pedidos registrados Localmente y su detalle al dar click -->
+		<ul class="unstyled" data-ng-hide="!isDefined(selectedMasterItems[0].Master)">
+			<li>
+				<em>Folio: <strong>{{selectedMasterItems[0].Master.folio}}</strong></em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<em>Fecha: <strong>{{selectedMasterItems[0].Master.fecha}}</strong></em>
+			</li>
+			<li>
+				<em>Cliente: <strong>{{selectedMasterItems[0].Cliente.clcvecli}}</strong></em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<em>Tienda: <strong>{{selectedMasterItems[0].Cliente.cltda}}</strong></em>
+			</li>
+			<li><em>Nombre: <strong>{{selectedMasterItems[0].Cliente.clnom}}</strong></em></li>
+			<li>
+				<em>Total: <strong>{{selectedMasterItems[0].Master.total | currency}}</strong></em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<em>Unidades: <strong>{{selectedMasterItems[0].Master.unidades | number}}</strong></em>
+			</li>
+		</ul>
+
 		<table class="table table-condensed" ng-hide="!isDefined(selectedMasterItems[0])">
 			<thead>
 			<tr>
@@ -64,7 +87,6 @@
 			</tr>
 			</tbody>
 		</table>
-		<pre>{{selectedMasterItems[0].Cliente}}</pre>
 	</div>
 </div>
 
@@ -269,65 +291,13 @@
 </tabs> <!-- div tabbable -->
 
 </form>
-
-<pre>{{appCache | json}}</pre>
+<pre>app.onlineStatus ==> <br/> {{app.onlineStatus | json}}</pre>
 <script language="javascript">
 
 /* Begins Plain JS models/variables initialization ******************/
 <?php echo $this->AxUI->getModelsAsJsObjects(); ?>
 
-var appCache = window.applicationCache;
-/*
-switch (appCache.status) {
-  case appCache.UNCACHED: // UNCACHED == 0
-    return 'UNCACHED';
-    break;
-  case appCache.IDLE: // IDLE == 1
-    return 'IDLE';
-    break;
-  case appCache.CHECKING: // CHECKING == 2
-    return 'CHECKING';
-    break;
-  case appCache.DOWNLOADING: // DOWNLOADING == 3
-    return 'DOWNLOADING';
-    break;
-  case appCache.UPDATEREADY:  // UPDATEREADY == 4
-    return 'UPDATEREADY';
-    break;
-  case appCache.OBSOLETE: // OBSOLETE == 5
-    return 'OBSOLETE';
-    break;
-  default:
-    return 'UKNOWN CACHE STATUS';
-    break;
-};
-*/
-
 // Check if a new cache is available on page load.
-window.addEventListener('load', function(e) {
-
-  window.applicationCache.addEventListener('updateready', function(e) {
-	console.log('Evento Update Ready Disparado <br>'+e );
-    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-      // Browser downloaded a new app cache.
-      if (confirm('A new version of this site is available. Load it?')) {
-        window.location.reload();
-      }
-    } else {
-      alert('No hay cambios para sincronizar'); // Manifest didn't changed. Nothing new to server.
-    }
-  }, false);
-
-}, false);
-
-console.log('Haciendo appCache.update()');
-//appCache.update(); // Attempt to update the user's cache.
-
-if (appCache.status == window.applicationCache.UPDATEREADY) {
-	console.log('si UPDATEREADY voy a hacer swapcache');
-  appCache.swapCache();
-}
-
 
 var emptyTalla={tl0:"T0", tl1:"T1", tl2:"T2", tl3:"T3", tl4:"T4", tl5:"T5", tl6:"T6", tl7:"T7", tl8:"T8", tl9:"T9" };
 var emptyItem={	
@@ -369,13 +339,8 @@ var emptyItem={
 	$scope.filterText='';
 	$scope.selectedMasterItems=[];
 	$scope.masterItems=$scope.loadLocalCollection('ITEMS');
-	$scope.appCache=appCache;
 	
 //	$scope.productFilter.articulo_id
-	$scope.isDefined=function(item) {
-		return angular.isDefined(item);
-	};
-
 	
 	if(!angular.isDefined($scope.data.Master.id) && $scope.data.Master.id>0) {
 		$scope.data.Master.impo1=16;
@@ -427,7 +392,7 @@ var emptyItem={
 		$scope.totalize($scope.data.Details);
 
 		if(!$scope.data.Master.suma>0) {
-			axAlert('El Pedido esta Vacio', 'warning');
+			axAlert('El Pedido esta Vacio', 'warning', false);
 			$scope.saveText='Guardar';
 			return;
 		}
@@ -442,7 +407,8 @@ var emptyItem={
 
 		$scope.masterItems=$scope.addAndLoadToLocalCollection('ITEMS', $scope.data);
 
-		axAlert('El PEDIDO se Guardó LOCALMENTE', 'success');
+		axAlert('El PEDIDO se Guardó LOCALMENTE', 'success', false);
+		$scope.log('Venta Guardada: Folio '+ $scope.data.Master.folio+' Fecha '+$scope.data.Master.fecha+' Cliente '+$scope.data.Cliente.clcvecli+'-'+$scope.data.Cliente.cltda+' (id:'+$scope.data.Master.id+')', 'success', false);
 		$scope.saveText='Guardar';
 
 		// Si la aplicacion esta onLine....
@@ -479,7 +445,13 @@ var emptyItem={
 
 	}
 
-	$scope.sync = function( id ) {
+	$scope.sync = function () {
+		$scope.log('Haciendo appCache.update()');
+		axAlert('SINCRONIZACIÓN INICIADA', 'warning', false);
+		appCache.update();
+	}
+
+	$scope.syncDocument = function( id ) {
 		if(!angular.isDefined(id)) {
 			id=$scope.dataMaster.id;
 		}
@@ -522,7 +494,7 @@ var emptyItem={
 		$scope.totalize($scope.data.Details);
 
 		if(!$scope.data.Master.suma>0) {
-			axAlert('El Pedido esta Vacio', 'warning');
+			axAlert('El Pedido esta Vacio', 'warning', false);
 			$scope.saveText='Guardar';
 			return;
 		}
@@ -937,8 +909,6 @@ var emptyItem={
 		}
 	}
 
-    $scope.onLineClass = function() { return $scope.app.onlineStatus.isOnline() ? 'badge-warning' : '' }
-
 	$scope.clienteChange();
 
 /* Begins Web UI Global Methods *****************************/
@@ -951,3 +921,13 @@ var emptyItem={
 <?php echo $this->AxUI->getAppDefaults();?>
 
 </script>
+<?php
+/*
+<div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Warning!</h4>
+sdsd  Best check yo self, you're not...
+</div>
+
+*/
+?>

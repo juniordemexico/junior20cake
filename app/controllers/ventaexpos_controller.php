@@ -33,6 +33,7 @@ class VentaexposController extends MasterDetailAppController {
 
 	public function beforeFilter() {
 		$this->paginate['session']=$this->Auth->User();
+		$this->Auth->allow('index', 'add', 'edit', 'delete');
 		parent::beforeFilter();
 	}
 	
@@ -41,22 +42,23 @@ class VentaexposController extends MasterDetailAppController {
 		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo());
 		$this->set('title_for_layout', 'Pedido Expo :: Nuevo');
 		$this->set('related', $model->loadDependencies());
-
-		parent::add( array(
-					'Master' =>
-						array('id'=>null, 'st'=>'A', 't'=>'0',
-								$model->title => $model->getNextFolio($this->actualSerie, 0),
-								$model->dateField => date('Y-m-d'),
-								'fvence' => date('Y-m-d'),
-								'vendedor_id' => 4002,
-								'cliente_id' => 11803,
-							),
-					'Details' => array(),
-					'masterModel' => $model->name,
-					'detailModel' => isset($model->detailsModel) ?
-									$model->detailsModel :
-									null,
-				));
+		$this->set('mode', 'add');
+		$this->set('data',  array(
+			'Master' =>
+				array('id'=>null, 'st'=>'A', 't'=>'0',
+						$model->title => $model->getNextFolio($this->actualSerie, 0),
+						$model->dateField => date('Y-m-d'),
+						'fvence' => date('Y-m-d'),
+						'vendedor_id' => 4002,
+						'cliente_id' => 11803,
+					),
+			'Details' => array(),
+			'masterModel' => $model->name,
+			'detailModel' => isset($model->detailsModel) ?
+							$model->detailsModel :
+							null,
+			));
+		$this->render('edit');
 	}
 
 	public function edit( $id=null ) {

@@ -63,6 +63,10 @@ class AxUIHelper extends Helper {
 			$encapsulateObject=false;
 		}
 
+		// Set Some Global Objects
+		$out.='var appCache = window.applicationCache;'."\n\r";
+		$out.="\n\r";
+
 		// Iterate thru all View's variables (these variables are defined by the controller->set() method)
 		foreach($view->getVars() as $thisVar) {
 			$out.=$encapsulateObject ? "var {$encapsulateObject}.{$thisVar} = " : "var {$thisVar} = ";
@@ -80,6 +84,11 @@ class AxUIHelper extends Helper {
 	public function getModelsFromJsObjects($options=null) {
 		$view 		= $this->_View;
 		$out='';
+
+		// Set Global Objects into the $scope
+		$out.='$scope.appCache=appCache;'."\n\r";
+
+		// Set Data Objects into the $scope
 		foreach($view->getVars() as $oneModel) {
 			$out.= '    $scope.'.$oneModel.' = angular.copy('.$oneModel.');'."\n\r"; 
 		}
@@ -242,21 +251,19 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			'state'					=> $state,
 			'lastRequest'			=> $lastRequest,
 			'estatus'				=> $estatus,
-			'isOnline'				=> 'SIN CONEXION'
+			'onlineStatus'			=> array(),
+			'appCache'				=> array(),
+			
 		)).";".
 "\n\r".
 "
 	\$http.defaults.headers.post[\"Content-Type\"] = 'application/x-www-form-urlencoded';
 	\$scope.\$window=\$window;
+	\$scope.app.onlineStatus=onlineStatus;
+	\$scope.app.appCache=appCache;
 
-	/* Internet/network connection status */
-	\$scope.app.isOnline=false;
-	\$scope.app.onlineStatus = onlineStatus;
-
-    \$scope.\$watch('app.onlineStatus.isOnline()', function(online) {
-        \$scope.app.isOnline = online ? 'EN LINEA' : 'SIN CONEXION';
-//		axAlert('ESTATUS DE CONEXIÓN<br/>'+'<strong>'+$scope.app.isOnline+'</strong>');
-    });
+	
+	// Internet/network connection status
 
 /*
 	if (typeof \$scope.items != 'undefined' && typeof \$scope.items[0].id != 'undefined') {
@@ -275,6 +282,9 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 	public function getAppGlobalMethods($options=null) {
 		return "\n\r".
 "
+	\$scope.isDefined=function(item) {
+		return angular.isDefined(item);
+	};
 	
 	\$scope.serializeToServer = function ( data, masterModel, detailsModel ) {
 		
@@ -307,26 +317,26 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		if (typeof related != 'undefined') {
 			\$scope.related=angular.copy(related);
 			localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(related));
-			console.log('AX: RELATED comes as plain JS!');
+			\$scope.log('RELATED comes as plain JS!');
 			return true;
 		}
 		else {
 			if(	theRelated=localStorageService.get(\$scope.app.localCachePrefix+'related') &&
 		 		theRelated!=null) {
 				\$scope.related=angular.fromJson(localStorageService.get(\$scope.app.localCachePrefix+'related'));
-				console.log('AX: RELATED not embeded. But found in localStorage!');
+				\$scope.log('RELATED not embeded. But found in localStorage!');
 				return true;
 			} 
 			else {
 				if ( \$scope.app.onlineStatus.isOnline() ) {
-					console.log('AX: RELATED not found in plain JS or localStorage. I will request it to '+\$scope.app.actions.getRelated+' .');
+					\$scope.log('RELATED not found in plain JS or localStorage. I will request it to '+\$scope.app.actions.getRelated+' .');
 					\$http.get(\$scope.app.actions.getRelated
 					).then(function(response) {
 					if(typeof response.data != 'undefined' && 
 						typeof response.data.result != 'undefined' && response.data.result=='ok') {
 						\$scope.related=angular.copy(response.data.related);
 						localStorageService.add(\$scope.app.localCachePrefix+'related', angular.toJson(\$scope.related));
-						console.log('AX: RELATED received and saved in localStorage');
+						\$scope.log('RELATED received and saved in localStorage');
 						return true;
 					}
 					else {
@@ -340,7 +350,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
        				});
 				}
 				else {
-					console.log('AX: RELATED no se encuentra incluido en la respuesta, ni en el cache y la Aplicación esta FUERA DE LINEA.');
+					\$scope.log('RELATED no se encuentra incluido en la respuesta, ni en el cache y la Aplicación esta FUERA DE LINEA.');
 				}
 			}
 		}
@@ -382,7 +392,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		container[collection].push( item );
 		localStorageService.add(\$scope.app.localCachePrefix+collection, angular.toJson(container));
 		if (collection!='LOG') {
-			console.log('AX: Local Collection (ADDED: '+ container[collection].length +'): ' + angular.toJson(item));
+			\$scope.log('Local Collection (ADDED: '+ container[collection].length +'): ' + angular.toJson(item));
 		}
 		return container[collection].length;
 	}
@@ -394,7 +404,7 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			container[collection]=[];
 		}
 		if (collection!='LOG') {
-			console.log('AX: Local Collection (LOADED: '+ container[collection].length +'): ' + collection);
+			\$scope.log('Local Collection (LOADED: '+ container[collection].length +'): ' + collection);
 		}
 		return angular.copy(container[collection]);
 	}
@@ -405,40 +415,166 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 	}
 
 	\$scope.log = function(text) {
-		console.log('AX: ' + text);
+		var actualDateTime=new Date();
+		console.log('AX: ('+actualDateTime.toISOString()+') ' + text);
 		\$scope.addItemToLocalCollection('LOG', text);
 	}
-
+	
 ".
-	"\n\r";
+"\n\r";
 	}
 
 	public function getAppDefaults($options=null) {
 		$out="
 		
-axApp.factory('onlineStatus', ['\$window', '\$rootScope', function (\$window, \$rootScope) {
-    var onlineStatus = {};
+axApp.factory('onlineStatus', ['\$window', '\$rootScope', '\$dialog', function (\$window, \$rootScope, \$dialog) {
 
-    onlineStatus.onLine = \$window.navigator.onLine;
+	// Initialize the main factory's object 'onlineStatus'
+	var onlineStatus = {};
+
+	onlineStatus.onLine = \$window.navigator.onLine;
 	onlineStatus.lastPageLoad = new Date();
+	onlineStatus.appCacheStatusText='';
 	
-    onlineStatus.isOnline = function() {
-        return onlineStatus.onLine;
-    }
 
-    \$window.addEventListener('online', function () {
-        onlineStatus.onLine = true;
-        onlineStatus.lastOnline = new Date();
-        \$rootScope.\$digest();
-    }, true);
+	// Getter and Setter Methods
+	onlineStatus.isOnline = function() {
+		return onlineStatus.onLine;
+	}
 
-    \$window.addEventListener('offline', function () {
-        onlineStatus.onLine = false;
-        onlineStatus.lastOffline = new Date();
-        \$rootScope.\$digest();
-    }, true);
+	onlineStatus.getClass = function() {
+		return onlineStatus.onLine?'badge-warning' : '';
+	}
 
-    return onlineStatus;
+	onlineStatus.asString = function() {
+		return onlineStatus.onLine?'EN LINEA' : 'SIN CONEXIÓN';
+	}
+
+	onlineStatus.getAppCacheClass = function() {
+		switch (appCache.status) {
+			case appCache.UNCACHED:								// UNCACHED == 0
+				return ''; break;
+			case appCache.IDLE: 								// IDLE == 1
+				return 'badge-info'; break;
+			case appCache.CHECKING: 							// CHECKING == 2
+				return 'badge-warning'; break;
+			case appCache.DOWNLOADING:							// DOWNLOADING == 3
+				return 'badge-warning'; break;
+			case appCache.UPDATEREADY:							// UPDATEREADY == 4
+				return 'badge-success'; break;
+			case appCache.OBSOLETE:								// OBSOLETE == 5
+				return 'badge-important'; break;
+			default:
+				return 'badge-inverse'; break;
+		}
+		return onlineStatus.onLine?'badge-warning' : '';
+	}
+
+	onlineStatus.getAppCacheStatusText = function() {
+		switch (appCache.status) {
+			case appCache.UNCACHED:								// UNCACHED == 0
+				return 'SIN CACHE'; break;
+			case appCache.IDLE: 								// IDLE == 1
+				return 'LISTO'; break;
+			case appCache.CHECKING: 							// CHECKING == 2
+				return 'REVISANDO'; break;
+			case appCache.DOWNLOADING:							// DOWNLOADING == 3
+				return 'DESCARGANDO'; break;
+			case appCache.UPDATEREADY:							// UPDATEREADY == 4
+				return 'HAY ACTUALIZACIÓN'; break;
+			case appCache.OBSOLETE:								// OBSOLETE == 5
+				return 'OBSOLETO'; break;
+			default:
+				return 'DESCONOCIDO'; break;
+		}
+	}
+
+
+	// Event listeners for Users-Agent's Online Status Events
+	
+	\$window.addEventListener('online', function () {
+		onlineStatus.onLine = true;
+		onlineStatus.lastOnline = new Date();
+		\$rootScope.\$digest();
+	}, true);
+
+	\$window.addEventListener('offline', function () {
+		onlineStatus.onLine = false;
+		onlineStatus.lastOffline = new Date();
+		\$rootScope.\$digest();
+	}, true);
+
+
+
+	// Event listeners for Users-Agent's Application Cache Events
+/*
+	\$window.applicationCache.addEventListener('status', function (e) {
+//		onlineStatus.appCacheStatusText=statusText();
+		console.log('AX: detecte un cambio en el applicationCache (appCache)' + onlineStatus.getAppCacheStatusText() );
+		\$rootScope.\$digest();
+	}, true);
+*/
+
+
+	\$window.applicationCache.addEventListener('checking', function(e) {
+		if (\$window.applicationCache.status == \$window.applicationCache.CHECKING) {
+			console.log('AX: Revisando si hay Actualizaciones en el servidor (applicationCache.CHECKING)...');					
+		}
+	}, false);
+
+	\$window.applicationCache.addEventListener('downloading', function(e) {
+		if (\$window.applicationCache.status == \$window.applicationCache.DOWNLOADING) {
+			console.log('AX: Descargando Actualización desde el servidor (applicationCache.DOWNLOADING)...');					
+		}
+	}, false);
+
+	\$window.applicationCache.addEventListener('obsolete', function(e) {
+		if (\$window.applicationCache.status == \$window.applicationCache.OBSOLETE) {
+			console.log('AX: El Caché de la Aplicación es Obsoleto (applicationCache.OBSOLETE)...');					
+		}
+	}, false);
+
+	\$window.applicationCache.addEventListener('obsolete', function(e) {
+		if (\$window.applicationCache.status == \$window.applicationCache.OBSOLETE) {
+			console.log('AX: El Caché de la Aplicación es Obsoleto (applicationCache.OBSOLETE)...');					
+		}
+	}, false);
+
+	\$window.applicationCache.addEventListener('noupdate', function(e) {
+			console.log('AX:El Caché de la Aplicación esta Sincronizado (NOUPDATE)...');					
+	}, false);
+
+	\$window.applicationCache.addEventListener('updateready', function(e) {
+	if (\$window.applicationCache.status == \$window.applicationCache.UPDATEREADY) {
+		// Browser downloaded a new app cache.
+		console.log('AX: Se encontró una nueva Actualización (applicationCache.UPDATEREADY). Notificando al usuario...');					
+		axAlert('Hay una nueva Actualización en el Servidor', 'warning', false);
+/*
+		\$dialog.messageBox(title, 'Hay una nueva Actualización en el Servidor. ¿ Deseas SINCRONIZAR ahora ?', btns)
+		.open()
+		.then( function(result) {
+			// El Usuario desea Sincronizar con el servidor....
+			if(result) {
+				\$window.location.reload();
+			}
+			// El Usuario Sincronizará después....
+			else {
+				console.log('AX: El decidió NO quizo sincronizar la Actualización encontrada.');					
+			}
+		});
+
+*/
+
+			if (confirm('Hay una nueva Actualización en el Servidor. ¿ Deseas SINCRONIZAR ahora ?')) {
+				\$window.location.reload();
+			}  
+
+		} else {
+			console.log('AX: Se buscarón nuevas actualizaciones en el servidor y no se encontró ninguna.');					
+		}
+	}, false);
+
+	return onlineStatus;
 }]);
 
 axApp.value('ui.config', {

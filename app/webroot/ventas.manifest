@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-02-28:v13
+# 2014-02-28:v54
 
 # Explicitly cached 'master entries'.
 
@@ -52,9 +52,13 @@ CACHE:
 /img/gritter/gritter.png
 /img/gritter/gritter-long.png
 /img/gritter-long.png
-
 /files/ico/Articulo/
 /files/doc/Articulo/
+/css/jquery-ui/images/ui-bg_inset-soft_50_c9c9c9_1x100.png
+/css/jquery-ui/images/ui-bg_glass_35_dddddd_1x400.png
+/css/jquery-ui/images/ui-icons_999999_256x240.png
+/css/jquery-ui/images/ui-bg_glass_60_eeeeee_1x400.png
+/css/jquery-ui/images/ui-bg_flat_55_eeeeee_40x100.png
 
 # Resources that require the user to be online.
 NETWORK:
@@ -65,10 +69,12 @@ NETWORK:
 # offline.html will be served in place of all other .html files
 FALLBACK:
 / /Ventaexpos.html
-/Ventaexpos/edit /Ventaexpos/add
-/Ventaexpos/edit/ /Ventaexpos/add
-/Ventaexpos/index /Ventaexpos/add
-/Ventaexpos/index/ /Ventaexpos/add
+/Ventaexpos/add /Ventaexpos.html
+/Ventaexpos/add/ /Ventaexpos.html
+/Ventaexpos/edit /Ventaexpos.html
+/Ventaexpos/edit/ /Ventaexpos.html
+/Ventaexpos/index /Ventaexpos.html
+/Ventaexpos/index/ /Ventaexpos.html
 
 
 
