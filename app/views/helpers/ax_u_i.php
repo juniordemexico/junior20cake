@@ -253,7 +253,8 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			'estatus'				=> $estatus,
 			'onlineStatus'			=> array(),
 			'appCache'				=> array(),
-			
+			'allowEdit'				=> true,
+			'allowEditFull'			=> true
 		)).";".
 "\n\r".
 "
@@ -465,7 +466,7 @@ axApp.factory('onlineStatus', ['\$window', '\$rootScope', '\$dialog', function (
 			case appCache.OBSOLETE:								// OBSOLETE == 5
 				return 'badge-important'; break;
 			default:
-				return 'badge-inverse'; break;
+				return ''; break;
 		}
 		return onlineStatus.onLine?'badge-warning' : '';
 	}
@@ -525,12 +526,6 @@ axApp.factory('onlineStatus', ['\$window', '\$rootScope', '\$dialog', function (
 	\$window.applicationCache.addEventListener('downloading', function(e) {
 		if (\$window.applicationCache.status == \$window.applicationCache.DOWNLOADING) {
 			console.log('AX: Descargando Actualización desde el servidor (applicationCache.DOWNLOADING)...');					
-		}
-	}, false);
-
-	\$window.applicationCache.addEventListener('obsolete', function(e) {
-		if (\$window.applicationCache.status == \$window.applicationCache.OBSOLETE) {
-			console.log('AX: El Caché de la Aplicación es Obsoleto (applicationCache.OBSOLETE)...');					
 		}
 	}, false);
 

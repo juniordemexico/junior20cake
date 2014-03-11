@@ -21,6 +21,16 @@
 
 	<title><?php echo $title_for_layout; ?></title>
 
+	<script type="text/javascript" src="/ventas.items.js"></script>
+	<script type="text/javascript" src="/ventas.related.js"></script>
+
+	<style>
+		BODY {
+			font-family: 'Arial Narrow', 'Helvetica', 'Arial', sans-serif;
+		}
+	</style>
+
+
 </head>
 
 <body>
@@ -31,11 +41,6 @@
 	<div id="wrapper" class="row ng-cloak ax-page-wrapper" data-ng-controller="AxAppCtrl">
 			<div class="span1"></div>
 			<div id="content" class="span10 ax-page-content">
-
-				<div id="formMessages" class="row ax-form-messages">
-<?php echo $this->TBS->myflashes(); ?>
-				</div> <!-- div#formMessages -->
-
 
 				<div id="formContent" class="row ax-form-content" >
 

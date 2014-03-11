@@ -1,27 +1,24 @@
 CACHE MANIFEST
-# 2014-02-28:v54
+# 2014-02-28:v76
+
 
 # Explicitly cached 'master entries'.
-
 CACHE:
 
-/favicon.ico
+/index.html
+/ventas.html
+/ventas.items.js
+/ventas.related.js
 
 /Ventaexpos
 /Ventaexpos/add
-/Ventaexpos/add/
-/Ventaexpos/edit
-/Ventaexpos/edit/
-/Ventaexpos/view
-/Ventaexpos/view/
 
-/Ventaexpos.html
+
+/favicon.ico
 
 /css/
 /css/core.css
 /css/ui.css
-/css/jquery-ui/
-#/css/jquery-ui/select2
 /css/jquery-ui/jquery-ui-1.9.1.custom.css
 /css/ui.css
 
@@ -68,13 +65,12 @@ NETWORK:
 # offline.jpg will be served in place of all images in images/large/
 # offline.html will be served in place of all other .html files
 FALLBACK:
-/ /Ventaexpos.html
-/Ventaexpos/add /Ventaexpos.html
-/Ventaexpos/add/ /Ventaexpos.html
-/Ventaexpos/edit /Ventaexpos.html
-/Ventaexpos/edit/ /Ventaexpos.html
-/Ventaexpos/index /Ventaexpos.html
-/Ventaexpos/index/ /Ventaexpos.html
+/ /index.html
+/Ventas /ventas.html
+/Ventaexpos/add /Ventaexpos
+/Ventaexpos/edit /Ventaexpos
+/Ventaexpos/edit/ /Ventaexpos
+/Ventaexpos/index /Ventaexpos
 
 
 

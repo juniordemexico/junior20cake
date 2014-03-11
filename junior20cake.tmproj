@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/layouts/ventas.ctp</string>
+	<string>app/views/ventaexpos/edit.ctp</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -79,6 +79,20 @@
 			<key>firstVisibleLine</key>
 			<integer>2</integer>
 		</dict>
+		<key>app/files/queries/facturas_descancelar_febrero_2014_20140307.sql</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>12</integer>
+				<key>line</key>
+				<integer>18</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>app/views/helpers/ax_u_i.php</key>
 		<dict>
 			<key>caret</key>
@@ -126,39 +140,23 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>313</integer>
+				<integer>796</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>305</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>34</integer>
-				<key>line</key>
-				<integer>313</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>45</integer>
-				<key>line</key>
-				<integer>313</integer>
-			</dict>
+			<integer>776</integer>
 		</dict>
 		<key>app/webroot/ventas.manifest</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>1</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -170,6 +168,7 @@
 	<array>
 		<string>app/views/helpers/ax_u_i.php</string>
 		<string>app/views/ventaexpos/edit.ctp</string>
+		<string>app/files/queries/facturas_descancelar_febrero_2014_20140307.sql</string>
 		<string>app/views/layouts/ventas.ctp</string>
 		<string>app/webroot/ventas.manifest</string>
 		<string>app/controllers/factura_electronica_controller.php</string>
@@ -180,6 +179,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{7, 32}, {909, 844}}</string>
+	<string>{{-1903, -19}, {909, 844}}</string>
 </dict>
 </plist>

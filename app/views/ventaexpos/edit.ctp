@@ -13,7 +13,7 @@
 <!-- Form's Tool / Button Bar -->
 <div id="divFormToolBar" class="toolbar well well-small round-corners ax-toolbar">
 	<div class="btn-group">	
-		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="saveText=='GUARDANDO' || ( (formMaster.$pristine || !formMaster.$valid) || data.Master.id>0)" alt="Guardar">
+		<button type="submit" class="btn btn-primary" data-ng-click="save()" data-ng-disabled="saveText=='GUARDANDO' || ( ( formMaster.$pristine || !formMaster.$valid) || data.Master.id>0 || !(data.Master.cliente_id>0))" alt="Guardar">
 		<i class="icon icon-ok-circle icon-white"></i> {{saveText}}
 		</button>
 
@@ -34,7 +34,6 @@
 		</button>
 	</div>
 	</div>
-
 </div>
 
 <form class="form form-horizontal" id="formmaster" name="formMaster" method="post" accept-charset="utf-8">
@@ -101,7 +100,8 @@
 		<div class="controls input">
 			<input type="text" id="VentaexpoRefer" name="data[Ventaexpo][folio]" field="Ventaexpo.folio"
 				data-ng-model="data.Master.folio" 
-				data-ng-minlength="1" data-ng-maxlength="8" data-ng-required="true"
+				data-ng-minlength="1" data-ng-maxlength="8"
+				data-ng-required="true"
 				class="date" placeholder="Folio..." title="Proporciona el Folio de la transacción" />
 		</div>
 	</div>
@@ -110,19 +110,24 @@
 		<label for="VentaexpoFecha" class="control-label">Fecha:</label>
 		<div class="controls input">
 			<input type="text" id="VentaexpoFecha" name="data[Ventaexpo][fecha]" field="Ventaexpo.fecha"
-				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="data.Master.fecha" data-ng-required="true"
+				data-ui-date 
+				data-ui-date-format="yy-mm-dd"
+				data-ng-model="data.Master.fecha"
+				data-ng-required="true"
 				class="date" placeholder="Fecha..." title="Proporciona la Fecha de la transacción" />
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="VentaexpoFvence" class="control-label">Vencimiento:</label>
+		<label for="VentaexpoFvence" class="control-label">Fecha de Entrega:</label>
 		<div class="controls input">
 			<input type="text" id="VentaexpoFvence" name="data[Ventaexpo][fvence]" field="Ventaexpo.fvence"
-				data-ui-date data-ui-date-format="yy-mm-dd"
-				data-ng-model="data.Master.fvence" data-ng-required="false"
-				class="date" placeholder="Vencimiento..." title="Proporciona la Fecha de Vencimiento del Pedido" />
+				class="date ng-valid ng-dirty"
+				data-ui-date
+				data-ui-date-format="yy-mm-dd"
+				data-ng-model="data.Master.fvence"
+				data-ng-required="true"
+				placeholder="Vencimiento..." title="Proporciona la Fecha de Vencimiento del Pedido" />
 		</div>
 	</div>
 
@@ -130,8 +135,9 @@
 		<label for="VentaexpoVendedor_id" class="control-label">Vendedor:</label>
 		<div class="controls input">
 			<select id="VentaexpoVendedor_id" name="data[Ventaexpo][vendedor_id]"
-				class="span3"
+				class="span3 ng-valid ng-dirty"
 				data-ng-model="data.Master.vendedor_id"
+				data-ng-required="true"
 				data-ng-options="i.id as i.cve for i in related.Vendedor"
 				>
 			</select>
@@ -142,10 +148,11 @@
 		<label for="VentaexpoCliente_id" class="control-label">Cliente:</label>
 		<div class="controls input">
 			<select id="VentaexpoCliente_id" name="data[Ventaexpo][cliente_id]"
-				class="span3"
+				class="span3 ng-valid ng-dirty"
 				data-ng-change="clienteChange()"
 				data-ng-model="data.Master.cliente_id"
 				data-ng-options="i.id as i.cve for i in related.Cliente"
+				data-ng-required="true"
 				>
 			</select>
 		</div>
@@ -262,8 +269,10 @@
 	<div class="control-group">
 		<div class="controls input">
 			<input type="text" class="form-control span2"  placeholder="Producto..." type="edit"
-			data-ng-model="filterText" data-ng-change="gridOptions.filterOptions.filterText=filterText"
-			class="ng-valid ng-dirty" data-ng-minlength="0" data-ng-maxlength="32" />
+			class="ng-valid ng-dirty" 
+			data-ng-model="filterText" 
+			data-ng-change="gridOptions.filterOptions.filterText=filterText"
+			data-ng-minlength="0" data-ng-maxlength="32" />
 		</div>
 	</div>
 
@@ -292,6 +301,10 @@
 
 </form>
 <pre>app.onlineStatus ==> <br/> {{app.onlineStatus | json}}</pre>
+<pre>app.appCache ==> <br/> {{app.appCache | json}}</pre>
+<pre>selectedItems ==> <br/>  {{selectedItems | json}}</pre>
+<pre>gridOptions.groups ==> <br/> {{gridOptions.group | json}}</pre>
+<pre>masterGridOptions.groups ==> <br/> {{masterGridOptions.group | json}}</pre>
 <script language="javascript">
 
 /* Begins Plain JS models/variables initialization ******************/
@@ -323,24 +336,31 @@ var emptyItem={
 /* Begins Web UI model's initialization *****************************/
 <?php echo $this->AxUI->getModelsFromJsObjects(); ?>
 
+	// Load Heavy Data Collections
+	$scope.items=angular.copy(items);
+
 	// Load Related Models
 	$scope.saveText='Guardar';
 	$scope.loadRelatedModels();
 	$scope.oldValues={"arcveart":"", "articulo_id": null, "color_id": null, "talla_id": 1, "t0":0, "cant":0, "precio":0};
 //	$scope.currentItem={};
+
+	// Document's Actual Master field's setup
+	$scope.Cliente={};
+	$scope.myItems={};
+	$scope.filterText='';
+
+	// Document's Child Item Collection's setup
 	$scope.currentProporcionpedido={};
 	$scope.currentItem=angular.copy(emptyTalla);
 	$scope.selectedItems=[];
 	$scope.selectedCell={};
 	$scope.selectedRow={};
     $scope.selectedColumn={};
-	$scope.Cliente={};
-	$scope.myItems={};
-	$scope.filterText='';
-	$scope.selectedMasterItems=[];
+
+	// Document's Master Items Collection's setup
 	$scope.masterItems=$scope.loadLocalCollection('ITEMS');
-	
-//	$scope.productFilter.articulo_id
+	$scope.selectedMasterItems=[];
 	
 	if(!angular.isDefined($scope.data.Master.id) && $scope.data.Master.id>0) {
 		$scope.data.Master.impo1=16;
@@ -414,7 +434,7 @@ var emptyItem={
 		// Si la aplicacion esta onLine....
 		if ( $scope.app.onlineStatus.isOnline() ) {
 			var title = 'Sincronización del Pedido';
-			var msg = 'Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido.<br/>¿ Deseas hacerlo ahora ?';
+			var msg = 'Actualmente hay conexión a Internet. Es recomendable sincronizar el Pedido. ¿ Deseas hacerlo ahora ?';
 			var btns = [{result:0, label: 'Luego'}, {result:1, label: 'Sincronizar', cssClass: 'btn-primary'}];
 			$dialog.messageBox(title, msg, btns)
 			.open()
@@ -422,13 +442,13 @@ var emptyItem={
 				// El Usuario desea Sincronizar con el servidor....
 				if(result) {
 					$scope.log('El Usuario SI quizo sincronizar al guardar.')
-					alert('SI quiere sincronizar');
+					axAlert('El Usuario SI quizo sincronizar al guardar.');
 					return;
 				}
 				// El Usuario Sincronizará después....
 				else {
 					$scope.log('El Usuario NO quizo sincronizar al guardar.');					
-					alert('NO quiere sincronizar');
+					axAlert('El usuario NO quizo sincronizar al guardar.');
 				}
 			});
 		}
@@ -691,8 +711,9 @@ var emptyItem={
 	};
 
 
+	// Master Item's Grid
     $scope.masterGridOptions = { 
- 		data: 'masterItems',
+		data: 'masterItems',
 
 		showColumnMenu: true,
 
@@ -701,12 +722,6 @@ var emptyItem={
 		enablePinning: true,
 
 		enableHighlighting: true,
-//        enableCellSelection: true,
- //       enableRowSelection: false,
-
-//		enableCellSelection: false,
-//		enableRowSelection: true,
-//		enableCellEdit: false,
 
 		multiSelect: false,
 		showSelectionCheckbox: false,
@@ -721,26 +736,22 @@ var emptyItem={
 
 		i18n: 'es',
 
-//		enableCellEditOnFocus: false,
-// 			{field: 'Master.id', displayName: 'ID', enableCellEdit: false, width: '75', visible: false, groupable: true}, 
-
 		columnDefs: [
-			{field: 'Cliente.clcvecli', displayName: 'Cliente', enableCellEdit: false, pinned: true, width: '75', sortable: true, groupable: true}, 
-			{field: 'Cliente.cltda', displayName: 'Tda', enableCellEdit: false, pinned: false, width: '75', sortable: true, groupable: true}, 
-			{field: 'Master.fecha', displayName: 'Fecha', enableCellEdit: false, pinned: false, pinnable: true, width: '100', sortable: true, groupable: true}, 
-			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '110', sortable: true, groupable: false}, 
-			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '110', sortable: true, groupable: true, visible: true },
-			{field: 'acciones', displayName:'Acciones', enableCellEdit: false, pinned: false, pinnable: true, width: '120', sortable: true, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="sync(row.entity, row.getProperty(col.field), col.field)" title="Sincronizar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
+			{field: 'Cliente.clcvecli', displayName: 'Cliente', enableCellEdit: false, pinned: true, pinnable: true, width: '75', sortable: true, groupable: true}, 
+			{field: 'Cliente.cltda', displayName: 'Tda', enableCellEdit: false, pinned: true, pinnable: true, width: 50', sortable: true, groupable: true}, 
+			{field: 'Master.fecha', displayName: 'Fecha', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: true, cellFilter: 'date'}, 
+			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: false}, 
+			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: true, visible: true, cellFilter: 'currency' },
+			{field: 'acciones', displayName:'Acciones', enableCellEdit: false, pinned: false, pinnable: true, width: '125', sortable: true, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="sync(row.entity, row.getProperty(col.field), col.field)" title="Sincronizar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
 			],
 		groups: ['cliente_id'],
     };
 
-//getFieldFromItemCollection(items, 'color_cve', 'color_id', i.Detail.color_id )
+	// Detail's Grid
+	$scope.gridOptions = { 
+		data: 'items',
 
-    $scope.gridOptions = { 
- 		data: 'items',
-
-		showColumnMenu: false,
+		showColumnMenu: true,
 
 		enableColumnResize: false,
 		enableColumnReordering: false,
@@ -767,40 +778,38 @@ var emptyItem={
 //		enableCellEditOnFocus: true,
 
 		columnDefs: [
-			{field: 'id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: true}, 
-			{field: 'arcveart', displayName: 'Clave', enableCellEdit: false, pinned: true, width: '150', groupable: true}, 
-			{field: 'color_cve', displayName: 'Color', enableCellEdit: false, pinned: true, width: '125', groupable: true}, 
-			{field: 'base_cve', displayName: 'Base', enableCellEdit: false, pinned: true, width: '120', groupable: true}, 
-			{field: 'linea_cve', displayName: 'Linea', enableCellEdit: false, pinned: true, width: '100', visible: false, groupable: true}, 
-			{field: 'talla_cve', displayName: 'Tallas', enableCellEdit: false, pinned: true, width: '100', groupable: false, visible: false}, 
-			{field: 'precio', displayName: 'Precio', enableCellEdit: false, pinned: true, width: '75', groupable: false, visible: true, cellFilter: 'currency'}, 
-			{field:'t0', displayName:'T0', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl0\')}}" title="Talla {{row.getProperty(\'tl0\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t1', displayName:'T1', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl1\')}}" title="Talla {{row.getProperty(\'tl1\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t2', displayName:'T2', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl2\')}}" title="Talla {{row.getProperty(\'tl2\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t3', displayName:'T3', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl3\')}}" title="Talla {{row.getProperty(\'tl3\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t4', displayName:'T4', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl4\')}}" title="Talla {{row.getProperty(\'tl4\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t5', displayName:'T5', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl5\')}}" title="Talla {{row.getProperty(\'tl5\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t6', displayName:'T6', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl6\')}}" title="Talla {{row.getProperty(\'tl6\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t7', displayName:'T7', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl7\')}}" title="Talla {{row.getProperty(\'tl7\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t8', displayName:'T8', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl8\')}}" title="Talla {{row.getProperty(\'tl8\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'t9', displayName:'T9', enableCellEdit: true, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl9\')}}" title="Talla {{row.getProperty(\'tl9\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false, width: '50', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'t0\')+row.getProperty(\'t1\')}}" title="Total de Piezas" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
-			{field:'importe', displayName:'Importe', enableCellEdit: false, pinnable: false, width: '70', sortable: false, groupable: false, visible: false },
-			{field:'copiar', displayName:'Editar', enableCellEdit: false, pinnable: false, width: '120', sortable: false, groupable: false,cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="detailCopy(row.entity, row.getProperty(col.field), col.field)" title="Copiar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
-			//		{field:'pegar', displayName:'Pegar', enableCellEdit: false, pinnable: false, width: '50', sortable: false, groupable: false,cellTemplate: '<button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)"><i class="icon "></i></button>'},
-			{field:'tl0', displayName:'TL0', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl1', displayName:'TL1', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl2', displayName:'TL2', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl3', displayName:'TL3', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl4', displayName:'TL4', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl5', displayName:'TL5', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl6', displayName:'TL6', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl7', displayName:'TL7', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl8', displayName:'TL8', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field:'tl9', displayName:'TL9', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
-			{field: 'estilo_cve', displayName: 'Estilo', enableCellEdit: false, pinned: true, width: '100', visible: false, groupable: true}, 
+			{field: 'arcveart', displayName: 'Clave', enableCellEdit: false, pinned: true, pinnable: true, width: '150', groupable: true}, 
+			{field: 'color_cve', displayName: 'Color', enableCellEdit: false, pinned: true, pinnable: true, width: '150', groupable: true}, 
+			{field: 'base_cve', displayName: 'Base', enableCellEdit: false, pinned: false, pinnable: true, width: '75', groupable: true}, 
+			{field: 'linea_cve', displayName: 'Linea', enableCellEdit: false, pinned: false, pinnable: true, width: '50', visible: true, groupable: true}, 
+			{field: 'precio', displayName: 'Precio', enableCellEdit: false, pinned: false, pinnable: false, width: '70', groupable: false, visible: true, cellFilter: 'currency'}, 
+			{field: 'importe', displayName:'Importe', enableCellEdit: false, pinnable: false, width: '70', sortable: false, groupable: false, visible: true, cellFilter: 'currency' },
+			{field: 't0', displayName:'T0', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl0\')}}" title="Talla {{row.getProperty(\'tl0\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't1', displayName:'T1', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl1\')}}" title="Talla {{row.getProperty(\'tl1\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't2', displayName:'T2', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl2\')}}" title="Talla {{row.getProperty(\'tl2\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't3', displayName:'T3', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl3\')}}" title="Talla {{row.getProperty(\'tl3\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't4', displayName:'T4', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl4\')}}" title="Talla {{row.getProperty(\'tl4\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't5', displayName:'T5', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl5\')}}" title="Talla {{row.getProperty(\'tl5\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't6', displayName:'T6', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl6\')}}" title="Talla {{row.getProperty(\'tl6\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't7', displayName:'T7', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl7\')}}" title="Talla {{row.getProperty(\'tl7\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't8', displayName:'T8', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl8\')}}" title="Talla {{row.getProperty(\'tl8\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 't9', displayName:'T9', enableCellEdit: true, pinned: false, pinnable: false, width: '40', sortable: false, groupable: false, editableCellTemplate: '<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'tl9\')}}" title="Talla {{row.getProperty(\'tl9\')}}" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'},
+			{field: 'cant', displayName:'Cant', enableCellEdit: false, pinnable: false, width: '40', sortable: false, groupable: false, /*editableCellTemplate: 			'<input data-ng-class="{{\'colt\' + col.index}}" ng-input="COL_FIELD" ng-model="COL_FIELD" placeholder="{{row.getProperty(\'t0\')+row.getProperty(\'t1\')}}" title="Total de Piezas" maxlenght="6" style="width:36px;" ng-change="detailEdit(row.entity, row.getProperty(col.field), col.field)" />'*/},
+			{field: 'copiar', displayName:'Editar', enableCellEdit: false, pinnable: false, width: '120', sortable: false, groupable: false, cellTemplate: '<div class="btn-group"><button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="detailCopy(row.entity, row.getProperty(col.field), col.field)" title="Copiar"><i class="icon icon-share-alt"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)" title="Pegar"><i class="icon  icon-chevron-down"></i></button><button class="btn btn-small" ng-class="{{\'colt\' + col.index}}" ng-click="detailDelete(row.entity, row.getProperty(col.field), col.field)" title="Borrar"><i class="icon  icon-trash"></i></button></div>'},
+//			{field: 'id', displayName: 'ID', enableCellEdit: false, pinned: true, width: '75', visible: false, groupable: false}, 
+//			{field: 'talla_cve', displayName: 'Tallas', enableCellEdit: false, pinned: false, pinnable: true, width: '50', groupable: false, visible: false}, 
+//			{field:'pegar', displayName:'Pegar', enableCellEdit: false, pinnable: false, width: '50', sortable: false, groupable: false,cellTemplate: '<button class="btn btn-small"  ng-class="{{\'colt\' + col.index}}" ng-click="detailPaste(row.entity, row.getProperty(col.field), col.field)"><i class="icon "></i></button>'},
+//			{field:'tl0', displayName:'TL0', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl1', displayName:'TL1', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl2', displayName:'TL2', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl3', displayName:'TL3', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl4', displayName:'TL4', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl6', displayName:'TL6', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl7', displayName:'TL7', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl8', displayName:'TL8', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field:'tl9', displayName:'TL9', enableCellEdit: true, pinnable: false, width: '50', visible: false, sortable: false, groupable: false},
+//			{field: 'estilo_cve', displayName: 'Estilo', enableCellEdit: false, pinned: true, width: '100', visible: false, groupable: true}, 
 //			{field:'cant', displayName:'Cant', enableCellEdit: false, pinnable: false},
-//			{field:'precio', displayName:'Precio', enableCellEdit: false, pinnable: false},
 			],
 		groups: ['linea_cve'],
     };

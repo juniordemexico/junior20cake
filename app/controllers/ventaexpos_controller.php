@@ -39,9 +39,9 @@ class VentaexposController extends MasterDetailAppController {
 	
 	public function add() {		
 		$model=$this->Ventaexpo;
-		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo());
 		$this->set('title_for_layout', 'Pedido Expo :: Nuevo');
-		$this->set('related', $model->loadDependencies());
+//		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo());
+//		$this->set('related', $model->loadDependencies());
 		$this->set('mode', 'add');
 		$this->set('data',  array(
 			'Master' =>
@@ -90,6 +90,10 @@ class VentaexposController extends MasterDetailAppController {
 		$this->set('result', 'ok');
 		$this->set('message', 'Total de Articulos:');
 		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo( $id ));
+	}
+
+	public function saveUserAgentData( $id=null ) {
+		
 	}
 
 }

@@ -94,15 +94,16 @@ class Ventaexpodet extends AppModel
 								Talla.tat8 ,
 								Talla.tat9 
 								FROM Articulos Articulo
+								JOIN Catalogo Catalogo ON Catalogo.articulo_id=Articulo.id AND catalogo_id=$id
 								JOIN Tallas Talla ON Talla.id=Articulo.talla_id
 								JOIN Articulos_Colores ArticuloColor ON ArticuloColor.articulo_id=Articulo.id
 								JOIN Colores Color ON Color.id=ArticuloColor.color_id
 								JOIN Lineas Linea ON Linea.id=Articulo.linea_id
 								LEFT JOIN Bases Base ON Base.id=Articulo.base_id
 								LEFT JOIN Estilos Estilo ON Estilo.id=Articulo.estilo_id
-								WHERE Articulo.arst='A' AND Articulo.tipoarticulo_id=0 AND Articulo.arcveart NOT LIKE '1%'
-								ORDER BY Articulo.linea_id, Articulo.estilo_id, Articulo.base_id,  Articulo.id, Color.id
-		ROWS 1000");
+								WHERE Articulo.arst='A' AND Articulo.tipoarticulo_id=0 /*AND Articulo.arcveart NOT LIKE '1%' */
+								ORDER BY Articulo.linea_id, Articulo.estilo_id, Articulo.base_id,  Articulo.arcveart, Color.cve
+		ROWS 5000");
 //		print_r($items);
 //		die();
 		$out=array();
