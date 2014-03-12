@@ -738,7 +738,7 @@ var emptyItem={
 
 		columnDefs: [
 			{field: 'Cliente.clcvecli', displayName: 'Cliente', enableCellEdit: false, pinned: true, pinnable: true, width: '75', sortable: true, groupable: true}, 
-			{field: 'Cliente.cltda', displayName: 'Tda', enableCellEdit: false, pinned: true, pinnable: true, width: 50', sortable: true, groupable: true}, 
+			{field: 'Cliente.cltda', displayName: 'Tda', enableCellEdit: false, pinned: true, pinnable: true, width: '50', sortable: true, groupable: true}, 
 			{field: 'Master.fecha', displayName: 'Fecha', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: true, cellFilter: 'date'}, 
 			{field: 'Master.folio', displayName: 'Folio', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: false}, 
 			{field: 'Master.total', displayName: 'Total', enableCellEdit: false, pinned: false, pinnable: true, width: '75', sortable: true, groupable: true, visible: true, cellFilter: 'currency' },

@@ -92,7 +92,12 @@ class VentaexposController extends MasterDetailAppController {
 		$this->set('items', $this->Ventaexpodet->getArticulosCatalogo( $id ));
 	}
 
-	public function saveUserAgentData( $id=null ) {
+	public function saveOfflineData( $id=null ) {
+		
+		
+	}
+
+	public function loadOfflineData( $id=null ) {
 		
 	}
 

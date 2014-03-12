@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/views/ventaexpos/edit.ctp</string>
+	<string>app/webroot/ventas.manifest</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,23 +18,9 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>303</integer>
+	<integer>260</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/factura_electronica_controller.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>382</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>365</integer>
-		</dict>
 		<key>app/controllers/pedidos_controller.php</key>
 		<dict>
 			<key>caret</key>
@@ -70,28 +56,42 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>76</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<integer>61</integer>
 		</dict>
-		<key>app/files/queries/facturas_descancelar_febrero_2014_20140307.sql</key>
+		<key>app/models/ventaexpo.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>128</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
+			<integer>99</integer>
+		</dict>
+		<key>app/models/ventaexpodet.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>86</integer>
+				<key>line</key>
+				<integer>96</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
 			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>67</integer>
 		</dict>
 		<key>app/views/helpers/ax_u_i.php</key>
 		<dict>
@@ -126,28 +126,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>14</integer>
 				<key>line</key>
-				<integer>35</integer>
+				<integer>44</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>3</integer>
+			<integer>16</integer>
 		</dict>
 		<key>app/views/ventaexpos/edit.ctp</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>34</integer>
+				<integer>109</integer>
 				<key>line</key>
-				<integer>796</integer>
+				<integer>740</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>776</integer>
+			<integer>721</integer>
 		</dict>
 		<key>app/webroot/ventas.manifest</key>
 		<dict>
@@ -168,10 +168,10 @@
 	<array>
 		<string>app/views/helpers/ax_u_i.php</string>
 		<string>app/views/ventaexpos/edit.ctp</string>
-		<string>app/files/queries/facturas_descancelar_febrero_2014_20140307.sql</string>
 		<string>app/views/layouts/ventas.ctp</string>
 		<string>app/webroot/ventas.manifest</string>
-		<string>app/controllers/factura_electronica_controller.php</string>
+		<string>app/models/ventaexpo.php</string>
+		<string>app/models/ventaexpodet.php</string>
 		<string>app/controllers/ventaexpos_controller.php</string>
 		<string>app/controllers/pedidos_controller.php</string>
 		<string>app/views/layouts/default.ctp</string>
@@ -179,6 +179,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1903, -19}, {909, 844}}</string>
+	<string>{{0, 0}, {909, 844}}</string>
 </dict>
 </plist>

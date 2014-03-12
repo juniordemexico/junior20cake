@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Generando archivo de productos para Ventas Offline..."
+echo "( Fuente: ventas.items.json  Destino ventas.items.js )"
+
+cat ventas.items.prefix.js > ventas.items.js &&
+cat ventas.items.json >> ventas.items.js &&
+echo ";" >> ventas.items.js &&
+chmod 660 ventas.items.js
+
+echo "Se generó el archvo ./ventas.items.js."
+
+exit 0
