@@ -258,12 +258,23 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 		)).";".
 "\n\r".
 "
+//	saveLocalGlobalCollection('APP', angular.toJson($scope.app));
+//	saveLocalGlobalCollection('USER', angular.toJson($scope.app));
+
 	\$http.defaults.headers.post[\"Content-Type\"] = 'application/x-www-form-urlencoded';
 	\$scope.\$window=\$window;
 	\$scope.app.onlineStatus=onlineStatus;
 	\$scope.app.appCache=appCache;
 
-	
+/*
+	\$window.addEventListener('selectedItems', function () {
+		alert('cambio selected items' + \$scope.selectedItems.length-1);
+		\$scope.currentItem=\$scope.selectedItems[\$scope.selectedItems.length-1];
+		\$rootScope.\$digest();
+	}, true);
+*/
+
+
 	// Internet/network connection status
 
 /*
@@ -382,6 +393,30 @@ function(\$scope, \$rootScope, \$http, \$window, \$location, \$dialog, \$timeout
 			}
 			axAlert('El cache local no contiene Detalle');
 		}
+	}
+
+/*
+	\$scope.saveLocalGlobalCollection = function (collection, value) {
+		localStorageService.add(collection, value);
+		\$scope.log('Local Global Collection (ADDED: ' + collection);
+		return true;
+	}
+
+	\$scope.loadLocalGlobalCollection = function (collection) {
+		localStorageService.get(collection);
+		if( !container ) {
+			container={};
+			container[collection]=[];
+		}
+		\$scope.log('Local Global Collection (LOADED: '+ container[collection].length +'): ' + collection);
+		return true;
+	}
+*/
+
+	\$scope.initLocalCollection = function (collection) {
+		localStorageService.add(\$scope.app.localCachePrefix+collection, '[]');
+		\$scope.log('Local Collection (INIT: ' + collection);
+		return true;
 	}
 
 	\$scope.addItemToLocalCollection = function (collection, item) {
@@ -543,26 +578,9 @@ axApp.factory('onlineStatus', ['\$window', '\$rootScope', '\$dialog', function (
 	if (\$window.applicationCache.status == \$window.applicationCache.UPDATEREADY) {
 		// Browser downloaded a new app cache.
 		console.log('AX: Se encontró una nueva Actualización (applicationCache.UPDATEREADY). Notificando al usuario...');					
-		axAlert('Hay una nueva Actualización en el Servidor', 'warning', false);
-/*
-		\$dialog.messageBox(title, 'Hay una nueva Actualización en el Servidor. ¿ Deseas SINCRONIZAR ahora ?', btns)
-		.open()
-		.then( function(result) {
-			// El Usuario desea Sincronizar con el servidor....
-			if(result) {
-				\$window.location.reload();
-			}
-			// El Usuario Sincronizará después....
-			else {
-				console.log('AX: El decidió NO quizo sincronizar la Actualización encontrada.');					
-			}
-		});
-
-*/
-
-			if (confirm('Hay una nueva Actualización en el Servidor. ¿ Deseas SINCRONIZAR ahora ?')) {
-				\$window.location.reload();
-			}  
+		if (confirm('Hay una nueva Actualización en el Servidor. ¿ Deseas SINCRONIZAR ahora ?')) {
+			\$window.location.reload();
+		}  
 
 		} else {
 			console.log('AX: Se buscarón nuevas actualizaciones en el servidor y no se encontró ninguna.');					
