@@ -74,7 +74,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 								'limit' => 20,
 								'order' => array('Ncredito.ncrefer' => 'desc'),
 								'fields' => $this->tableFields,
-								'conditions' => array("Ncredito.ncrefer LIKE" => 'N00%',"Ncredito.crefec >" => '2013-12-31', 'Ncredito.nct'=>'0'),
+								'conditions' => array("Ncredito.crefec >" => date('Y-m-d', strtotime("-12 months")),'Ncredito.nct'=>'0'),
 								'doJoinUservendedor'=>true,
 								'session' => $this->Auth->User(),
 								);
@@ -188,21 +188,9 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 		$docto_arr=json_decode($docto);
 		$this->set('docto', $docto_arr);
 
-/*
-		if(empty($docto_arr['Receptor']['clcalle']) || empty($docto_arr['Receptor']['clcp']) ) {
-				$this->Session->setFlash(__('Esa Nota de Crédito NO tiene una Dirección del Cliente Válida. No la puedo timbrar.', true), 'error');
-				return;			
-		}
-*/
-
 		$estatus=$this->Ncredito->findById($id);
 		if(!$estatus || !empty($estatus['Ncredito']['sellosat'])) {
 				$this->Session->setFlash(__('Esa Nota de Crédito YA se Timbró. Tiene el UUID: '.$estatus['Ncredito']['uuid'], true), 'error');
-				return;			
-		}
-
-		if(strlen($estatus['Ncredito']['ncrefer'])<>8) {
-				$this->Session->setFlash(__('Esa Nota de Crédito NO se puede timbrar, el folio NO contiene 8 digitos ', true), 'error');
 				return;			
 		}
 
@@ -216,7 +204,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 
 		// Generamos el XML con Cadena Original y Sello
 
-		$this->set('title_for_layout', 'Ncrédito CFDI');
+		$this->set('title_for_layout', 'Ncredito CFDI');
 
 		if ( !$this->AxFolioselectronicos->createCFDI( $docto ) ) {
 			$this->set('result', "error");
@@ -267,9 +255,9 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 
 
 		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Ncrédito <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
+		$this->set('message', 'Se generó el comprobante digital CFDI de la Ncredito <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
 							' (uuid: '.$documento['UUID'].' fecha: '.$documento['FechaTimbrado'].')'); //$docto['Master']['uuid']
-		$this->set('title_for_layout', 'Ncrédito CFDI::'.$this->AxFolioselectronicos->documento['folio']);
+		$this->set('title_for_layout', 'Ncredito CFDI::'.$this->AxFolioselectronicos->documento['folio']);
 //		$this->set('docto', json_decode($docto));
 		$this->set('documento', $documento);
 		$this->set('responses', $responses);
@@ -297,7 +285,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 //		$pac_url_timbrado='http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl';
 //		$pac_url_cancela='http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl';
 
-		$this->set('title_for_layout', 'Ncrédito CFDI Cancelación :: '.$id);
+		$this->set('title_for_layout', 'Ncredito CFDI Cancelación :: '.$id);
 
 		$RFC= "JME910405B83";
 		$path_CERT=APP.'files'.DS.'SAT'.DS.'SAT_CERT_JME910405B83.pem';
@@ -316,11 +304,11 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 
 		if(!$item && !isset($item['Ncredito'])) {
 			$this->set('result', "error");
-			$this->set('message', 'Error en el Ensobretado del XML para Cancelación. Ncrédito: '.$item['Ncredito']['ncrefer']. ' (id:'.$item['Factura']['id'].')');
+			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Ncredito: '.$item['Ncredito']['ncrefer']. ' (id:'.$item['Factura']['id'].')');
 //			$this->Session->setFlash(__('invalid_item', true), 'error');
 			return;			
 		}
-		$this->set('title_for_layout', 'Ncrédito CFDI Cancelación :: '.$item['Ncredito']['farefer']);
+		$this->set('title_for_layout', 'Ncredito CFDI Cancelación :: '.$item['Ncredito']['farefer']);
 
 		$textenv=
 		'<?xml version="1.0" encoding="UTF-8"?>
@@ -341,7 +329,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 
 		if( !$env->loadXML($textenv) ) {
 			$this->set('result', "error");
-			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Ncrédito: '.$item['Ncredito']['ncrefer'].' (id:'.$id.')');
+			$this->set('message', 'Error en el Ensobretado del XML para Cancelacion. Ncredito: '.$item['Ncredito']['ncrefer'].' (id:'.$id.')');
 			return;
 		}
 
@@ -399,7 +387,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 		$xml = new DOMDocument();
 		if (!$xml->loadXML($res)) {
 			$this->set('result', "error");
-			$this->set('message', 'Error al leer respuesta del PAC al Cancelar Ncrédito '.$item['Ncredito']['ncrefer'].' (id: '.$id.')');
+			$this->set('message', 'Error al leer respuesta del PAC al Cancelar Ncredito '.$item['Ncredito']['ncrefer'].' (id: '.$id.')');
 			$this->set('docto', $item);
 			return false;
 		}
@@ -416,7 +404,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 		$xml->save($pathDOCS.DS.$filename);
 
 		$this->set('result', 'ok' );
-		$this->set('message', 'La Ncrédito '.$item['Ncredito']['ncrefer'].' se canceló correctamente (id: '.$id.')');
+		$this->set('message', 'La Ncredito '.$item['Ncredito']['ncrefer'].' se canceló correctamente (id: '.$id.')');
 		$this->set('data', $item);
 		$this->set('textenv', $textenv);	
 		$this->set('response', $this->Axfile->FileToString( $pathDOCS.DS.$filename ));	
@@ -435,7 +423,7 @@ class NcreditoElectronicaController extends MasterDetailAppController {
 
 		$sender = array(
 			'subject'=>'Comprobante Digital.'.' Junior de Mexico'.'. '.
-								'Ncrédito: '.$data['Master']['folio'].' (uuid: '.
+								'Ncredito: '.$data['Master']['folio'].' (uuid: '.
 					$data['Master']['uuid']. '). '.	//$data['Master']['uuid']
 								' ['.$data['Master']['fecha'].']',
 			'from'=>'Comprobantes (Junior de Mexico) <comprobantes@oggi.com.mx>',
@@ -724,7 +712,7 @@ function _sendemail($sender = array(), $receipt = array(), $params = array(), $b
 
 		$docto_arr=json_decode($docto);
 
-		$this->set('title_for_layout', 'Ncrédito CFDI');
+		$this->set('title_for_layout', 'Ncredito CFDI');
 
 		if ( !$this->AxFolioselectronicos->createCFDI2( $docto ) ) {
 			$this->set('result', "error");
@@ -744,9 +732,9 @@ function _sendemail($sender = array(), $receipt = array(), $params = array(), $b
 
 
 		$this->set('result', 'ok');
-		$this->set('message', 'Se generó el comprobante digital CFDI de la Ncrédito <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
+		$this->set('message', 'Se generó el comprobante digital CFDI de la Ncredito <strong>'.$this->AxFolioselectronicos->documento['folio'].'</strong> '.
 							' (uuid: '.$documento['UUID'].' fecha: '.$documento['FechaTimbrado'].')'); //$docto['Master']['uuid']
-		$this->set('title_for_layout', 'Ncrédito CFDI::'.$this->AxFolioselectronicos->documento['folio']);
+		$this->set('title_for_layout', 'Ncredito CFDI::'.$this->AxFolioselectronicos->documento['folio']);
 		$this->set('docto', json_decode($docto));
 		$this->set('documento', $documento);
 		$this->set('responses', $responses);

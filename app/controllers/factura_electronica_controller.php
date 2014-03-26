@@ -289,13 +289,31 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$responses=array();
 		
 		// Obtenemos los datos de la factura listos para generar XML y PDF
-		$docto=$this->Factura->getDoctoForCFDI( $id );
+		$docto=$this->Factura->getDoctoForCFDI( $id, true );
+		if(is_string($docto) && substr($docto,0,5)=='Error') {
+			$this->Session->setFlash($docto, 'error');
+//			$this->set('result', 'error');
+//			$this->set('message', $docto);
+			return;
+		}
+
 		$docto_arr=json_decode($docto);
 		$this->set('docto', $docto_arr);
+/*
+		if(empty(trim($docto_arr['Receptor']['clcalle']))) || empty(trim($docto_arr['Receptor']['clcp'])) ) {
+				$this->Session->setFlash(__('Esa Factura NO tiene una Dirección del Cliente Válida. No se puede timbrar.', true), 'error');
+				return;			
+		}
+*/
 
 		$estatus=$this->Factura->findById($id);
 		if(!$estatus || !empty($estatus['Factura']['sellosat'])) {
 				$this->Session->setFlash(__('Esa Factura YA se Timbró. Tiene el UUID: '.$estatus['Factura']['uuid'], true), 'error');
+				return;			
+		}
+
+		if(strlen($estatus['Factura']['farefer'])<>8 || substr($estatus['Factura']['farefer'],0,1)<>'D') {
+				$this->Session->setFlash(__('Esa Factura NO se puede timbrar, verifica el Folio', true), 'error');
 				return;			
 		}
 
@@ -315,7 +333,6 @@ class FacturaElectronicaController extends MasterDetailAppController {
 			$this->set('result', "error");
 			$this->set('message', "ERROR EN CREATECFDI:".$this->AxFolioselectronicos->message);
 			return;
-//			$this->Session->setFlash($this->AxFolioselectronicos->message, 'error');
 		}
 		else {
 			$responses[]=array('default','Creación del XML, Cadena Original y Sello Digital',
@@ -324,9 +341,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		}
 
 		// Obtiene el contenido del Timbre Fiscal devuelto por el PAC
-//		print_r($docto_arr);
 
-//		die();
 		if ( !$this->AxFolioselectronicos->timbrarComprobanteFiscal() ) { 
 			$this->set('result', 'error');
 			$this->set('message','Error al Timbrar CFDI: ' . $this->AxFolioselectronicos->message);
@@ -612,6 +627,27 @@ class FacturaElectronicaController extends MasterDetailAppController {
 	}
 
 
+	public function validateModel( $id=null ) {
+		if (!$id) {
+			if(isset($this->params['url']['id'])) {
+				$id=$this->params['url']['id'];
+			}
+			else {
+				$this->Session->setFlash(__('invalid_item', true), 'error');
+				return;
+			}
+		}
+		$x=$this->Factura->getDoctoForCFDI( $id );
+		if(!is_array($x) && is_string($x)) {
+			$this->set('result', 'error');
+			$this->set('message', $x);
+			return;
+		}
+
+		$this->set('result', 'ok');
+		
+	}
+
 	function download($id=null, $format='pdf') {
 		if ( isset($params['named']['format']) && !empty($params['named']['format']) ) {
 			$format=strtolower(trim($params['named']['format']));
@@ -732,7 +768,7 @@ class FacturaElectronicaController extends MasterDetailAppController {
 		$this->view = 'Media';
 		$params = array('id' => $filename,
 						'name' => 'JME910405B83-'.trim($result['Factura']['farefer']),
-						'download' => true,
+						'download' => false,
 						'extension' => $format,
 						'path' => ($format==='pdf'?$appPathPDF:$appPathXML).DS);
 		$this->set($params);

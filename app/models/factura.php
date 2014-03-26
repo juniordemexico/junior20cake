@@ -82,7 +82,7 @@ class Factura extends AppModel
 
 //	public $hasOne = array('Comprobante'=>array('className'=>'Comprobante','foreignKey'=>'id', 'conditions'=>array('Comprobante.model'=>'Factura')));
 
-	public $hasMany = array('Facturadet'=>array('className'=>'Facturadet','foreignKey'=>'factura_id'));
+	public $hasMany = array('Facturadet'=>array('className'=>'Facturadet', 'foreignKey'=>'factura_id'));
 	
 	function beforeFind( $options ) {
 		if( isset( $options['doJoinUservendedor'] )) {
@@ -91,7 +91,7 @@ class Factura extends AppModel
 		return (parent::beforeFind($options));
 	}
 
-	public function getDoctoForCFDI( $id=null ) {
+	public function getDoctoForCFDI( $id=null, $validateModel = false ) {
 
 		// Datos del Emisor (nuestra empresa)
 		$emisor=array(
@@ -114,6 +114,7 @@ class Factura extends AppModel
 								Factura.fafecha fecha,
 								Factura.fapedido pedido,
 								Factura.fatcambio tcambio,	
+								Factura.cliente_id cliente_id,	
 								Factura.divisa_id, Divisa.dicve divisa_cve,
 								Factura.faplazo plazo,
 								Factura.faimpu impuesto_tasa,
@@ -146,18 +147,31 @@ class Factura extends AppModel
 								LEFT JOIN Direccioncte Direccioncte ON (Direccioncte.cliente_id=Cliente.id AND Direccioncte.cltpodir='Fiscal')
 								WHERE Factura.id=$id
 							");
+		
+
+		// Datos del Documento (la factura)
+		$docto=$docto[0];
 
 		if(!$docto || !is_array($docto) || count($docto)<1) {
 			return false;
 		}
 
-		// Datos del Documento (la factura)
-		$docto=$docto[0];
+		$docto['Cliente']['clrfc']=trim($docto['Cliente']['clrfc']);
 		$docto['Cliente']['clmtdopago']=trim($docto['Cliente']['clmtdopago']);
 		$docto['Cliente']['clbancocta']=trim($docto['Cliente']['clbancocta']);
+
+		$this->Cliente->read(null, $docto['Factura']['cliente_id']);
+
+		if ( !$this->Cliente->validates( array('fieldList' => array('clrfc') ) )) {
+			return "Error. El RFC del Cliente tiene un formato incorrecto. Corrigelo en el Catálogo de Clientes.";
+		}
+		if ( !$this->Cliente->validates( array('fieldList' => array('clnom') ) )) {
+			return "Error. La Razón Social del Cliente es Incorrecta. Corrigelo en el catálogo de Clientes.";
+		}
 		
 		$master=array();
 		$master=$docto['Factura'];
+		$master["folio"]=trim($master["folio"]);
 		$master["comprobante_tipo"]="ingreso";
 		$master["divisa_cve"]=trim($docto['Divisa']['divisa_cve'])=='MN'?'MXP':trim($docto['Divisa']['divisa_cve']);
 		$master["impuesto_cve"]="IVA";

@@ -110,7 +110,7 @@ class Ncredito extends AppModel
 					"regimen_fiscal"=>"Regimen General de ley Personas Morales"
 					);
 
-		$docto=$this->query("SELECT Ncredito.id, Ncredito.ncrefer folio,
+		$docto=$this->query("SELECT Ncredito.id, TRIM(Ncredito.ncrefer) folio,
 								Ncredito.ncfecha fecha,
 								Ncredito.nctcambio tcambio,
 								Ncredito.ncdevol ncdevol,

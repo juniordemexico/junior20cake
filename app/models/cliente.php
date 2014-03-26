@@ -19,6 +19,10 @@ class Cliente extends AppModel
 			'type' => 'string',
 			'length' => 64
 		),
+		'clrfc' => array(
+			'type' => 'string',
+			'length' => 16
+		),
 		'cldesc1' => array(
 			'type' => 'float',
 			'length' => 4
@@ -61,7 +65,7 @@ class Cliente extends AppModel
 		'clnom' => array(
 			'cvebetween' => array(
 				'rule' => array('between', 1, 64),
-				'message' => 'NOMBRE / RAZON SOCIAL debe contener entre 1 y 64 caracteres',
+				'message' => 'NOMBRE / RAZÓN SOCIAL debe contener entre 1 y 64 caracteres',
 				'required' => true,
 				'allowEmpty' => false,
 				)
@@ -105,6 +109,10 @@ class Cliente extends AppModel
 				'message' => 'Elige serie ( A / B / C / D)'
 			)
 		),
+ 		'clrfc' => array(
+				'rule' => '/^[[:alnum:]\&\@]{3,4}[[:digit:]]{6,}[[:alnum:]\&\@]{3,3}$/i',
+				'message' => 'RFC tiene el formato AAA999999CCC o AAAA999999CCC'
+		),
 		'clt' => array(
 			'inlist' => array(
 				'rule' => array(
@@ -133,6 +141,7 @@ class Cliente extends AppModel
 			),
 		'Pedido',
 		'Factura',
+		'Ncredito',
 	);
 
 	function beforeFind( $options ) {
